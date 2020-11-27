@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Android死机问题定位笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="addr2line死机问题定位">
+<meta property="og:url" content="http://example.com/2018/06/22/android/addr2line%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/index.html">
+<meta property="og:site_name" content="RJY&#39;s BLOG">
+<meta property="og:description" content="Android死机问题定位笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-11-27T06:42:29.313Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Android调试">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2018/06/22/android/addr2line%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>addr2line死机问题定位 | RJY's BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">RJY's BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2018/06/22/android/addr2line%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RJY's BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          addr2line死机问题定位
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2018-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-22T00:00:00+08:00">2018-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-27 14:42:29" itemprop="dateModified" datetime="2020-11-27T14:42:29+08:00">2020-11-27</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">Android死机问题定位笔记</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>死机问题在程序开发过程中是经常遇到的问题，本文介绍通过addr2line工具解析堆栈来定位死机问题</p>
+</blockquote>
+<h1 id="使用addr2line定位死机问题"><a href="#使用addr2line定位死机问题" class="headerlink" title="使用addr2line定位死机问题"></a>使用addr2line定位死机问题</h1><p>在某个C应用程序挂掉后，会生成堆栈信息，如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">F&#x2F;libc    (21866): Fatal signal 11 (SIGSEGV) at 0x00000000 (code&#x3D;1)</span><br><span class="line">W&#x2F;        (21866): [SkCanvas* DrawSurface::lockCanvas(const android::Rect&amp;)]-----[76]</span><br><span class="line">I&#x2F;DEBUG   (  944): *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***</span><br><span class="line">I&#x2F;DEBUG   (  944): Build fingerprint: &#39;full_godbox&#x2F;godbox:4.0.3&#x2F;8841C&#x2F;84125002:eng&#x2F; test-keys&#39;</span><br><span class="line">I&#x2F;DEBUG   (  944): pid: 21866, tid: 21866  &gt;&gt;&gt; demo_cmd &lt;&lt;&lt;</span><br><span class="line">I&#x2F;DEBUG   (  944): signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 00000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  r0 00000003  r1 00000000  r2 000010b0  r3 0000001f</span><br><span class="line">I&#x2F;DEBUG   (  944):  r4 41334124  r5 00000000  r6 beae2f94  r7 00000046</span><br><span class="line">I&#x2F;DEBUG   (  944):  r8 beae2f08  r9 00000010  10 00000bb8  fp beae3024</span><br><span class="line">I&#x2F;DEBUG   (  944):  ip 400c6108  sp beae2f00  lr 41331d13  pc 41331d42  cpsr 00000030</span><br><span class="line">I&#x2F;DEBUG   (  944):  d0  0000000000000000  d1  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d2  0000000000000000  d3  c1859800408ca000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d4  4125f000c1981600  d5  43ff000041200000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d6  0000000000000000  d7  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d8  0000000000000000  d9  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d10 0000000000000000  d11 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d12 0000000000000000  d13 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d14 0000000000000000  d15 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  scr 60000010</span><br><span class="line">I&#x2F;DEBUG   (  944):</span><br><span class="line">I&#x2F;DEBUG   (  944):          #00  pc 00002d42  &#x2F;system&#x2F;lib&#x2F;libtest.so (std_ping)</span><br><span class="line">I&#x2F;DEBUG   (  944):          #01  pc 0000f466  &#x2F;system&#x2F;bin&#x2F;demo_cmd</span><br><span class="line">I&#x2F;DEBUG   (  944):</span><br><span class="line">I&#x2F;DEBUG   (  944): code around pc:</span><br></pre></td></tr></table></figure>
+<p>这种情况下就可以通过<span style='color:blue'>addr2line</span>命令定位出死在了哪一行代码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">addr2line -e libtest.so 00002d42</span><br><span class="line">addr2line -e demo_cmd 0000f466</span><br></pre></td></tr></table></figure>
+
+<p>注意：我们机顶盒上的so库或者可执行程序，一般都是被stripped的，是无法使用addr2line命令定位死机位置的。这种情况下，则需要找到对应的not stripped的同名文件。这两个文件必须是同一次编译生成的。<br>&ensp; 可以使用file命令查看strip状态，如下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ file system/bin/demo_cmd</span><br><span class="line">system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), stripped</span><br><span class="line">$ file symbols/system/bin/demo_cmd</span><br><span class="line">symbols/system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), not stripped</span><br></pre></td></tr></table></figure>
+
+<p>备注：</p>
+<ul>
+<li>本文介绍的所有命令，都是在Linux主机上执行的命令；</li>
+<li>addr2line解析的文件必须是”<span style='color:red'>not stripped</span>“的文件。如果是android sdk，一般放在out的symbols目录下，比如：out/target/product/xxx/symbols/</li>
+<li>如果是Android机顶盒，应用程序挂掉后在/data/tombstones/目录下面会生成墓碑文件tombstone_*。在这些文件中就会有堆栈信息。</li>
+</ul>
+<h1 id="Android墓碑文件tombstone"><a href="#Android墓碑文件tombstone" class="headerlink" title="Android墓碑文件tombstone"></a>Android墓碑文件tombstone</h1><p>Android logcat打印的日志可以显示堆栈信息，但堆栈信息同时会保存到墓碑文件中。</p>
+<p>当一个动态库（native 程序）开始执行时，系统会注册一些连接到 debuggerd 的 signal handlers，当系统 crash 的时候，会保存一个 tombstone 文件到/data/tombstones目录下（Logcat中也会有相应的信息），文件的确就像墓碑一样记录了死亡了的进程的基本信息（例如进程的进程号，线程号），死亡的地址（在哪个地址上发生了 Crash），死亡时的现场是什么样的（记录了一系列的堆栈调用信息）等等。<br>注意：有些Android设备默认是不会产生墓碑文件的，需要手动创建文件/data/tombstones/tombstone_00</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">mkdir /data/tombstones/</span><br><span class="line">touch /data/tombstones/tombstone_00</span><br><span class="line">chmod 777 /data/tombstones/tombstone_00</span><br></pre></td></tr></table></figure>
+<p>系统发生一次段错误后，会把堆栈信息写入tombstone_0x文件，tombstone_0x文件需要从0~9循环使用，需要通过文件更新时间确认最新的一次段错误是哪个墓碑文件。</p>
+<p>参考文章：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/CoderTian/p/5980426.html">Android Tombstone 分析</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android%E8%B0%83%E8%AF%95/" rel="tag"># Android调试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/06/22/android/%E4%BB%A3%E7%A0%81%E8%B0%83%E8%AF%95%E4%B9%8B%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88/" rel="prev" title="代码调试之打印堆栈">
+      <i class="fa fa-chevron-left"></i> 代码调试之打印堆栈
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/06/24/shell/sed%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/" rel="next" title="sed命令使用说明">
+      sed命令使用说明 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8addr2line%E5%AE%9A%E4%BD%8D%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98"><span class="nav-text">使用addr2line定位死机问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Android%E5%A2%93%E7%A2%91%E6%96%87%E4%BB%B6tombstone"><span class="nav-text">Android墓碑文件tombstone</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+</body>
+</html>

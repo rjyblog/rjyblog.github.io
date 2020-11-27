@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="本文介绍Graphviz dot的常用知识点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GraphViz dot">
+<meta property="og:url" content="http://example.com/2020/11/26/GraphViz-dot/index.html">
+<meta property="og:site_name" content="RJY&#39;s BLOG">
+<meta property="og:description" content="本文介绍Graphviz dot的常用知识点">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-26T08:28:39.000Z">
+<meta property="article:modified_time" content="2020-11-27T06:44:48.590Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="GraphViz">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2020/11/26/GraphViz-dot/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>GraphViz dot | RJY's BLOG</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">RJY's BLOG</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/26/GraphViz-dot/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Jason">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="RJY's BLOG">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GraphViz dot
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-11-26 16:28:39" itemprop="dateCreated datePublished" datetime="2020-11-26T16:28:39+08:00">2020-11-26</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-11-27 14:44:48" itemprop="dateModified" datetime="2020-11-27T14:44:48+08:00">2020-11-27</time>
+              </span>
+
+          
+            <div class="post-description">本文介绍Graphviz dot的常用知识点</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>在线编译工具：<a target="_blank" rel="noopener" href="http://viz-js.com/">http://viz-js.com</a><br>VSCode安装插件：<a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz">Graphviz (dot) language support for Visual Studio Code</a><br>命令行：dot，比如，<code>dot -Tpng -ofile.png file.dot</code>可以导出图片。在Ubuntu系统中，通过<code>sudo apt install graphviz</code>安装即可使用。</p>
+<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p><a target="_blank" rel="noopener" href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Graphviz (dot) examples</a><br><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a></p>
+<h2 id="常用属性介绍"><a href="#常用属性介绍" class="headerlink" title="常用属性介绍"></a>常用属性介绍</h2><h3 id="节点（node）属性"><a href="#节点（node）属性" class="headerlink" title="节点（node）属性"></a>节点（node）属性</h3><p>节点的形状主要有三种：<a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html#polygon">Polygon-based Nodes</a>, <a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html#record">Record-based Nodes</a>, <a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html#epsf">User-defined Nodes</a>。点击链接可看到详细介绍。</p>
+<table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:shape">shape</a></td>
+<td>节点形状，box长方形、circle圆形等，参考<a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#k:color">color</a></td>
+<td>边框颜色</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:style">style</a></td>
+<td>节点样式，filled, invisible, diagonals等，参考<a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html#d:style">Styles for Nodes</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:fillcolor">fillcolor</a></td>
+<td>填充颜色, 只有在style=filled时才生效</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:fontcolor">fontcolor</a></td>
+<td>文字颜色</td>
+</tr>
+</tbody></table>
+<h3 id="连接线（edge）属性"><a href="#连接线（edge）属性" class="headerlink" title="连接线（edge）属性"></a>连接线（edge）属性</h3><table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:label">label</a></td>
+<td>文字描述</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:headlabel">headlabel</a></td>
+<td>连接线头部文字描述，比如A -&gt; B, A端是尾部，B端是头部</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:taillabel">taillabel</a></td>
+<td>连接线尾部文字描述</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:headport">headport</a></td>
+<td>连接线头部指向节点的位置，n(north), s(south), w(west), e(east)</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#a:tailport">tailport</a></td>
+<td>连接线尾部指向节点的位置</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#k:color">color</a></td>
+<td>连接线颜色</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:fontcolor">labelfontcolor</a></td>
+<td>文字颜色，还有fontname和</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:arrowhead">arrowhead</a></td>
+<td>箭头样式</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:splines">splines</a></td>
+<td>连接线样式，直线、曲线、折线等，splines=false设置为直线。</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:dir">dir</a></td>
+<td>连接线方向</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:headclip">headclip</a></td>
+<td>连接线头部指向节点边缘或节点中心，默认是边缘</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:tailclip">tailclip</a></td>
+<td>连接线尾部指向节点边缘或节点中心，默认是边缘</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:weight">weight</a></td>
+<td>连接线布局系数，值越大则线越短、越直、越垂直</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:constraint">constraint</a></td>
+<td>为false时，该连接线不用于节点布局的计算</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:decorate">decorate</a></td>
+<td>为true时，连接线标签通过下划线附着到连接线上</td>
+</tr>
+</tbody></table>
+<h3 id="布局属性"><a href="#布局属性" class="headerlink" title="布局属性"></a>布局属性</h3><table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:rankdir">rankdir</a></td>
+<td>图形布局方向，默认TB，表示top -&gt; bottom。值为LR表示left -&gt; right。</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:ranksep">ranksep</a></td>
+<td>最小间隔</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html#d:group">group</a></td>
+<td>对节点有效，同组节点的连接线将保持在一个直线方向。<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/19308847/graphviz-vertical-ordering">示例</a></td>
+</tr>
+</tbody></table>
+<h3 id="设置node和edge的默认属性"><a href="#设置node和edge的默认属性" class="headerlink" title="设置node和edge的默认属性"></a>设置node和edge的默认属性</h3><p>node和edge是两个特殊关键字，用于设置默认属性</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [attr&#x3D;value, ...]</span><br><span class="line">    edge [attr&#x3D;value, ...]</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多点连线"><a href="#多点连线" class="headerlink" title="多点连线"></a>多点连线</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [shape&#x3D;box]</span><br><span class="line">    A -&gt; &#123;B, C, D&#125;</span><br><span class="line">    node [shape&#x3D;&quot;&quot;] &#x2F;&#x2F;恢复默认形状</span><br><span class="line">    &#123;E, F&#125; -&gt; &#123;M, N&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<div id="graphviz-0"></div>
+
+<h2 id="控制元素水平对齐"><a href="#控制元素水平对齐" class="headerlink" title="控制元素水平对齐"></a>控制元素水平对齐</h2><div id="graphviz-1"></div>
+参考：[GraphViz DOT有向图 (六)edge线条控制](https://blog.csdn.net/youwen21/article/details/98397993)
+
+<h2 id="建立表格元素的连接关系"><a href="#建立表格元素的连接关系" class="headerlink" title="建立表格元素的连接关系"></a>建立表格元素的连接关系</h2><p>参考：<a target="_blank" rel="noopener" href="https://spin.atomicobject.com/2017/11/15/table-rel-diagrams-graphviz/">Table Relationship Diagrams with Graphviz</a><script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">digraph {
+    node [shape=box]
+    A -> {B, C, D}
+    node [shape=""]  //恢复默认形状
+    {E, F} -> {M, N}
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script><textarea id="graphviz-1-code" style="display: none">digraph {
+    A -> A1 
+    A -> A2
+    A -> A3
+
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-1-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-1").append(element)  });</script></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/GraphViz/" rel="tag"># GraphViz</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/11/24/Hexo-User-Manual/" rel="prev" title="Hexo User Manual">
+      <i class="fa fa-chevron-left"></i> Hexo User Manual
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-text">学习资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D"><span class="nav-text">常用属性介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%EF%BC%88node%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">节点（node）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E7%BA%BF%EF%BC%88edge%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">连接线（edge）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%83%E5%B1%80%E5%B1%9E%E6%80%A7"><span class="nav-text">布局属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEnode%E5%92%8Cedge%E7%9A%84%E9%BB%98%E8%AE%A4%E5%B1%9E%E6%80%A7"><span class="nav-text">设置node和edge的默认属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%82%B9%E8%BF%9E%E7%BA%BF"><span class="nav-text">多点连线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%85%83%E7%B4%A0%E6%B0%B4%E5%B9%B3%E5%AF%B9%E9%BD%90"><span class="nav-text">控制元素水平对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E8%A1%A8%E6%A0%BC%E5%85%83%E7%B4%A0%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%85%B3%E7%B3%BB"><span class="nav-text">建立表格元素的连接关系</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jason</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/pjax/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.dataset.pjax !== undefined) {
+      script.dataset.pjax = '';
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+</body>
+</html>
