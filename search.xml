@@ -1,246 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hexo User Manual</title>
-    <url>/2020/11/24/Hexo-User-Manual/</url>
-    <content><![CDATA[<h2 id="主页配置显示文章摘抄"><a href="#主页配置显示文章摘抄" class="headerlink" title="主页配置显示文章摘抄"></a>主页配置显示文章摘抄</h2><p>默认情况下，在主页中会把整个文章都显示了，导致主页特别乱。可以通过在文章中插入下面代码来截取摘抄：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure>
-<p>也可以通过description字段来单独撰写摘抄。</p>
-<h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h2><p>可以通过代码段标签<code>raw</code>来禁止Markdown引擎渲染标签内的内容。</p>
-<h2 id="支持-plantuml-画图"><a href="#支持-plantuml-画图" class="headerlink" title="支持 plantuml 画图"></a>支持 plantuml 画图</h2><p><a href="https://github.com/miao1007/hexo-filter-plantuml">hexo-filter-plantuml</a></p>
-<h2 id="支持-GraphViz-画图"><a href="#支持-GraphViz-画图" class="headerlink" title="支持 GraphViz 画图"></a>支持 GraphViz 画图</h2><p>使用<a href="https://github.com/Gowa2017/hexo-filter-viz">hexo-filter-viz</a>插件来绘制。</p>
-<p>安装：<code>npm install https://github.com/Gowa2017/hexo-filter-viz.git</code></p>
-<p>支持把<code>dot</code>或<code>viz</code>代码块渲染成graphviz图形。可以通过 {engine=”…”} 来选择不同的渲染引擎。 引擎 circo，dot，neato，osage，或者 twopi 是被支持的。默认下，使用 dot 引擎。</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph demo3 &#123;</span><br><span class="line">    &quot;数据结构三要素&quot; -- &#123;&quot;数据的逻辑结构&quot;, &quot;数据的存储结构&quot;, &quot;数据的运算&quot;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>GraphViz dot</title>
+    <url>/2020/11/26/GraphViz-dot/</url>
+    <content><![CDATA[<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>在线编译工具：<a href="http://viz-js.com/">http://viz-js.com</a><br>VSCode安装插件：<a href="https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz">Graphviz (dot) language support for Visual Studio Code</a><br>命令行：dot，比如，<code>dot -Tpng -ofile.png file.dot</code>可以导出图片。在Ubuntu系统中，通过<code>sudo apt install graphviz</code>安装即可使用。</p>
+<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p><a href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Graphviz (dot) examples</a><br><a href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a></p>
+<h2 id="常用属性介绍"><a href="#常用属性介绍" class="headerlink" title="常用属性介绍"></a>常用属性介绍</h2><h3 id="节点（node）属性"><a href="#节点（node）属性" class="headerlink" title="节点（node）属性"></a>节点（node）属性</h3><p>节点的形状主要有三种：<a href="http://www.graphviz.org/doc/info/shapes.html#polygon">Polygon-based Nodes</a>, <a href="http://www.graphviz.org/doc/info/shapes.html#record">Record-based Nodes</a>, <a href="http://www.graphviz.org/doc/info/shapes.html#epsf">User-defined Nodes</a>。点击链接可看到详细介绍。</p>
+<table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:shape">shape</a></td>
+<td>节点形状，box长方形、circle圆形等，参考<a href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a></td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#k:color">color</a></td>
+<td>边框颜色</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:style">style</a></td>
+<td>节点样式，filled, invisible, diagonals等，参考<a href="http://www.graphviz.org/doc/info/shapes.html#d:style">Styles for Nodes</a></td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:fillcolor">fillcolor</a></td>
+<td>填充颜色, 只有在style=filled时才生效</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:fontcolor">fontcolor</a></td>
+<td>文字颜色</td>
+</tr>
+</tbody></table>
+<h3 id="连接线（edge）属性"><a href="#连接线（edge）属性" class="headerlink" title="连接线（edge）属性"></a>连接线（edge）属性</h3><table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:label">label</a></td>
+<td>文字描述</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:headlabel">headlabel</a></td>
+<td>连接线头部文字描述，比如A -&gt; B, A端是尾部，B端是头部</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:taillabel">taillabel</a></td>
+<td>连接线尾部文字描述</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:headport">headport</a></td>
+<td>连接线头部指向节点的位置，n(north), s(south), w(west), e(east)</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#a:tailport">tailport</a></td>
+<td>连接线尾部指向节点的位置</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#k:color">color</a></td>
+<td>连接线颜色</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:fontcolor">labelfontcolor</a></td>
+<td>文字颜色，还有fontname和</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:arrowhead">arrowhead</a></td>
+<td>箭头样式</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:splines">splines</a></td>
+<td>连接线样式，直线、曲线、折线等，splines=false设置为直线。</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:dir">dir</a></td>
+<td>连接线方向</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:headclip">headclip</a></td>
+<td>连接线头部指向节点边缘或节点中心，默认是边缘</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:tailclip">tailclip</a></td>
+<td>连接线尾部指向节点边缘或节点中心，默认是边缘</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:weight">weight</a></td>
+<td>连接线布局系数，值越大则线越短、越直、越垂直</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:constraint">constraint</a></td>
+<td>为false时，该连接线不用于节点布局的计算</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:decorate">decorate</a></td>
+<td>为true时，连接线标签通过下划线附着到连接线上</td>
+</tr>
+</tbody></table>
+<h3 id="布局属性"><a href="#布局属性" class="headerlink" title="布局属性"></a>布局属性</h3><table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:rankdir">rankdir</a></td>
+<td>图形布局方向，默认TB，表示top -&gt; bottom。值为LR表示left -&gt; right。</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:ranksep">ranksep</a></td>
+<td>最小间隔</td>
+</tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:group">group</a></td>
+<td>对节点有效，同组节点的连接线将保持在一个直线方向。<a href="https://stackoverflow.com/questions/19308847/graphviz-vertical-ordering">示例</a></td>
+</tr>
+</tbody></table>
+<h3 id="设置node和edge的默认属性"><a href="#设置node和edge的默认属性" class="headerlink" title="设置node和edge的默认属性"></a>设置node和edge的默认属性</h3><p>node和edge是两个特殊关键字，用于设置默认属性</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [attr&#x3D;value, ...]</span><br><span class="line">    edge [attr&#x3D;value, ...]</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
+<h2 id="多点连线"><a href="#多点连线" class="headerlink" title="多点连线"></a>多点连线</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [shape&#x3D;box]</span><br><span class="line">    A -&gt; &#123;B, C, D&#125;</span><br><span class="line">    node [shape&#x3D;&quot;&quot;] &#x2F;&#x2F;恢复默认形状</span><br><span class="line">    &#123;E, F&#125; -&gt; &#123;M, N&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <div id="graphviz-0"></div>
 
-<p>参考：<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz">https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz</a></p>
-<p>但是这个版本不知道为啥显示不出来，又尝试了这个版本<a href="https://github.com/Gowa2017/hexo-filter-viz.git">https://github.com/Gowa2017/hexo-filter-viz.git</a>。这个是好使的，但是这个版本的标签必须是graphviz，与vscode的Markdown Preview Enhanced不兼容，因此又自己fork了一个仓库把标签改成了dot。但现在还是有个缺陷，这个版本不支持自定义engine。后续需要完善下。<script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">graph demo3 {
-    "数据结构三要素" -- {"数据的逻辑结构", "数据的存储结构", "数据的运算"}
-}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script></p>
-]]></content>
-      <tags>
-        <tag>Hexo</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Excel常用函数算法</title>
-    <url>/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
-<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Office</category>
-      </categories>
-      <tags>
-        <tag>Excel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ANR分析</title>
-    <url>/2018/09/05/android/ANR%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
-<li><a href="https://developer.android.com/topic/performance/vitals/anr">ANRs (Google)</a></li>
-<li><a href="http://zenandroid.io/deadlocks-and-anrs/">Deadlocks and ANRs</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android调试</tag>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>addr2line死机问题定位</title>
-    <url>/2018/06/22/android/addr2line%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/</url>
-    <content><![CDATA[<blockquote>
-<p>死机问题在程序开发过程中是经常遇到的问题，本文介绍通过addr2line工具解析堆栈来定位死机问题</p>
-</blockquote>
-<h1 id="使用addr2line定位死机问题"><a href="#使用addr2line定位死机问题" class="headerlink" title="使用addr2line定位死机问题"></a>使用addr2line定位死机问题</h1><p>在某个C应用程序挂掉后，会生成堆栈信息，如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">F&#x2F;libc    (21866): Fatal signal 11 (SIGSEGV) at 0x00000000 (code&#x3D;1)</span><br><span class="line">W&#x2F;        (21866): [SkCanvas* DrawSurface::lockCanvas(const android::Rect&amp;)]-----[76]</span><br><span class="line">I&#x2F;DEBUG   (  944): *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***</span><br><span class="line">I&#x2F;DEBUG   (  944): Build fingerprint: &#39;full_godbox&#x2F;godbox:4.0.3&#x2F;8841C&#x2F;84125002:eng&#x2F; test-keys&#39;</span><br><span class="line">I&#x2F;DEBUG   (  944): pid: 21866, tid: 21866  &gt;&gt;&gt; demo_cmd &lt;&lt;&lt;</span><br><span class="line">I&#x2F;DEBUG   (  944): signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 00000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  r0 00000003  r1 00000000  r2 000010b0  r3 0000001f</span><br><span class="line">I&#x2F;DEBUG   (  944):  r4 41334124  r5 00000000  r6 beae2f94  r7 00000046</span><br><span class="line">I&#x2F;DEBUG   (  944):  r8 beae2f08  r9 00000010  10 00000bb8  fp beae3024</span><br><span class="line">I&#x2F;DEBUG   (  944):  ip 400c6108  sp beae2f00  lr 41331d13  pc 41331d42  cpsr 00000030</span><br><span class="line">I&#x2F;DEBUG   (  944):  d0  0000000000000000  d1  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d2  0000000000000000  d3  c1859800408ca000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d4  4125f000c1981600  d5  43ff000041200000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d6  0000000000000000  d7  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d8  0000000000000000  d9  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d10 0000000000000000  d11 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d12 0000000000000000  d13 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d14 0000000000000000  d15 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  scr 60000010</span><br><span class="line">I&#x2F;DEBUG   (  944):</span><br><span class="line">I&#x2F;DEBUG   (  944):          #00  pc 00002d42  &#x2F;system&#x2F;lib&#x2F;libtest.so (std_ping)</span><br><span class="line">I&#x2F;DEBUG   (  944):          #01  pc 0000f466  &#x2F;system&#x2F;bin&#x2F;demo_cmd</span><br><span class="line">I&#x2F;DEBUG   (  944):</span><br><span class="line">I&#x2F;DEBUG   (  944): code around pc:</span><br></pre></td></tr></table></figure>
-<p>这种情况下就可以通过<span style='color:blue'>addr2line</span>命令定位出死在了哪一行代码：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">addr2line -e libtest.so 00002d42</span><br><span class="line">addr2line -e demo_cmd 0000f466</span><br></pre></td></tr></table></figure>
+<h2 id="控制元素水平对齐"><a href="#控制元素水平对齐" class="headerlink" title="控制元素水平对齐"></a>控制元素水平对齐</h2><div id="graphviz-1"></div>
+参考：[GraphViz DOT有向图 (六)edge线条控制](https://blog.csdn.net/youwen21/article/details/98397993)
 
-<p>注意：我们机顶盒上的so库或者可执行程序，一般都是被stripped的，是无法使用addr2line命令定位死机位置的。这种情况下，则需要找到对应的not stripped的同名文件。这两个文件必须是同一次编译生成的。<br>&ensp; 可以使用file命令查看strip状态，如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ file system/bin/demo_cmd</span><br><span class="line">system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), stripped</span><br><span class="line">$ file symbols/system/bin/demo_cmd</span><br><span class="line">symbols/system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), not stripped</span><br></pre></td></tr></table></figure>
+<h2 id="建立表格元素的连接关系"><a href="#建立表格元素的连接关系" class="headerlink" title="建立表格元素的连接关系"></a>建立表格元素的连接关系</h2><p>参考：<a href="https://spin.atomicobject.com/2017/11/15/table-rel-diagrams-graphviz/">Table Relationship Diagrams with Graphviz</a><script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">digraph {
+    node [shape=box]
+    A -> {B, C, D}
+    node [shape=""]  //恢复默认形状
+    {E, F} -> {M, N}
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script><textarea id="graphviz-1-code" style="display: none">digraph {
+    A -> A1 
+    A -> A2
+    A -> A3
 
-<p>备注：</p>
-<ul>
-<li>本文介绍的所有命令，都是在Linux主机上执行的命令；</li>
-<li>addr2line解析的文件必须是”<span style='color:red'>not stripped</span>“的文件。如果是android sdk，一般放在out的symbols目录下，比如：out/target/product/xxx/symbols/</li>
-<li>如果是Android机顶盒，应用程序挂掉后在/data/tombstones/目录下面会生成墓碑文件tombstone_*。在这些文件中就会有堆栈信息。</li>
-</ul>
-<h1 id="Android墓碑文件tombstone"><a href="#Android墓碑文件tombstone" class="headerlink" title="Android墓碑文件tombstone"></a>Android墓碑文件tombstone</h1><p>Android logcat打印的日志可以显示堆栈信息，但堆栈信息同时会保存到墓碑文件中。</p>
-<p>当一个动态库（native 程序）开始执行时，系统会注册一些连接到 debuggerd 的 signal handlers，当系统 crash 的时候，会保存一个 tombstone 文件到/data/tombstones目录下（Logcat中也会有相应的信息），文件的确就像墓碑一样记录了死亡了的进程的基本信息（例如进程的进程号，线程号），死亡的地址（在哪个地址上发生了 Crash），死亡时的现场是什么样的（记录了一系列的堆栈调用信息）等等。<br>注意：有些Android设备默认是不会产生墓碑文件的，需要手动创建文件/data/tombstones/tombstone_00</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir /data/tombstones/</span><br><span class="line">touch /data/tombstones/tombstone_00</span><br><span class="line">chmod 777 /data/tombstones/tombstone_00</span><br></pre></td></tr></table></figure>
-<p>系统发生一次段错误后，会把堆栈信息写入tombstone_0x文件，tombstone_0x文件需要从0~9循环使用，需要通过文件更新时间确认最新的一次段错误是哪个墓碑文件。</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://www.cnblogs.com/CoderTian/p/5980426.html">Android Tombstone 分析</a></li>
-</ul>
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-1-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-1").append(element)  });</script></p>
 ]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
       <tags>
-        <tag>Android调试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>代码调试之打印堆栈</title>
-    <url>/2018/06/22/android/%E4%BB%A3%E7%A0%81%E8%B0%83%E8%AF%95%E4%B9%8B%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88/</url>
-    <content><![CDATA[<h2 id="java代码中打印堆栈"><a href="#java代码中打印堆栈" class="headerlink" title="java代码中打印堆栈"></a>java代码中打印堆栈</h2><p>Java代码打印堆栈比较简单， 堆栈信息获取和输出，都可以通过Throwable类的方法实现。目前通用的做法是在java进程出现需要注意的异常时，打印堆栈，然后再决定退出或挽救。通常的方法是使用exception的printStackTrace()方法：  </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也可以只打印堆栈不退出，这样就比较方便分析代码的动态运行情况。Java代码中插入堆栈打印的方法如下  </p>
-<p>推荐   </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line">Log.d(TAG, android.util.Log.getStackTraceString(<span class="keyword">new</span> java.lang.Throwable()));</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android调试</tag>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++成员函数指针</title>
-    <url>/2018/06/24/cpp/C++%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/</url>
-    <content><![CDATA[<p>对于类的普通成员函数和静态成员函数，定义函数指针的方法是不同的，如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func_normal</span><span class="params">()</span> </span>&#123;      <span class="comment">//普通成员函数</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">func_static</span><span class="params">()</span> </span>&#123;    <span class="comment">//静态成员函数（static）</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//g++ -std=c++11 to enable std::function</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="built_in">std</span>::function&lt;<span class="keyword">void</span>()&gt; pf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pf();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* normal function pointer */</span></span><br><span class="line">    <span class="keyword">void</span> (Test::*pfunc_n)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_n = &amp;Test::func_normal;</span><br><span class="line">    Test t;</span><br><span class="line">    (t.*pfunc_n)();</span><br><span class="line">    foo(<span class="built_in">std</span>::bind(&amp;Test::func_normal, &amp;t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* static function pointer */</span></span><br><span class="line">    <span class="keyword">void</span> (*pfunc_s)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_s = &amp;Test::func_static;</span><br><span class="line">    pfunc_s();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果一个非静态成员函数指针作为函数参数，则只能把对象传入函数中，然后通过对象调用函数指针。在C++11中引入了function，其本质也是把类传入了函数。</p>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++ 构造函数和初始化成员列表</title>
-    <url>/2018/06/24/cpp/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%91%98%E5%88%97%E8%A1%A8/</url>
-    <content><![CDATA[<h2 id="类的初始化顺序"><a href="#类的初始化顺序" class="headerlink" title="类的初始化顺序"></a>类的初始化顺序</h2><hr>
-<p>根据ISO/IEC 14882:1998(E) 中12.6.2一节的介绍。</p>
-<blockquote>
-<p>Initialization shall proceed in the following order:</p>
-<ul>
-<li>First, and only for the constructor of the most derived class as described below, virtual base classes shall be initialized in the order they appear on a depth-first left-to-right traversal of the directed acyclic graph of base classes, where “left-to-right” is the order of appearance of the base class names in the derived class base-specifier-list.</li>
-<li>Then, direct base classes shall be initialized in declaration order as they appear in the base-specifier-list (regardless of the order of the mem-initializers).</li>
-<li>Then, nonstatic data members shall be initialized in the order they were declared in the class definition (again regardless of the order of the mem-initializers).</li>
-<li>Finally, the body of the constructor is executed.</li>
-</ul>
-</blockquote>
-<p>上面的引用文字我没有完全看懂。但可以大体解释如下：</p>
-<ul>
-<li>首先，对基类进行初始化；</li>
-<li>然后，初始化非静态数据成员。对于在初始化成员列表中的数据成员，编译器会使用列表中的值对数据成员进行初始化；没有出现在初始化成员列表中的数据成员，编译器会按照默认方式进行初始化（如果是类，就是调用类的默认构造函数）；</li>
-<li>最后，构造函数体会被执行。</li>
-</ul>
-<h2 id="初始化成员列表（member-initializer-list）"><a href="#初始化成员列表（member-initializer-list）" class="headerlink" title="初始化成员列表（member initializer list）"></a>初始化成员列表（member initializer list）</h2><hr>
-<p>执行构造函数时，先执行初始化列表的内容，若初始化里面没有数据，则编译器按照系统默认的方式对成员变量赋值，随后再进行构造函数中花括号内部的指令。</p>
-<ul>
-<li>对于引用型成员变量和const常量型成员变量，则必须通过初始化列表初始化该成员变量。</li>
-<li>如果成员类或者基类没有默认构造函数，则必须通过初始化表初始化该成员变量。</li>
-<li>成员变量初始化顺序有声明顺序决定，而与初始化列表的顺序无关。</li>
-<li>对于参数列表中所列的成员变量，可以不包含所有的成员变量。</li>
-</ul>
-<p>出于效率方面的考虑：对于有默认构造函数的成员类，编译器会在构建父类之前调用成员类的默认构造函数，如果在构造函数中又对该成员类进行赋值，则该成员类的构造函数调用了两次。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><hr>
-<ul>
-<li><a href="http://en.cppreference.com/w/cpp/language/initializer_list">Constructors and member initializer lists</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C/C++ 程序内存分段</title>
-    <url>/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/</url>
-    <content><![CDATA[<!-- ![内存分段示意图](C程序内存分段/11907096-13cc0f17b647d1bc.png) -->
-<img src="/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png" class="">
-
-
-<h2 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h2><p>栈又称堆栈， 是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进后出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
-<h2 id="堆（heap）"><a href="#堆（heap）" class="headerlink" title="堆（heap）"></a>堆（heap）</h2><p>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
-<h2 id="BSS段（bss-segment）"><a href="#BSS段（bss-segment）" class="headerlink" title="BSS段（bss segment）"></a>BSS段（bss segment）</h2><p>BSS（Block Started by Symbol）属于静态内存分配，通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。特点是可读写。</p>
-<p>BSS段在磁盘上不是真的占用变量大小的空间，它仅仅记录了变量所需要的大小（占位符），也就是说，在该段中记录了所有未初始化全局变量与局部静态变量的大小总和，至于每个变量的大小则存储在符号表的size属性中。当可执行文件加载运行前，会为BSS段中的变量分配足够的空间并全部自动清零（因此，才有未初始化的全局变量的值为0的说法）。</p>
-<p>BSS段主要是为了节省可执行文件在磁盘上所占的空间，对未初始化的大型数组的节省效率比较明显。</p>
-<p>默认情况下，编译器会把初始化值为0的变量（比如static int a = 0）放在BSS段。但可以通过“#pragma explicit_zero_data on”把初始值为零的变量放到data段，而不是bss段。</p>
-<h2 id="数据段（data-segment）"><a href="#数据段（data-segment）" class="headerlink" title="数据段（data segment）"></a>数据段（data segment）</h2><p>通常是指用来存放程序中已初始化的全局变量的一块内存区域，会占用磁盘文件空间。数据段属于静态内存分配。</p>
-<h2 id="只读数据段（read-only-data-segment）"><a href="#只读数据段（read-only-data-segment）" class="headerlink" title="只读数据段（read only data segment）"></a>只读数据段（read only data segment）</h2><p>rodata用于存储使用const修饰的变量，或者只读类型的字符串等。</p>
-<h2 id="代码段（code-segment-text-segment）"><a href="#代码段（code-segment-text-segment）" class="headerlink" title="代码段（code segment/text segment）"></a>代码段（code segment/text segment）</h2><p>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读, 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等。</p>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
-<li><a href="https://blog.csdn.net/virtual_func/article/details/48529249">关于BSS段的大小</a></li>
-<li><a href="https://blog.csdn.net/jxhui23/article/details/8064766">数据段、代码段、堆栈段、BSS段的区别</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>gcc编译过程</title>
-    <url>/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<!-- ![gcc编译过程](/images/11907096-16ea161c42fba6a4.png) -->
-<img src="/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/11907096-16ea161c42fba6a4.png" class="">
-
-<h2 id="示例如下："><a href="#示例如下：" class="headerlink" title="示例如下："></a>示例如下：</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i</span><br><span class="line">gcc -S hello.i -o hello.s</span><br><span class="line">gcc -c hello.s -o hello.o</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>编程语言参考网站</title>
-    <url>/2018/06/24/cpp/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99/</url>
-    <content><![CDATA[<h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><hr>
-<ul>
-<li><a href="http://www.cplusplus.com/reference/">Standard C++ Library reference</a></li>
-<li><a href="https://zh.cppreference.com/">C++ 参考手册</a></li>
-<li><a href="https://en.wikibooks.org/wiki/C%2B%2B_Programming/All_Chapters">C++ Programming - Wikibooks</a></li>
-<li><a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">C++ Core Guidelines</a> by Bjarne Stroustrup &amp; Herb Sutter</li>
-<li><a href="http://www.stroustrup.com/bs_faq2.html">Bjarne Stroustrup’s C++ Style and Technique FAQ</a></li>
-<li><a href="https://www.boost.org/">Boost: C++ libraries</a></li>
-<li><a href="https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list">The Definitive C++ Book Guide and List</a></li>
-</ul>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><hr>
-<ul>
-<li><a href="https://docs.python.org/3/library/index.html#the-python-standard-library" title="Permalink to this headline">The Python Standard Library</a></li>
-<li><a href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a></li>
-<li><a href="http://www.runoob.com/python3/python3-tutorial.html">Python 3 教程 - 菜鸟教程</a></li>
-<li><a href="http://www.runoob.com/python/python-tutorial.html">Python 2 教程 - 菜鸟教程</a></li>
-</ul>
-<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><hr>
-<ul>
-<li><a href="https://developer.android.google.cn/guide?hl=zh_cn">开发者指南</a></li>
-<li><a href="https://developer.android.google.cn/reference/">Android API reference</a></li>
-<li><a href="https://developer.android.com/guide/platform/">Android Platform Architecture</a></li>
-<li><a href="https://developer.android.google.cn/reference/android/media/MediaCodec">MediaCodec</a></li>
-<li><a href="https://developer.android.google.cn/training/articles/perf-jni">JNI tips</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>C++</tag>
-        <tag>Python</tag>
+        <tag>GraphViz</tag>
       </tags>
   </entry>
   <entry>
@@ -404,6 +308,236 @@ void main(int argc, char* argv[]) { <br>
       </categories>
       <tags>
         <tag>Markdown</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hexo User Manual</title>
+    <url>/2020/11/24/Hexo-User-Manual/</url>
+    <content><![CDATA[<h2 id="主页配置显示文章摘抄"><a href="#主页配置显示文章摘抄" class="headerlink" title="主页配置显示文章摘抄"></a>主页配置显示文章摘抄</h2><p>默认情况下，在主页中会把整个文章都显示了，导致主页特别乱。可以通过在文章中插入下面代码来截取摘抄：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure>
+<p>也可以通过description字段来单独撰写摘抄。</p>
+<h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h2><p>可以通过代码段标签<code>raw</code>来禁止Markdown引擎渲染标签内的内容。</p>
+<h2 id="支持-plantuml-画图"><a href="#支持-plantuml-画图" class="headerlink" title="支持 plantuml 画图"></a>支持 plantuml 画图</h2><p><a href="https://github.com/miao1007/hexo-filter-plantuml">hexo-filter-plantuml</a></p>
+<h2 id="支持-GraphViz-画图"><a href="#支持-GraphViz-画图" class="headerlink" title="支持 GraphViz 画图"></a>支持 GraphViz 画图</h2><p>使用<a href="https://github.com/Gowa2017/hexo-filter-viz">hexo-filter-viz</a>插件来绘制。</p>
+<p>安装：<code>npm install https://github.com/Gowa2017/hexo-filter-viz.git</code></p>
+<p>支持把<code>dot</code>或<code>viz</code>代码块渲染成graphviz图形。可以通过 {engine=”…”} 来选择不同的渲染引擎。 引擎 circo，dot，neato，osage，或者 twopi 是被支持的。默认下，使用 dot 引擎。</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">graph demo3 &#123;</span><br><span class="line">    &quot;数据结构三要素&quot; -- &#123;&quot;数据的逻辑结构&quot;, &quot;数据的存储结构&quot;, &quot;数据的运算&quot;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<div id="graphviz-0"></div>
+
+<p>参考：<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz">https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz</a></p>
+<p>但是这个版本不知道为啥显示不出来，又尝试了这个版本<a href="https://github.com/Gowa2017/hexo-filter-viz.git">https://github.com/Gowa2017/hexo-filter-viz.git</a>。这个是好使的，但是这个版本的标签必须是graphviz，与vscode的Markdown Preview Enhanced不兼容，因此又自己fork了一个仓库把标签改成了dot。但现在还是有个缺陷，这个版本不支持自定义engine。后续需要完善下。<script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">graph demo3 {
+    "数据结构三要素" -- {"数据的逻辑结构", "数据的存储结构", "数据的运算"}
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script></p>
+]]></content>
+      <tags>
+        <tag>Hexo</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Excel常用函数算法</title>
+    <url>/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
+<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Office</category>
+      </categories>
+      <tags>
+        <tag>Excel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>APK 反编译</title>
+    <url>/2019/05/10/android/APK%E5%8F%8D%E7%BC%96%E8%AF%91/</url>
+    <content><![CDATA[<h1 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h1><ul>
+<li><a href="https://ibotpeaches.github.io/Apktool/">apktool</a></li>
+<li><a href="https://github.com/pxb1988/dex2jar">dex2jar</a></li>
+<li><a href="http://java-decompiler.github.io/">JD-GUI</a></li>
+</ul>
+<h1 id="提取APK中的资源文件"><a href="#提取APK中的资源文件" class="headerlink" title="提取APK中的资源文件"></a>提取APK中的资源文件</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -jar apktool_2.1.0.jar decode app.apk</span><br></pre></td></tr></table></figure>
+
+<h1 id="dex转换为jar"><a href="#dex转换为jar" class="headerlink" title="dex转换为jar"></a>dex转换为jar</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">d2j-dex2jar.sh -f ~&#x2F;path&#x2F;to&#x2F;apk_to_decompile.apk</span><br></pre></td></tr></table></figure>
+<p>生成jar包后，需要使用<a href="http://java-decompiler.github.io/">JD-GUI</a>打开查看</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000004703783">apk包的破解与反编译</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android调试</tag>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ANR分析</title>
+    <url>/2018/09/05/android/ANR%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a href="https://developer.android.com/topic/performance/vitals/anr">ANRs (Google)</a></li>
+<li><a href="http://zenandroid.io/deadlocks-and-anrs/">Deadlocks and ANRs</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android调试</tag>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android Java虚拟机创建过程</title>
+    <url>/2020/10/30/android/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<p>本文基于Android8.0源码</p>
+<p>Android8.0使用的java虚拟机为ART，在大名鼎鼎的zygote进程中启动java虚拟机。<br>首先看一下zygote的main函数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//app_main.cpp</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* <span class="keyword">const</span> argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//AppRuntime继承自AndroidRuntime, 构造函数中没有什么有用信息，可以不关注</span></span><br><span class="line">    <span class="function">AppRuntime <span class="title">runtime</span><span class="params">(argv[<span class="number">0</span>], computeArgBlockSize(argc, argv))</span></span>;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> (zygote) &#123;</span><br><span class="line">        <span class="comment">//调用到AndroidRuntime.start函数启动zygote进程的虚拟机</span></span><br><span class="line">        <span class="comment">//传入的第一个参数是java类ZygoteInit</span></span><br><span class="line">        runtime.start(<span class="string">&quot;com.android.internal.os.ZygoteInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className) &#123;</span><br><span class="line">        runtime.start(<span class="string">&quot;com.android.internal.os.RuntimeInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Error: no class name or --zygote supplied.\n&quot;</span>);</span><br><span class="line">        app_usage();</span><br><span class="line">        LOG_ALWAYS_FATAL(<span class="string">&quot;app_process: no class name or --zygote supplied.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>runtime.start会调用父类的AndroidRuntime::start，看一下实现</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AndroidRuntime.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AndroidRuntime::start</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* className, <span class="keyword">const</span> Vector&lt;String8&gt;&amp; options, <span class="keyword">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">/* start the virtual machine */</span></span><br><span class="line">    JniInvocation jni_invocation;</span><br><span class="line">    jni_invocation.Init(<span class="literal">NULL</span>);  <span class="comment">// 1. 加载虚拟机动态库，并加载库函数符号</span></span><br><span class="line">    JNIEnv* env;</span><br><span class="line">    <span class="keyword">if</span> (startVm(&amp;mJavaVM, &amp;env, zygote) != <span class="number">0</span>) &#123; <span class="comment">// 2. 启动虚拟机</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    onVmCreated(env);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Register android functions.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (startReg(env) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;Unable to register all android natives\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (startClass == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;JavaVM unable to locate class &#x27;%s&#x27;\n&quot;</span>, slashClassName);</span><br><span class="line">        <span class="comment">/* keep going */</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//调用com.android.internal.os.ZygoteInit的main函数，从此便进入了Java的世界</span></span><br><span class="line">        jmethodID startMeth = env-&gt;GetStaticMethodID(startClass, <span class="string">&quot;main&quot;</span>,</span><br><span class="line">            <span class="string">&quot;([Ljava/lang/String;)V&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (startMeth == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            ALOGE(<span class="string">&quot;JavaVM unable to find main() in &#x27;%s&#x27;\n&quot;</span>, className);</span><br><span class="line">            <span class="comment">/* keep going */</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            env-&gt;CallStaticVoidMethod(startClass, startMeth, strArray);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>加载虚拟机动态库，并加载库函数符号</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//JniInvocation.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">JniInvocation::Init</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* library)</span> </span>&#123;</span><br><span class="line">  ......</span><br><span class="line">  library = GetLibrary(library, buffer); <span class="comment">//返回“libart.so” art虚拟机库</span></span><br><span class="line">  ......</span><br><span class="line">  handle_ = dlopen(library, kDlopenFlags);  <span class="comment">//动态加载虚拟机so库</span></span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//下面的三个if语句都是通过dlsym来获取虚拟机so库中的函数符号</span></span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_GetDefaultJavaVMInitArgs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetDefaultJavaVMInitArgs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//无比重要的函数，获取虚拟机构造函数的函数符号，创建虚拟机全靠JNI_CreateJavaVM</span></span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_CreateJavaVM_),</span><br><span class="line">                  <span class="string">&quot;JNI_CreateJavaVM&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_GetCreatedJavaVMs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetCreatedJavaVMs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">jint <span class="title">JniInvocation::JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="keyword">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> JNI_CreateJavaVM_(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//该函数就是最终创建虚拟机的函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function">jint <span class="title">JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="keyword">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> JniInvocation::GetJniInvocation().JNI_CreateJavaVM(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>启动虚拟机</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Start the Dalvik Virtual Machine.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">AndroidRuntime::startVm</span><span class="params">(JavaVM** pJavaVM, JNIEnv** pEnv, <span class="keyword">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...... <span class="comment">//组装虚拟机启动参数</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Initialize the VM.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * The JavaVM* is essentially per-process, and the JNIEnv* is per-thread.</span></span><br><span class="line"><span class="comment">     * If this call succeeds, the VM is ready, and we can start issuing</span></span><br><span class="line"><span class="comment">     * JNI calls.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (JNI_CreateJavaVM(pJavaVM, pEnv, &amp;initArgs) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;JNI_CreateJavaVM failed\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++成员函数指针</title>
+    <url>/2018/06/24/cpp/C++%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/</url>
+    <content><![CDATA[<p>对于类的普通成员函数和静态成员函数，定义函数指针的方法是不同的，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func_normal</span><span class="params">()</span> </span>&#123;      <span class="comment">//普通成员函数</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">func_static</span><span class="params">()</span> </span>&#123;    <span class="comment">//静态成员函数（static）</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//g++ -std=c++11 to enable std::function</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="built_in">std</span>::function&lt;<span class="keyword">void</span>()&gt; pf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pf();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* normal function pointer */</span></span><br><span class="line">    <span class="keyword">void</span> (Test::*pfunc_n)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_n = &amp;Test::func_normal;</span><br><span class="line">    Test t;</span><br><span class="line">    (t.*pfunc_n)();</span><br><span class="line">    foo(<span class="built_in">std</span>::bind(&amp;Test::func_normal, &amp;t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* static function pointer */</span></span><br><span class="line">    <span class="keyword">void</span> (*pfunc_s)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_s = &amp;Test::func_static;</span><br><span class="line">    pfunc_s();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果一个非静态成员函数指针作为函数参数，则只能把对象传入函数中，然后通过对象调用函数指针。在C++11中引入了function，其本质也是把类传入了函数。</p>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>addr2line死机问题定位</title>
+    <url>/2018/06/22/android/addr2line%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/</url>
+    <content><![CDATA[<blockquote>
+<p>死机问题在程序开发过程中是经常遇到的问题，本文介绍通过addr2line工具解析堆栈来定位死机问题</p>
+</blockquote>
+<h1 id="使用addr2line定位死机问题"><a href="#使用addr2line定位死机问题" class="headerlink" title="使用addr2line定位死机问题"></a>使用addr2line定位死机问题</h1><p>在某个C应用程序挂掉后，会生成堆栈信息，如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">F&#x2F;libc    (21866): Fatal signal 11 (SIGSEGV) at 0x00000000 (code&#x3D;1)</span><br><span class="line">W&#x2F;        (21866): [SkCanvas* DrawSurface::lockCanvas(const android::Rect&amp;)]-----[76]</span><br><span class="line">I&#x2F;DEBUG   (  944): *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***</span><br><span class="line">I&#x2F;DEBUG   (  944): Build fingerprint: &#39;full_godbox&#x2F;godbox:4.0.3&#x2F;8841C&#x2F;84125002:eng&#x2F; test-keys&#39;</span><br><span class="line">I&#x2F;DEBUG   (  944): pid: 21866, tid: 21866  &gt;&gt;&gt; demo_cmd &lt;&lt;&lt;</span><br><span class="line">I&#x2F;DEBUG   (  944): signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 00000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  r0 00000003  r1 00000000  r2 000010b0  r3 0000001f</span><br><span class="line">I&#x2F;DEBUG   (  944):  r4 41334124  r5 00000000  r6 beae2f94  r7 00000046</span><br><span class="line">I&#x2F;DEBUG   (  944):  r8 beae2f08  r9 00000010  10 00000bb8  fp beae3024</span><br><span class="line">I&#x2F;DEBUG   (  944):  ip 400c6108  sp beae2f00  lr 41331d13  pc 41331d42  cpsr 00000030</span><br><span class="line">I&#x2F;DEBUG   (  944):  d0  0000000000000000  d1  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d2  0000000000000000  d3  c1859800408ca000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d4  4125f000c1981600  d5  43ff000041200000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d6  0000000000000000  d7  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d8  0000000000000000  d9  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d10 0000000000000000  d11 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d12 0000000000000000  d13 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d14 0000000000000000  d15 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  scr 60000010</span><br><span class="line">I&#x2F;DEBUG   (  944):</span><br><span class="line">I&#x2F;DEBUG   (  944):          #00  pc 00002d42  &#x2F;system&#x2F;lib&#x2F;libtest.so (std_ping)</span><br><span class="line">I&#x2F;DEBUG   (  944):          #01  pc 0000f466  &#x2F;system&#x2F;bin&#x2F;demo_cmd</span><br><span class="line">I&#x2F;DEBUG   (  944):</span><br><span class="line">I&#x2F;DEBUG   (  944): code around pc:</span><br></pre></td></tr></table></figure>
+<p>这种情况下就可以通过<span style='color:blue'>addr2line</span>命令定位出死在了哪一行代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">addr2line -e libtest.so 00002d42</span><br><span class="line">addr2line -e demo_cmd 0000f466</span><br></pre></td></tr></table></figure>
+
+<p>注意：我们机顶盒上的so库或者可执行程序，一般都是被stripped的，是无法使用addr2line命令定位死机位置的。这种情况下，则需要找到对应的not stripped的同名文件。这两个文件必须是同一次编译生成的。<br>&ensp; 可以使用file命令查看strip状态，如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ file system/bin/demo_cmd</span><br><span class="line">system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), stripped</span><br><span class="line">$ file symbols/system/bin/demo_cmd</span><br><span class="line">symbols/system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), not stripped</span><br></pre></td></tr></table></figure>
+
+<p>备注：</p>
+<ul>
+<li>本文介绍的所有命令，都是在Linux主机上执行的命令；</li>
+<li>addr2line解析的文件必须是”<span style='color:red'>not stripped</span>“的文件。如果是android sdk，一般放在out的symbols目录下，比如：out/target/product/xxx/symbols/</li>
+<li>如果是Android机顶盒，应用程序挂掉后在/data/tombstones/目录下面会生成墓碑文件tombstone_*。在这些文件中就会有堆栈信息。</li>
+</ul>
+<h1 id="Android墓碑文件tombstone"><a href="#Android墓碑文件tombstone" class="headerlink" title="Android墓碑文件tombstone"></a>Android墓碑文件tombstone</h1><p>Android logcat打印的日志可以显示堆栈信息，但堆栈信息同时会保存到墓碑文件中。</p>
+<p>当一个动态库（native 程序）开始执行时，系统会注册一些连接到 debuggerd 的 signal handlers，当系统 crash 的时候，会保存一个 tombstone 文件到/data/tombstones目录下（Logcat中也会有相应的信息），文件的确就像墓碑一样记录了死亡了的进程的基本信息（例如进程的进程号，线程号），死亡的地址（在哪个地址上发生了 Crash），死亡时的现场是什么样的（记录了一系列的堆栈调用信息）等等。<br>注意：有些Android设备默认是不会产生墓碑文件的，需要手动创建文件/data/tombstones/tombstone_00</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir /data/tombstones/</span><br><span class="line">touch /data/tombstones/tombstone_00</span><br><span class="line">chmod 777 /data/tombstones/tombstone_00</span><br></pre></td></tr></table></figure>
+<p>系统发生一次段错误后，会把堆栈信息写入tombstone_0x文件，tombstone_0x文件需要从0~9循环使用，需要通过文件更新时间确认最新的一次段错误是哪个墓碑文件。</p>
+<p>参考文章：</p>
+<ul>
+<li><a href="http://www.cnblogs.com/CoderTian/p/5980426.html">Android Tombstone 分析</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android调试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>代码调试之打印堆栈</title>
+    <url>/2018/06/22/android/%E4%BB%A3%E7%A0%81%E8%B0%83%E8%AF%95%E4%B9%8B%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88/</url>
+    <content><![CDATA[<h2 id="java代码中打印堆栈"><a href="#java代码中打印堆栈" class="headerlink" title="java代码中打印堆栈"></a>java代码中打印堆栈</h2><p>Java代码打印堆栈比较简单， 堆栈信息获取和输出，都可以通过Throwable类的方法实现。目前通用的做法是在java进程出现需要注意的异常时，打印堆栈，然后再决定退出或挽救。通常的方法是使用exception的printStackTrace()方法：  </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以只打印堆栈不退出，这样就比较方便分析代码的动态运行情况。Java代码中插入堆栈打印的方法如下  </p>
+<p>推荐   </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line">Log.d(TAG, android.util.Log.getStackTraceString(<span class="keyword">new</span> java.lang.Throwable()));</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android调试</tag>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gcc编译过程</title>
+    <url>/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<!-- ![gcc编译过程](/images/11907096-16ea161c42fba6a4.png) -->
+<img src="/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/11907096-16ea161c42fba6a4.png" class="">
+
+<h2 id="示例如下："><a href="#示例如下：" class="headerlink" title="示例如下："></a>示例如下：</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i</span><br><span class="line">gcc -S hello.i -o hello.s</span><br><span class="line">gcc -c hello.s -o hello.o</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Shell判断文件是否存在</title>
+    <url>/2018/06/24/shell/Shell%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/</url>
+    <content><![CDATA[<p>Conditional Logic on Files</p>
+<ul>
+<li>‘-a’ file exists.</li>
+<li>‘-b’ file exists and is a block special file.</li>
+<li>‘-c’ file exists and is a character special file.</li>
+<li>‘-d’ file exists and is a directory.</li>
+<li>‘-e’ file exists (just the same as -a).</li>
+<li>‘-f’ file exists and is a regular file.</li>
+<li>‘-g’ file exists and has its setgid(2) bit set.</li>
+<li>‘-G’ file exists and has the same group ID as this process.</li>
+<li>‘-k’ file exists and has its sticky bit set.</li>
+<li>‘-L’ file exists and is a symbolic link.</li>
+<li>‘-n’ string length is not zero.</li>
+<li>‘-o’ Named option is set on.</li>
+<li>‘-O’ file exists and is owned by the user ID of this process.</li>
+<li>‘-p’ file exists and is a first in, first out (FIFO) special file or named pipe.</li>
+<li>‘-r’ file exists and is readable by the current process.</li>
+<li>‘-s’ file exists and has a size greater than zero.</li>
+<li>‘-S’ file exists and is a socket.</li>
+<li>‘-t’ file descriptor number fildes is open and associated with a terminal device.</li>
+<li>‘-u’ file exists and has its setuid(2) bit set.</li>
+<li>‘-w’ file exists and is writable by the current process.</li>
+<li>‘-x’ file exists and is executable by the current process.</li>
+<li>‘-z’ string length is zero.</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if [ -f $&#123;mypath&#125; ];then</span><br><span class="line">    echo &quot;file exist&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ &quot;$&#123;mypath&#125;&quot; !&#x3D; &quot;&quot; ] &amp;&amp; [ -f $&#123;mypath&#125; ];then</span><br><span class="line">    echo &quot;mypath is not empty and file exist&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<p>参考网站：</p>
+<ul>
+<li><a href="http://codewiki.wikidot.com/shell-script:if-else">If / Else Statements (Shell Scripting)</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
       </tags>
   </entry>
   <entry>
@@ -716,62 +850,17 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>Shell判断文件是否存在</title>
-    <url>/2018/06/24/shell/Shell%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/</url>
-    <content><![CDATA[<p>Conditional Logic on Files</p>
-<ul>
-<li>‘-a’ file exists.</li>
-<li>‘-b’ file exists and is a block special file.</li>
-<li>‘-c’ file exists and is a character special file.</li>
-<li>‘-d’ file exists and is a directory.</li>
-<li>‘-e’ file exists (just the same as -a).</li>
-<li>‘-f’ file exists and is a regular file.</li>
-<li>‘-g’ file exists and has its setgid(2) bit set.</li>
-<li>‘-G’ file exists and has the same group ID as this process.</li>
-<li>‘-k’ file exists and has its sticky bit set.</li>
-<li>‘-L’ file exists and is a symbolic link.</li>
-<li>‘-n’ string length is not zero.</li>
-<li>‘-o’ Named option is set on.</li>
-<li>‘-O’ file exists and is owned by the user ID of this process.</li>
-<li>‘-p’ file exists and is a first in, first out (FIFO) special file or named pipe.</li>
-<li>‘-r’ file exists and is readable by the current process.</li>
-<li>‘-s’ file exists and has a size greater than zero.</li>
-<li>‘-S’ file exists and is a socket.</li>
-<li>‘-t’ file descriptor number fildes is open and associated with a terminal device.</li>
-<li>‘-u’ file exists and has its setuid(2) bit set.</li>
-<li>‘-w’ file exists and is writable by the current process.</li>
-<li>‘-x’ file exists and is executable by the current process.</li>
-<li>‘-z’ string length is zero.</li>
-</ul>
-<p>示例：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">if [ -f $&#123;mypath&#125; ];then</span><br><span class="line">    echo &quot;file exist&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ &quot;$&#123;mypath&#125;&quot; !&#x3D; &quot;&quot; ] &amp;&amp; [ -f $&#123;mypath&#125; ];then</span><br><span class="line">    echo &quot;mypath is not empty and file exist&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+    <title>sed命令使用说明</title>
+    <url>/2018/06/24/shell/sed%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
+    <content><![CDATA[<h2 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h2><h3 id="普通字符替换"><a href="#普通字符替换" class="headerlink" title="普通字符替换"></a>普通字符替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">param_name=ro.build.id</span><br><span class="line">sed -i &quot;s/$&#123;param_name&#125;=.*/$&#123;param_name&#125;=new_value/g&quot; build.prop</span><br></pre></td></tr></table></figure>
+<p>本例用于修改build.prop文件中的ro.build.id参数的值</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/oldstring/newstring/g&quot; `grep oldstring -rl yourdir`</span><br></pre></td></tr></table></figure>
+<p>批量替换</p>
+<h3 id="二进制内容替换"><a href="#二进制内容替换" class="headerlink" title="二进制内容替换"></a>二进制内容替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &#x27;s/\x00/\x0a/g&#x27; %s      #本例是把&#x27;\0&#x27;替换为&#x27;\n&#x27;</span><br></pre></td></tr></table></figure>
 
-<p>参考网站：</p>
-<ul>
-<li><a href="http://codewiki.wikidot.com/shell-script:if-else">If / Else Statements (Shell Scripting)</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Shell</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Shell管道</title>
-    <url>/2018/06/24/shell/Shell%E7%AE%A1%E9%81%93/</url>
-    <content><![CDATA[<h2 id="通过管道执行命令，获取各个命令的返回值"><a href="#通过管道执行命令，获取各个命令的返回值" class="headerlink" title="通过管道执行命令，获取各个命令的返回值"></a>通过管道执行命令，获取各个命令的返回值</h2><p>比如执行命令：cmd1 | cmd2 | cmd3  。 如果命令执行完后，通过”$?”获取的是cmd3的返回值。如何获取cmd1和cmd2的返回值呢？</p>
-<p>在bash环境下，命令的返回值保存在”PIPESTATUS”数组中:</p>
-<ul>
-<li>${PIPESTATUS[0]} 是cmd1的返回值；</li>
-<li>${PIPESTATUS[1]} 是cmd2的返回值；</li>
-<li>${PIPESTATUS[2]} 是cmd3的返回值；</li>
-<li>$? 始终等于 ${PIPESTATUS:-1}。</li>
-</ul>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
-<li><a href="http://unix.derkeiler.com/Newsgroups/comp.unix.shell/2003-09/0909.html">comp.unix.shell FAQ - Answers to Frequently Asked Questions</a></li>
-</ul>
+<h2 id="行操作"><a href="#行操作" class="headerlink" title="行操作"></a>行操作</h2><h3 id="删除文件中的某一行"><a href="#删除文件中的某一行" class="headerlink" title="删除文件中的某一行"></a>删除文件中的某一行</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i \&#x27;1d\&#x27; %s   #删除第一行的文字</span><br></pre></td></tr></table></figure>
+
+<h3 id="按行截取文本文件内容"><a href="#按行截取文本文件内容" class="headerlink" title="按行截取文本文件内容"></a>按行截取文本文件内容</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;起始行号,结束行号p&#x27; 原始文件 &gt; 另存为的文件</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Shell</category>
@@ -807,17 +896,19 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>sed命令使用说明</title>
-    <url>/2018/06/24/shell/sed%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
-    <content><![CDATA[<h2 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h2><h3 id="普通字符替换"><a href="#普通字符替换" class="headerlink" title="普通字符替换"></a>普通字符替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">param_name=ro.build.id</span><br><span class="line">sed -i &quot;s/$&#123;param_name&#125;=.*/$&#123;param_name&#125;=new_value/g&quot; build.prop</span><br></pre></td></tr></table></figure>
-<p>本例用于修改build.prop文件中的ro.build.id参数的值</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/oldstring/newstring/g&quot; `grep oldstring -rl yourdir`</span><br></pre></td></tr></table></figure>
-<p>批量替换</p>
-<h3 id="二进制内容替换"><a href="#二进制内容替换" class="headerlink" title="二进制内容替换"></a>二进制内容替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &#x27;s/\x00/\x0a/g&#x27; %s      #本例是把&#x27;\0&#x27;替换为&#x27;\n&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="行操作"><a href="#行操作" class="headerlink" title="行操作"></a>行操作</h2><h3 id="删除文件中的某一行"><a href="#删除文件中的某一行" class="headerlink" title="删除文件中的某一行"></a>删除文件中的某一行</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i \&#x27;1d\&#x27; %s   #删除第一行的文字</span><br></pre></td></tr></table></figure>
-
-<h3 id="按行截取文本文件内容"><a href="#按行截取文本文件内容" class="headerlink" title="按行截取文本文件内容"></a>按行截取文本文件内容</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;起始行号,结束行号p&#x27; 原始文件 &gt; 另存为的文件</span><br></pre></td></tr></table></figure>
+    <title>Shell管道</title>
+    <url>/2018/06/24/shell/Shell%E7%AE%A1%E9%81%93/</url>
+    <content><![CDATA[<h2 id="通过管道执行命令，获取各个命令的返回值"><a href="#通过管道执行命令，获取各个命令的返回值" class="headerlink" title="通过管道执行命令，获取各个命令的返回值"></a>通过管道执行命令，获取各个命令的返回值</h2><p>比如执行命令：cmd1 | cmd2 | cmd3  。 如果命令执行完后，通过”$?”获取的是cmd3的返回值。如何获取cmd1和cmd2的返回值呢？</p>
+<p>在bash环境下，命令的返回值保存在”PIPESTATUS”数组中:</p>
+<ul>
+<li>${PIPESTATUS[0]} 是cmd1的返回值；</li>
+<li>${PIPESTATUS[1]} 是cmd2的返回值；</li>
+<li>${PIPESTATUS[2]} 是cmd3的返回值；</li>
+<li>$? 始终等于 ${PIPESTATUS:-1}。</li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="http://unix.derkeiler.com/Newsgroups/comp.unix.shell/2003-09/0909.html">comp.unix.shell FAQ - Answers to Frequently Asked Questions</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>Shell</category>
@@ -837,6 +928,30 @@ void main(int argc, char* argv[]) { <br>
       </categories>
       <tags>
         <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux清理Cached内存</title>
+    <url>/2018/07/13/memory/Linux%E6%B8%85%E7%90%86cache/</url>
+    <content><![CDATA[<p>Kernels 2.6.16 and newer provide a mechanism to have the kernel drop the page cache and/or inode and dentry caches on command, which can help free up a lot of memory. Now you can throw away that script that allocated a ton of memory just to get rid of the cache…</p>
+<p>To use /proc/sys/vm/drop_caches, just echo a number to it.</p>
+<p>To free pagecache:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>To free dentries and inodes:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>To free pagecache, dentries and inodes:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>This is a non-destructive operation and will only free things that are completely unused. Dirty objects will continue to be in use until written out to disk and are not freeable. If you run “sync” first to flush them out to disk, these drop operations will tend to free more memory.</p>
+<p>参考网站：</p>
+<ul>
+<li><a href="https://linux-mm.org/Drop_Caches">Drop_Caches</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -1005,225 +1120,110 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>Linux清理Cached内存</title>
-    <url>/2018/07/13/memory/Linux%E6%B8%85%E7%90%86cache/</url>
-    <content><![CDATA[<p>Kernels 2.6.16 and newer provide a mechanism to have the kernel drop the page cache and/or inode and dentry caches on command, which can help free up a lot of memory. Now you can throw away that script that allocated a ton of memory just to get rid of the cache…</p>
-<p>To use /proc/sys/vm/drop_caches, just echo a number to it.</p>
-<p>To free pagecache:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>To free dentries and inodes:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>To free pagecache, dentries and inodes:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>This is a non-destructive operation and will only free things that are completely unused. Dirty objects will continue to be in use until written out to disk and are not freeable. If you run “sync” first to flush them out to disk, these drop operations will tend to free more memory.</p>
-<p>参考网站：</p>
+    <title>C++ 构造函数和初始化成员列表</title>
+    <url>/2018/06/24/cpp/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%91%98%E5%88%97%E8%A1%A8/</url>
+    <content><![CDATA[<h2 id="类的初始化顺序"><a href="#类的初始化顺序" class="headerlink" title="类的初始化顺序"></a>类的初始化顺序</h2><hr>
+<p>根据ISO/IEC 14882:1998(E) 中12.6.2一节的介绍。</p>
+<blockquote>
+<p>Initialization shall proceed in the following order:</p>
 <ul>
-<li><a href="https://linux-mm.org/Drop_Caches">Drop_Caches</a></li>
+<li>First, and only for the constructor of the most derived class as described below, virtual base classes shall be initialized in the order they appear on a depth-first left-to-right traversal of the directed acyclic graph of base classes, where “left-to-right” is the order of appearance of the base class names in the derived class base-specifier-list.</li>
+<li>Then, direct base classes shall be initialized in declaration order as they appear in the base-specifier-list (regardless of the order of the mem-initializers).</li>
+<li>Then, nonstatic data members shall be initialized in the order they were declared in the class definition (again regardless of the order of the mem-initializers).</li>
+<li>Finally, the body of the constructor is executed.</li>
+</ul>
+</blockquote>
+<p>上面的引用文字我没有完全看懂。但可以大体解释如下：</p>
+<ul>
+<li>首先，对基类进行初始化；</li>
+<li>然后，初始化非静态数据成员。对于在初始化成员列表中的数据成员，编译器会使用列表中的值对数据成员进行初始化；没有出现在初始化成员列表中的数据成员，编译器会按照默认方式进行初始化（如果是类，就是调用类的默认构造函数）；</li>
+<li>最后，构造函数体会被执行。</li>
+</ul>
+<h2 id="初始化成员列表（member-initializer-list）"><a href="#初始化成员列表（member-initializer-list）" class="headerlink" title="初始化成员列表（member initializer list）"></a>初始化成员列表（member initializer list）</h2><hr>
+<p>执行构造函数时，先执行初始化列表的内容，若初始化里面没有数据，则编译器按照系统默认的方式对成员变量赋值，随后再进行构造函数中花括号内部的指令。</p>
+<ul>
+<li>对于引用型成员变量和const常量型成员变量，则必须通过初始化列表初始化该成员变量。</li>
+<li>如果成员类或者基类没有默认构造函数，则必须通过初始化表初始化该成员变量。</li>
+<li>成员变量初始化顺序有声明顺序决定，而与初始化列表的顺序无关。</li>
+<li>对于参数列表中所列的成员变量，可以不包含所有的成员变量。</li>
+</ul>
+<p>出于效率方面的考虑：对于有默认构造函数的成员类，编译器会在构建父类之前调用成员类的默认构造函数，如果在构造函数中又对该成员类进行赋值，则该成员类的构造函数调用了两次。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><hr>
+<ul>
+<li><a href="http://en.cppreference.com/w/cpp/language/initializer_list">Constructors and member initializer lists</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>Linux</category>
+        <category>C/C++</category>
       </categories>
       <tags>
-        <tag>Linux</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
-    <title>Android Java虚拟机创建过程</title>
-    <url>/2020/10/30/android/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<p>本文基于Android8.0源码</p>
-<p>Android8.0使用的java虚拟机为ART，在大名鼎鼎的zygote进程中启动java虚拟机。<br>首先看一下zygote的main函数：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//app_main.cpp</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* <span class="keyword">const</span> argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//AppRuntime继承自AndroidRuntime, 构造函数中没有什么有用信息，可以不关注</span></span><br><span class="line">    <span class="function">AppRuntime <span class="title">runtime</span><span class="params">(argv[<span class="number">0</span>], computeArgBlockSize(argc, argv))</span></span>;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> (zygote) &#123;</span><br><span class="line">        <span class="comment">//调用到AndroidRuntime.start函数启动zygote进程的虚拟机</span></span><br><span class="line">        <span class="comment">//传入的第一个参数是java类ZygoteInit</span></span><br><span class="line">        runtime.start(<span class="string">&quot;com.android.internal.os.ZygoteInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className) &#123;</span><br><span class="line">        runtime.start(<span class="string">&quot;com.android.internal.os.RuntimeInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Error: no class name or --zygote supplied.\n&quot;</span>);</span><br><span class="line">        app_usage();</span><br><span class="line">        LOG_ALWAYS_FATAL(<span class="string">&quot;app_process: no class name or --zygote supplied.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>C/C++ 程序内存分段</title>
+    <url>/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/</url>
+    <content><![CDATA[<!-- ![内存分段示意图](C程序内存分段/11907096-13cc0f17b647d1bc.png) -->
+<img src="/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png" class="">
 
-<p>runtime.start会调用父类的AndroidRuntime::start，看一下实现</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AndroidRuntime.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AndroidRuntime::start</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* className, <span class="keyword">const</span> Vector&lt;String8&gt;&amp; options, <span class="keyword">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">/* start the virtual machine */</span></span><br><span class="line">    JniInvocation jni_invocation;</span><br><span class="line">    jni_invocation.Init(<span class="literal">NULL</span>);  <span class="comment">// 1. 加载虚拟机动态库，并加载库函数符号</span></span><br><span class="line">    JNIEnv* env;</span><br><span class="line">    <span class="keyword">if</span> (startVm(&amp;mJavaVM, &amp;env, zygote) != <span class="number">0</span>) &#123; <span class="comment">// 2. 启动虚拟机</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    onVmCreated(env);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Register android functions.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (startReg(env) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;Unable to register all android natives\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (startClass == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;JavaVM unable to locate class &#x27;%s&#x27;\n&quot;</span>, slashClassName);</span><br><span class="line">        <span class="comment">/* keep going */</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//调用com.android.internal.os.ZygoteInit的main函数，从此便进入了Java的世界</span></span><br><span class="line">        jmethodID startMeth = env-&gt;GetStaticMethodID(startClass, <span class="string">&quot;main&quot;</span>,</span><br><span class="line">            <span class="string">&quot;([Ljava/lang/String;)V&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (startMeth == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            ALOGE(<span class="string">&quot;JavaVM unable to find main() in &#x27;%s&#x27;\n&quot;</span>, className);</span><br><span class="line">            <span class="comment">/* keep going */</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            env-&gt;CallStaticVoidMethod(startClass, startMeth, strArray);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<ol>
-<li>加载虚拟机动态库，并加载库函数符号</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//JniInvocation.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">JniInvocation::Init</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* library)</span> </span>&#123;</span><br><span class="line">  ......</span><br><span class="line">  library = GetLibrary(library, buffer); <span class="comment">//返回“libart.so” art虚拟机库</span></span><br><span class="line">  ......</span><br><span class="line">  handle_ = dlopen(library, kDlopenFlags);  <span class="comment">//动态加载虚拟机so库</span></span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//下面的三个if语句都是通过dlsym来获取虚拟机so库中的函数符号</span></span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_GetDefaultJavaVMInitArgs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetDefaultJavaVMInitArgs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//无比重要的函数，获取虚拟机构造函数的函数符号，创建虚拟机全靠JNI_CreateJavaVM</span></span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_CreateJavaVM_),</span><br><span class="line">                  <span class="string">&quot;JNI_CreateJavaVM&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_GetCreatedJavaVMs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetCreatedJavaVMs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">jint <span class="title">JniInvocation::JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="keyword">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> JNI_CreateJavaVM_(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//该函数就是最终创建虚拟机的函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function">jint <span class="title">JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="keyword">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> JniInvocation::GetJniInvocation().JNI_CreateJavaVM(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>启动虚拟机</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Start the Dalvik Virtual Machine.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">AndroidRuntime::startVm</span><span class="params">(JavaVM** pJavaVM, JNIEnv** pEnv, <span class="keyword">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...... <span class="comment">//组装虚拟机启动参数</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Initialize the VM.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * The JavaVM* is essentially per-process, and the JNIEnv* is per-thread.</span></span><br><span class="line"><span class="comment">     * If this call succeeds, the VM is ready, and we can start issuing</span></span><br><span class="line"><span class="comment">     * JNI calls.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (JNI_CreateJavaVM(pJavaVM, pEnv, &amp;initArgs) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;JNI_CreateJavaVM failed\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h2><p>栈又称堆栈， 是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进后出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
+<h2 id="堆（heap）"><a href="#堆（heap）" class="headerlink" title="堆（heap）"></a>堆（heap）</h2><p>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
+<h2 id="BSS段（bss-segment）"><a href="#BSS段（bss-segment）" class="headerlink" title="BSS段（bss segment）"></a>BSS段（bss segment）</h2><p>BSS（Block Started by Symbol）属于静态内存分配，通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。特点是可读写。</p>
+<p>BSS段在磁盘上不是真的占用变量大小的空间，它仅仅记录了变量所需要的大小（占位符），也就是说，在该段中记录了所有未初始化全局变量与局部静态变量的大小总和，至于每个变量的大小则存储在符号表的size属性中。当可执行文件加载运行前，会为BSS段中的变量分配足够的空间并全部自动清零（因此，才有未初始化的全局变量的值为0的说法）。</p>
+<p>BSS段主要是为了节省可执行文件在磁盘上所占的空间，对未初始化的大型数组的节省效率比较明显。</p>
+<p>默认情况下，编译器会把初始化值为0的变量（比如static int a = 0）放在BSS段。但可以通过“#pragma explicit_zero_data on”把初始值为零的变量放到data段，而不是bss段。</p>
+<h2 id="数据段（data-segment）"><a href="#数据段（data-segment）" class="headerlink" title="数据段（data segment）"></a>数据段（data segment）</h2><p>通常是指用来存放程序中已初始化的全局变量的一块内存区域，会占用磁盘文件空间。数据段属于静态内存分配。</p>
+<h2 id="只读数据段（read-only-data-segment）"><a href="#只读数据段（read-only-data-segment）" class="headerlink" title="只读数据段（read only data segment）"></a>只读数据段（read only data segment）</h2><p>rodata用于存储使用const修饰的变量，或者只读类型的字符串等。</p>
+<h2 id="代码段（code-segment-text-segment）"><a href="#代码段（code-segment-text-segment）" class="headerlink" title="代码段（code segment/text segment）"></a>代码段（code segment/text segment）</h2><p>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读, 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="https://blog.csdn.net/virtual_func/article/details/48529249">关于BSS段的大小</a></li>
+<li><a href="https://blog.csdn.net/jxhui23/article/details/8064766">数据段、代码段、堆栈段、BSS段的区别</a></li>
+</ul>
 ]]></content>
       <categories>
-        <category>Android</category>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>编程语言参考网站</title>
+    <url>/2018/06/24/cpp/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99/</url>
+    <content><![CDATA[<h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><hr>
+<ul>
+<li><a href="http://www.cplusplus.com/reference/">Standard C++ Library reference</a></li>
+<li><a href="https://zh.cppreference.com/">C++ 参考手册</a></li>
+<li><a href="https://en.wikibooks.org/wiki/C%2B%2B_Programming/All_Chapters">C++ Programming - Wikibooks</a></li>
+<li><a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">C++ Core Guidelines</a> by Bjarne Stroustrup &amp; Herb Sutter</li>
+<li><a href="http://www.stroustrup.com/bs_faq2.html">Bjarne Stroustrup’s C++ Style and Technique FAQ</a></li>
+<li><a href="https://www.boost.org/">Boost: C++ libraries</a></li>
+<li><a href="https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list">The Definitive C++ Book Guide and List</a></li>
+</ul>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><hr>
+<ul>
+<li><a href="https://docs.python.org/3/library/index.html#the-python-standard-library" title="Permalink to this headline">The Python Standard Library</a></li>
+<li><a href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a></li>
+<li><a href="http://www.runoob.com/python3/python3-tutorial.html">Python 3 教程 - 菜鸟教程</a></li>
+<li><a href="http://www.runoob.com/python/python-tutorial.html">Python 2 教程 - 菜鸟教程</a></li>
+</ul>
+<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><hr>
+<ul>
+<li><a href="https://developer.android.google.cn/guide?hl=zh_cn">开发者指南</a></li>
+<li><a href="https://developer.android.google.cn/reference/">Android API reference</a></li>
+<li><a href="https://developer.android.com/guide/platform/">Android Platform Architecture</a></li>
+<li><a href="https://developer.android.google.cn/reference/android/media/MediaCodec">MediaCodec</a></li>
+<li><a href="https://developer.android.google.cn/training/articles/perf-jni">JNI tips</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程</category>
       </categories>
       <tags>
         <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>APK 反编译</title>
-    <url>/2019/05/10/android/APK%E5%8F%8D%E7%BC%96%E8%AF%91/</url>
-    <content><![CDATA[<h1 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h1><ul>
-<li><a href="https://ibotpeaches.github.io/Apktool/">apktool</a></li>
-<li><a href="https://github.com/pxb1988/dex2jar">dex2jar</a></li>
-<li><a href="http://java-decompiler.github.io/">JD-GUI</a></li>
-</ul>
-<h1 id="提取APK中的资源文件"><a href="#提取APK中的资源文件" class="headerlink" title="提取APK中的资源文件"></a>提取APK中的资源文件</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -jar apktool_2.1.0.jar decode app.apk</span><br></pre></td></tr></table></figure>
-
-<h1 id="dex转换为jar"><a href="#dex转换为jar" class="headerlink" title="dex转换为jar"></a>dex转换为jar</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">d2j-dex2jar.sh -f ~&#x2F;path&#x2F;to&#x2F;apk_to_decompile.apk</span><br></pre></td></tr></table></figure>
-<p>生成jar包后，需要使用<a href="http://java-decompiler.github.io/">JD-GUI</a>打开查看</p>
-<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul>
-<li><a href="https://segmentfault.com/a/1190000004703783">apk包的破解与反编译</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android调试</tag>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>GraphViz dot</title>
-    <url>/2020/11/26/GraphViz-dot/</url>
-    <content><![CDATA[<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>在线编译工具：<a href="http://viz-js.com/">http://viz-js.com</a><br>VSCode安装插件：<a href="https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz">Graphviz (dot) language support for Visual Studio Code</a><br>命令行：dot，比如，<code>dot -Tpng -ofile.png file.dot</code>可以导出图片。在Ubuntu系统中，通过<code>sudo apt install graphviz</code>安装即可使用。</p>
-<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p><a href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Graphviz (dot) examples</a><br><a href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a></p>
-<h2 id="常用属性介绍"><a href="#常用属性介绍" class="headerlink" title="常用属性介绍"></a>常用属性介绍</h2><h3 id="节点（node）属性"><a href="#节点（node）属性" class="headerlink" title="节点（node）属性"></a>节点（node）属性</h3><p>节点的形状主要有三种：<a href="http://www.graphviz.org/doc/info/shapes.html#polygon">Polygon-based Nodes</a>, <a href="http://www.graphviz.org/doc/info/shapes.html#record">Record-based Nodes</a>, <a href="http://www.graphviz.org/doc/info/shapes.html#epsf">User-defined Nodes</a>。点击链接可看到详细介绍。</p>
-<table>
-<thead>
-<tr>
-<th>属性名称</th>
-<th>介绍</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:shape">shape</a></td>
-<td>节点形状，box长方形、circle圆形等，参考<a href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a></td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#k:color">color</a></td>
-<td>边框颜色</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:style">style</a></td>
-<td>节点样式，filled, invisible, diagonals等，参考<a href="http://www.graphviz.org/doc/info/shapes.html#d:style">Styles for Nodes</a></td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:fillcolor">fillcolor</a></td>
-<td>填充颜色, 只有在style=filled时才生效</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:fontcolor">fontcolor</a></td>
-<td>文字颜色</td>
-</tr>
-</tbody></table>
-<h3 id="连接线（edge）属性"><a href="#连接线（edge）属性" class="headerlink" title="连接线（edge）属性"></a>连接线（edge）属性</h3><table>
-<thead>
-<tr>
-<th>属性名称</th>
-<th>介绍</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:label">label</a></td>
-<td>文字描述</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:headlabel">headlabel</a></td>
-<td>连接线头部文字描述，比如A -&gt; B, A端是尾部，B端是头部</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:taillabel">taillabel</a></td>
-<td>连接线尾部文字描述</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:headport">headport</a></td>
-<td>连接线头部指向节点的位置，n(north), s(south), w(west), e(east)</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#a:tailport">tailport</a></td>
-<td>连接线尾部指向节点的位置</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#k:color">color</a></td>
-<td>连接线颜色</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:fontcolor">labelfontcolor</a></td>
-<td>文字颜色，还有fontname和</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:arrowhead">arrowhead</a></td>
-<td>箭头样式</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:splines">splines</a></td>
-<td>连接线样式，直线、曲线、折线等，splines=false设置为直线。</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:dir">dir</a></td>
-<td>连接线方向</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:headclip">headclip</a></td>
-<td>连接线头部指向节点边缘或节点中心，默认是边缘</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:tailclip">tailclip</a></td>
-<td>连接线尾部指向节点边缘或节点中心，默认是边缘</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:weight">weight</a></td>
-<td>连接线布局系数，值越大则线越短、越直、越垂直</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:constraint">constraint</a></td>
-<td>为false时，该连接线不用于节点布局的计算</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:decorate">decorate</a></td>
-<td>为true时，连接线标签通过下划线附着到连接线上</td>
-</tr>
-</tbody></table>
-<h3 id="布局属性"><a href="#布局属性" class="headerlink" title="布局属性"></a>布局属性</h3><table>
-<thead>
-<tr>
-<th>属性名称</th>
-<th>介绍</th>
-</tr>
-</thead>
-<tbody><tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:rankdir">rankdir</a></td>
-<td>图形布局方向，默认TB，表示top -&gt; bottom。值为LR表示left -&gt; right。</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:ranksep">ranksep</a></td>
-<td>最小间隔</td>
-</tr>
-<tr>
-<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:group">group</a></td>
-<td>对节点有效，同组节点的连接线将保持在一个直线方向。<a href="https://stackoverflow.com/questions/19308847/graphviz-vertical-ordering">示例</a></td>
-</tr>
-</tbody></table>
-<h3 id="设置node和edge的默认属性"><a href="#设置node和edge的默认属性" class="headerlink" title="设置node和edge的默认属性"></a>设置node和edge的默认属性</h3><p>node和edge是两个特殊关键字，用于设置默认属性</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [attr&#x3D;value, ...]</span><br><span class="line">    edge [attr&#x3D;value, ...]</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="多点连线"><a href="#多点连线" class="headerlink" title="多点连线"></a>多点连线</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [shape&#x3D;box]</span><br><span class="line">    A -&gt; &#123;B, C, D&#125;</span><br><span class="line">    node [shape&#x3D;&quot;&quot;] &#x2F;&#x2F;恢复默认形状</span><br><span class="line">    &#123;E, F&#125; -&gt; &#123;M, N&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<div id="graphviz-0"></div>
-
-<h2 id="控制元素水平对齐"><a href="#控制元素水平对齐" class="headerlink" title="控制元素水平对齐"></a>控制元素水平对齐</h2><div id="graphviz-1"></div>
-参考：[GraphViz DOT有向图 (六)edge线条控制](https://blog.csdn.net/youwen21/article/details/98397993)
-
-<h2 id="建立表格元素的连接关系"><a href="#建立表格元素的连接关系" class="headerlink" title="建立表格元素的连接关系"></a>建立表格元素的连接关系</h2><p>参考：<a href="https://spin.atomicobject.com/2017/11/15/table-rel-diagrams-graphviz/">Table Relationship Diagrams with Graphviz</a><script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">digraph {
-    node [shape=box]
-    A -> {B, C, D}
-    node [shape=""]  //恢复默认形状
-    {E, F} -> {M, N}
-}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script><textarea id="graphviz-1-code" style="display: none">digraph {
-    A -> A1 
-    A -> A2
-    A -> A3
-
-}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-1-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-1").append(element)  });</script></p>
-]]></content>
-      <tags>
-        <tag>GraphViz</tag>
+        <tag>C++</tag>
+        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
