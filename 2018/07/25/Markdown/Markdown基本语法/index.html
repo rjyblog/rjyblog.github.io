@@ -414,12 +414,12 @@ void main(int argc, char* argv[]) { <br>
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/" rel="prev" title="Excel常用函数算法">
-      <i class="fa fa-chevron-left"></i> Excel常用函数算法
+    <a href="/2018/07/25/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/" rel="prev" title="Git 常用命令">
+      <i class="fa fa-chevron-left"></i> Git 常用命令
     </a></div>
       <div class="post-nav-item">
-    <a href="/2018/09/05/android/ANR%E5%88%86%E6%9E%90/" rel="next" title="ANR分析">
-      ANR分析 <i class="fa fa-chevron-right"></i>
+    <a href="/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/" rel="next" title="Excel常用函数算法">
+      Excel常用函数算法 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -557,7 +557,6 @@ void main(int argc, char* argv[]) { <br>
 
   
   <script src="/lib/anime.min.js"></script>
-  <script src="/lib/pjax/pjax.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
   <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
   <script src="/lib/velocity/velocity.min.js"></script>
@@ -572,65 +571,6 @@ void main(int argc, char* argv[]) { <br>
 
 
 <script src="/js/next-boot.js"></script>
-
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '.languages',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[data-pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.dataset.pjax !== undefined) {
-      script.dataset.pjax = '';
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
 
 
 
@@ -655,11 +595,9 @@ window.addEventListener('pjax:success', () => {
 
 
 
-    <div id="pjax">
   
 
   
 
-    </div>
 </body>
 </html>

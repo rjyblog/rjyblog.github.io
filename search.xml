@@ -4,7 +4,7 @@
     <title>GraphViz dot</title>
     <url>/2020/11/26/GraphViz-dot/</url>
     <content><![CDATA[<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>在线编译工具：<a href="http://viz-js.com/">http://viz-js.com</a><br>VSCode安装插件：<a href="https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz">Graphviz (dot) language support for Visual Studio Code</a><br>命令行：dot，比如，<code>dot -Tpng -ofile.png file.dot</code>可以导出图片。在Ubuntu系统中，通过<code>sudo apt install graphviz</code>安装即可使用。</p>
-<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p><a href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Graphviz (dot) examples</a><br><a href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a></p>
+<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p><a href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a><br><a href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Graphviz (dot) examples</a></p>
 <h2 id="常用属性介绍"><a href="#常用属性介绍" class="headerlink" title="常用属性介绍"></a>常用属性介绍</h2><h3 id="节点（node）属性"><a href="#节点（node）属性" class="headerlink" title="节点（node）属性"></a>节点（node）属性</h3><p>节点的形状主要有三种：<a href="http://www.graphviz.org/doc/info/shapes.html#polygon">Polygon-based Nodes</a>, <a href="http://www.graphviz.org/doc/info/shapes.html#record">Record-based Nodes</a>, <a href="http://www.graphviz.org/doc/info/shapes.html#epsf">User-defined Nodes</a>。点击链接可看到详细介绍。</p>
 <table>
 <thead>
@@ -34,7 +34,8 @@
 <td>文字颜色</td>
 </tr>
 </tbody></table>
-<h3 id="连接线（edge）属性"><a href="#连接线（edge）属性" class="headerlink" title="连接线（edge）属性"></a>连接线（edge）属性</h3><table>
+<h3 id="边（edge）属性"><a href="#边（edge）属性" class="headerlink" title="边（edge）属性"></a>边（edge）属性</h3><p>边也可以认为就是节点之间的连接线</p>
+<table>
 <thead>
 <tr>
 <th>属性名称</th>
@@ -102,7 +103,7 @@
 <td>为true时，连接线标签通过下划线附着到连接线上</td>
 </tr>
 </tbody></table>
-<h3 id="布局属性"><a href="#布局属性" class="headerlink" title="布局属性"></a>布局属性</h3><table>
+<h3 id="图（graph）属性"><a href="#图（graph）属性" class="headerlink" title="图（graph）属性"></a>图（graph）属性</h3><table>
 <thead>
 <tr>
 <th>属性名称</th>
@@ -121,11 +122,16 @@
 <td><a href="http://www.graphviz.org/doc/info/attrs.html#d:group">group</a></td>
 <td>对节点有效，同组节点的连接线将保持在一个直线方向。<a href="https://stackoverflow.com/questions/19308847/graphviz-vertical-ordering">示例</a></td>
 </tr>
+<tr>
+<td><a href="http://www.graphviz.org/doc/info/attrs.html#d:compound">compound</a></td>
+<td>如果为ture，则允许clusters集群之间留出边。默认不允许。</td>
+</tr>
 </tbody></table>
 <h3 id="设置node和edge的默认属性"><a href="#设置node和edge的默认属性" class="headerlink" title="设置node和edge的默认属性"></a>设置node和edge的默认属性</h3><p>node和edge是两个特殊关键字，用于设置默认属性</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [attr&#x3D;value, ...]</span><br><span class="line">    edge [attr&#x3D;value, ...]</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="多点连线"><a href="#多点连线" class="headerlink" title="多点连线"></a>多点连线</h2><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [shape&#x3D;box]</span><br><span class="line">    A -&gt; &#123;B, C, D&#125;</span><br><span class="line">    node [shape&#x3D;&quot;&quot;] &#x2F;&#x2F;恢复默认形状</span><br><span class="line">    &#123;E, F&#125; -&gt; &#123;M, N&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <div id="graphviz-0"></div>
 
 <h2 id="控制元素水平对齐"><a href="#控制元素水平对齐" class="headerlink" title="控制元素水平对齐"></a>控制元素水平对齐</h2><div id="graphviz-1"></div>
@@ -134,7 +140,7 @@
 <h2 id="建立表格元素的连接关系"><a href="#建立表格元素的连接关系" class="headerlink" title="建立表格元素的连接关系"></a>建立表格元素的连接关系</h2><p>参考：<a href="https://spin.atomicobject.com/2017/11/15/table-rel-diagrams-graphviz/">Table Relationship Diagrams with Graphviz</a><script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">digraph {
     node [shape=box]
     A -> {B, C, D}
-    node [shape=""]  //恢复默认形状
+    node [shape=""]
     {E, F} -> {M, N}
 }</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script><textarea id="graphviz-1-code" style="display: none">digraph {
     A -> A1 
@@ -145,6 +151,34 @@
 ]]></content>
       <tags>
         <tag>GraphViz</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Excel常用函数算法</title>
+    <url>/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
+<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Office</category>
+      </categories>
+      <tags>
+        <tag>Excel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++成员函数指针</title>
+    <url>/2018/06/24/cpp/C++%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/</url>
+    <content><![CDATA[<p>对于类的普通成员函数和静态成员函数，定义函数指针的方法是不同的，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func_normal</span><span class="params">()</span> </span>&#123;      <span class="comment">//普通成员函数</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">func_static</span><span class="params">()</span> </span>&#123;    <span class="comment">//静态成员函数（static）</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//g++ -std=c++11 to enable std::function</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="built_in">std</span>::function&lt;<span class="keyword">void</span>()&gt; pf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pf();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* normal function pointer */</span></span><br><span class="line">    <span class="keyword">void</span> (Test::*pfunc_n)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_n = &amp;Test::func_normal;</span><br><span class="line">    Test t;</span><br><span class="line">    (t.*pfunc_n)();</span><br><span class="line">    foo(<span class="built_in">std</span>::bind(&amp;Test::func_normal, &amp;t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* static function pointer */</span></span><br><span class="line">    <span class="keyword">void</span> (*pfunc_s)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_s = &amp;Test::func_static;</span><br><span class="line">    pfunc_s();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果一个非静态成员函数指针作为函数参数，则只能把对象传入函数中，然后通过对象调用函数指针。在C++11中引入了function，其本质也是把类传入了函数。</p>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -311,6 +345,75 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
+    <title>C++ 构造函数和初始化成员列表</title>
+    <url>/2018/06/24/cpp/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%91%98%E5%88%97%E8%A1%A8/</url>
+    <content><![CDATA[<h2 id="类的初始化顺序"><a href="#类的初始化顺序" class="headerlink" title="类的初始化顺序"></a>类的初始化顺序</h2><hr>
+<p>根据ISO/IEC 14882:1998(E) 中12.6.2一节的介绍。</p>
+<blockquote>
+<p>Initialization shall proceed in the following order:</p>
+<ul>
+<li>First, and only for the constructor of the most derived class as described below, virtual base classes shall be initialized in the order they appear on a depth-first left-to-right traversal of the directed acyclic graph of base classes, where “left-to-right” is the order of appearance of the base class names in the derived class base-specifier-list.</li>
+<li>Then, direct base classes shall be initialized in declaration order as they appear in the base-specifier-list (regardless of the order of the mem-initializers).</li>
+<li>Then, nonstatic data members shall be initialized in the order they were declared in the class definition (again regardless of the order of the mem-initializers).</li>
+<li>Finally, the body of the constructor is executed.</li>
+</ul>
+</blockquote>
+<p>上面的引用文字我没有完全看懂。但可以大体解释如下：</p>
+<ul>
+<li>首先，对基类进行初始化；</li>
+<li>然后，初始化非静态数据成员。对于在初始化成员列表中的数据成员，编译器会使用列表中的值对数据成员进行初始化；没有出现在初始化成员列表中的数据成员，编译器会按照默认方式进行初始化（如果是类，就是调用类的默认构造函数）；</li>
+<li>最后，构造函数体会被执行。</li>
+</ul>
+<h2 id="初始化成员列表（member-initializer-list）"><a href="#初始化成员列表（member-initializer-list）" class="headerlink" title="初始化成员列表（member initializer list）"></a>初始化成员列表（member initializer list）</h2><hr>
+<p>执行构造函数时，先执行初始化列表的内容，若初始化里面没有数据，则编译器按照系统默认的方式对成员变量赋值，随后再进行构造函数中花括号内部的指令。</p>
+<ul>
+<li>对于引用型成员变量和const常量型成员变量，则必须通过初始化列表初始化该成员变量。</li>
+<li>如果成员类或者基类没有默认构造函数，则必须通过初始化表初始化该成员变量。</li>
+<li>成员变量初始化顺序有声明顺序决定，而与初始化列表的顺序无关。</li>
+<li>对于参数列表中所列的成员变量，可以不包含所有的成员变量。</li>
+</ul>
+<p>出于效率方面的考虑：对于有默认构造函数的成员类，编译器会在构建父类之前调用成员类的默认构造函数，如果在构造函数中又对该成员类进行赋值，则该成员类的构造函数调用了两次。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><hr>
+<ul>
+<li><a href="http://en.cppreference.com/w/cpp/language/initializer_list">Constructors and member initializer lists</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C/C++ 程序内存分段</title>
+    <url>/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/</url>
+    <content><![CDATA[<!-- ![内存分段示意图](C程序内存分段/11907096-13cc0f17b647d1bc.png) -->
+<img src="/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png" class="">
+
+
+<h2 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h2><p>栈又称堆栈， 是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进后出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
+<h2 id="堆（heap）"><a href="#堆（heap）" class="headerlink" title="堆（heap）"></a>堆（heap）</h2><p>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
+<h2 id="BSS段（bss-segment）"><a href="#BSS段（bss-segment）" class="headerlink" title="BSS段（bss segment）"></a>BSS段（bss segment）</h2><p>BSS（Block Started by Symbol）属于静态内存分配，通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。特点是可读写。</p>
+<p>BSS段在磁盘上不是真的占用变量大小的空间，它仅仅记录了变量所需要的大小（占位符），也就是说，在该段中记录了所有未初始化全局变量与局部静态变量的大小总和，至于每个变量的大小则存储在符号表的size属性中。当可执行文件加载运行前，会为BSS段中的变量分配足够的空间并全部自动清零（因此，才有未初始化的全局变量的值为0的说法）。</p>
+<p>BSS段主要是为了节省可执行文件在磁盘上所占的空间，对未初始化的大型数组的节省效率比较明显。</p>
+<p>默认情况下，编译器会把初始化值为0的变量（比如static int a = 0）放在BSS段。但可以通过“#pragma explicit_zero_data on”把初始值为零的变量放到data段，而不是bss段。</p>
+<h2 id="数据段（data-segment）"><a href="#数据段（data-segment）" class="headerlink" title="数据段（data segment）"></a>数据段（data segment）</h2><p>通常是指用来存放程序中已初始化的全局变量的一块内存区域，会占用磁盘文件空间。数据段属于静态内存分配。</p>
+<h2 id="只读数据段（read-only-data-segment）"><a href="#只读数据段（read-only-data-segment）" class="headerlink" title="只读数据段（read only data segment）"></a>只读数据段（read only data segment）</h2><p>rodata用于存储使用const修饰的变量，或者只读类型的字符串等。</p>
+<h2 id="代码段（code-segment-text-segment）"><a href="#代码段（code-segment-text-segment）" class="headerlink" title="代码段（code segment/text segment）"></a>代码段（code segment/text segment）</h2><p>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读, 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="https://blog.csdn.net/virtual_func/article/details/48529249">关于BSS段的大小</a></li>
+<li><a href="https://blog.csdn.net/jxhui23/article/details/8064766">数据段、代码段、堆栈段、BSS段的区别</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Hexo User Manual</title>
     <url>/2020/11/24/Hexo-User-Manual/</url>
     <content><![CDATA[<h2 id="主页配置显示文章摘抄"><a href="#主页配置显示文章摘抄" class="headerlink" title="主页配置显示文章摘抄"></a>主页配置显示文章摘抄</h2><p>默认情况下，在主页中会把整个文章都显示了，导致主页特别乱。可以通过在文章中插入下面代码来截取摘抄：</p>
@@ -326,7 +429,7 @@ void main(int argc, char* argv[]) { <br>
 <div id="graphviz-0"></div>
 
 <p>参考：<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz">https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz</a></p>
-<p>但是这个版本不知道为啥显示不出来，又尝试了这个版本<a href="https://github.com/Gowa2017/hexo-filter-viz.git">https://github.com/Gowa2017/hexo-filter-viz.git</a>。这个是好使的，但是这个版本的标签必须是graphviz，与vscode的Markdown Preview Enhanced不兼容，因此又自己fork了一个仓库把标签改成了dot。但现在还是有个缺陷，这个版本不支持自定义engine。后续需要完善下。<script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">graph demo3 {
+<p>但是在开启pjax时，graphviz图形需要手动刷新才能显示，所以不得不关闭pjax。<script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">graph demo3 {
     "数据结构三要素" -- {"数据的逻辑结构", "数据的存储结构", "数据的运算"}
 }</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script></p>
 ]]></content>
@@ -335,16 +438,142 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>Excel常用函数算法</title>
-    <url>/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
-<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+    <title>编程语言参考网站</title>
+    <url>/2018/06/24/cpp/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99/</url>
+    <content><![CDATA[<h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><hr>
+<ul>
+<li><a href="http://www.cplusplus.com/reference/">Standard C++ Library reference</a></li>
+<li><a href="https://zh.cppreference.com/">C++ 参考手册</a></li>
+<li><a href="https://en.wikibooks.org/wiki/C%2B%2B_Programming/All_Chapters">C++ Programming - Wikibooks</a></li>
+<li><a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">C++ Core Guidelines</a> by Bjarne Stroustrup &amp; Herb Sutter</li>
+<li><a href="http://www.stroustrup.com/bs_faq2.html">Bjarne Stroustrup’s C++ Style and Technique FAQ</a></li>
+<li><a href="https://www.boost.org/">Boost: C++ libraries</a></li>
+<li><a href="https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list">The Definitive C++ Book Guide and List</a></li>
+</ul>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><hr>
+<ul>
+<li><a href="https://docs.python.org/3/library/index.html#the-python-standard-library" title="Permalink to this headline">The Python Standard Library</a></li>
+<li><a href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a></li>
+<li><a href="http://www.runoob.com/python3/python3-tutorial.html">Python 3 教程 - 菜鸟教程</a></li>
+<li><a href="http://www.runoob.com/python/python-tutorial.html">Python 2 教程 - 菜鸟教程</a></li>
+</ul>
+<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><hr>
+<ul>
+<li><a href="https://developer.android.google.cn/guide?hl=zh_cn">开发者指南</a></li>
+<li><a href="https://developer.android.google.cn/reference/">Android API reference</a></li>
+<li><a href="https://developer.android.com/guide/platform/">Android Platform Architecture</a></li>
+<li><a href="https://developer.android.google.cn/reference/android/media/MediaCodec">MediaCodec</a></li>
+<li><a href="https://developer.android.google.cn/training/articles/perf-jni">JNI tips</a></li>
+</ul>
 ]]></content>
       <categories>
-        <category>Office</category>
+        <category>编程</category>
       </categories>
       <tags>
-        <tag>Excel</tag>
+        <tag>C++</tag>
+        <tag>Python</tag>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>gcc编译过程</title>
+    <url>/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<!-- ![gcc编译过程](/images/11907096-16ea161c42fba6a4.png) -->
+<!-- <img src="/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/11907096-16ea161c42fba6a4.png" class=""> -->
+
+<div id="graphviz-0"></div>
+
+<h2 id="示例如下："><a href="#示例如下：" class="headerlink" title="示例如下："></a>示例如下：</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i</span><br><span class="line">gcc -S hello.i -o hello.s</span><br><span class="line">gcc -c hello.s -o hello.o</span><br><span class="line">gcc hello.s -o hello</span><br></pre></td></tr></table></figure>
+<script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">digraph {
+    node [shape=box]
+    rankdir=LR
+    c [label="hello.c"]
+    i [label="hello.i"]
+    s [label="hello.s"]
+    o [label="hello.o"]
+    e [label="hello"]
+    c -> i [label="预处理 -E"]
+    i -> s [label="编译 -S"]
+    s -> o [label="汇编 -c"]
+    o -> e [label="链接"]
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script>]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mixin模式</title>
+    <url>/2019/01/13/design-patterns/Mixin/</url>
+    <content><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Mixin">Mixin wiki</a></p>
+<p><a href="http://www.cnblogs.com/xybaby/p/6484262.html">Mixin模式</a></p>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>软件设计原则</title>
+    <url>/2019/09/04/design-patterns/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</url>
+    <content><![CDATA[<h3 id="SOLID"><a href="#SOLID" class="headerlink" title="SOLID"></a><a href="https://en.wikipedia.org/wiki/SOLID">SOLID</a></h3><hr>
+<h4 id="Single-responsibility-principle-单一职责"><a href="#Single-responsibility-principle-单一职责" class="headerlink" title="Single responsibility principle 单一职责"></a><a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">Single responsibility principle</a> 单一职责</h4><p>The single responsibility principle is a computer programming principle that states that every module, class, or function should have responsibility over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class, module or function. All its services should be narrowly aligned with that responsibility. Robert C. Martin expresses the principle as, “A class should have only one reason to change,” although, because of confusion around the word “reason” he more recently stated “This principle is about people.(Actor)”</p>
+<p>Martin defines a responsibility as a reason to change, and concludes that a class or module should have one, and only one, reason to be changed (i.e. rewritten). As an example, consider a module that compiles and prints a report. Imagine such a module can be changed for two reasons. First, the content of the report could change. Second, the format of the report could change. These two things change for very different causes; one substantive, and one cosmetic. The single responsibility principle says that these two aspects of the problem are really two separate responsibilities, and should therefore be in separate classes or modules. It would be a bad design to couple two things that change for different reasons at different times.</p>
+<p>The reason it is important to keep a class focused on a single concern is that it makes the class more robust. Continuing with the foregoing example, if there is a change to the report compilation process, there is greater danger that the printing code will break if it is part of the same class.</p>
+<h4 id="Open–closed-principle-开闭原则"><a href="#Open–closed-principle-开闭原则" class="headerlink" title="Open–closed principle 开闭原则"></a><a href="https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle">Open–closed principle</a> 开闭原则</h4><p>Open/closed principle states “software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification”; that is, such an entity can allow its behaviour to be extended without modifying its source code.</p>
+<p>The name open/closed principle has been used in two ways. Both ways use generalizations (for instance, inheritance or delegate functions) to resolve the apparent dilemma, but the goals, techniques, and results are different.</p>
+<h4 id="Liskov-substitution-principle-里式替换"><a href="#Liskov-substitution-principle-里式替换" class="headerlink" title="Liskov substitution principle 里式替换"></a><a href="https://en.wikipedia.org/wiki/Liskov_substitution_principle">Liskov substitution principle</a> 里式替换</h4><h4 id="Interface-segregation-principle-ISP"><a href="#Interface-segregation-principle-ISP" class="headerlink" title="Interface segregation principle (ISP)"></a><a href="https://en.wikipedia.org/wiki/Interface_segregation_principle">Interface segregation principle (ISP)</a></h4><p>ISP states that no client should be forced to depend on methods it does not use. ISP splits interfaces that are very large into smaller and more specific ones so that clients will only have to know about the methods that are of interest to them. Such shrunken interfaces are also called role interfaces. ISP is intended to keep a system decoupled and thus easier to refactor, change, and redeploy.</p>
+<h4 id="Dependency-inversion-principle"><a href="#Dependency-inversion-principle" class="headerlink" title="Dependency inversion principle"></a><a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle">Dependency inversion principle</a></h4><p>In object-oriented design, the dependency inversion principle is a specific form of decoupling software modules. When following this principle, the conventional dependency relationships established from high-level, policy-setting modules to low-level, dependency modules are reversed, thus rendering high-level modules independent of the low-level module implementation details. The principle states:</p>
+<ul>
+<li>High-level modules should not depend on low-level modules. Both should depend on abstractions (e.g. interfaces).</li>
+<li>Abstractions should not depend on details. Details (concrete implementations) should depend on abstractions.</li>
+</ul>
+<p>By dictating that both high-level and low-level objects must depend on the same abstraction, this design principle inverts the way some people may think about object-oriented programming.</p>
+<p> Depend upon abstractions.  Do not depend upon concrete classes. P177</p>
+<p> In conventional application architecture, lower-level components (e.g. Utility Layer) are designed to be consumed by higher-level components (e.g. Policy Layer) which enable increasingly complex systems to be built. In this composition, higher-level components depend directly upon lower-level components to achieve some task. This dependency upon lower-level components limits the reuse opportunities of the higher-level components.The goal of the dependency inversion pattern is to avoid this highly coupled distribution with the mediation of an abstract layer, and to increase the re-usability of higher/policy layers.<br> <img src="/img/in-post/Traditional_Layers_Pattern.png" alt="Traditional_Layers_Pattern" title="Traditional Layers Pattern"></p>
+<p> With the addition of an abstract layer, both high- and lower-level layers reduce the traditional dependencies from top to bottom. Nevertheless, the “inversion” concept does not mean that lower-level layers depend on higher-level layers. Both layers should depend on abstractions that draw the behavior needed by higher-level layers.<br> <img src="/img/in-post/DIPLayersPattern.png" alt="DIPLayersPattern" title="DIP Layers Pattern"></p>
+<p> In a direct application of dependency inversion, the abstracts are owned by the upper/policy layers. This architecture groups the higher/policy components and the abstractions that define lower services together in the same package. The lower-level layers are created by inheritance/implementation of these abstract classes or interfaces.[1]</p>
+<p>The inversion of the dependencies and ownership encourages the re-usability of the higher/policy layers. Upper layers could use other implementations of the lower services. When the lower-level layer components are closed or when the application requires the reuse of existing services, it is common that an Adapter mediates between the services and the abstractions.</p>
+<h3 id="GRASP"><a href="#GRASP" class="headerlink" title="GRASP"></a><a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)">GRASP</a></h3><hr>
+<p>General Responsibility Assignment Software Patterns (or Principles), abbreviated GRASP, consist of guidelines for assigning responsibility to classes and objects in object-oriented design. It is not related to the <a href="https://en.wikipedia.org/wiki/SOLID">SOLID</a> design principle.</p>
+<p>The different patterns and principles used in GRASP are <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Controller">controller</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Creator">creator</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Indirection">indirection</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Information_expert">information expert</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#High_cohesion">high cohesion</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Low_coupling">low coupling</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Polymorphism">polymorphism</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Protected_variations">protected variations</a>, and <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Pure_fabrication">pure fabrication</a>. All these patterns answer some software problems, and these problems are common to almost every software development project. These techniques have not been invented to create new ways of working, but to better document and standardize old, tried-and-tested programming principles in object-oriented design.</p>
+<h3 id="Separation-of-Concerns-关注点分离"><a href="#Separation-of-Concerns-关注点分离" class="headerlink" title="Separation of Concerns 关注点分离"></a><a href="https://en.wikipedia.org/wiki/Separation_of_concerns">Separation of Concerns</a> 关注点分离</h3><hr>
+<h3 id="Don’t-Repeat-Yourself"><a href="#Don’t-Repeat-Yourself" class="headerlink" title="Don’t Repeat Yourself"></a><a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">Don’t Repeat Yourself</a></h3><hr>
+<h3 id="Inversion-of-Control"><a href="#Inversion-of-Control" class="headerlink" title="Inversion of Control"></a><a href="https://en.wikipedia.org/wiki/Inversion_of_control">Inversion of Control</a></h3><hr>
+<p>Inversion of control is sometimes facetiously referred to as the “Hollywood Principle: Don’t call us, we’ll call you”.<br>(The Hollywood Principle: Don’t call us, we’ll call you. 《Head First design patterns - ora 2004》 P334)</p>
+<p><a href="https://martinfowler.com/bliki/InversionOfControl.html">Inversion of Control</a> by Martin Fowler</p>
+<h3 id="Dependency-Injection"><a href="#Dependency-Injection" class="headerlink" title="Dependency Injection"></a><a href="https://en.wikipedia.org/wiki/Dependency_injection">Dependency Injection</a></h3><hr>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Linux清理Cached内存</title>
+    <url>/2018/07/13/memory/Linux%E6%B8%85%E7%90%86cache/</url>
+    <content><![CDATA[<p>Kernels 2.6.16 and newer provide a mechanism to have the kernel drop the page cache and/or inode and dentry caches on command, which can help free up a lot of memory. Now you can throw away that script that allocated a ton of memory just to get rid of the cache…</p>
+<p>To use /proc/sys/vm/drop_caches, just echo a number to it.</p>
+<p>To free pagecache:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>To free dentries and inodes:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>To free pagecache, dentries and inodes:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>This is a non-destructive operation and will only free things that are completely unused. Dirty objects will continue to be in use until written out to disk and are not freeable. If you run “sync” first to flush them out to disk, these drop operations will tend to free more memory.</p>
+<p>参考网站：</p>
+<ul>
+<li><a href="https://linux-mm.org/Drop_Caches">Drop_Caches</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Linux</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -367,8 +596,8 @@ void main(int argc, char* argv[]) { <br>
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Android调试</tag>
         <tag>Android</tag>
+        <tag>Android调试</tag>
       </tags>
   </entry>
   <entry>
@@ -383,8 +612,8 @@ void main(int argc, char* argv[]) { <br>
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Android调试</tag>
         <tag>Android</tag>
+        <tag>Android调试</tag>
       </tags>
   </entry>
   <entry>
@@ -412,21 +641,6 @@ void main(int argc, char* argv[]) { <br>
       </categories>
       <tags>
         <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++成员函数指针</title>
-    <url>/2018/06/24/cpp/C++%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/</url>
-    <content><![CDATA[<p>对于类的普通成员函数和静态成员函数，定义函数指针的方法是不同的，如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func_normal</span><span class="params">()</span> </span>&#123;      <span class="comment">//普通成员函数</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">func_static</span><span class="params">()</span> </span>&#123;    <span class="comment">//静态成员函数（static）</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//g++ -std=c++11 to enable std::function</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="built_in">std</span>::function&lt;<span class="keyword">void</span>()&gt; pf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pf();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* normal function pointer */</span></span><br><span class="line">    <span class="keyword">void</span> (Test::*pfunc_n)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_n = &amp;Test::func_normal;</span><br><span class="line">    Test t;</span><br><span class="line">    (t.*pfunc_n)();</span><br><span class="line">    foo(<span class="built_in">std</span>::bind(&amp;Test::func_normal, &amp;t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* static function pointer */</span></span><br><span class="line">    <span class="keyword">void</span> (*pfunc_s)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_s = &amp;Test::func_static;</span><br><span class="line">    pfunc_s();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果一个非静态成员函数指针作为函数参数，则只能把对象传入函数中，然后通过对象调用函数指针。在C++11中引入了function，其本质也是把类传入了函数。</p>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -478,23 +692,8 @@ void main(int argc, char* argv[]) { <br>
         <category>Android</category>
       </categories>
       <tags>
-        <tag>Android调试</tag>
         <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>gcc编译过程</title>
-    <url>/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<!-- ![gcc编译过程](/images/11907096-16ea161c42fba6a4.png) -->
-<img src="/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/11907096-16ea161c42fba6a4.png" class="">
-
-<h2 id="示例如下："><a href="#示例如下：" class="headerlink" title="示例如下："></a>示例如下：</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i</span><br><span class="line">gcc -S hello.i -o hello.s</span><br><span class="line">gcc -c hello.s -o hello.o</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
+        <tag>Android调试</tag>
       </tags>
   </entry>
   <entry>
@@ -850,23 +1049,15 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>sed命令使用说明</title>
-    <url>/2018/06/24/shell/sed%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
-    <content><![CDATA[<h2 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h2><h3 id="普通字符替换"><a href="#普通字符替换" class="headerlink" title="普通字符替换"></a>普通字符替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">param_name=ro.build.id</span><br><span class="line">sed -i &quot;s/$&#123;param_name&#125;=.*/$&#123;param_name&#125;=new_value/g&quot; build.prop</span><br></pre></td></tr></table></figure>
-<p>本例用于修改build.prop文件中的ro.build.id参数的值</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/oldstring/newstring/g&quot; `grep oldstring -rl yourdir`</span><br></pre></td></tr></table></figure>
-<p>批量替换</p>
-<h3 id="二进制内容替换"><a href="#二进制内容替换" class="headerlink" title="二进制内容替换"></a>二进制内容替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &#x27;s/\x00/\x0a/g&#x27; %s      #本例是把&#x27;\0&#x27;替换为&#x27;\n&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="行操作"><a href="#行操作" class="headerlink" title="行操作"></a>行操作</h2><h3 id="删除文件中的某一行"><a href="#删除文件中的某一行" class="headerlink" title="删除文件中的某一行"></a>删除文件中的某一行</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i \&#x27;1d\&#x27; %s   #删除第一行的文字</span><br></pre></td></tr></table></figure>
-
-<h3 id="按行截取文本文件内容"><a href="#按行截取文本文件内容" class="headerlink" title="按行截取文本文件内容"></a>按行截取文本文件内容</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;起始行号,结束行号p&#x27; 原始文件 &gt; 另存为的文件</span><br></pre></td></tr></table></figure>
+    <title>Git 中文乱码问题</title>
+    <url>/2019/01/13/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://www.worldhello.net/gotgit/08-git-misc/020-git-charset.html">Git字符集问题</a></p>
 ]]></content>
       <categories>
-        <category>Shell</category>
+        <category>代码管理</category>
       </categories>
       <tags>
-        <tag>shell</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -896,109 +1087,23 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>Shell管道</title>
-    <url>/2018/06/24/shell/Shell%E7%AE%A1%E9%81%93/</url>
-    <content><![CDATA[<h2 id="通过管道执行命令，获取各个命令的返回值"><a href="#通过管道执行命令，获取各个命令的返回值" class="headerlink" title="通过管道执行命令，获取各个命令的返回值"></a>通过管道执行命令，获取各个命令的返回值</h2><p>比如执行命令：cmd1 | cmd2 | cmd3  。 如果命令执行完后，通过”$?”获取的是cmd3的返回值。如何获取cmd1和cmd2的返回值呢？</p>
-<p>在bash环境下，命令的返回值保存在”PIPESTATUS”数组中:</p>
-<ul>
-<li>${PIPESTATUS[0]} 是cmd1的返回值；</li>
-<li>${PIPESTATUS[1]} 是cmd2的返回值；</li>
-<li>${PIPESTATUS[2]} 是cmd3的返回值；</li>
-<li>$? 始终等于 ${PIPESTATUS:-1}。</li>
-</ul>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
-<li><a href="http://unix.derkeiler.com/Newsgroups/comp.unix.shell/2003-09/0909.html">comp.unix.shell FAQ - Answers to Frequently Asked Questions</a></li>
-</ul>
+    <title>sed命令使用说明</title>
+    <url>/2018/06/24/shell/sed%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
+    <content><![CDATA[<h2 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h2><h3 id="普通字符替换"><a href="#普通字符替换" class="headerlink" title="普通字符替换"></a>普通字符替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">param_name=ro.build.id</span><br><span class="line">sed -i &quot;s/$&#123;param_name&#125;=.*/$&#123;param_name&#125;=new_value/g&quot; build.prop</span><br></pre></td></tr></table></figure>
+<p>本例用于修改build.prop文件中的ro.build.id参数的值</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/oldstring/newstring/g&quot; `grep oldstring -rl yourdir`</span><br></pre></td></tr></table></figure>
+<p>批量替换</p>
+<h3 id="二进制内容替换"><a href="#二进制内容替换" class="headerlink" title="二进制内容替换"></a>二进制内容替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &#x27;s/\x00/\x0a/g&#x27; %s      #本例是把&#x27;\0&#x27;替换为&#x27;\n&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="行操作"><a href="#行操作" class="headerlink" title="行操作"></a>行操作</h2><h3 id="删除文件中的某一行"><a href="#删除文件中的某一行" class="headerlink" title="删除文件中的某一行"></a>删除文件中的某一行</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i \&#x27;1d\&#x27; %s   #删除第一行的文字</span><br></pre></td></tr></table></figure>
+
+<h3 id="按行截取文本文件内容"><a href="#按行截取文本文件内容" class="headerlink" title="按行截取文本文件内容"></a>按行截取文本文件内容</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;起始行号,结束行号p&#x27; 原始文件 &gt; 另存为的文件</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Shell</category>
       </categories>
       <tags>
         <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mixin模式</title>
-    <url>/2019/01/13/design-patterns/Mixin/</url>
-    <content><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Mixin">Mixin wiki</a></p>
-<p><a href="http://www.cnblogs.com/xybaby/p/6484262.html">Mixin模式</a></p>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux清理Cached内存</title>
-    <url>/2018/07/13/memory/Linux%E6%B8%85%E7%90%86cache/</url>
-    <content><![CDATA[<p>Kernels 2.6.16 and newer provide a mechanism to have the kernel drop the page cache and/or inode and dentry caches on command, which can help free up a lot of memory. Now you can throw away that script that allocated a ton of memory just to get rid of the cache…</p>
-<p>To use /proc/sys/vm/drop_caches, just echo a number to it.</p>
-<p>To free pagecache:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>To free dentries and inodes:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>To free pagecache, dentries and inodes:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>This is a non-destructive operation and will only free things that are completely unused. Dirty objects will continue to be in use until written out to disk and are not freeable. If you run “sync” first to flush them out to disk, these drop operations will tend to free more memory.</p>
-<p>参考网站：</p>
-<ul>
-<li><a href="https://linux-mm.org/Drop_Caches">Drop_Caches</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>软件设计原则</title>
-    <url>/2019/09/04/design-patterns/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</url>
-    <content><![CDATA[<h3 id="SOLID"><a href="#SOLID" class="headerlink" title="SOLID"></a><a href="https://en.wikipedia.org/wiki/SOLID">SOLID</a></h3><hr>
-<h4 id="Single-responsibility-principle-单一职责"><a href="#Single-responsibility-principle-单一职责" class="headerlink" title="Single responsibility principle 单一职责"></a><a href="https://en.wikipedia.org/wiki/Single_responsibility_principle">Single responsibility principle</a> 单一职责</h4><p>The single responsibility principle is a computer programming principle that states that every module, class, or function should have responsibility over a single part of the functionality provided by the software, and that responsibility should be entirely encapsulated by the class, module or function. All its services should be narrowly aligned with that responsibility. Robert C. Martin expresses the principle as, “A class should have only one reason to change,” although, because of confusion around the word “reason” he more recently stated “This principle is about people.(Actor)”</p>
-<p>Martin defines a responsibility as a reason to change, and concludes that a class or module should have one, and only one, reason to be changed (i.e. rewritten). As an example, consider a module that compiles and prints a report. Imagine such a module can be changed for two reasons. First, the content of the report could change. Second, the format of the report could change. These two things change for very different causes; one substantive, and one cosmetic. The single responsibility principle says that these two aspects of the problem are really two separate responsibilities, and should therefore be in separate classes or modules. It would be a bad design to couple two things that change for different reasons at different times.</p>
-<p>The reason it is important to keep a class focused on a single concern is that it makes the class more robust. Continuing with the foregoing example, if there is a change to the report compilation process, there is greater danger that the printing code will break if it is part of the same class.</p>
-<h4 id="Open–closed-principle-开闭原则"><a href="#Open–closed-principle-开闭原则" class="headerlink" title="Open–closed principle 开闭原则"></a><a href="https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle">Open–closed principle</a> 开闭原则</h4><p>Open/closed principle states “software entities (classes, modules, functions, etc.) should be open for extension, but closed for modification”; that is, such an entity can allow its behaviour to be extended without modifying its source code.</p>
-<p>The name open/closed principle has been used in two ways. Both ways use generalizations (for instance, inheritance or delegate functions) to resolve the apparent dilemma, but the goals, techniques, and results are different.</p>
-<h4 id="Liskov-substitution-principle-里式替换"><a href="#Liskov-substitution-principle-里式替换" class="headerlink" title="Liskov substitution principle 里式替换"></a><a href="https://en.wikipedia.org/wiki/Liskov_substitution_principle">Liskov substitution principle</a> 里式替换</h4><h4 id="Interface-segregation-principle-ISP"><a href="#Interface-segregation-principle-ISP" class="headerlink" title="Interface segregation principle (ISP)"></a><a href="https://en.wikipedia.org/wiki/Interface_segregation_principle">Interface segregation principle (ISP)</a></h4><p>ISP states that no client should be forced to depend on methods it does not use. ISP splits interfaces that are very large into smaller and more specific ones so that clients will only have to know about the methods that are of interest to them. Such shrunken interfaces are also called role interfaces. ISP is intended to keep a system decoupled and thus easier to refactor, change, and redeploy.</p>
-<h4 id="Dependency-inversion-principle"><a href="#Dependency-inversion-principle" class="headerlink" title="Dependency inversion principle"></a><a href="https://en.wikipedia.org/wiki/Dependency_inversion_principle">Dependency inversion principle</a></h4><p>In object-oriented design, the dependency inversion principle is a specific form of decoupling software modules. When following this principle, the conventional dependency relationships established from high-level, policy-setting modules to low-level, dependency modules are reversed, thus rendering high-level modules independent of the low-level module implementation details. The principle states:</p>
-<ul>
-<li>High-level modules should not depend on low-level modules. Both should depend on abstractions (e.g. interfaces).</li>
-<li>Abstractions should not depend on details. Details (concrete implementations) should depend on abstractions.</li>
-</ul>
-<p>By dictating that both high-level and low-level objects must depend on the same abstraction, this design principle inverts the way some people may think about object-oriented programming.</p>
-<p> Depend upon abstractions.  Do not depend upon concrete classes. P177</p>
-<p> In conventional application architecture, lower-level components (e.g. Utility Layer) are designed to be consumed by higher-level components (e.g. Policy Layer) which enable increasingly complex systems to be built. In this composition, higher-level components depend directly upon lower-level components to achieve some task. This dependency upon lower-level components limits the reuse opportunities of the higher-level components.The goal of the dependency inversion pattern is to avoid this highly coupled distribution with the mediation of an abstract layer, and to increase the re-usability of higher/policy layers.<br> <img src="/img/in-post/Traditional_Layers_Pattern.png" alt="Traditional_Layers_Pattern" title="Traditional Layers Pattern"></p>
-<p> With the addition of an abstract layer, both high- and lower-level layers reduce the traditional dependencies from top to bottom. Nevertheless, the “inversion” concept does not mean that lower-level layers depend on higher-level layers. Both layers should depend on abstractions that draw the behavior needed by higher-level layers.<br> <img src="/img/in-post/DIPLayersPattern.png" alt="DIPLayersPattern" title="DIP Layers Pattern"></p>
-<p> In a direct application of dependency inversion, the abstracts are owned by the upper/policy layers. This architecture groups the higher/policy components and the abstractions that define lower services together in the same package. The lower-level layers are created by inheritance/implementation of these abstract classes or interfaces.[1]</p>
-<p>The inversion of the dependencies and ownership encourages the re-usability of the higher/policy layers. Upper layers could use other implementations of the lower services. When the lower-level layer components are closed or when the application requires the reuse of existing services, it is common that an Adapter mediates between the services and the abstractions.</p>
-<h3 id="GRASP"><a href="#GRASP" class="headerlink" title="GRASP"></a><a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)">GRASP</a></h3><hr>
-<p>General Responsibility Assignment Software Patterns (or Principles), abbreviated GRASP, consist of guidelines for assigning responsibility to classes and objects in object-oriented design. It is not related to the <a href="https://en.wikipedia.org/wiki/SOLID">SOLID</a> design principle.</p>
-<p>The different patterns and principles used in GRASP are <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Controller">controller</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Creator">creator</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Indirection">indirection</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Information_expert">information expert</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#High_cohesion">high cohesion</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Low_coupling">low coupling</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Polymorphism">polymorphism</a>, <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Protected_variations">protected variations</a>, and <a href="https://en.wikipedia.org/wiki/GRASP_(object-oriented_design)#Pure_fabrication">pure fabrication</a>. All these patterns answer some software problems, and these problems are common to almost every software development project. These techniques have not been invented to create new ways of working, but to better document and standardize old, tried-and-tested programming principles in object-oriented design.</p>
-<h3 id="Separation-of-Concerns-关注点分离"><a href="#Separation-of-Concerns-关注点分离" class="headerlink" title="Separation of Concerns 关注点分离"></a><a href="https://en.wikipedia.org/wiki/Separation_of_concerns">Separation of Concerns</a> 关注点分离</h3><hr>
-<h3 id="Don’t-Repeat-Yourself"><a href="#Don’t-Repeat-Yourself" class="headerlink" title="Don’t Repeat Yourself"></a><a href="https://en.wikipedia.org/wiki/Don%27t_repeat_yourself">Don’t Repeat Yourself</a></h3><hr>
-<h3 id="Inversion-of-Control"><a href="#Inversion-of-Control" class="headerlink" title="Inversion of Control"></a><a href="https://en.wikipedia.org/wiki/Inversion_of_control">Inversion of Control</a></h3><hr>
-<p>Inversion of control is sometimes facetiously referred to as the “Hollywood Principle: Don’t call us, we’ll call you”.<br>(The Hollywood Principle: Don’t call us, we’ll call you. 《Head First design patterns - ora 2004》 P334)</p>
-<p><a href="https://martinfowler.com/bliki/InversionOfControl.html">Inversion of Control</a> by Martin Fowler</p>
-<h3 id="Dependency-Injection"><a href="#Dependency-Injection" class="headerlink" title="Dependency Injection"></a><a href="https://en.wikipedia.org/wiki/Dependency_injection">Dependency Injection</a></h3><hr>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git 中文乱码问题</title>
-    <url>/2019/01/13/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://www.worldhello.net/gotgit/08-git-misc/020-git-charset.html">Git字符集问题</a></p>
-]]></content>
-      <categories>
-        <category>代码管理</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -1120,110 +1225,25 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>C++ 构造函数和初始化成员列表</title>
-    <url>/2018/06/24/cpp/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%91%98%E5%88%97%E8%A1%A8/</url>
-    <content><![CDATA[<h2 id="类的初始化顺序"><a href="#类的初始化顺序" class="headerlink" title="类的初始化顺序"></a>类的初始化顺序</h2><hr>
-<p>根据ISO/IEC 14882:1998(E) 中12.6.2一节的介绍。</p>
-<blockquote>
-<p>Initialization shall proceed in the following order:</p>
+    <title>Shell管道</title>
+    <url>/2018/06/24/shell/Shell%E7%AE%A1%E9%81%93/</url>
+    <content><![CDATA[<h2 id="通过管道执行命令，获取各个命令的返回值"><a href="#通过管道执行命令，获取各个命令的返回值" class="headerlink" title="通过管道执行命令，获取各个命令的返回值"></a>通过管道执行命令，获取各个命令的返回值</h2><p>比如执行命令：cmd1 | cmd2 | cmd3  。 如果命令执行完后，通过”$?”获取的是cmd3的返回值。如何获取cmd1和cmd2的返回值呢？</p>
+<p>在bash环境下，命令的返回值保存在”PIPESTATUS”数组中:</p>
 <ul>
-<li>First, and only for the constructor of the most derived class as described below, virtual base classes shall be initialized in the order they appear on a depth-first left-to-right traversal of the directed acyclic graph of base classes, where “left-to-right” is the order of appearance of the base class names in the derived class base-specifier-list.</li>
-<li>Then, direct base classes shall be initialized in declaration order as they appear in the base-specifier-list (regardless of the order of the mem-initializers).</li>
-<li>Then, nonstatic data members shall be initialized in the order they were declared in the class definition (again regardless of the order of the mem-initializers).</li>
-<li>Finally, the body of the constructor is executed.</li>
+<li>${PIPESTATUS[0]} 是cmd1的返回值；</li>
+<li>${PIPESTATUS[1]} 是cmd2的返回值；</li>
+<li>${PIPESTATUS[2]} 是cmd3的返回值；</li>
+<li>$? 始终等于 ${PIPESTATUS:-1}。</li>
 </ul>
-</blockquote>
-<p>上面的引用文字我没有完全看懂。但可以大体解释如下：</p>
-<ul>
-<li>首先，对基类进行初始化；</li>
-<li>然后，初始化非静态数据成员。对于在初始化成员列表中的数据成员，编译器会使用列表中的值对数据成员进行初始化；没有出现在初始化成员列表中的数据成员，编译器会按照默认方式进行初始化（如果是类，就是调用类的默认构造函数）；</li>
-<li>最后，构造函数体会被执行。</li>
-</ul>
-<h2 id="初始化成员列表（member-initializer-list）"><a href="#初始化成员列表（member-initializer-list）" class="headerlink" title="初始化成员列表（member initializer list）"></a>初始化成员列表（member initializer list）</h2><hr>
-<p>执行构造函数时，先执行初始化列表的内容，若初始化里面没有数据，则编译器按照系统默认的方式对成员变量赋值，随后再进行构造函数中花括号内部的指令。</p>
-<ul>
-<li>对于引用型成员变量和const常量型成员变量，则必须通过初始化列表初始化该成员变量。</li>
-<li>如果成员类或者基类没有默认构造函数，则必须通过初始化表初始化该成员变量。</li>
-<li>成员变量初始化顺序有声明顺序决定，而与初始化列表的顺序无关。</li>
-<li>对于参数列表中所列的成员变量，可以不包含所有的成员变量。</li>
-</ul>
-<p>出于效率方面的考虑：对于有默认构造函数的成员类，编译器会在构建父类之前调用成员类的默认构造函数，如果在构造函数中又对该成员类进行赋值，则该成员类的构造函数调用了两次。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><hr>
-<ul>
-<li><a href="http://en.cppreference.com/w/cpp/language/initializer_list">Constructors and member initializer lists</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C/C++ 程序内存分段</title>
-    <url>/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/</url>
-    <content><![CDATA[<!-- ![内存分段示意图](C程序内存分段/11907096-13cc0f17b647d1bc.png) -->
-<img src="/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png" class="">
-
-
-<h2 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h2><p>栈又称堆栈， 是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进后出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
-<h2 id="堆（heap）"><a href="#堆（heap）" class="headerlink" title="堆（heap）"></a>堆（heap）</h2><p>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
-<h2 id="BSS段（bss-segment）"><a href="#BSS段（bss-segment）" class="headerlink" title="BSS段（bss segment）"></a>BSS段（bss segment）</h2><p>BSS（Block Started by Symbol）属于静态内存分配，通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。特点是可读写。</p>
-<p>BSS段在磁盘上不是真的占用变量大小的空间，它仅仅记录了变量所需要的大小（占位符），也就是说，在该段中记录了所有未初始化全局变量与局部静态变量的大小总和，至于每个变量的大小则存储在符号表的size属性中。当可执行文件加载运行前，会为BSS段中的变量分配足够的空间并全部自动清零（因此，才有未初始化的全局变量的值为0的说法）。</p>
-<p>BSS段主要是为了节省可执行文件在磁盘上所占的空间，对未初始化的大型数组的节省效率比较明显。</p>
-<p>默认情况下，编译器会把初始化值为0的变量（比如static int a = 0）放在BSS段。但可以通过“#pragma explicit_zero_data on”把初始值为零的变量放到data段，而不是bss段。</p>
-<h2 id="数据段（data-segment）"><a href="#数据段（data-segment）" class="headerlink" title="数据段（data segment）"></a>数据段（data segment）</h2><p>通常是指用来存放程序中已初始化的全局变量的一块内存区域，会占用磁盘文件空间。数据段属于静态内存分配。</p>
-<h2 id="只读数据段（read-only-data-segment）"><a href="#只读数据段（read-only-data-segment）" class="headerlink" title="只读数据段（read only data segment）"></a>只读数据段（read only data segment）</h2><p>rodata用于存储使用const修饰的变量，或者只读类型的字符串等。</p>
-<h2 id="代码段（code-segment-text-segment）"><a href="#代码段（code-segment-text-segment）" class="headerlink" title="代码段（code segment/text segment）"></a>代码段（code segment/text segment）</h2><p>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读, 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等。</p>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
-<li><a href="https://blog.csdn.net/virtual_func/article/details/48529249">关于BSS段的大小</a></li>
-<li><a href="https://blog.csdn.net/jxhui23/article/details/8064766">数据段、代码段、堆栈段、BSS段的区别</a></li>
+<li><a href="http://unix.derkeiler.com/Newsgroups/comp.unix.shell/2003-09/0909.html">comp.unix.shell FAQ - Answers to Frequently Asked Questions</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>C/C++</category>
+        <category>Shell</category>
       </categories>
       <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>编程语言参考网站</title>
-    <url>/2018/06/24/cpp/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99/</url>
-    <content><![CDATA[<h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><hr>
-<ul>
-<li><a href="http://www.cplusplus.com/reference/">Standard C++ Library reference</a></li>
-<li><a href="https://zh.cppreference.com/">C++ 参考手册</a></li>
-<li><a href="https://en.wikibooks.org/wiki/C%2B%2B_Programming/All_Chapters">C++ Programming - Wikibooks</a></li>
-<li><a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">C++ Core Guidelines</a> by Bjarne Stroustrup &amp; Herb Sutter</li>
-<li><a href="http://www.stroustrup.com/bs_faq2.html">Bjarne Stroustrup’s C++ Style and Technique FAQ</a></li>
-<li><a href="https://www.boost.org/">Boost: C++ libraries</a></li>
-<li><a href="https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list">The Definitive C++ Book Guide and List</a></li>
-</ul>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><hr>
-<ul>
-<li><a href="https://docs.python.org/3/library/index.html#the-python-standard-library" title="Permalink to this headline">The Python Standard Library</a></li>
-<li><a href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a></li>
-<li><a href="http://www.runoob.com/python3/python3-tutorial.html">Python 3 教程 - 菜鸟教程</a></li>
-<li><a href="http://www.runoob.com/python/python-tutorial.html">Python 2 教程 - 菜鸟教程</a></li>
-</ul>
-<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><hr>
-<ul>
-<li><a href="https://developer.android.google.cn/guide?hl=zh_cn">开发者指南</a></li>
-<li><a href="https://developer.android.google.cn/reference/">Android API reference</a></li>
-<li><a href="https://developer.android.com/guide/platform/">Android Platform Architecture</a></li>
-<li><a href="https://developer.android.google.cn/reference/android/media/MediaCodec">MediaCodec</a></li>
-<li><a href="https://developer.android.google.cn/training/articles/perf-jni">JNI tips</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>C++</tag>
-        <tag>Python</tag>
+        <tag>shell</tag>
       </tags>
   </entry>
   <entry>
