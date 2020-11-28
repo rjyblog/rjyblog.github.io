@@ -24,21 +24,21 @@
   <meta name="description" content="本文基于Android 8.0源码分析。以mediaserver为例剖析binder addService的流程。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android binder剖析之addService">
-<meta property="og:url" content="http://example.com/2020/11/23/Android-binder-addService/index.html">
+<meta property="og:url" content="http://example.com/2020/11/23/android/Android-binder-addService/index.html">
 <meta property="og:site_name" content="RJY&#39;s BLOG">
 <meta property="og:description" content="本文基于Android 8.0源码分析。以mediaserver为例剖析binder addService的流程。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2020/11/23/Android-binder-addService/binder_addServer_Parcel.png">
-<meta property="og:image" content="http://example.com/2020/11/23/Android-binder-addService/binder_addServer_mOut_Parcel.png">
+<meta property="og:image" content="http://example.com/2020/11/23/android/Android-binder-addService/binder_addServer_Parcel.png">
+<meta property="og:image" content="http://example.com/2020/11/23/android/Android-binder-addService/binder_addServer_mOut_Parcel.png">
 <meta property="article:published_time" content="2020-11-23T03:16:04.000Z">
 <meta property="article:modified_time" content="2020-11-27T00:57:48.206Z">
 <meta property="article:author" content="Jason">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="binder">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2020/11/23/Android-binder-addService/binder_addServer_Parcel.png">
+<meta name="twitter:image" content="http://example.com/2020/11/23/android/Android-binder-addService/binder_addServer_Parcel.png">
 
-<link rel="canonical" href="http://example.com/2020/11/23/Android-binder-addService/">
+<link rel="canonical" href="http://example.com/2020/11/23/android/Android-binder-addService/">
 
 
 <script id="page-configurations">
@@ -194,7 +194,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/23/Android-binder-addService/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/11/23/android/Android-binder-addService/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -525,7 +525,7 @@ Country: US
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//class BpServiceManager</span></span><br><span class="line"><span class="function"><span class="keyword">virtual</span> <span class="keyword">status_t</span> <span class="title">addService</span><span class="params">(<span class="keyword">const</span> String16&amp; name, <span class="keyword">const</span> sp&lt;IBinder&gt;&amp; service,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">bool</span> allowIsolated)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    Parcel data, reply;</span><br><span class="line">    data.writeInterfaceToken(IServiceManager::getInterfaceDescriptor());</span><br><span class="line">    data.writeString16(name);</span><br><span class="line">    data.writeStrongBinder(service);</span><br><span class="line">    data.writeInt32(allowIsolated ? <span class="number">1</span> : <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">status_t</span> err = remote()-&gt;transact(ADD_SERVICE_TRANSACTION, data, &amp;reply);</span><br><span class="line">    <span class="keyword">return</span> err == NO_ERROR ? reply.readExceptionCode() : err;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>上述代码执行后，Parcel中mData和mObjects两个成员变量可以用下图来表示：</p>
-<!-- <img src="/2020/11/23/Android-binder-addService/binder_addServer_Parcel.png" class=""> -->
+<!-- <img src="/2020/11/23/android/Android-binder-addService/binder_addServer_Parcel.png" class=""> -->
 
 <div id="graphviz-0"></div>
 
@@ -548,7 +548,7 @@ Country: US
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">status_t</span> <span class="title">IPCThreadState::writeTransactionData</span><span class="params">(<span class="keyword">int32_t</span> cmd, <span class="keyword">uint32_t</span> binderFlags,</span></span></span><br><span class="line"><span class="function"><span class="params">    <span class="keyword">int32_t</span> handle, <span class="keyword">uint32_t</span> code, <span class="keyword">const</span> Parcel&amp; data, <span class="keyword">status_t</span>* statusBuffer)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    binder_transaction_data tr;</span><br><span class="line"></span><br><span class="line">    tr.target.ptr = <span class="number">0</span>; <span class="comment">/* Don&#x27;t pass uninitialized stack data to a remote process */</span></span><br><span class="line">    tr.target.handle = handle;  <span class="comment">//target表示发送给谁，handle为0就代表ServiceManager</span></span><br><span class="line">    tr.code = code;  <span class="comment">//code值为ADD_SERVICE_TRANSACTION，就是我们分析的addService</span></span><br><span class="line">    tr.flags = binderFlags;</span><br><span class="line">    tr.cookie = <span class="number">0</span>;</span><br><span class="line">    tr.sender_pid = <span class="number">0</span>;</span><br><span class="line">    tr.sender_euid = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">status_t</span> err = data.errorCheck();</span><br><span class="line">    <span class="keyword">if</span> (err == NO_ERROR) &#123;</span><br><span class="line">        tr.data_size = data.ipcDataSize(); <span class="comment">//Parcel数据大小</span></span><br><span class="line">        <span class="comment">//ptr.buffer就是Parcel的mData的地址，addService瓶装的Parcel数据都放在以mData为首地址的内存中</span></span><br><span class="line">        tr.data.ptr.buffer = data.ipcData();  <span class="comment">//指向Parcel.mData</span></span><br><span class="line">        tr.offsets_size = data.ipcObjectsCount()*<span class="keyword">sizeof</span>(<span class="keyword">binder_size_t</span>);</span><br><span class="line">        <span class="comment">//ptr.offsets会指向Parcel的mObjects数组的首地址，数组中存放着flat_binder_object结构体在mData中的偏移</span></span><br><span class="line">        tr.data.ptr.offsets = data.ipcObjects();</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (statusBuffer) &#123;</span><br><span class="line">        ......</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> (mLastError = err);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//只是把数据写到mOut中，并没有发送出去</span></span><br><span class="line">    <span class="comment">//需要注意下数据结构的转换：把输入的Parcel转换成binder_transaction_data.</span></span><br><span class="line">    <span class="comment">//在IPCThreadState构造函数中mOut设置存储大小是256，binder_transaction_data的大小肯定不会大于256</span></span><br><span class="line">    mOut.writeInt32(cmd);  <span class="comment">//cmd=BC_TRANSACTION</span></span><br><span class="line">    mOut.write(&amp;tr, <span class="keyword">sizeof</span>(tr));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> NO_ERROR;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>传输数据已经写入到mOut表示Parcel类中，我们看下此时的mOut数据：</p>
-<!-- <img src="/2020/11/23/Android-binder-addService/binder_addServer_mOut_Parcel.png" class=""> -->
+<!-- <img src="/2020/11/23/android/Android-binder-addService/binder_addServer_mOut_Parcel.png" class=""> -->
 <div id="graphviz-1"></div>
 来看下`binder_transaction_data`结构体的定义：
 

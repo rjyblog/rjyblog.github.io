@@ -29,7 +29,7 @@
 <meta property="og:description" content="本文介绍Graphviz dot的常用知识点">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2020-11-26T08:28:39.000Z">
-<meta property="article:modified_time" content="2020-11-28T08:02:54.622Z">
+<meta property="article:modified_time" content="2020-11-28T10:16:34.002Z">
 <meta property="article:author" content="Jason">
 <meta property="article:tag" content="GraphViz">
 <meta name="twitter:card" content="summary">
@@ -220,7 +220,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-28 16:02:54" itemprop="dateModified" datetime="2020-11-28T16:02:54+08:00">2020-11-28</time>
+                <time title="修改时间：2020-11-28 18:16:34" itemprop="dateModified" datetime="2020-11-28T18:16:34+08:00">2020-11-28</time>
               </span>
 
           
@@ -236,7 +236,7 @@
 
       
         <h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>在线编译工具：<a target="_blank" rel="noopener" href="http://viz-js.com/">http://viz-js.com</a><br>VSCode安装插件：<a target="_blank" rel="noopener" href="https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz">Graphviz (dot) language support for Visual Studio Code</a><br>命令行：dot，比如，<code>dot -Tpng -ofile.png file.dot</code>可以导出图片。在Ubuntu系统中，通过<code>sudo apt install graphviz</code>安装即可使用。</p>
-<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a><br><a target="_blank" rel="noopener" href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Graphviz (dot) examples</a></p>
+<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a><br><a target="_blank" rel="noopener" href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Graphviz (dot) examples</a><br><a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/attrs.html">Node, Edge and Graph Attributes</a></p>
 <h2 id="常用属性介绍"><a href="#常用属性介绍" class="headerlink" title="常用属性介绍"></a>常用属性介绍</h2><h3 id="节点（node）属性"><a href="#节点（node）属性" class="headerlink" title="节点（node）属性"></a>节点（node）属性</h3><p>节点的形状主要有三种：<a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html#polygon">Polygon-based Nodes</a>, <a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html#record">Record-based Nodes</a>, <a target="_blank" rel="noopener" href="http://www.graphviz.org/doc/info/shapes.html#epsf">User-defined Nodes</a>。点击链接可看到详细介绍。</p>
 <table>
 <thead>
@@ -362,25 +362,77 @@
 <h3 id="设置node和edge的默认属性"><a href="#设置node和edge的默认属性" class="headerlink" title="设置node和edge的默认属性"></a>设置node和edge的默认属性</h3><p>node和edge是两个特殊关键字，用于设置默认属性</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [attr&#x3D;value, ...]</span><br><span class="line">    edge [attr&#x3D;value, ...]</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="多点连线"><a href="#多点连线" class="headerlink" title="多点连线"></a>多点连线</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [shape&#x3D;box]</span><br><span class="line">    A -&gt; &#123;B, C, D&#125;</span><br><span class="line">    node [shape&#x3D;&quot;&quot;] &#x2F;&#x2F;恢复默认形状</span><br><span class="line">    &#123;E, F&#125; -&gt; &#123;M, N&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="多点连线"><a href="#多点连线" class="headerlink" title="多点连线"></a>多点连线</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [shape&#x3D;box]</span><br><span class="line">    A -&gt; &#123;B, C, D&#125; -&gt; E</span><br><span class="line">    node [shape&#x3D;&quot;&quot;]</span><br><span class="line">    &#123;P, Q&#125; -&gt; &#123;M, N&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <div id="graphviz-0"></div>
 
-<h2 id="控制元素水平对齐"><a href="#控制元素水平对齐" class="headerlink" title="控制元素水平对齐"></a>控制元素水平对齐</h2><div id="graphviz-1"></div>
-参考：[GraphViz DOT有向图 (六)edge线条控制](https://blog.csdn.net/youwen21/article/details/98397993)
+<h2 id="垂直方向布局"><a href="#垂直方向布局" class="headerlink" title="垂直方向布局"></a>垂直方向布局</h2><div id="graphviz-1"></div>
 
-<h2 id="建立表格元素的连接关系"><a href="#建立表格元素的连接关系" class="headerlink" title="建立表格元素的连接关系"></a>建立表格元素的连接关系</h2><p>参考：<a target="_blank" rel="noopener" href="https://spin.atomicobject.com/2017/11/15/table-rel-diagrams-graphviz/">Table Relationship Diagrams with Graphviz</a><script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">digraph {
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">digraph g&#123;</span><br><span class="line"> &#123;node[group&#x3D;a]; B;C;D;&#125;</span><br><span class="line"> A -&gt; B;</span><br><span class="line"> A -&gt; C;</span><br><span class="line"> A -&gt; D;</span><br><span class="line"> B -&gt;C -&gt;D [style&#x3D;invis];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<div id="graphviz-2"></div>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">digraph g&#123;</span><br><span class="line"> &#123;node[style&#x3D;invis, shape&#x3D;point, width&#x3D;0, height&#x3D;0]; l1; l2; l3&#125;</span><br><span class="line"> &#123;rank&#x3D;same; l1; B1; B2&#125;</span><br><span class="line"> &#123;rank&#x3D;same; l2; C1; C2&#125;</span><br><span class="line"> &#123;rank&#x3D;same; l3; D1; D2&#125;</span><br><span class="line"></span><br><span class="line"> A -&gt; l1 -&gt; l2 -&gt; l3 [dir&#x3D;none]</span><br><span class="line"> B1 -&gt; l1 [dir&#x3D;back]</span><br><span class="line"> l1 -&gt; B2</span><br><span class="line"> C1 -&gt; l2 [dir&#x3D;back]</span><br><span class="line"> l2 -&gt; C2</span><br><span class="line"> D1 -&gt; l3 [dir&#x3D;back]</span><br><span class="line"> l3 -&gt; D2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/19308847/graphviz-vertical-ordering">Graphviz Vertical Ordering</a></li>
+<li><a target="_blank" rel="noopener" href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/organization-chart">Graphviz example: organization chart</a></li>
+</ul>
+<h2 id="横向布局示例"><a href="#横向布局示例" class="headerlink" title="横向布局示例"></a>横向布局示例</h2><div id="graphviz-3"></div>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"> digraph G &#123;</span><br><span class="line"> newrank&#x3D;true</span><br><span class="line"> rankdir &#x3D; LR;</span><br><span class="line"> node [shape &#x3D; none]</span><br><span class="line"></span><br><span class="line"> 1-&gt;2-&gt;3-&gt;4[arrowhead&#x3D;none]</span><br><span class="line"></span><br><span class="line"> node [shape &#x3D; ellipse]</span><br><span class="line"></span><br><span class="line"> A-&gt;A1-&gt;A2-&gt;A3;</span><br><span class="line"></span><br><span class="line"> subgraph clusterCG&#123;</span><br><span class="line">  shape &#x3D; rect;</span><br><span class="line">  rank&#x3D;same;</span><br><span class="line"></span><br><span class="line">  A2;</span><br><span class="line">  B;</span><br><span class="line">  C;</span><br><span class="line">  color&#x3D;blue;</span><br><span class="line">  label&#x3D;&quot;C&quot;;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> &#123; rank&#x3D;same; 1; A;&#125;</span><br><span class="line"> &#123; rank&#x3D;same; 2; A1&#125;</span><br><span class="line"> &#123; rank&#x3D;same; 3; A2&#125;</span><br><span class="line"> &#123; rank&#x3D;same; 4; A3;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考：<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/13041728/how-to-change-graphviz-subgraph-rank">How to change Graphviz subgraph rank?</a></p>
+<script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">digraph {
     node [shape=box]
-    A -> {B, C, D}
+    A -> {B, C, D} -> E
     node [shape=""]
-    {E, F} -> {M, N}
-}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script><textarea id="graphviz-1-code" style="display: none">digraph {
-    A -> A1 
-    A -> A2
-    A -> A3
+    {P, Q} -> {M, N}
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script><textarea id="graphviz-1-code" style="display: none">digraph g{
+ {node[group=a]; B;C;D;}
+ A -> B;
+ A -> C;
+ A -> D;
+ B->C->D [style=invis];
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-1-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-1").append(element)  });</script><textarea id="graphviz-2-code" style="display: none">digraph g{
+ {node[style=invis, shape=point, width=0, height=0]; l1; l2; l3}
+ {rank=same; l1; B1; B2}
+ {rank=same; l2; C1; C2}
+ {rank=same; l3; D1; D2}
 
-}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-1-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-1").append(element)  });</script></p>
+ A -> l1 -> l2 -> l3 [dir=none]
+ B1 -> l1 [dir=back]
+ l1 -> B2
+ C1 -> l2 [dir=back]
+ l2 -> C2
+ D1 -> l3 [dir=back]
+ l3 -> D2
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-2-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-2").append(element)  });</script><textarea id="graphviz-3-code" style="display: none"> digraph G {
+ newrank=true
+ rankdir = LR;
+ node [shape = none]
 
+ 1->2->3->4[arrowhead=none]
+
+ node [shape = ellipse]
+
+ A->A1->A2->A3;
+
+ subgraph clusterCG{
+  shape = rect;
+  rank=same;
+
+  A2;
+  B;
+  C;
+  color=blue;
+  label="C";
+ }
+
+ { rank=same; 1; A;}
+ { rank=same; 2; A1}
+ { rank=same; 3; A2}
+ { rank=same; 4; A3;}
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-3-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-3").append(element)  });</script>
     </div>
 
     
@@ -460,7 +512,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-text">学习资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D"><span class="nav-text">常用属性介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%EF%BC%88node%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">节点（node）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%EF%BC%88edge%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">边（edge）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%EF%BC%88graph%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">图（graph）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEnode%E5%92%8Cedge%E7%9A%84%E9%BB%98%E8%AE%A4%E5%B1%9E%E6%80%A7"><span class="nav-text">设置node和edge的默认属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%82%B9%E8%BF%9E%E7%BA%BF"><span class="nav-text">多点连线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E5%85%83%E7%B4%A0%E6%B0%B4%E5%B9%B3%E5%AF%B9%E9%BD%90"><span class="nav-text">控制元素水平对齐</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BB%BA%E7%AB%8B%E8%A1%A8%E6%A0%BC%E5%85%83%E7%B4%A0%E7%9A%84%E8%BF%9E%E6%8E%A5%E5%85%B3%E7%B3%BB"><span class="nav-text">建立表格元素的连接关系</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-text">学习资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D"><span class="nav-text">常用属性介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%EF%BC%88node%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">节点（node）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%EF%BC%88edge%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">边（edge）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%EF%BC%88graph%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">图（graph）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEnode%E5%92%8Cedge%E7%9A%84%E9%BB%98%E8%AE%A4%E5%B1%9E%E6%80%A7"><span class="nav-text">设置node和edge的默认属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%82%B9%E8%BF%9E%E7%BA%BF"><span class="nav-text">多点连线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E5%B8%83%E5%B1%80"><span class="nav-text">垂直方向布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%AA%E5%90%91%E5%B8%83%E5%B1%80%E7%A4%BA%E4%BE%8B"><span class="nav-text">横向布局示例</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
