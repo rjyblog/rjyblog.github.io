@@ -240,37 +240,17 @@
 <div id="graphviz-0"></div>
 
 <p>参考：<a href="https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz">https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz</a></p>
-<p>但是在开启pjax时，graphviz图形需要手动刷新才能显示，所以不得不关闭pjax。<script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">graph demo3 {
+<p>但是在开启pjax时，graphviz图形需要手动刷新才能显示，所以不得不关闭pjax。</p>
+<h2 id="提交Google搜索收录"><a href="#提交Google搜索收录" class="headerlink" title="提交Google搜索收录"></a>提交Google搜索收录</h2><p>参考</p>
+<ul>
+<li><a href="http://www.yuan-ji.me/Hexo-%E4%BC%98%E5%8C%96%EF%BC%9A%E6%8F%90%E4%BA%A4sitemap%E5%8F%8A%E8%A7%A3%E5%86%B3%E7%99%BE%E5%BA%A6%E7%88%AC%E8%99%AB%E6%8A%93%E5%8F%96-GitHub-Pages-%E9%97%AE%E9%A2%98/">Hexo 优化：提交 sitemap 及解决百度爬虫无法抓取 GitHub Pages 链接问题</a><script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">graph demo3 {
     "数据结构三要素" -- {"数据的逻辑结构", "数据的存储结构", "数据的运算"}
-}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script></p>
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script></li>
+</ul>
 ]]></content>
       <categories>
         <category>Hexo</category>
       </categories>
-  </entry>
-  <entry>
-    <title>APK 反编译</title>
-    <url>/2019/05/10/android/APK%E5%8F%8D%E7%BC%96%E8%AF%91/</url>
-    <content><![CDATA[<h1 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h1><ul>
-<li><a href="https://ibotpeaches.github.io/Apktool/">apktool</a></li>
-<li><a href="https://github.com/pxb1988/dex2jar">dex2jar</a></li>
-<li><a href="http://java-decompiler.github.io/">JD-GUI</a></li>
-</ul>
-<h1 id="提取APK中的资源文件"><a href="#提取APK中的资源文件" class="headerlink" title="提取APK中的资源文件"></a>提取APK中的资源文件</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -jar apktool_2.1.0.jar decode app.apk</span><br></pre></td></tr></table></figure>
-
-<h1 id="dex转换为jar"><a href="#dex转换为jar" class="headerlink" title="dex转换为jar"></a>dex转换为jar</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">d2j-dex2jar.sh -f ~&#x2F;path&#x2F;to&#x2F;apk_to_decompile.apk</span><br></pre></td></tr></table></figure>
-<p>生成jar包后，需要使用<a href="http://java-decompiler.github.io/">JD-GUI</a>打开查看</p>
-<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul>
-<li><a href="https://segmentfault.com/a/1190000004703783">apk包的破解与反编译</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android调试</tag>
-        <tag>Android</tag>
-      </tags>
   </entry>
   <entry>
     <title>Markdown基本语法</title>
@@ -452,32 +432,38 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>addr2line死机问题定位</title>
-    <url>/2018/06/22/android/addr2line%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/</url>
-    <content><![CDATA[<blockquote>
-<p>死机问题在程序开发过程中是经常遇到的问题，本文介绍通过addr2line工具解析堆栈来定位死机问题</p>
-</blockquote>
-<h1 id="使用addr2line定位死机问题"><a href="#使用addr2line定位死机问题" class="headerlink" title="使用addr2line定位死机问题"></a>使用addr2line定位死机问题</h1><p>在某个C应用程序挂掉后，会生成堆栈信息，如下：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">F&#x2F;libc    (21866): Fatal signal 11 (SIGSEGV) at 0x00000000 (code&#x3D;1)</span><br><span class="line">W&#x2F;        (21866): [SkCanvas* DrawSurface::lockCanvas(const android::Rect&amp;)]-----[76]</span><br><span class="line">I&#x2F;DEBUG   (  944): *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***</span><br><span class="line">I&#x2F;DEBUG   (  944): Build fingerprint: &#39;full_godbox&#x2F;godbox:4.0.3&#x2F;8841C&#x2F;84125002:eng&#x2F; test-keys&#39;</span><br><span class="line">I&#x2F;DEBUG   (  944): pid: 21866, tid: 21866  &gt;&gt;&gt; demo_cmd &lt;&lt;&lt;</span><br><span class="line">I&#x2F;DEBUG   (  944): signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 00000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  r0 00000003  r1 00000000  r2 000010b0  r3 0000001f</span><br><span class="line">I&#x2F;DEBUG   (  944):  r4 41334124  r5 00000000  r6 beae2f94  r7 00000046</span><br><span class="line">I&#x2F;DEBUG   (  944):  r8 beae2f08  r9 00000010  10 00000bb8  fp beae3024</span><br><span class="line">I&#x2F;DEBUG   (  944):  ip 400c6108  sp beae2f00  lr 41331d13  pc 41331d42  cpsr 00000030</span><br><span class="line">I&#x2F;DEBUG   (  944):  d0  0000000000000000  d1  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d2  0000000000000000  d3  c1859800408ca000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d4  4125f000c1981600  d5  43ff000041200000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d6  0000000000000000  d7  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d8  0000000000000000  d9  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d10 0000000000000000  d11 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d12 0000000000000000  d13 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d14 0000000000000000  d15 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  scr 60000010</span><br><span class="line">I&#x2F;DEBUG   (  944):</span><br><span class="line">I&#x2F;DEBUG   (  944):          #00  pc 00002d42  &#x2F;system&#x2F;lib&#x2F;libtest.so (std_ping)</span><br><span class="line">I&#x2F;DEBUG   (  944):          #01  pc 0000f466  &#x2F;system&#x2F;bin&#x2F;demo_cmd</span><br><span class="line">I&#x2F;DEBUG   (  944):</span><br><span class="line">I&#x2F;DEBUG   (  944): code around pc:</span><br></pre></td></tr></table></figure>
-<p>这种情况下就可以通过<span style='color:blue'>addr2line</span>命令定位出死在了哪一行代码：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">addr2line -e libtest.so 00002d42</span><br><span class="line">addr2line -e demo_cmd 0000f466</span><br></pre></td></tr></table></figure>
-
-<p>注意：我们机顶盒上的so库或者可执行程序，一般都是被stripped的，是无法使用addr2line命令定位死机位置的。这种情况下，则需要找到对应的not stripped的同名文件。这两个文件必须是同一次编译生成的。<br>&ensp; 可以使用file命令查看strip状态，如下：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ file system/bin/demo_cmd</span><br><span class="line">system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), stripped</span><br><span class="line">$ file symbols/system/bin/demo_cmd</span><br><span class="line">symbols/system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), not stripped</span><br></pre></td></tr></table></figure>
-
-<p>备注：</p>
-<ul>
-<li>本文介绍的所有命令，都是在Linux主机上执行的命令；</li>
-<li>addr2line解析的文件必须是”<span style='color:red'>not stripped</span>“的文件。如果是android sdk，一般放在out的symbols目录下，比如：out/target/product/xxx/symbols/</li>
-<li>如果是Android机顶盒，应用程序挂掉后在/data/tombstones/目录下面会生成墓碑文件tombstone_*。在这些文件中就会有堆栈信息。</li>
+    <title>Android应用进程启动流程</title>
+    <url>/2020/11/29/android/Android-APP%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="启动流程图（点击可以看大图）："><a href="#启动流程图（点击可以看大图）：" class="headerlink" title="启动流程图（点击可以看大图）："></a>启动流程图（点击可以看大图）：</h2><p><img src="http://www.plantuml.com/plantuml/png/bLR9Rjim4BthAtYBdI16qlPa844SeoW2P37YeWNI4qsEBI8oAL1qdEHOjEUU-WNzWTxxFLq-eqEAacbhiNEIFVDcuUCiFCiCrMOnJw9eZyI20vagPIRgCKfHBfX8gJJaxccc35n8OOZI73GvFZgg0On1Fw2oW1pNG8PAIc16A5d2NjN0IkNhDUNjGXenNq_aJVH97Pw6AVR9d0eP1P9IxpFSts_Jzec6cSWCw5mmLkmUJBI6gTf8M99BnMWI6dMwMm8jv1WI9EHIgRGzmi41ufUnIA1Zz0Aws_AvoNgfIXBCO0_FOnPQHZbJ0wJ_GPYdAohfB3-ZO80MhXH6MZ78iakRFeyQiEZ5up0jRnWLaZALAcHTtWpy86YksMRH9tz_VVdtu-kpa_x-zldFzv-xH54fIC-NkwUBwJK0nmCts8uDnQAqbYmlu2YK8oo_UUThLLsbDlmRLeh33pZN6ApDOnWub5Thf99WIp5HnY0rGpMVKyb707e76wO1yxk6vQgH6wo2JaT2V0MsV4AI2iqkL_dieqi-qBDi8FaxCBUGBPAQSWkvwvFE-M8w1GtyenROxDsb_NIeddLRIRRZWNAIvLE10xKzOYyjCDhEYKqTk_z6igB80sLfu61JfU_nNECKcA29U2xe8QdWOVmmPgEyETP6Sc9AEXZWzAXBOgoF14PKWtJpeTR9EhUEIvTWBPMh_dLSrXuagB0sNUMIov-7phrZoil6ThZuugZuz9XcHH2ZQIwsXtmn-ISd9Vj3dFoyaVnWoQnwmlwjNJz-IqgAXu2x9couRArJcgQ9ODI6TEXGlm770yW7TU-QMR0hkurRqIRMQfdvx7fNO6B51tb33scIODbwKkrYxtG9Pi5YylRHpgzL3HI-Yyjv7xlYyi-13MaTpYvXqBrK0puwmAQTIt27RhMs3Dd1lYwkjrmHwOKu87SAG8sXBEvSL3oq9RXHeoi_WPUMHT_uN3WN4bzWlHaOUqT2paOYFEyBF5NIsVhwQ7GrnQIArhi5Xez4CdboywN5MUK--cI2Va9-_48APiCwuIyehmG_o5DqXYiB7zx_0G00" alt="应用进程启动流程" title="应用进程启动流程"></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Android Activity启动流程</title>
+    <url>/2020/11/29/android/Android-Activity%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="startActivity流程"><a href="#startActivity流程" class="headerlink" title="startActivity流程"></a>startActivity流程</h2><p><img src="http://www.plantuml.com/plantuml/png/nLNDIkmm5DxtARAx_Z-02t4GnC9KnCvu4GM9oT49TfAIfA8x1HSNtRYIo-XIn8te0mY-Z3FgMvZMTkmqqp8CWhicv_k-SywNatHHQInrr0wS5gE0zeJGk-B8SRR4x0Ag4SqEcJv6qzFpA05cEqu_L0bR5d8TL1Je0RpBbPPH6xZ6cWcUqE08Y3-GuO-5owNoCCVx81FgFcWVv24ZO3WIT2GvSWj0PuYMQukXOfiM9gx1yuSPOdRBWZNLLAQ639Bk9kqEJUlXux-OVPkM8KSYrmKv03eUjugr3aH8YgQcVbwwdDNaf0KZz4CE_2YCXq09QJIa6ResB0iIAQ19k272Wa4uNc8DPJ9EcNmnSpzVBaU_xifaWobiuSGFIzlb7AHzoaC4yaNFfixw8H2snyYW6zlyzRdJ_NVRkthe_N_iNjvrBn-xv_UzgwUtpjdxo_NR_OL3OPGkAepAXTBESE1NZwwb5uO18yaLRhGCdwOpOzocKG1r71dZlqVEGkTAodPYOu1J3vGoDtnYPQvUQwukhUpKbXhkXjlOd45oqYcIB9bvrCAS1f3Ab9gLcw-n8V7y_rh8yulBgkDANiFiKgz9GOmzNwUCjld7pSdxtUdNfAKpbZtWOtuiceCq_x9F" alt="startActivity流程" title="startActivity流程"></p>
+<h2 id="Activity启动流程"><a href="#Activity启动流程" class="headerlink" title="Activity启动流程"></a>Activity启动流程</h2><p><img src="http://www.plantuml.com/plantuml/png/bLNBRjim4BphAuZqK3k6ZVGO7OAuAj8QSDeWSLC4EHGRQHCHe4Y1fAssNrzIf0JBfYn51pt8cNqCTrVNIeFKsu95ESsGl0gXNyIVg3IBDAKbS4r-KPw9wXOulA7yoiGBC29aXf9SNdQ0ZnIhUsDWLPGDujF5HHGzY_aLMQQQxgZ-kyabGaPYaWFF6DwYKiRkOhty-JtvzdkPR5QFgyrJT00_DZ2RjJRMiELftkm7gA4CPhEOK4ur1KR_OHI2z31ZGXvGxcYAVdtnXjglJCwgcd4sdKOIzLRoKPbykBdvRAwOb2XVXIm6CrfnfUMsGAv1Ky6T6Xohbd88271YaZ1GQYt0dDI2cKVz7Q8sPidvkVDZCS1J74xIXGPQGvgtC0kuomL7fwypMxYFNb1C5EhEWVHxFzOd9YamrY1_yCH0DPvCjexSduY7xyVMnGaUWEo7RqCm2II2Q-FDzagqlstGNp0LqcuOFGxtka8KtieTI7DVG9RLzhmSmSVG2Vay7-muwEGGBBMkbevqIihvl9R80JyI5rExC3RIGCEu2N2FoZW-qI-XuU4p7iqDi0Q4EjJ9aqO8vP53mdIweHwxrgalXqdMrDCqEWRsZaNI6kWRYfqvRqhrNREpi6nbItQoEmvja6tzEhOqR-zbctw1mj6hidwVZagoxjn0YrqZpyo_ypy0" alt="Activity启动流程" title="Activity启动流程"></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>APK 反编译</title>
+    <url>/2019/05/10/android/APK%E5%8F%8D%E7%BC%96%E8%AF%91/</url>
+    <content><![CDATA[<h1 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h1><ul>
+<li><a href="https://ibotpeaches.github.io/Apktool/">apktool</a></li>
+<li><a href="https://github.com/pxb1988/dex2jar">dex2jar</a></li>
+<li><a href="http://java-decompiler.github.io/">JD-GUI</a></li>
 </ul>
-<h1 id="Android墓碑文件tombstone"><a href="#Android墓碑文件tombstone" class="headerlink" title="Android墓碑文件tombstone"></a>Android墓碑文件tombstone</h1><p>Android logcat打印的日志可以显示堆栈信息，但堆栈信息同时会保存到墓碑文件中。</p>
-<p>当一个动态库（native 程序）开始执行时，系统会注册一些连接到 debuggerd 的 signal handlers，当系统 crash 的时候，会保存一个 tombstone 文件到/data/tombstones目录下（Logcat中也会有相应的信息），文件的确就像墓碑一样记录了死亡了的进程的基本信息（例如进程的进程号，线程号），死亡的地址（在哪个地址上发生了 Crash），死亡时的现场是什么样的（记录了一系列的堆栈调用信息）等等。<br>注意：有些Android设备默认是不会产生墓碑文件的，需要手动创建文件/data/tombstones/tombstone_00</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir /data/tombstones/</span><br><span class="line">touch /data/tombstones/tombstone_00</span><br><span class="line">chmod 777 /data/tombstones/tombstone_00</span><br></pre></td></tr></table></figure>
-<p>系统发生一次段错误后，会把堆栈信息写入tombstone_0x文件，tombstone_0x文件需要从0~9循环使用，需要通过文件更新时间确认最新的一次段错误是哪个墓碑文件。</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://www.cnblogs.com/CoderTian/p/5980426.html">Android Tombstone 分析</a></li>
+<h1 id="提取APK中的资源文件"><a href="#提取APK中的资源文件" class="headerlink" title="提取APK中的资源文件"></a>提取APK中的资源文件</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">java -jar apktool_2.1.0.jar decode app.apk</span><br></pre></td></tr></table></figure>
+
+<h1 id="dex转换为jar"><a href="#dex转换为jar" class="headerlink" title="dex转换为jar"></a>dex转换为jar</h1><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">d2j-dex2jar.sh -f ~&#x2F;path&#x2F;to&#x2F;apk_to_decompile.apk</span><br></pre></td></tr></table></figure>
+<p>生成jar包后，需要使用<a href="http://java-decompiler.github.io/">JD-GUI</a>打开查看</p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul>
+<li><a href="https://segmentfault.com/a/1190000004703783">apk包的破解与反编译</a></li>
 </ul>
 ]]></content>
       <categories>
@@ -485,32 +471,6 @@ void main(int argc, char* argv[]) { <br>
       </categories>
       <tags>
         <tag>Android调试</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android Java虚拟机创建过程</title>
-    <url>/2020/10/30/android/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<p>本文基于Android8.0源码</p>
-<p>Android8.0使用的java虚拟机为ART，在大名鼎鼎的zygote进程中启动java虚拟机。<br>首先看一下zygote的main函数：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//app_main.cpp</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* <span class="keyword">const</span> argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//AppRuntime继承自AndroidRuntime, 构造函数中没有什么有用信息，可以不关注</span></span><br><span class="line">    <span class="function">AppRuntime <span class="title">runtime</span><span class="params">(argv[<span class="number">0</span>], computeArgBlockSize(argc, argv))</span></span>;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> (zygote) &#123;</span><br><span class="line">        <span class="comment">//调用到AndroidRuntime.start函数启动zygote进程的虚拟机</span></span><br><span class="line">        <span class="comment">//传入的第一个参数是java类ZygoteInit</span></span><br><span class="line">        runtime.start(<span class="string">&quot;com.android.internal.os.ZygoteInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className) &#123;</span><br><span class="line">        runtime.start(<span class="string">&quot;com.android.internal.os.RuntimeInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Error: no class name or --zygote supplied.\n&quot;</span>);</span><br><span class="line">        app_usage();</span><br><span class="line">        LOG_ALWAYS_FATAL(<span class="string">&quot;app_process: no class name or --zygote supplied.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>runtime.start会调用父类的AndroidRuntime::start，看一下实现</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AndroidRuntime.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AndroidRuntime::start</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* className, <span class="keyword">const</span> Vector&lt;String8&gt;&amp; options, <span class="keyword">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">/* start the virtual machine */</span></span><br><span class="line">    JniInvocation jni_invocation;</span><br><span class="line">    jni_invocation.Init(<span class="literal">NULL</span>);  <span class="comment">// 1. 加载虚拟机动态库，并加载库函数符号</span></span><br><span class="line">    JNIEnv* env;</span><br><span class="line">    <span class="keyword">if</span> (startVm(&amp;mJavaVM, &amp;env, zygote) != <span class="number">0</span>) &#123; <span class="comment">// 2. 启动虚拟机</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    onVmCreated(env);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Register android functions.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (startReg(env) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;Unable to register all android natives\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (startClass == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;JavaVM unable to locate class &#x27;%s&#x27;\n&quot;</span>, slashClassName);</span><br><span class="line">        <span class="comment">/* keep going */</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//调用com.android.internal.os.ZygoteInit的main函数，从此便进入了Java的世界</span></span><br><span class="line">        jmethodID startMeth = env-&gt;GetStaticMethodID(startClass, <span class="string">&quot;main&quot;</span>,</span><br><span class="line">            <span class="string">&quot;([Ljava/lang/String;)V&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (startMeth == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            ALOGE(<span class="string">&quot;JavaVM unable to find main() in &#x27;%s&#x27;\n&quot;</span>, className);</span><br><span class="line">            <span class="comment">/* keep going */</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            env-&gt;CallStaticVoidMethod(startClass, startMeth, strArray);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>加载虚拟机动态库，并加载库函数符号</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//JniInvocation.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">JniInvocation::Init</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* library)</span> </span>&#123;</span><br><span class="line">  ......</span><br><span class="line">  library = GetLibrary(library, buffer); <span class="comment">//返回“libart.so” art虚拟机库</span></span><br><span class="line">  ......</span><br><span class="line">  handle_ = dlopen(library, kDlopenFlags);  <span class="comment">//动态加载虚拟机so库</span></span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//下面的三个if语句都是通过dlsym来获取虚拟机so库中的函数符号</span></span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_GetDefaultJavaVMInitArgs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetDefaultJavaVMInitArgs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//无比重要的函数，获取虚拟机构造函数的函数符号，创建虚拟机全靠JNI_CreateJavaVM</span></span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_CreateJavaVM_),</span><br><span class="line">                  <span class="string">&quot;JNI_CreateJavaVM&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_GetCreatedJavaVMs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetCreatedJavaVMs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">jint <span class="title">JniInvocation::JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="keyword">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> JNI_CreateJavaVM_(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//该函数就是最终创建虚拟机的函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function">jint <span class="title">JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="keyword">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> JniInvocation::GetJniInvocation().JNI_CreateJavaVM(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>启动虚拟机</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Start the Dalvik Virtual Machine.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">AndroidRuntime::startVm</span><span class="params">(JavaVM** pJavaVM, JNIEnv** pEnv, <span class="keyword">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...... <span class="comment">//组装虚拟机启动参数</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Initialize the VM.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * The JavaVM* is essentially per-process, and the JNIEnv* is per-thread.</span></span><br><span class="line"><span class="comment">     * If this call succeeds, the VM is ready, and we can start issuing</span></span><br><span class="line"><span class="comment">     * JNI calls.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (JNI_CreateJavaVM(pJavaVM, pEnv, &amp;initArgs) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;JNI_CreateJavaVM failed\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
         <tag>Android</tag>
       </tags>
   </entry>
@@ -547,72 +507,52 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>C++ 构造函数和初始化成员列表</title>
-    <url>/2018/06/24/cpp/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%91%98%E5%88%97%E8%A1%A8/</url>
-    <content><![CDATA[<h2 id="类的初始化顺序"><a href="#类的初始化顺序" class="headerlink" title="类的初始化顺序"></a>类的初始化顺序</h2><hr>
-<p>根据ISO/IEC 14882:1998(E) 中12.6.2一节的介绍。</p>
-<blockquote>
-<p>Initialization shall proceed in the following order:</p>
-<ul>
-<li>First, and only for the constructor of the most derived class as described below, virtual base classes shall be initialized in the order they appear on a depth-first left-to-right traversal of the directed acyclic graph of base classes, where “left-to-right” is the order of appearance of the base class names in the derived class base-specifier-list.</li>
-<li>Then, direct base classes shall be initialized in declaration order as they appear in the base-specifier-list (regardless of the order of the mem-initializers).</li>
-<li>Then, nonstatic data members shall be initialized in the order they were declared in the class definition (again regardless of the order of the mem-initializers).</li>
-<li>Finally, the body of the constructor is executed.</li>
-</ul>
+    <title>addr2line死机问题定位</title>
+    <url>/2018/06/22/android/addr2line%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/</url>
+    <content><![CDATA[<blockquote>
+<p>死机问题在程序开发过程中是经常遇到的问题，本文介绍通过addr2line工具解析堆栈来定位死机问题</p>
 </blockquote>
-<p>上面的引用文字我没有完全看懂。但可以大体解释如下：</p>
+<h1 id="使用addr2line定位死机问题"><a href="#使用addr2line定位死机问题" class="headerlink" title="使用addr2line定位死机问题"></a>使用addr2line定位死机问题</h1><p>在某个C应用程序挂掉后，会生成堆栈信息，如下：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">F&#x2F;libc    (21866): Fatal signal 11 (SIGSEGV) at 0x00000000 (code&#x3D;1)</span><br><span class="line">W&#x2F;        (21866): [SkCanvas* DrawSurface::lockCanvas(const android::Rect&amp;)]-----[76]</span><br><span class="line">I&#x2F;DEBUG   (  944): *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***</span><br><span class="line">I&#x2F;DEBUG   (  944): Build fingerprint: &#39;full_godbox&#x2F;godbox:4.0.3&#x2F;8841C&#x2F;84125002:eng&#x2F; test-keys&#39;</span><br><span class="line">I&#x2F;DEBUG   (  944): pid: 21866, tid: 21866  &gt;&gt;&gt; demo_cmd &lt;&lt;&lt;</span><br><span class="line">I&#x2F;DEBUG   (  944): signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 00000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  r0 00000003  r1 00000000  r2 000010b0  r3 0000001f</span><br><span class="line">I&#x2F;DEBUG   (  944):  r4 41334124  r5 00000000  r6 beae2f94  r7 00000046</span><br><span class="line">I&#x2F;DEBUG   (  944):  r8 beae2f08  r9 00000010  10 00000bb8  fp beae3024</span><br><span class="line">I&#x2F;DEBUG   (  944):  ip 400c6108  sp beae2f00  lr 41331d13  pc 41331d42  cpsr 00000030</span><br><span class="line">I&#x2F;DEBUG   (  944):  d0  0000000000000000  d1  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d2  0000000000000000  d3  c1859800408ca000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d4  4125f000c1981600  d5  43ff000041200000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d6  0000000000000000  d7  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d8  0000000000000000  d9  0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d10 0000000000000000  d11 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d12 0000000000000000  d13 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  d14 0000000000000000  d15 0000000000000000</span><br><span class="line">I&#x2F;DEBUG   (  944):  scr 60000010</span><br><span class="line">I&#x2F;DEBUG   (  944):</span><br><span class="line">I&#x2F;DEBUG   (  944):          #00  pc 00002d42  &#x2F;system&#x2F;lib&#x2F;libtest.so (std_ping)</span><br><span class="line">I&#x2F;DEBUG   (  944):          #01  pc 0000f466  &#x2F;system&#x2F;bin&#x2F;demo_cmd</span><br><span class="line">I&#x2F;DEBUG   (  944):</span><br><span class="line">I&#x2F;DEBUG   (  944): code around pc:</span><br></pre></td></tr></table></figure>
+<p>这种情况下就可以通过<span style='color:blue'>addr2line</span>命令定位出死在了哪一行代码：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">addr2line -e libtest.so 00002d42</span><br><span class="line">addr2line -e demo_cmd 0000f466</span><br></pre></td></tr></table></figure>
+
+<p>注意：我们机顶盒上的so库或者可执行程序，一般都是被stripped的，是无法使用addr2line命令定位死机位置的。这种情况下，则需要找到对应的not stripped的同名文件。这两个文件必须是同一次编译生成的。<br>&ensp; 可以使用file命令查看strip状态，如下：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ file system/bin/demo_cmd</span><br><span class="line">system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), stripped</span><br><span class="line">$ file symbols/system/bin/demo_cmd</span><br><span class="line">symbols/system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), not stripped</span><br></pre></td></tr></table></figure>
+
+<p>备注：</p>
 <ul>
-<li>首先，对基类进行初始化；</li>
-<li>然后，初始化非静态数据成员。对于在初始化成员列表中的数据成员，编译器会使用列表中的值对数据成员进行初始化；没有出现在初始化成员列表中的数据成员，编译器会按照默认方式进行初始化（如果是类，就是调用类的默认构造函数）；</li>
-<li>最后，构造函数体会被执行。</li>
+<li>本文介绍的所有命令，都是在Linux主机上执行的命令；</li>
+<li>addr2line解析的文件必须是”<span style='color:red'>not stripped</span>“的文件。如果是android sdk，一般放在out的symbols目录下，比如：out/target/product/xxx/symbols/</li>
+<li>如果是Android机顶盒，应用程序挂掉后在/data/tombstones/目录下面会生成墓碑文件tombstone_*。在这些文件中就会有堆栈信息。</li>
 </ul>
-<h2 id="初始化成员列表（member-initializer-list）"><a href="#初始化成员列表（member-initializer-list）" class="headerlink" title="初始化成员列表（member initializer list）"></a>初始化成员列表（member initializer list）</h2><hr>
-<p>执行构造函数时，先执行初始化列表的内容，若初始化里面没有数据，则编译器按照系统默认的方式对成员变量赋值，随后再进行构造函数中花括号内部的指令。</p>
+<h1 id="Android墓碑文件tombstone"><a href="#Android墓碑文件tombstone" class="headerlink" title="Android墓碑文件tombstone"></a>Android墓碑文件tombstone</h1><p>Android logcat打印的日志可以显示堆栈信息，但堆栈信息同时会保存到墓碑文件中。</p>
+<p>当一个动态库（native 程序）开始执行时，系统会注册一些连接到 debuggerd 的 signal handlers，当系统 crash 的时候，会保存一个 tombstone 文件到/data/tombstones目录下（Logcat中也会有相应的信息），文件的确就像墓碑一样记录了死亡了的进程的基本信息（例如进程的进程号，线程号），死亡的地址（在哪个地址上发生了 Crash），死亡时的现场是什么样的（记录了一系列的堆栈调用信息）等等。<br>注意：有些Android设备默认是不会产生墓碑文件的，需要手动创建文件/data/tombstones/tombstone_00</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">mkdir /data/tombstones/</span><br><span class="line">touch /data/tombstones/tombstone_00</span><br><span class="line">chmod 777 /data/tombstones/tombstone_00</span><br></pre></td></tr></table></figure>
+<p>系统发生一次段错误后，会把堆栈信息写入tombstone_0x文件，tombstone_0x文件需要从0~9循环使用，需要通过文件更新时间确认最新的一次段错误是哪个墓碑文件。</p>
+<p>参考文章：</p>
 <ul>
-<li>对于引用型成员变量和const常量型成员变量，则必须通过初始化列表初始化该成员变量。</li>
-<li>如果成员类或者基类没有默认构造函数，则必须通过初始化表初始化该成员变量。</li>
-<li>成员变量初始化顺序有声明顺序决定，而与初始化列表的顺序无关。</li>
-<li>对于参数列表中所列的成员变量，可以不包含所有的成员变量。</li>
-</ul>
-<p>出于效率方面的考虑：对于有默认构造函数的成员类，编译器会在构建父类之前调用成员类的默认构造函数，如果在构造函数中又对该成员类进行赋值，则该成员类的构造函数调用了两次。</p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><hr>
-<ul>
-<li><a href="http://en.cppreference.com/w/cpp/language/initializer_list">Constructors and member initializer lists</a></li>
+<li><a href="http://www.cnblogs.com/CoderTian/p/5980426.html">Android Tombstone 分析</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>C/C++</category>
+        <category>Android</category>
       </categories>
       <tags>
-        <tag>C++</tag>
+        <tag>Android调试</tag>
       </tags>
   </entry>
   <entry>
-    <title>C/C++ 程序内存分段</title>
-    <url>/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/</url>
-    <content><![CDATA[<!-- ![内存分段示意图](C程序内存分段/11907096-13cc0f17b647d1bc.png) -->
-<img src="/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png" class="">
-
-
-<h2 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h2><p>栈又称堆栈， 是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进后出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
-<h2 id="堆（heap）"><a href="#堆（heap）" class="headerlink" title="堆（heap）"></a>堆（heap）</h2><p>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
-<h2 id="BSS段（bss-segment）"><a href="#BSS段（bss-segment）" class="headerlink" title="BSS段（bss segment）"></a>BSS段（bss segment）</h2><p>BSS（Block Started by Symbol）属于静态内存分配，通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。特点是可读写。</p>
-<p>BSS段在磁盘上不是真的占用变量大小的空间，它仅仅记录了变量所需要的大小（占位符），也就是说，在该段中记录了所有未初始化全局变量与局部静态变量的大小总和，至于每个变量的大小则存储在符号表的size属性中。当可执行文件加载运行前，会为BSS段中的变量分配足够的空间并全部自动清零（因此，才有未初始化的全局变量的值为0的说法）。</p>
-<p>BSS段主要是为了节省可执行文件在磁盘上所占的空间，对未初始化的大型数组的节省效率比较明显。</p>
-<p>默认情况下，编译器会把初始化值为0的变量（比如static int a = 0）放在BSS段。但可以通过“#pragma explicit_zero_data on”把初始值为零的变量放到data段，而不是bss段。</p>
-<h2 id="数据段（data-segment）"><a href="#数据段（data-segment）" class="headerlink" title="数据段（data segment）"></a>数据段（data segment）</h2><p>通常是指用来存放程序中已初始化的全局变量的一块内存区域，会占用磁盘文件空间。数据段属于静态内存分配。</p>
-<h2 id="只读数据段（read-only-data-segment）"><a href="#只读数据段（read-only-data-segment）" class="headerlink" title="只读数据段（read only data segment）"></a>只读数据段（read only data segment）</h2><p>rodata用于存储使用const修饰的变量，或者只读类型的字符串等。</p>
-<h2 id="代码段（code-segment-text-segment）"><a href="#代码段（code-segment-text-segment）" class="headerlink" title="代码段（code segment/text segment）"></a>代码段（code segment/text segment）</h2><p>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读, 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等。</p>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
-<li><a href="https://blog.csdn.net/virtual_func/article/details/48529249">关于BSS段的大小</a></li>
-<li><a href="https://blog.csdn.net/jxhui23/article/details/8064766">数据段、代码段、堆栈段、BSS段的区别</a></li>
-</ul>
+    <title>Excel常用函数算法</title>
+    <url>/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
+<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>C/C++</category>
+        <category>Office</category>
       </categories>
       <tags>
-        <tag>C++</tag>
+        <tag>Excel</tag>
       </tags>
   </entry>
   <entry>
@@ -654,69 +594,31 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>gcc编译过程</title>
-    <url>/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</url>
-    <content><![CDATA[<!-- ![gcc编译过程](/images/11907096-16ea161c42fba6a4.png) -->
-<!-- <img src="/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/11907096-16ea161c42fba6a4.png" class=""> -->
+    <title>C/C++ 程序内存分段</title>
+    <url>/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/</url>
+    <content><![CDATA[<!-- ![内存分段示意图](C程序内存分段/11907096-13cc0f17b647d1bc.png) -->
+<img src="/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png" class="">
 
-<div id="graphviz-0"></div>
 
-<h2 id="示例如下："><a href="#示例如下：" class="headerlink" title="示例如下："></a>示例如下：</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i</span><br><span class="line">gcc -S hello.i -o hello.s</span><br><span class="line">gcc -c hello.s -o hello.o</span><br><span class="line">gcc hello.s -o hello</span><br></pre></td></tr></table></figure>
-<script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">digraph {
-    node [shape=box]
-    rankdir=LR
-    c [label="hello.c"]
-    i [label="hello.i"]
-    s [label="hello.s"]
-    o [label="hello.o"]
-    e [label="hello"]
-    c -> i [label="预处理 -E"]
-    i -> s [label="编译 -S"]
-    s -> o [label="汇编 -c"]
-    o -> e [label="链接"]
-}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script>]]></content>
+<h2 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h2><p>栈又称堆栈， 是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进后出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
+<h2 id="堆（heap）"><a href="#堆（heap）" class="headerlink" title="堆（heap）"></a>堆（heap）</h2><p>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
+<h2 id="BSS段（bss-segment）"><a href="#BSS段（bss-segment）" class="headerlink" title="BSS段（bss segment）"></a>BSS段（bss segment）</h2><p>BSS（Block Started by Symbol）属于静态内存分配，通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。特点是可读写。</p>
+<p>BSS段在磁盘上不是真的占用变量大小的空间，它仅仅记录了变量所需要的大小（占位符），也就是说，在该段中记录了所有未初始化全局变量与局部静态变量的大小总和，至于每个变量的大小则存储在符号表的size属性中。当可执行文件加载运行前，会为BSS段中的变量分配足够的空间并全部自动清零（因此，才有未初始化的全局变量的值为0的说法）。</p>
+<p>BSS段主要是为了节省可执行文件在磁盘上所占的空间，对未初始化的大型数组的节省效率比较明显。</p>
+<p>默认情况下，编译器会把初始化值为0的变量（比如static int a = 0）放在BSS段。但可以通过“#pragma explicit_zero_data on”把初始值为零的变量放到data段，而不是bss段。</p>
+<h2 id="数据段（data-segment）"><a href="#数据段（data-segment）" class="headerlink" title="数据段（data segment）"></a>数据段（data segment）</h2><p>通常是指用来存放程序中已初始化的全局变量的一块内存区域，会占用磁盘文件空间。数据段属于静态内存分配。</p>
+<h2 id="只读数据段（read-only-data-segment）"><a href="#只读数据段（read-only-data-segment）" class="headerlink" title="只读数据段（read only data segment）"></a>只读数据段（read only data segment）</h2><p>rodata用于存储使用const修饰的变量，或者只读类型的字符串等。</p>
+<h2 id="代码段（code-segment-text-segment）"><a href="#代码段（code-segment-text-segment）" class="headerlink" title="代码段（code segment/text segment）"></a>代码段（code segment/text segment）</h2><p>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读, 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="https://blog.csdn.net/virtual_func/article/details/48529249">关于BSS段的大小</a></li>
+<li><a href="https://blog.csdn.net/jxhui23/article/details/8064766">数据段、代码段、堆栈段、BSS段的区别</a></li>
+</ul>
+]]></content>
       <categories>
         <category>C/C++</category>
       </categories>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Linux清理Cached内存</title>
-    <url>/2018/07/13/memory/Linux%E6%B8%85%E7%90%86cache/</url>
-    <content><![CDATA[<p>Kernels 2.6.16 and newer provide a mechanism to have the kernel drop the page cache and/or inode and dentry caches on command, which can help free up a lot of memory. Now you can throw away that script that allocated a ton of memory just to get rid of the cache…</p>
-<p>To use /proc/sys/vm/drop_caches, just echo a number to it.</p>
-<p>To free pagecache:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>To free dentries and inodes:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>To free pagecache, dentries and inodes:</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
-<p>This is a non-destructive operation and will only free things that are completely unused. Dirty objects will continue to be in use until written out to disk and are not freeable. If you run “sync” first to flush them out to disk, these drop operations will tend to free more memory.</p>
-<p>参考网站：</p>
-<ul>
-<li><a href="https://linux-mm.org/Drop_Caches">Drop_Caches</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Linux</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Mixin模式</title>
-    <url>/2019/01/13/design-patterns/Mixin/</url>
-    <content><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Mixin">Mixin wiki</a></p>
-<p><a href="http://www.cnblogs.com/xybaby/p/6484262.html">Mixin模式</a></p>
-]]></content>
-      <categories>
-        <category>设计模式</category>
-      </categories>
-      <tags>
-        <tag>设计模式</tag>
       </tags>
   </entry>
   <entry>
@@ -755,51 +657,27 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>Shell管道</title>
-    <url>/2018/06/24/shell/Shell%E7%AE%A1%E9%81%93/</url>
-    <content><![CDATA[<h2 id="通过管道执行命令，获取各个命令的返回值"><a href="#通过管道执行命令，获取各个命令的返回值" class="headerlink" title="通过管道执行命令，获取各个命令的返回值"></a>通过管道执行命令，获取各个命令的返回值</h2><p>比如执行命令：cmd1 | cmd2 | cmd3  。 如果命令执行完后，通过”$?”获取的是cmd3的返回值。如何获取cmd1和cmd2的返回值呢？</p>
-<p>在bash环境下，命令的返回值保存在”PIPESTATUS”数组中:</p>
+    <title>Linux清理Cached内存</title>
+    <url>/2018/07/13/memory/Linux%E6%B8%85%E7%90%86cache/</url>
+    <content><![CDATA[<p>Kernels 2.6.16 and newer provide a mechanism to have the kernel drop the page cache and/or inode and dentry caches on command, which can help free up a lot of memory. Now you can throw away that script that allocated a ton of memory just to get rid of the cache…</p>
+<p>To use /proc/sys/vm/drop_caches, just echo a number to it.</p>
+<p>To free pagecache:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>To free dentries and inodes:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>To free pagecache, dentries and inodes:</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>This is a non-destructive operation and will only free things that are completely unused. Dirty objects will continue to be in use until written out to disk and are not freeable. If you run “sync” first to flush them out to disk, these drop operations will tend to free more memory.</p>
+<p>参考网站：</p>
 <ul>
-<li>${PIPESTATUS[0]} 是cmd1的返回值；</li>
-<li>${PIPESTATUS[1]} 是cmd2的返回值；</li>
-<li>${PIPESTATUS[2]} 是cmd3的返回值；</li>
-<li>$? 始终等于 ${PIPESTATUS:-1}。</li>
-</ul>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
-<li><a href="http://unix.derkeiler.com/Newsgroups/comp.unix.shell/2003-09/0909.html">comp.unix.shell FAQ - Answers to Frequently Asked Questions</a></li>
+<li><a href="https://linux-mm.org/Drop_Caches">Drop_Caches</a></li>
 </ul>
 ]]></content>
       <categories>
-        <category>Shell</category>
+        <category>Linux</category>
       </categories>
       <tags>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>awk命令使用说明</title>
-    <url>/2018/06/24/shell/awk%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
-    <content><![CDATA[<p><strong>查找</strong><br>查找以<code>ro.build.id=</code>开头的行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;/^ro.build.id=/ &#123;print $1&#125;&#x27;</span> build.prop   <span class="comment">#在build.prop文件中查找</span></span><br></pre></td></tr></table></figure>
-<p>下面的例子实现了同样的效果，但是采用了变量的形式，用起来会更加灵活</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">prop_name=ro.build.id</span><br><span class="line">awk -v identifier=<span class="string">&quot;<span class="variable">$&#123;prop_name&#125;</span>=&quot;</span> <span class="string">&#x27;$0 ~ &quot;^&quot; identifier &#123;print $1&#125;&#x27;</span> build.prop</span><br></pre></td></tr></table></figure>
-
-<p><strong>分割字符</strong><br>默认以空格为分隔符，比如：<code>input | awk &#39;&#123;print \$1&#125;&#39;</code><br>可以通过-F参数指定分隔符，比如： <code>input | awk -F &quot;-&gt;&quot; &#39;&#123;print $2&#125;&#39;</code></p>
-<p><strong>字符串替换</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>实例：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>查找SYSTEM/开头的字符串，并把SYSTEM替换为system后输出<br>或者：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 /target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;/^SYSTEM\// &#123;print&#125;&#x27;</span> | awk <span class="string">&#x27;sub(/SYSTEM/,&quot;system&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>也能实现相同的效果</p>
-<p><strong>只输出最后一行</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --pretty=format:<span class="string">&quot;%H\ | awk &#x27;NF&#123;a=<span class="variable">$0</span>&#125; END&#123;print a&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Shell</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
+        <tag>Linux</tag>
       </tags>
   </entry>
   <entry>
@@ -846,153 +724,32 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>sed命令使用说明</title>
-    <url>/2018/06/24/shell/sed%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
-    <content><![CDATA[<h2 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h2><h3 id="普通字符替换"><a href="#普通字符替换" class="headerlink" title="普通字符替换"></a>普通字符替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">param_name=ro.build.id</span><br><span class="line">sed -i &quot;s/$&#123;param_name&#125;=.*/$&#123;param_name&#125;=new_value/g&quot; build.prop</span><br></pre></td></tr></table></figure>
-<p>本例用于修改build.prop文件中的ro.build.id参数的值</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/oldstring/newstring/g&quot; `grep oldstring -rl yourdir`</span><br></pre></td></tr></table></figure>
-<p>批量替换</p>
-<h3 id="二进制内容替换"><a href="#二进制内容替换" class="headerlink" title="二进制内容替换"></a>二进制内容替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &#x27;s/\x00/\x0a/g&#x27; %s      #本例是把&#x27;\0&#x27;替换为&#x27;\n&#x27;</span><br></pre></td></tr></table></figure>
+    <title>gcc编译过程</title>
+    <url>/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<!-- ![gcc编译过程](/images/11907096-16ea161c42fba6a4.png) -->
+<!-- <img src="/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/11907096-16ea161c42fba6a4.png" class=""> -->
 
-<h2 id="行操作"><a href="#行操作" class="headerlink" title="行操作"></a>行操作</h2><h3 id="删除文件中的某一行"><a href="#删除文件中的某一行" class="headerlink" title="删除文件中的某一行"></a>删除文件中的某一行</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i \&#x27;1d\&#x27; %s   #删除第一行的文字</span><br></pre></td></tr></table></figure>
+<div id="graphviz-0"></div>
 
-<h3 id="按行截取文本文件内容"><a href="#按行截取文本文件内容" class="headerlink" title="按行截取文本文件内容"></a>按行截取文本文件内容</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;起始行号,结束行号p&#x27; 原始文件 &gt; 另存为的文件</span><br></pre></td></tr></table></figure>
-]]></content>
+<h2 id="示例如下："><a href="#示例如下：" class="headerlink" title="示例如下："></a>示例如下：</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i</span><br><span class="line">gcc -S hello.i -o hello.s</span><br><span class="line">gcc -c hello.s -o hello.o</span><br><span class="line">gcc hello.s -o hello</span><br></pre></td></tr></table></figure>
+<script src="https://unpkg.com/viz.js@2.1.2/viz.js"></script><script src="https://unpkg.com/viz.js@2.1.2/full.render.js"></script><textarea id="graphviz-0-code" style="display: none">digraph {
+    node [shape=box]
+    rankdir=LR
+    c [label="hello.c"]
+    i [label="hello.i"]
+    s [label="hello.s"]
+    o [label="hello.o"]
+    e [label="hello"]
+    c -> i [label="预处理 -E"]
+    i -> s [label="编译 -S"]
+    s -> o [label="汇编 -c"]
+    o -> e [label="链接"]
+}</textarea><script>  var viz = new Viz();  var code = document.getElementById("graphviz-0-code").value;  viz.renderSVGElement(code)  .then(function(element) {    document.getElementById("graphviz-0").append(element)  });</script>]]></content>
       <categories>
-        <category>Shell</category>
+        <category>C/C++</category>
       </categories>
       <tags>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git 中文乱码问题</title>
-    <url>/2019/01/13/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</url>
-    <content><![CDATA[<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://www.worldhello.net/gotgit/08-git-misc/020-git-charset.html">Git字符集问题</a></p>
-]]></content>
-      <categories>
-        <category>代码管理</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Git 常用命令</title>
-    <url>/2018/07/25/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h2 id="常用全局配置"><a href="#常用全局配置" class="headerlink" title="常用全局配置"></a>常用全局配置</h2><p>git配置使用<a href="https://git-scm.com/docs/git-config">git config</a>来完成。</p>
-<h3 id="配置用户信息"><a href="#配置用户信息" class="headerlink" title="配置用户信息"></a>配置用户信息</h3><p>要配置成自己的真实用户名（姓名全拼）和邮箱</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;John Doe&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;johndoe@example.com&quot;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="配置别名"><a href="#配置别名" class="headerlink" title="配置别名"></a>配置别名</h3><p>比如<a href="https://git-scm.com/docs/git-checkout">git checkout</a>通过配置别名，可以使用git co来达到<a href="https://git-scm.com/docs/git-checkout">git checkout</a>的效果</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global alias.co checkout</span><br><span class="line">git config --global alias.br branch</span><br><span class="line">git config --global alias.ci commit</span><br><span class="line">git config --global alias.st status</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置编辑器vim"><a href="#配置编辑器vim" class="headerlink" title="配置编辑器vim"></a>配置编辑器vim</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global core.editor vim</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置代码合并工具"><a href="#配置代码合并工具" class="headerlink" title="配置代码合并工具"></a>配置代码合并工具</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global merge.tool vimdiff</span><br></pre></td></tr></table></figure>
-
-<h3 id="配置高亮显示"><a href="#配置高亮显示" class="headerlink" title="配置高亮显示"></a>配置高亮显示</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global color.ui <span class="literal">true</span></span><br><span class="line">git config --global color.status auto</span><br><span class="line">git config --global color.branch auto</span><br></pre></td></tr></table></figure>
-
-<h3 id="查看所有配置"><a href="#查看所有配置" class="headerlink" title="查看所有配置"></a>查看所有配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
-
-<h2 id="下载代码"><a href="#下载代码" class="headerlink" title="下载代码"></a>下载代码</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/libgit2/libgit2</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/libgit2/libgit2 -b &lt;branch name&gt;</span><br></pre></td></tr></table></figure>
-
-<h2 id="下载单个分支"><a href="#下载单个分支" class="headerlink" title="下载单个分支"></a>下载单个分支</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/libgit2/libgit2 -b master --single-branch</span><br></pre></td></tr></table></figure>
-
-<p>查看工程下的.git/config文件可以看到下面一句“fetch = +refs/heads/dev:refs/remotes/origin/master”，表示只拉取一个分支。</p>
-<p>如果还想在工程中拉取其他分支，比如develop，则可以执行命令<code>git remote set-branches --add origin develop</code><br>参考链接：<a href="https://git-scm.com/book/en/v2/Git-Internals-The-Refspec">Git Internals - The Refspec</a></p>
-<h2 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h2><p>创建一个名为new_branch的分支</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch new_branch  </span><br></pre></td></tr></table></figure>
-
-<p>创建本地branch_name分支，并且跟踪远端仓库的同名分支</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git checkout -t remote/branch_name</span><br></pre></td></tr></table></figure>
-
-<p>删除本地分支</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch -D branch_name</span><br></pre></td></tr></table></figure>
-<p>删除远端remote仓库的名为branch_name的分支</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push remote :branch_name</span><br></pre></td></tr></table></figure>
-<p>从一个分支切到另一个分支，注意此分支必须是已经有的分支</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git checkout branch</span><br></pre></td></tr></table></figure>
-
-<h2 id="查看代码历史"><a href="#查看代码历史" class="headerlink" title="查看代码历史"></a>查看代码历史</h2><h3 id="查看本地未提交的commit"><a href="#查看本地未提交的commit" class="headerlink" title="查看本地未提交的commit"></a>查看本地未提交的commit</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> @&#123;u&#125;..</span><br></pre></td></tr></table></figure>
-<p>或者</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> origin/master..HEAD</span><br></pre></td></tr></table></figure>
-
-<h2 id="修改代码并提交"><a href="#修改代码并提交" class="headerlink" title="修改代码并提交"></a>修改代码并提交</h2><ol>
-<li><p>代码修改后，可以通过如下命令将修改的代码标记为track状态（可根据实际情况选择其中一条或者多条命令)。</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add &lt;files...&gt;</span><br><span class="line">git mv &lt;old&gt; &lt;new&gt;</span><br><span class="line">git rm &lt;files...&gt;</span><br><span class="line">git rm -r &lt;<span class="built_in">dirs</span>...&gt;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将标记为track状态的文件提交</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git commit</span><br></pre></td></tr></table></figure>
-<p> 提交修改，该命令会调用编辑器用于书写log信息。也可使使用<code>git commit     -m &quot;commit messages&quot;</code></p>
-</li>
-<li><p>提交代码到远程仓库<br> 如果本地分支已经配置为跟踪远端分支（比如：git co -t origin/develop)，可以直接使用<code>git push</code>。如果还没有设置跟踪远端分支，则需要使用下面命令：</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push remote branch</span><br></pre></td></tr></table></figure>
-<p> remote 表示远程仓库名称，branch表示分支名称。此命令只适用于本地仓库与远程仓库同名的情况。当分支名称不同是，需要同时指定本地分支和远端分支。</p>
- <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push remote local_branch:remote_branch</span><br></pre></td></tr></table></figure>
-
-</li>
-</ol>
-<h2 id="回退代码"><a href="#回退代码" class="headerlink" title="回退代码"></a>回退代码</h2><p>回退代码会用到git的reset和checkout两个指令：</p>
-<ul>
-<li><p><a href="https://git-scm.com/docs/git-reset">git reset</a> 是把本地代码回退掉，要切到最新，则需要通过<a href="https://git-scm.com/docs/git-pull">git pull</a>拉取服务器上的最新代码；一般只有在需要永远放弃某些修改的情况下，才使用<a href="https://git-scm.com/docs/git-reset">git reset</a>命令。</p>
-</li>
-<li><p><a href="https://git-scm.com/docs/git-checkout">git checkout</a> 是切到过去的时间点，还可以切换来。相当于切到了一个新的分支，还可以切换原来分支。</p>
-</li>
-<li><p>*注意**，本节的示例中的所有<a href="https://git-scm.com/docs/git-reset">git reset</a>都可以可以换成<a href="https://git-scm.com/docs/git-checkout">git checkout</a>。</p>
-</li>
-<li><p>将代码回退到三天前</p>
-</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --before=<span class="string">&quot;3 days&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span></span><br><span class="line">619ee7a53952d4c94270aa39e9ecdf9ac3aca473</span><br><span class="line">$ git reset --hard 619ee7a53952d4c94270aa39e9ecdf9ac3aca473</span><br></pre></td></tr></table></figure>
-
-<p>也可以合起来用：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --before=<span class="string">&quot;3 days&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span> | xargs git reset --hard</span><br></pre></td></tr></table></figure>
-
-<ul>
-<li><p>回退代码到某一天</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --before=<span class="string">&quot;2013-10-10&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span> | xargs git reset --hard</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>回退代码到某一天的某个时间点</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --before=<span class="string">&quot;2013-10-10 09:15:00 +0800&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span> | xargs git    checkout</span><br></pre></td></tr></table></figure>
-<p>  其中 +0800 表示东八区时间</p>
-</li>
-<li><p>查看某个时间段的日志</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --since=<span class="string">&quot;2013-10-10 09:15:00 +0800&quot;</span> --before=<span class="string">&quot;2013-10-10 23:59:00 +0800&quot;</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>将服务器代码回退到某个点并提交到某个分支（服务器回退不可恢复，确保准确后回退，做好备份）</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git reset --hard commit_id</span><br><span class="line">git push --force sunniwell base</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h2><p>合并分支前提是需要相同SDK中的不同分支。</p>
-<ul>
-<li><p>把另外一个分支的所有修改快速合并。并提交到一个分支上</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git merge --no-ff</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>把另外一个分支的单个commit 合并到当前分支，并提交单个分支，有冲突查看“HEAD”关键字</p>
-  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git cherry-pick &lt;commit&gt;</span><br></pre></td></tr></table></figure>
-
-</li>
-</ul>
-<h2 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h2><p>合并分支时难免会产生冲突。冲突发生后分为如下两种情况进行处理：</p>
-<ul>
-<li><strong>文本文件冲突</strong> 可以通过git mergetool命令编辑冲突文件；</li>
-<li><strong>二进制文件冲突</strong> 时就无法合并了，要么使用被合并分支的该文件，要么就采用当前分支的该文件。<br>比如仓库下面的“path/lib_file.so”冲突了。则可以通过如下命令选择采用哪个分支的文件：  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git show branch_name:path/lib_file.so &gt; path/lib_file.so</span><br></pre></td></tr></table></figure>
-  命令中的第一个path/lib_file.so必须是对应的git仓库根目录的路径，第二个path/lib_file.so则是当前目录的相对路径。<h2 id="查看本地分支跟踪的远程分支"><a href="#查看本地分支跟踪的远程分支" class="headerlink" title="查看本地分支跟踪的远程分支"></a>查看本地分支跟踪的远程分支</h2></li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git rev-parse --abbrev-ref --symbolic-full-name @&#123;upstream&#125;</span><br></pre></td></tr></table></figure>
-
-<p><a href="https://stackoverflow.com/questions/171550/find-out-which-remote-branch-a-local-branch-is-tracking">Find out which remote branch a local branch is tracking</a></p>
-<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
-<li><a href="https://git-scm.com/book/en/v2">Pro Git book</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>代码管理</category>
-      </categories>
-      <tags>
-        <tag>Git</tag>
+        <tag>C++</tag>
       </tags>
   </entry>
   <entry>
@@ -1305,16 +1062,282 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>Excel常用函数算法</title>
-    <url>/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
-<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+    <title>Shell管道</title>
+    <url>/2018/06/24/shell/Shell%E7%AE%A1%E9%81%93/</url>
+    <content><![CDATA[<h2 id="通过管道执行命令，获取各个命令的返回值"><a href="#通过管道执行命令，获取各个命令的返回值" class="headerlink" title="通过管道执行命令，获取各个命令的返回值"></a>通过管道执行命令，获取各个命令的返回值</h2><p>比如执行命令：cmd1 | cmd2 | cmd3  。 如果命令执行完后，通过”$?”获取的是cmd3的返回值。如何获取cmd1和cmd2的返回值呢？</p>
+<p>在bash环境下，命令的返回值保存在”PIPESTATUS”数组中:</p>
+<ul>
+<li>${PIPESTATUS[0]} 是cmd1的返回值；</li>
+<li>${PIPESTATUS[1]} 是cmd2的返回值；</li>
+<li>${PIPESTATUS[2]} 是cmd3的返回值；</li>
+<li>$? 始终等于 ${PIPESTATUS:-1}。</li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="http://unix.derkeiler.com/Newsgroups/comp.unix.shell/2003-09/0909.html">comp.unix.shell FAQ - Answers to Frequently Asked Questions</a></li>
+</ul>
 ]]></content>
       <categories>
-        <category>Office</category>
+        <category>Shell</category>
       </categories>
       <tags>
-        <tag>Excel</tag>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Mixin模式</title>
+    <url>/2019/01/13/design-patterns/Mixin/</url>
+    <content><![CDATA[<p><a href="https://en.wikipedia.org/wiki/Mixin">Mixin wiki</a></p>
+<p><a href="http://www.cnblogs.com/xybaby/p/6484262.html">Mixin模式</a></p>
+]]></content>
+      <categories>
+        <category>设计模式</category>
+      </categories>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++ 构造函数和初始化成员列表</title>
+    <url>/2018/06/24/cpp/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%91%98%E5%88%97%E8%A1%A8/</url>
+    <content><![CDATA[<h2 id="类的初始化顺序"><a href="#类的初始化顺序" class="headerlink" title="类的初始化顺序"></a>类的初始化顺序</h2><hr>
+<p>根据ISO/IEC 14882:1998(E) 中12.6.2一节的介绍。</p>
+<blockquote>
+<p>Initialization shall proceed in the following order:</p>
+<ul>
+<li>First, and only for the constructor of the most derived class as described below, virtual base classes shall be initialized in the order they appear on a depth-first left-to-right traversal of the directed acyclic graph of base classes, where “left-to-right” is the order of appearance of the base class names in the derived class base-specifier-list.</li>
+<li>Then, direct base classes shall be initialized in declaration order as they appear in the base-specifier-list (regardless of the order of the mem-initializers).</li>
+<li>Then, nonstatic data members shall be initialized in the order they were declared in the class definition (again regardless of the order of the mem-initializers).</li>
+<li>Finally, the body of the constructor is executed.</li>
+</ul>
+</blockquote>
+<p>上面的引用文字我没有完全看懂。但可以大体解释如下：</p>
+<ul>
+<li>首先，对基类进行初始化；</li>
+<li>然后，初始化非静态数据成员。对于在初始化成员列表中的数据成员，编译器会使用列表中的值对数据成员进行初始化；没有出现在初始化成员列表中的数据成员，编译器会按照默认方式进行初始化（如果是类，就是调用类的默认构造函数）；</li>
+<li>最后，构造函数体会被执行。</li>
+</ul>
+<h2 id="初始化成员列表（member-initializer-list）"><a href="#初始化成员列表（member-initializer-list）" class="headerlink" title="初始化成员列表（member initializer list）"></a>初始化成员列表（member initializer list）</h2><hr>
+<p>执行构造函数时，先执行初始化列表的内容，若初始化里面没有数据，则编译器按照系统默认的方式对成员变量赋值，随后再进行构造函数中花括号内部的指令。</p>
+<ul>
+<li>对于引用型成员变量和const常量型成员变量，则必须通过初始化列表初始化该成员变量。</li>
+<li>如果成员类或者基类没有默认构造函数，则必须通过初始化表初始化该成员变量。</li>
+<li>成员变量初始化顺序有声明顺序决定，而与初始化列表的顺序无关。</li>
+<li>对于参数列表中所列的成员变量，可以不包含所有的成员变量。</li>
+</ul>
+<p>出于效率方面的考虑：对于有默认构造函数的成员类，编译器会在构建父类之前调用成员类的默认构造函数，如果在构造函数中又对该成员类进行赋值，则该成员类的构造函数调用了两次。</p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><hr>
+<ul>
+<li><a href="http://en.cppreference.com/w/cpp/language/initializer_list">Constructors and member initializer lists</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git 中文乱码问题</title>
+    <url>/2019/01/13/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</url>
+    <content><![CDATA[<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://www.worldhello.net/gotgit/08-git-misc/020-git-charset.html">Git字符集问题</a></p>
+]]></content>
+      <categories>
+        <category>代码管理</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>sed命令使用说明</title>
+    <url>/2018/06/24/shell/sed%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
+    <content><![CDATA[<h2 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h2><h3 id="普通字符替换"><a href="#普通字符替换" class="headerlink" title="普通字符替换"></a>普通字符替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">param_name=ro.build.id</span><br><span class="line">sed -i &quot;s/$&#123;param_name&#125;=.*/$&#123;param_name&#125;=new_value/g&quot; build.prop</span><br></pre></td></tr></table></figure>
+<p>本例用于修改build.prop文件中的ro.build.id参数的值</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &quot;s/oldstring/newstring/g&quot; `grep oldstring -rl yourdir`</span><br></pre></td></tr></table></figure>
+<p>批量替换</p>
+<h3 id="二进制内容替换"><a href="#二进制内容替换" class="headerlink" title="二进制内容替换"></a>二进制内容替换</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i &#x27;s/\x00/\x0a/g&#x27; %s      #本例是把&#x27;\0&#x27;替换为&#x27;\n&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="行操作"><a href="#行操作" class="headerlink" title="行操作"></a>行操作</h2><h3 id="删除文件中的某一行"><a href="#删除文件中的某一行" class="headerlink" title="删除文件中的某一行"></a>删除文件中的某一行</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i \&#x27;1d\&#x27; %s   #删除第一行的文字</span><br></pre></td></tr></table></figure>
+
+<h3 id="按行截取文本文件内容"><a href="#按行截取文本文件内容" class="headerlink" title="按行截取文本文件内容"></a>按行截取文本文件内容</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;起始行号,结束行号p&#x27; 原始文件 &gt; 另存为的文件</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>awk命令使用说明</title>
+    <url>/2018/06/24/shell/awk%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
+    <content><![CDATA[<p><strong>查找</strong><br>查找以<code>ro.build.id=</code>开头的行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;/^ro.build.id=/ &#123;print $1&#125;&#x27;</span> build.prop   <span class="comment">#在build.prop文件中查找</span></span><br></pre></td></tr></table></figure>
+<p>下面的例子实现了同样的效果，但是采用了变量的形式，用起来会更加灵活</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">prop_name=ro.build.id</span><br><span class="line">awk -v identifier=<span class="string">&quot;<span class="variable">$&#123;prop_name&#125;</span>=&quot;</span> <span class="string">&#x27;$0 ~ &quot;^&quot; identifier &#123;print $1&#125;&#x27;</span> build.prop</span><br></pre></td></tr></table></figure>
+
+<p><strong>分割字符</strong><br>默认以空格为分隔符，比如：<code>input | awk &#39;&#123;print \$1&#125;&#39;</code><br>可以通过-F参数指定分隔符，比如： <code>input | awk -F &quot;-&gt;&quot; &#39;&#123;print $2&#125;&#39;</code></p>
+<p><strong>字符串替换</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>实例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>查找SYSTEM/开头的字符串，并把SYSTEM替换为system后输出<br>或者：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 /target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;/^SYSTEM\// &#123;print&#125;&#x27;</span> | awk <span class="string">&#x27;sub(/SYSTEM/,&quot;system&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>也能实现相同的效果</p>
+<p><strong>只输出最后一行</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --pretty=format:<span class="string">&quot;%H\ | awk &#x27;NF&#123;a=<span class="variable">$0</span>&#125; END&#123;print a&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git 常用命令</title>
+    <url>/2018/07/25/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</url>
+    <content><![CDATA[<h2 id="常用全局配置"><a href="#常用全局配置" class="headerlink" title="常用全局配置"></a>常用全局配置</h2><p>git配置使用<a href="https://git-scm.com/docs/git-config">git config</a>来完成。</p>
+<h3 id="配置用户信息"><a href="#配置用户信息" class="headerlink" title="配置用户信息"></a>配置用户信息</h3><p>要配置成自己的真实用户名（姓名全拼）和邮箱</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;John Doe&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;johndoe@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置别名"><a href="#配置别名" class="headerlink" title="配置别名"></a>配置别名</h3><p>比如<a href="https://git-scm.com/docs/git-checkout">git checkout</a>通过配置别名，可以使用git co来达到<a href="https://git-scm.com/docs/git-checkout">git checkout</a>的效果</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global alias.co checkout</span><br><span class="line">git config --global alias.br branch</span><br><span class="line">git config --global alias.ci commit</span><br><span class="line">git config --global alias.st status</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置编辑器vim"><a href="#配置编辑器vim" class="headerlink" title="配置编辑器vim"></a>配置编辑器vim</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global core.editor vim</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置代码合并工具"><a href="#配置代码合并工具" class="headerlink" title="配置代码合并工具"></a>配置代码合并工具</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global merge.tool vimdiff</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置高亮显示"><a href="#配置高亮显示" class="headerlink" title="配置高亮显示"></a>配置高亮显示</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --global color.ui <span class="literal">true</span></span><br><span class="line">git config --global color.status auto</span><br><span class="line">git config --global color.branch auto</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看所有配置"><a href="#查看所有配置" class="headerlink" title="查看所有配置"></a>查看所有配置</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载代码"><a href="#下载代码" class="headerlink" title="下载代码"></a>下载代码</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/libgit2/libgit2</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/libgit2/libgit2 -b &lt;branch name&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载单个分支"><a href="#下载单个分支" class="headerlink" title="下载单个分支"></a>下载单个分支</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/libgit2/libgit2 -b master --single-branch</span><br></pre></td></tr></table></figure>
+
+<p>查看工程下的.git/config文件可以看到下面一句“fetch = +refs/heads/dev:refs/remotes/origin/master”，表示只拉取一个分支。</p>
+<p>如果还想在工程中拉取其他分支，比如develop，则可以执行命令<code>git remote set-branches --add origin develop</code><br>参考链接：<a href="https://git-scm.com/book/en/v2/Git-Internals-The-Refspec">Git Internals - The Refspec</a></p>
+<h2 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h2><p>创建一个名为new_branch的分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch new_branch  </span><br></pre></td></tr></table></figure>
+
+<p>创建本地branch_name分支，并且跟踪远端仓库的同名分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git checkout -t remote/branch_name</span><br></pre></td></tr></table></figure>
+
+<p>删除本地分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git branch -D branch_name</span><br></pre></td></tr></table></figure>
+<p>删除远端remote仓库的名为branch_name的分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push remote :branch_name</span><br></pre></td></tr></table></figure>
+<p>从一个分支切到另一个分支，注意此分支必须是已经有的分支</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git checkout branch</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看代码历史"><a href="#查看代码历史" class="headerlink" title="查看代码历史"></a>查看代码历史</h2><h3 id="查看本地未提交的commit"><a href="#查看本地未提交的commit" class="headerlink" title="查看本地未提交的commit"></a>查看本地未提交的commit</h3><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> @&#123;u&#125;..</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> origin/master..HEAD</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改代码并提交"><a href="#修改代码并提交" class="headerlink" title="修改代码并提交"></a>修改代码并提交</h2><ol>
+<li><p>代码修改后，可以通过如下命令将修改的代码标记为track状态（可根据实际情况选择其中一条或者多条命令)。</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git add &lt;files...&gt;</span><br><span class="line">git mv &lt;old&gt; &lt;new&gt;</span><br><span class="line">git rm &lt;files...&gt;</span><br><span class="line">git rm -r &lt;<span class="built_in">dirs</span>...&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将标记为track状态的文件提交</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git commit</span><br></pre></td></tr></table></figure>
+<p> 提交修改，该命令会调用编辑器用于书写log信息。也可使使用<code>git commit     -m &quot;commit messages&quot;</code></p>
+</li>
+<li><p>提交代码到远程仓库<br> 如果本地分支已经配置为跟踪远端分支（比如：git co -t origin/develop)，可以直接使用<code>git push</code>。如果还没有设置跟踪远端分支，则需要使用下面命令：</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push remote branch</span><br></pre></td></tr></table></figure>
+<p> remote 表示远程仓库名称，branch表示分支名称。此命令只适用于本地仓库与远程仓库同名的情况。当分支名称不同是，需要同时指定本地分支和远端分支。</p>
+ <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git push remote local_branch:remote_branch</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="回退代码"><a href="#回退代码" class="headerlink" title="回退代码"></a>回退代码</h2><p>回退代码会用到git的reset和checkout两个指令：</p>
+<ul>
+<li><p><a href="https://git-scm.com/docs/git-reset">git reset</a> 是把本地代码回退掉，要切到最新，则需要通过<a href="https://git-scm.com/docs/git-pull">git pull</a>拉取服务器上的最新代码；一般只有在需要永远放弃某些修改的情况下，才使用<a href="https://git-scm.com/docs/git-reset">git reset</a>命令。</p>
+</li>
+<li><p><a href="https://git-scm.com/docs/git-checkout">git checkout</a> 是切到过去的时间点，还可以切换来。相当于切到了一个新的分支，还可以切换原来分支。</p>
+</li>
+<li><p>*注意**，本节的示例中的所有<a href="https://git-scm.com/docs/git-reset">git reset</a>都可以可以换成<a href="https://git-scm.com/docs/git-checkout">git checkout</a>。</p>
+</li>
+<li><p>将代码回退到三天前</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --before=<span class="string">&quot;3 days&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span></span><br><span class="line">619ee7a53952d4c94270aa39e9ecdf9ac3aca473</span><br><span class="line">$ git reset --hard 619ee7a53952d4c94270aa39e9ecdf9ac3aca473</span><br></pre></td></tr></table></figure>
+
+<p>也可以合起来用：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --before=<span class="string">&quot;3 days&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span> | xargs git reset --hard</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>回退代码到某一天</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --before=<span class="string">&quot;2013-10-10&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span> | xargs git reset --hard</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>回退代码到某一天的某个时间点</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --before=<span class="string">&quot;2013-10-10 09:15:00 +0800&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span> | xargs git    checkout</span><br></pre></td></tr></table></figure>
+<p>  其中 +0800 表示东八区时间</p>
+</li>
+<li><p>查看某个时间段的日志</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --since=<span class="string">&quot;2013-10-10 09:15:00 +0800&quot;</span> --before=<span class="string">&quot;2013-10-10 23:59:00 +0800&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将服务器代码回退到某个点并提交到某个分支（服务器回退不可恢复，确保准确后回退，做好备份）</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git reset --hard commit_id</span><br><span class="line">git push --force sunniwell base</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h2><p>合并分支前提是需要相同SDK中的不同分支。</p>
+<ul>
+<li><p>把另外一个分支的所有修改快速合并。并提交到一个分支上</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git merge --no-ff</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把另外一个分支的单个commit 合并到当前分支，并提交单个分支，有冲突查看“HEAD”关键字</p>
+  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git cherry-pick &lt;commit&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h2><p>合并分支时难免会产生冲突。冲突发生后分为如下两种情况进行处理：</p>
+<ul>
+<li><strong>文本文件冲突</strong> 可以通过git mergetool命令编辑冲突文件；</li>
+<li><strong>二进制文件冲突</strong> 时就无法合并了，要么使用被合并分支的该文件，要么就采用当前分支的该文件。<br>比如仓库下面的“path/lib_file.so”冲突了。则可以通过如下命令选择采用哪个分支的文件：  <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git show branch_name:path/lib_file.so &gt; path/lib_file.so</span><br></pre></td></tr></table></figure>
+  命令中的第一个path/lib_file.so必须是对应的git仓库根目录的路径，第二个path/lib_file.so则是当前目录的相对路径。<h2 id="查看本地分支跟踪的远程分支"><a href="#查看本地分支跟踪的远程分支" class="headerlink" title="查看本地分支跟踪的远程分支"></a>查看本地分支跟踪的远程分支</h2></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git rev-parse --abbrev-ref --symbolic-full-name @&#123;upstream&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://stackoverflow.com/questions/171550/find-out-which-remote-branch-a-local-branch-is-tracking">Find out which remote branch a local branch is tracking</a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a href="https://git-scm.com/book/en/v2">Pro Git book</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>代码管理</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android Java虚拟机创建过程</title>
+    <url>/2020/10/30/android/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</url>
+    <content><![CDATA[<p>本文基于Android8.0源码</p>
+<p>Android8.0使用的java虚拟机为ART，在大名鼎鼎的zygote进程中启动java虚拟机。<br>首先看一下zygote的main函数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//app_main.cpp</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* <span class="keyword">const</span> argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//AppRuntime继承自AndroidRuntime, 构造函数中没有什么有用信息，可以不关注</span></span><br><span class="line">    <span class="function">AppRuntime <span class="title">runtime</span><span class="params">(argv[<span class="number">0</span>], computeArgBlockSize(argc, argv))</span></span>;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> (zygote) &#123;</span><br><span class="line">        <span class="comment">//调用到AndroidRuntime.start函数启动zygote进程的虚拟机</span></span><br><span class="line">        <span class="comment">//传入的第一个参数是java类ZygoteInit</span></span><br><span class="line">        runtime.start(<span class="string">&quot;com.android.internal.os.ZygoteInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className) &#123;</span><br><span class="line">        runtime.start(<span class="string">&quot;com.android.internal.os.RuntimeInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(<span class="built_in">stderr</span>, <span class="string">&quot;Error: no class name or --zygote supplied.\n&quot;</span>);</span><br><span class="line">        app_usage();</span><br><span class="line">        LOG_ALWAYS_FATAL(<span class="string">&quot;app_process: no class name or --zygote supplied.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>runtime.start会调用父类的AndroidRuntime::start，看一下实现</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AndroidRuntime.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">AndroidRuntime::start</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* className, <span class="keyword">const</span> Vector&lt;String8&gt;&amp; options, <span class="keyword">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">/* start the virtual machine */</span></span><br><span class="line">    JniInvocation jni_invocation;</span><br><span class="line">    jni_invocation.Init(<span class="literal">NULL</span>);  <span class="comment">// 1. 加载虚拟机动态库，并加载库函数符号</span></span><br><span class="line">    JNIEnv* env;</span><br><span class="line">    <span class="keyword">if</span> (startVm(&amp;mJavaVM, &amp;env, zygote) != <span class="number">0</span>) &#123; <span class="comment">// 2. 启动虚拟机</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    onVmCreated(env);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Register android functions.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (startReg(env) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;Unable to register all android natives\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (startClass == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;JavaVM unable to locate class &#x27;%s&#x27;\n&quot;</span>, slashClassName);</span><br><span class="line">        <span class="comment">/* keep going */</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//调用com.android.internal.os.ZygoteInit的main函数，从此便进入了Java的世界</span></span><br><span class="line">        jmethodID startMeth = env-&gt;GetStaticMethodID(startClass, <span class="string">&quot;main&quot;</span>,</span><br><span class="line">            <span class="string">&quot;([Ljava/lang/String;)V&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (startMeth == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            ALOGE(<span class="string">&quot;JavaVM unable to find main() in &#x27;%s&#x27;\n&quot;</span>, className);</span><br><span class="line">            <span class="comment">/* keep going */</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            env-&gt;CallStaticVoidMethod(startClass, startMeth, strArray);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>加载虚拟机动态库，并加载库函数符号</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//JniInvocation.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">JniInvocation::Init</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* library)</span> </span>&#123;</span><br><span class="line">  ......</span><br><span class="line">  library = GetLibrary(library, buffer); <span class="comment">//返回“libart.so” art虚拟机库</span></span><br><span class="line">  ......</span><br><span class="line">  handle_ = dlopen(library, kDlopenFlags);  <span class="comment">//动态加载虚拟机so库</span></span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//下面的三个if语句都是通过dlsym来获取虚拟机so库中的函数符号</span></span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_GetDefaultJavaVMInitArgs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetDefaultJavaVMInitArgs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//无比重要的函数，获取虚拟机构造函数的函数符号，创建虚拟机全靠JNI_CreateJavaVM</span></span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_CreateJavaVM_),</span><br><span class="line">                  <span class="string">&quot;JNI_CreateJavaVM&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!FindSymbol(<span class="keyword">reinterpret_cast</span>&lt;<span class="keyword">void</span>**&gt;(&amp;JNI_GetCreatedJavaVMs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetCreatedJavaVMs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">jint <span class="title">JniInvocation::JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="keyword">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> JNI_CreateJavaVM_(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//该函数就是最终创建虚拟机的函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function">jint <span class="title">JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="keyword">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> JniInvocation::GetJniInvocation().JNI_CreateJavaVM(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>启动虚拟机</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Start the Dalvik Virtual Machine.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">AndroidRuntime::startVm</span><span class="params">(JavaVM** pJavaVM, JNIEnv** pEnv, <span class="keyword">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...... <span class="comment">//组装虚拟机启动参数</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Initialize the VM.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * The JavaVM* is essentially per-process, and the JNIEnv* is per-thread.</span></span><br><span class="line"><span class="comment">     * If this call succeeds, the VM is ready, and we can start issuing</span></span><br><span class="line"><span class="comment">     * JNI calls.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (JNI_CreateJavaVM(pJavaVM, pEnv, &amp;initArgs) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        ALOGE(<span class="string">&quot;JNI_CreateJavaVM failed\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -1324,7 +1347,7 @@ void main(int argc, char* argv[]) { <br>
 <a id="more"></a>
 
 <p>先来看下addService的时序图：</p>
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="682px" preserveAspectRatio="none" style="width:1009px;height:682px;" version="1.1" viewBox="0 0 1009 682" width="1009px" zoomAndPan="magnify"><defs><filter height="300%" id="f1o0n9ya9b6utj" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="181.3984" style="stroke:#A80036;stroke-width:1.0;" width="10" x="215.5" y="71.4297"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="123.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="220.5" y="108.5625"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="54.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="225.5" y="150.6953"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="101.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="364.5" y="281.9609"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="89.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="553.5" y="353.2266"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="89.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="682" y="412.3594"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="194.5313" style="stroke:#A80036;stroke-width:1.0;" width="10" x="800" y="471.4922"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="85.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="805" y="580.7578"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="43.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="810" y="622.8906"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="79" x2="79" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="220" x2="220" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="369" x2="369" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="558.5" x2="558.5" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="686.5" x2="686.5" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="804.5" x2="804.5" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="966.5" x2="966.5" y1="40.2969" y2="675.0234"/><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="145" x="5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="131" x="12" y="24.9951">main_mediaserver</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="109" x="164" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="95" x="171" y="24.9951">ProcessState</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="153" x="291" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="139" x="298" y="24.9951">MediaPlayerService</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="148" x="482.5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="134" x="489.5" y="24.9951">BpServiceManager</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="81" x="644.5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="67" x="651.5" y="24.9951">BpBinder</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="127" x="739.5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="113" x="746.5" y="24.9951">IPCThreadState</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="61" x="934.5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="47" x="941.5" y="24.9951">binder</text><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="181.3984" style="stroke:#A80036;stroke-width:1.0;" width="10" x="215.5" y="71.4297"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="123.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="220.5" y="108.5625"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="54.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="225.5" y="150.6953"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="101.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="364.5" y="281.9609"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="89.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="553.5" y="353.2266"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="89.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="682" y="412.3594"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="194.5313" style="stroke:#A80036;stroke-width:1.0;" width="10" x="800" y="471.4922"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="85.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="805" y="580.7578"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="43.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="810" y="622.8906"/><polygon fill="#A80036" points="203.5,67.4297,213.5,71.4297,203.5,75.4297,207.5,71.4297" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="79.5" x2="209.5" y1="71.4297" y2="71.4297"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="33" x="86.5" y="66.3638">self()</text><line style="stroke:#A80036;stroke-width:1.0;" x1="225.5" x2="272.5" y1="95.5625" y2="95.5625"/><line style="stroke:#A80036;stroke-width:1.0;" x1="272.5" x2="272.5" y1="95.5625" y2="108.5625"/><line style="stroke:#A80036;stroke-width:1.0;" x1="231.5" x2="272.5" y1="108.5625" y2="108.5625"/><polygon fill="#A80036" points="241.5,104.5625,231.5,108.5625,241.5,112.5625,237.5,108.5625" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="125" x="237.5" y="90.4966">new ProcessState()</text><line style="stroke:#A80036;stroke-width:1.0;" x1="230.5" x2="277.5" y1="137.6953" y2="137.6953"/><line style="stroke:#A80036;stroke-width:1.0;" x1="277.5" x2="277.5" y1="137.6953" y2="150.6953"/><line style="stroke:#A80036;stroke-width:1.0;" x1="236.5" x2="277.5" y1="150.6953" y2="150.6953"/><polygon fill="#A80036" points="246.5,146.6953,236.5,150.6953,246.5,154.6953,242.5,150.6953" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="76" x="242.5" y="132.6294">open_driver</text><polygon fill="#A80036" points="955,180.8281,965,184.8281,955,188.8281,959,184.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="235.5" x2="961" y1="184.8281" y2="184.8281"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="32" x="242.5" y="179.7622">open</text><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="235.5" x2="277.5" y1="203.8281" y2="203.8281"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="277.5" x2="277.5" y1="203.8281" y2="216.8281"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="230.5" x2="277.5" y1="216.8281" y2="216.8281"/><polygon fill="#A80036" points="240.5,212.8281,230.5,216.8281,240.5,220.8281,236.5,216.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="230.5" x2="272.5" y1="230.8281" y2="230.8281"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="272.5" x2="272.5" y1="230.8281" y2="243.8281"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="225.5" x2="272.5" y1="243.8281" y2="243.8281"/><polygon fill="#A80036" points="235.5,239.8281,225.5,243.8281,235.5,247.8281,231.5,243.8281" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="90.5,248.8281,80.5,252.8281,90.5,256.8281,86.5,252.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="84.5" x2="219.5" y1="252.8281" y2="252.8281"/><polygon fill="#A80036" points="352.5,277.9609,362.5,281.9609,352.5,285.9609,356.5,281.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="79.5" x2="358.5" y1="281.9609" y2="281.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="68" x="86.5" y="276.895">instantiate</text><line style="stroke:#A80036;stroke-width:1.0;" x1="374.5" x2="416.5" y1="311.0938" y2="311.0938"/><line style="stroke:#A80036;stroke-width:1.0;" x1="416.5" x2="416.5" y1="311.0938" y2="324.0938"/><line style="stroke:#A80036;stroke-width:1.0;" x1="375.5" x2="416.5" y1="324.0938" y2="324.0938"/><polygon fill="#A80036" points="385.5,320.0938,375.5,324.0938,385.5,328.0938,381.5,324.0938" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="165" x="381.5" y="306.0278">new MediaPlayerService()</text><polygon fill="#A80036" points="541.5,349.2266,551.5,353.2266,541.5,357.2266,545.5,353.2266" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="374.5" x2="547.5" y1="353.2266" y2="353.2266"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="71" x="381.5" y="348.1606">addService</text><polygon fill="#A80036" points="670,408.3594,680,412.3594,670,416.3594,674,412.3594" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="563.5" x2="676" y1="412.3594" y2="412.3594"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="53" x="570.5" y="407.2935">transact</text><polygon fill="#A80036" points="788,467.4922,798,471.4922,788,475.4922,792,471.4922" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="692" x2="794" y1="471.4922" y2="471.4922"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="53" x="699" y="466.4263">transact</text><line style="stroke:#A80036;stroke-width:1.0;" x1="810" x2="852" y1="530.625" y2="530.625"/><line style="stroke:#A80036;stroke-width:1.0;" x1="852" x2="852" y1="530.625" y2="543.625"/><line style="stroke:#A80036;stroke-width:1.0;" x1="811" x2="852" y1="543.625" y2="543.625"/><polygon fill="#A80036" points="821,539.625,811,543.625,821,547.625,817,543.625" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="138" x="817" y="525.5591">writeTransactionData</text><line style="stroke:#A80036;stroke-width:1.0;" x1="810" x2="857" y1="567.7578" y2="567.7578"/><line style="stroke:#A80036;stroke-width:1.0;" x1="857" x2="857" y1="567.7578" y2="580.7578"/><line style="stroke:#A80036;stroke-width:1.0;" x1="816" x2="857" y1="580.7578" y2="580.7578"/><polygon fill="#A80036" points="826,576.7578,816,580.7578,826,584.7578,822,580.7578" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="110" x="822" y="562.6919">waitForResponse</text><line style="stroke:#A80036;stroke-width:1.0;" x1="815" x2="862" y1="609.8906" y2="609.8906"/><line style="stroke:#A80036;stroke-width:1.0;" x1="862" x2="862" y1="609.8906" y2="622.8906"/><line style="stroke:#A80036;stroke-width:1.0;" x1="821" x2="862" y1="622.8906" y2="622.8906"/><polygon fill="#A80036" points="831,618.8906,821,622.8906,831,626.8906,827,622.8906" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="91" x="827" y="604.8247">talkWithDriver</text><polygon fill="#A80036" points="955,653.0234,965,657.0234,955,661.0234,959,657.0234" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="820" x2="961" y1="657.0234" y2="657.0234"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="26" x="827" y="651.9575">ioctl</text><!--MD5=[da4101180029e30dfba3414fe44790f1]
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="682px" preserveAspectRatio="none" style="width:1009px;height:682px;" version="1.1" viewBox="0 0 1009 682" width="1009px" zoomAndPan="magnify"><defs><filter height="300%" id="f1o0n9ya9b6utj" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="181.3984" style="stroke:#A80036;stroke-width:1.0;" width="10" x="215.5" y="71.4297"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="123.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="220.5" y="108.5625"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="54.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="225.5" y="150.6953"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="101.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="364.5" y="281.9609"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="89.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="553.5" y="353.2266"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="89.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="682" y="412.3594"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="194.5313" style="stroke:#A80036;stroke-width:1.0;" width="10" x="800" y="471.4922"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="85.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="805" y="580.7578"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="43.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="810" y="622.8906"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="79" x2="79" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="220" x2="220" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="369" x2="369" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="558.5" x2="558.5" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="686.5" x2="686.5" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="804.5" x2="804.5" y1="40.2969" y2="675.0234"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="966.5" x2="966.5" y1="40.2969" y2="675.0234"/><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="145" x="5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="131" x="12" y="24.9951">main_mediaserver</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="109" x="164" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="95" x="171" y="24.9951">ProcessState</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="153" x="291" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="139" x="298" y="24.9951">MediaPlayerService</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="148" x="482.5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="134" x="489.5" y="24.9951">BpServiceManager</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="81" x="644.5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="67" x="651.5" y="24.9951">BpBinder</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="127" x="739.5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="113" x="746.5" y="24.9951">IPCThreadState</text><rect fill="#FEFECE" filter="url(#f1o0n9ya9b6utj)" height="30.2969" style="stroke:#A80036;stroke-width:1.5;" width="61" x="934.5" y="5"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" textLength="47" x="941.5" y="24.9951">binder</text><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="181.3984" style="stroke:#A80036;stroke-width:1.0;" width="10" x="215.5" y="71.4297"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="123.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="220.5" y="108.5625"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="54.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="225.5" y="150.6953"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="101.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="364.5" y="281.9609"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="89.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="553.5" y="353.2266"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="89.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="682" y="412.3594"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="194.5313" style="stroke:#A80036;stroke-width:1.0;" width="10" x="800" y="471.4922"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="85.2656" style="stroke:#A80036;stroke-width:1.0;" width="10" x="805" y="580.7578"/><rect fill="#FFFFFF" filter="url(#f1o0n9ya9b6utj)" height="43.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="810" y="622.8906"/><polygon fill="#A80036" points="203.5,67.4297,213.5,71.4297,203.5,75.4297,207.5,71.4297" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="79.5" x2="209.5" y1="71.4297" y2="71.4297"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="33" x="86.5" y="66.3638">self()</text><line style="stroke:#A80036;stroke-width:1.0;" x1="225.5" x2="272.5" y1="95.5625" y2="95.5625"/><line style="stroke:#A80036;stroke-width:1.0;" x1="272.5" x2="272.5" y1="95.5625" y2="108.5625"/><line style="stroke:#A80036;stroke-width:1.0;" x1="231.5" x2="272.5" y1="108.5625" y2="108.5625"/><polygon fill="#A80036" points="241.5,104.5625,231.5,108.5625,241.5,112.5625,237.5,108.5625" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="125" x="237.5" y="90.4966">new ProcessState()</text><line style="stroke:#A80036;stroke-width:1.0;" x1="230.5" x2="277.5" y1="137.6953" y2="137.6953"/><line style="stroke:#A80036;stroke-width:1.0;" x1="277.5" x2="277.5" y1="137.6953" y2="150.6953"/><line style="stroke:#A80036;stroke-width:1.0;" x1="236.5" x2="277.5" y1="150.6953" y2="150.6953"/><polygon fill="#A80036" points="246.5,146.6953,236.5,150.6953,246.5,154.6953,242.5,150.6953" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="76" x="242.5" y="132.6294">open_driver</text><polygon fill="#A80036" points="955,180.8281,965,184.8281,955,188.8281,959,184.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="235.5" x2="961" y1="184.8281" y2="184.8281"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="32" x="242.5" y="179.7622">open</text><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="235.5" x2="277.5" y1="203.8281" y2="203.8281"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="277.5" x2="277.5" y1="203.8281" y2="216.8281"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="230.5" x2="277.5" y1="216.8281" y2="216.8281"/><polygon fill="#A80036" points="240.5,212.8281,230.5,216.8281,240.5,220.8281,236.5,216.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="230.5" x2="272.5" y1="230.8281" y2="230.8281"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="272.5" x2="272.5" y1="230.8281" y2="243.8281"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="225.5" x2="272.5" y1="243.8281" y2="243.8281"/><polygon fill="#A80036" points="235.5,239.8281,225.5,243.8281,235.5,247.8281,231.5,243.8281" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="90.5,248.8281,80.5,252.8281,90.5,256.8281,86.5,252.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="84.5" x2="219.5" y1="252.8281" y2="252.8281"/><polygon fill="#A80036" points="352.5,277.9609,362.5,281.9609,352.5,285.9609,356.5,281.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="79.5" x2="358.5" y1="281.9609" y2="281.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="68" x="86.5" y="276.895">instantiate</text><line style="stroke:#A80036;stroke-width:1.0;" x1="374.5" x2="416.5" y1="311.0938" y2="311.0938"/><line style="stroke:#A80036;stroke-width:1.0;" x1="416.5" x2="416.5" y1="311.0938" y2="324.0938"/><line style="stroke:#A80036;stroke-width:1.0;" x1="375.5" x2="416.5" y1="324.0938" y2="324.0938"/><polygon fill="#A80036" points="385.5,320.0938,375.5,324.0938,385.5,328.0938,381.5,324.0938" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="165" x="381.5" y="306.0278">new MediaPlayerService()</text><polygon fill="#A80036" points="541.5,349.2266,551.5,353.2266,541.5,357.2266,545.5,353.2266" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="374.5" x2="547.5" y1="353.2266" y2="353.2266"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="71" x="381.5" y="348.1606">addService</text><polygon fill="#A80036" points="670,408.3594,680,412.3594,670,416.3594,674,412.3594" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="563.5" x2="676" y1="412.3594" y2="412.3594"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="53" x="570.5" y="407.2935">transact</text><polygon fill="#A80036" points="788,467.4922,798,471.4922,788,475.4922,792,471.4922" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="692" x2="794" y1="471.4922" y2="471.4922"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="53" x="699" y="466.4263">transact</text><line style="stroke:#A80036;stroke-width:1.0;" x1="810" x2="852" y1="530.625" y2="530.625"/><line style="stroke:#A80036;stroke-width:1.0;" x1="852" x2="852" y1="530.625" y2="543.625"/><line style="stroke:#A80036;stroke-width:1.0;" x1="811" x2="852" y1="543.625" y2="543.625"/><polygon fill="#A80036" points="821,539.625,811,543.625,821,547.625,817,543.625" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="138" x="817" y="525.5591">writeTransactionData</text><line style="stroke:#A80036;stroke-width:1.0;" x1="810" x2="857" y1="567.7578" y2="567.7578"/><line style="stroke:#A80036;stroke-width:1.0;" x1="857" x2="857" y1="567.7578" y2="580.7578"/><line style="stroke:#A80036;stroke-width:1.0;" x1="816" x2="857" y1="580.7578" y2="580.7578"/><polygon fill="#A80036" points="826,576.7578,816,580.7578,826,584.7578,822,580.7578" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="110" x="822" y="562.6919">waitForResponse</text><line style="stroke:#A80036;stroke-width:1.0;" x1="815" x2="862" y1="609.8906" y2="609.8906"/><line style="stroke:#A80036;stroke-width:1.0;" x1="862" x2="862" y1="609.8906" y2="622.8906"/><line style="stroke:#A80036;stroke-width:1.0;" x1="821" x2="862" y1="622.8906" y2="622.8906"/><polygon fill="#A80036" points="831,618.8906,821,622.8906,831,626.8906,827,622.8906" style="stroke:#A80036;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="91" x="827" y="604.8247">talkWithDriver</text><polygon fill="#A80036" points="955,653.0234,965,657.0234,955,661.0234,959,657.0234" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="820" x2="961" y1="657.0234" y2="657.0234"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="26" x="827" y="651.9575">ioctl</text><!--MD5=[18ccf0bf8538a33e33e6a6ad327ce472]
 @startuml
 ' addService时序图
 hide footbox
@@ -1376,7 +1399,7 @@ IPCThreadState -> IPCThreadState ++ : talkWithDriver
 IPCThreadState -> binder : ioctl
 @enduml
 
-PlantUML version 1.2020.21beta3(Unknown compile time)
+PlantUML version 1.2020.21beta7(Unknown compile time)
 (GPL source distribution)
 Java Runtime: Java(TM) SE Runtime Environment
 JVM: Java HotSpot(TM) 64-Bit Server VM
@@ -1445,7 +1468,7 @@ reverse link RefBase to BpRefBase--><path codeLine="15" d="M207,75.109 C207,88.3
 reverse link BpRefBase to BpInterface--><path codeLine="16" d="M225.251,194.795 C235.547,221.335 248.936,254.719 262,284 C271.168,304.548 282.57,327.445 291.022,343.976 " fill="none" id="BpRefBase-backto-BpInterface" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="218.675,197.195,218.037,176.015,231.744,192.175,218.675,197.195" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[401f1e8875a8370b455e55f47a32b819]
 reverse link IServiceManager to BpInterface--><path codeLine="17" d="M329.135,302.575 C323.468,316.543 317.351,331.622 312.461,343.678 " fill="none" id="IServiceManager-backto-BpInterface" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="322.665,299.902,336.67,284,335.638,305.165,322.665,299.902" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[3f2ad1bd4a6982853a59e4d2af06eefd]
 reverse link BpInterface to BpServiceManager--><path codeLine="18" d="M303,412.0236 C303,425.5792 303,440.0381 303,451.6784 " fill="none" id="BpInterface-backto-BpServiceManager" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="296,412.0005,303,392,310,412.0004,296,412.0005" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[4ec4459d4d9a6548d21f47e1ac7d6955]
-link IBinder to BpRefBase--><path codeLine="20" d="M105.7363,145.5 C113.071,145.5 120.405,145.5 127.739,145.5 " fill="none" id="IBinder-to-BpRefBase" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="140.941,145.5,134.941,141.5,128.941,145.5,134.941,149.5,140.941,145.5" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[2210d8ad268412328bf78b42b392e10f]
+link IBinder to BpRefBase--><path codeLine="20" d="M105.7363,145.5 C113.071,145.5 120.405,145.5 127.739,145.5 " fill="none" id="IBinder-to-BpRefBase" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="#A80036" points="140.941,145.5,134.941,141.5,128.941,145.5,134.941,149.5,140.941,145.5" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[6b91a96008af0c81ab1ebe4ab237ed9b]
 @startuml
 ' BpServiceManager 继承关系
 interface IBinder {
@@ -1496,7 +1519,7 @@ class BpRefBase {
 }
 @enduml
 
-PlantUML version 1.2020.21beta3(Unknown compile time)
+PlantUML version 1.2020.21beta7(Unknown compile time)
 (GPL source distribution)
 Java Runtime: Java(TM) SE Runtime Environment
 JVM: Java HotSpot(TM) 64-Bit Server VM
@@ -1523,7 +1546,7 @@ reverse link IBinder to BBinder--><path codeLine="14" d="M58.718,189.895 C57.559
 reverse link BBinder to BnInterface--><path codeLine="15" d="M84.6334,313.718 C94.7515,328.501 105.5236,344.239 114.031,356.669 " fill="none" id="BBinder-backto-BnInterface" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="78.7507,317.516,73.2308,297.058,90.3037,309.609,78.7507,317.516" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[b19795261cc3259912b1b29a9388410b]
 reverse link IMediaPlayerService to BnInterface--><path codeLine="16" d="M180.492,307.175 C168.928,323.854 155.884,342.667 145.951,356.993 " fill="none" id="IMediaPlayerService-backto-BnInterface" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="174.879,302.985,192.027,290.538,186.384,310.962,174.879,302.985" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[def47d96d088f6ea588820618243d3ee]
 reverse link BnInterface to BnMediaPlayerService--><path codeLine="17" d="M130,425.024 C130,438.579 130,453.038 130,464.678 " fill="none" id="BnInterface-backto-BnMediaPlayerService" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="123,425,130,405,137,425,123,425" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[5a377b67d40503763f55b78a81fb73e6]
-reverse link BnMediaPlayerService to MediaPlayerService--><path codeLine="18" d="M130,533.0236 C130,546.5792 130,561.0381 130,572.6784 " fill="none" id="BnMediaPlayerService-backto-MediaPlayerService" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="123,533.0005,130,513,137,533.0004,123,533.0005" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[1ee94f428293eec5de19fb621aa01398]
+reverse link BnMediaPlayerService to MediaPlayerService--><path codeLine="18" d="M130,533.0236 C130,546.5792 130,561.0381 130,572.6784 " fill="none" id="BnMediaPlayerService-backto-MediaPlayerService" style="stroke:#A80036;stroke-width:1.0;"/><polygon fill="none" points="123,533.0005,130,513,137,533.0004,123,533.0005" style="stroke:#A80036;stroke-width:1.0;"/><!--MD5=[d31262fb53967d533488a8f803a0f9bf]
 @startuml
 ' MediaPlayerService继承关系
 interface IBinder
@@ -1565,7 +1588,7 @@ BnInterface <|- - BnMediaPlayerService
 BnMediaPlayerService <|- - MediaPlayerService
 @enduml
 
-PlantUML version 1.2020.21beta3(Unknown compile time)
+PlantUML version 1.2020.21beta7(Unknown compile time)
 (GPL source distribution)
 Java Runtime: Java(TM) SE Runtime Environment
 JVM: Java HotSpot(TM) 64-Bit Server VM

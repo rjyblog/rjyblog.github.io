@@ -21,21 +21,23 @@
     var CONFIG = {"hostname":"rjyblog.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="Android anr分析笔记">
+  <meta name="description" content="本文介绍Android Activity的启动流程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ANR分析">
-<meta property="og:url" content="https://rjyblog.github.io/2018/09/05/android/ANR%E5%88%86%E6%9E%90/index.html">
+<meta property="og:title" content="Android Activity启动流程">
+<meta property="og:url" content="https://rjyblog.github.io/2020/11/29/android/Android-Activity%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/index.html">
 <meta property="og:site_name" content="RJY&#39;s BLOG">
-<meta property="og:description" content="Android anr分析笔记">
+<meta property="og:description" content="本文介绍Android Activity的启动流程">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2018-09-04T16:00:00.000Z">
-<meta property="article:modified_time" content="2020-11-27T06:52:16.286Z">
+<meta property="og:image" content="http://www.plantuml.com/plantuml/png/nLNDIkmm5DxtARAx_Z-02t4GnC9KnCvu4GM9oT49TfAIfA8x1HSNtRYIo-XIn8te0mY-Z3FgMvZMTkmqqp8CWhicv_k-SywNatHHQInrr0wS5gE0zeJGk-B8SRR4x0Ag4SqEcJv6qzFpA05cEqu_L0bR5d8TL1Je0RpBbPPH6xZ6cWcUqE08Y3-GuO-5owNoCCVx81FgFcWVv24ZO3WIT2GvSWj0PuYMQukXOfiM9gx1yuSPOdRBWZNLLAQ639Bk9kqEJUlXux-OVPkM8KSYrmKv03eUjugr3aH8YgQcVbwwdDNaf0KZz4CE_2YCXq09QJIa6ResB0iIAQ19k272Wa4uNc8DPJ9EcNmnSpzVBaU_xifaWobiuSGFIzlb7AHzoaC4yaNFfixw8H2snyYW6zlyzRdJ_NVRkthe_N_iNjvrBn-xv_UzgwUtpjdxo_NR_OL3OPGkAepAXTBESE1NZwwb5uO18yaLRhGCdwOpOzocKG1r71dZlqVEGkTAodPYOu1J3vGoDtnYPQvUQwukhUpKbXhkXjlOd45oqYcIB9bvrCAS1f3Ab9gLcw-n8V7y_rh8yulBgkDANiFiKgz9GOmzNwUCjld7pSdxtUdNfAKpbZtWOtuiceCq_x9F">
+<meta property="og:image" content="http://www.plantuml.com/plantuml/png/bLNBRjim4BphAuZqK3k6ZVGO7OAuAj8QSDeWSLC4EHGRQHCHe4Y1fAssNrzIf0JBfYn51pt8cNqCTrVNIeFKsu95ESsGl0gXNyIVg3IBDAKbS4r-KPw9wXOulA7yoiGBC29aXf9SNdQ0ZnIhUsDWLPGDujF5HHGzY_aLMQQQxgZ-kyabGaPYaWFF6DwYKiRkOhty-JtvzdkPR5QFgyrJT00_DZ2RjJRMiELftkm7gA4CPhEOK4ur1KR_OHI2z31ZGXvGxcYAVdtnXjglJCwgcd4sdKOIzLRoKPbykBdvRAwOb2XVXIm6CrfnfUMsGAv1Ky6T6Xohbd88271YaZ1GQYt0dDI2cKVz7Q8sPidvkVDZCS1J74xIXGPQGvgtC0kuomL7fwypMxYFNb1C5EhEWVHxFzOd9YamrY1_yCH0DPvCjexSduY7xyVMnGaUWEo7RqCm2II2Q-FDzagqlstGNp0LqcuOFGxtka8KtieTI7DVG9RLzhmSmSVG2Vay7-muwEGGBBMkbevqIihvl9R80JyI5rExC3RIGCEu2N2FoZW-qI-XuU4p7iqDi0Q4EjJ9aqO8vP53mdIweHwxrgalXqdMrDCqEWRsZaNI6kWRYfqvRqhrNREpi6nbItQoEmvja6tzEhOqR-zbctw1mj6hidwVZagoxjn0YrqZpyo_ypy0">
+<meta property="article:published_time" content="2020-11-29T06:12:05.000Z">
+<meta property="article:modified_time" content="2020-11-29T08:26:53.787Z">
 <meta property="article:author" content="Jason">
-<meta property="article:tag" content="Android调试">
-<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Android, Linux, C++, Java, 前端技术, 设计模式">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://www.plantuml.com/plantuml/png/nLNDIkmm5DxtARAx_Z-02t4GnC9KnCvu4GM9oT49TfAIfA8x1HSNtRYIo-XIn8te0mY-Z3FgMvZMTkmqqp8CWhicv_k-SywNatHHQInrr0wS5gE0zeJGk-B8SRR4x0Ag4SqEcJv6qzFpA05cEqu_L0bR5d8TL1Je0RpBbPPH6xZ6cWcUqE08Y3-GuO-5owNoCCVx81FgFcWVv24ZO3WIT2GvSWj0PuYMQukXOfiM9gx1yuSPOdRBWZNLLAQ639Bk9kqEJUlXux-OVPkM8KSYrmKv03eUjugr3aH8YgQcVbwwdDNaf0KZz4CE_2YCXq09QJIa6ResB0iIAQ19k272Wa4uNc8DPJ9EcNmnSpzVBaU_xifaWobiuSGFIzlb7AHzoaC4yaNFfixw8H2snyYW6zlyzRdJ_NVRkthe_N_iNjvrBn-xv_UzgwUtpjdxo_NR_OL3OPGkAepAXTBESE1NZwwb5uO18yaLRhGCdwOpOzocKG1r71dZlqVEGkTAodPYOu1J3vGoDtnYPQvUQwukhUpKbXhkXjlOd45oqYcIB9bvrCAS1f3Ab9gLcw-n8V7y_rh8yulBgkDANiFiKgz9GOmzNwUCjld7pSdxtUdNfAKpbZtWOtuiceCq_x9F">
 
-<link rel="canonical" href="https://rjyblog.github.io/2018/09/05/android/ANR%E5%88%86%E6%9E%90/">
+<link rel="canonical" href="https://rjyblog.github.io/2020/11/29/android/Android-Activity%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/">
 
 
 <script id="page-configurations">
@@ -48,7 +50,7 @@
   };
 </script>
 
-  <title>ANR分析 | RJY's BLOG</title>
+  <title>Android Activity启动流程 | RJY's BLOG</title>
   
 
 
@@ -191,7 +193,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://rjyblog.github.io/2018/09/05/android/ANR%E5%88%86%E6%9E%90/">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.github.io/2020/11/29/android/Android-Activity%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -204,7 +206,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          ANR分析
+          Android Activity启动流程
         </h1>
 
         <div class="post-meta">
@@ -213,16 +215,10 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2018-09-05 00:00:00" itemprop="dateCreated datePublished" datetime="2018-09-05T00:00:00+08:00">2018-09-05</time>
+              <time title="创建时间：2020-11-29 14:12:05 / 修改时间：16:26:53" itemprop="dateCreated datePublished" datetime="2020-11-29T14:12:05+08:00">2020-11-29</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-11-27 14:52:16" itemprop="dateModified" datetime="2020-11-27T14:52:16+08:00">2020-11-27</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -234,7 +230,7 @@
             </span>
 
           
-            <div class="post-description">Android anr分析笔记</div>
+            <div class="post-description">本文介绍Android Activity的启动流程</div>
 
         </div>
       </header>
@@ -245,10 +241,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://developer.android.com/topic/performance/vitals/anr">ANRs (Google)</a></li>
-<li><a target="_blank" rel="noopener" href="http://zenandroid.io/deadlocks-and-anrs/">Deadlocks and ANRs</a></li>
-</ul>
+        <h2 id="startActivity流程"><a href="#startActivity流程" class="headerlink" title="startActivity流程"></a>startActivity流程</h2><p><img src="http://www.plantuml.com/plantuml/png/nLNDIkmm5DxtARAx_Z-02t4GnC9KnCvu4GM9oT49TfAIfA8x1HSNtRYIo-XIn8te0mY-Z3FgMvZMTkmqqp8CWhicv_k-SywNatHHQInrr0wS5gE0zeJGk-B8SRR4x0Ag4SqEcJv6qzFpA05cEqu_L0bR5d8TL1Je0RpBbPPH6xZ6cWcUqE08Y3-GuO-5owNoCCVx81FgFcWVv24ZO3WIT2GvSWj0PuYMQukXOfiM9gx1yuSPOdRBWZNLLAQ639Bk9kqEJUlXux-OVPkM8KSYrmKv03eUjugr3aH8YgQcVbwwdDNaf0KZz4CE_2YCXq09QJIa6ResB0iIAQ19k272Wa4uNc8DPJ9EcNmnSpzVBaU_xifaWobiuSGFIzlb7AHzoaC4yaNFfixw8H2snyYW6zlyzRdJ_NVRkthe_N_iNjvrBn-xv_UzgwUtpjdxo_NR_OL3OPGkAepAXTBESE1NZwwb5uO18yaLRhGCdwOpOzocKG1r71dZlqVEGkTAodPYOu1J3vGoDtnYPQvUQwukhUpKbXhkXjlOd45oqYcIB9bvrCAS1f3Ab9gLcw-n8V7y_rh8yulBgkDANiFiKgz9GOmzNwUCjld7pSdxtUdNfAKpbZtWOtuiceCq_x9F" alt="startActivity流程" title="startActivity流程"></p>
+<h2 id="Activity启动流程"><a href="#Activity启动流程" class="headerlink" title="Activity启动流程"></a>Activity启动流程</h2><p><img src="http://www.plantuml.com/plantuml/png/bLNBRjim4BphAuZqK3k6ZVGO7OAuAj8QSDeWSLC4EHGRQHCHe4Y1fAssNrzIf0JBfYn51pt8cNqCTrVNIeFKsu95ESsGl0gXNyIVg3IBDAKbS4r-KPw9wXOulA7yoiGBC29aXf9SNdQ0ZnIhUsDWLPGDujF5HHGzY_aLMQQQxgZ-kyabGaPYaWFF6DwYKiRkOhty-JtvzdkPR5QFgyrJT00_DZ2RjJRMiELftkm7gA4CPhEOK4ur1KR_OHI2z31ZGXvGxcYAVdtnXjglJCwgcd4sdKOIzLRoKPbykBdvRAwOb2XVXIm6CrfnfUMsGAv1Ky6T6Xohbd88271YaZ1GQYt0dDI2cKVz7Q8sPidvkVDZCS1J74xIXGPQGvgtC0kuomL7fwypMxYFNb1C5EhEWVHxFzOd9YamrY1_yCH0DPvCjexSduY7xyVMnGaUWEo7RqCm2II2Q-FDzagqlstGNp0LqcuOFGxtka8KtieTI7DVG9RLzhmSmSVG2Vay7-muwEGGBBMkbevqIihvl9R80JyI5rExC3RIGCEu2N2FoZW-qI-XuU4p7iqDi0Q4EjJ9aqO8vP53mdIweHwxrgalXqdMrDCqEWRsZaNI6kWRYfqvRqhrNREpi6nbItQoEmvja6tzEhOqR-zbctw1mj6hidwVZagoxjn0YrqZpyo_ypy0" alt="Activity启动流程" title="Activity启动流程"></p>
 
     </div>
 
@@ -257,10 +251,6 @@
     
 
       <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Android%E8%B0%83%E8%AF%95/" rel="tag"># Android调试</a>
-              <a href="/tags/Android/" rel="tag"># Android</a>
-          </div>
 
         
 
@@ -268,13 +258,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2018/07/25/Markdown/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/" rel="prev" title="Markdown基本语法">
-      <i class="fa fa-chevron-left"></i> Markdown基本语法
+    <a href="/2020/11/29/android/Android-APP%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/" rel="prev" title="Android应用进程启动流程">
+      <i class="fa fa-chevron-left"></i> Android应用进程启动流程
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2019/01/13/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/" rel="next" title="Git 中文乱码问题">
-      Git 中文乱码问题 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -333,7 +320,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#startActivity%E6%B5%81%E7%A8%8B"><span class="nav-text">startActivity流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="nav-text">Activity启动流程</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
