@@ -2,189 +2,189 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://example.com/2020/11/24/Hexo-User-Manual/</loc>
+    <loc>https://rjyblog.github.io/2020/11/24/Hexo-User-Manual/</loc>
     
     <lastmod>2020-11-28</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/07/25/Markdown/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</loc>
+    <loc>https://rjyblog.github.io/2018/07/25/Markdown/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</loc>
     
     <lastmod>2020-11-28</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/11/26/GraphViz-dot/</loc>
+    <loc>https://rjyblog.github.io/2020/11/26/GraphViz-dot/</loc>
     
     <lastmod>2020-11-28</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</loc>
+    <loc>https://rjyblog.github.io/2018/06/24/cpp/gcc%E7%BC%96%E8%AF%91%E8%BF%87%E7%A8%8B/</loc>
     
     <lastmod>2020-11-28</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/</loc>
+    <loc>https://rjyblog.github.io/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/24/shell/awk%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</loc>
+    <loc>https://rjyblog.github.io/2018/06/24/shell/awk%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2019/01/13/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</loc>
+    <loc>https://rjyblog.github.io/2019/01/13/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/07/25/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
+    <loc>https://rjyblog.github.io/2018/07/25/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/22/shell/Shell%E5%8F%98%E9%87%8F%E5%9F%BA%E7%A1%80/</loc>
+    <loc>https://rjyblog.github.io/2018/06/22/shell/Shell%E5%8F%98%E9%87%8F%E5%9F%BA%E7%A1%80/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/07/13/memory/Linux%E6%B8%85%E7%90%86cache/</loc>
+    <loc>https://rjyblog.github.io/2018/07/13/memory/Linux%E6%B8%85%E7%90%86cache/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/24/shell/Shell%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/</loc>
+    <loc>https://rjyblog.github.io/2018/06/24/shell/Shell%E5%88%A4%E6%96%AD%E6%96%87%E4%BB%B6%E6%98%AF%E5%90%A6%E5%AD%98%E5%9C%A8/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/24/shell/Shell%E7%AE%A1%E9%81%93/</loc>
+    <loc>https://rjyblog.github.io/2018/06/24/shell/Shell%E7%AE%A1%E9%81%93/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/24/shell/sed%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</loc>
+    <loc>https://rjyblog.github.io/2018/06/24/shell/sed%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2019/09/04/design-patterns/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</loc>
+    <loc>https://rjyblog.github.io/2019/09/04/design-patterns/%E8%BD%AF%E4%BB%B6%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2019/01/13/design-patterns/Mixin/</loc>
+    <loc>https://rjyblog.github.io/2019/01/13/design-patterns/Mixin/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/24/cpp/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%91%98%E5%88%97%E8%A1%A8/</loc>
+    <loc>https://rjyblog.github.io/2018/06/24/cpp/C++%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0%E5%92%8C%E5%88%9D%E5%A7%8B%E5%8C%96%E6%88%90%E5%91%98%E5%88%97%E8%A1%A8/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/24/cpp/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99/</loc>
+    <loc>https://rjyblog.github.io/2018/06/24/cpp/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/24/cpp/C++%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/</loc>
+    <loc>https://rjyblog.github.io/2018/06/24/cpp/C++%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</loc>
+    <loc>https://rjyblog.github.io/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/09/05/android/ANR%E5%88%86%E6%9E%90/</loc>
+    <loc>https://rjyblog.github.io/2018/09/05/android/ANR%E5%88%86%E6%9E%90/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2019/05/10/android/APK%E5%8F%8D%E7%BC%96%E8%AF%91/</loc>
+    <loc>https://rjyblog.github.io/2019/05/10/android/APK%E5%8F%8D%E7%BC%96%E8%AF%91/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/10/30/android/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</loc>
+    <loc>https://rjyblog.github.io/2020/10/30/android/Java%E8%99%9A%E6%8B%9F%E6%9C%BA%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/22/android/%E4%BB%A3%E7%A0%81%E8%B0%83%E8%AF%95%E4%B9%8B%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88/</loc>
+    <loc>https://rjyblog.github.io/2018/06/22/android/%E4%BB%A3%E7%A0%81%E8%B0%83%E8%AF%95%E4%B9%8B%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2018/06/22/android/addr2line%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/</loc>
+    <loc>https://rjyblog.github.io/2018/06/22/android/addr2line%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/2020/11/23/android/Android-binder-addService/</loc>
+    <loc>https://rjyblog.github.io/2020/11/23/android/Android-binder-addService/</loc>
     
     <lastmod>2020-11-27</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/tags/index.html</loc>
+    <loc>https://rjyblog.github.io/tags/index.html</loc>
     
     <lastmod>2020-11-22</lastmod>
     
   </url>
   
   <url>
-    <loc>http://example.com/categories/index.html</loc>
+    <loc>https://rjyblog.github.io/categories/index.html</loc>
     
     <lastmod>2020-11-22</lastmod>
     
@@ -192,7 +192,7 @@
   
 
   <url>
-    <loc>http://example.com/</loc>
+    <loc>https://rjyblog.github.io/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
@@ -200,84 +200,84 @@
 
   
   <url>
-    <loc>http://example.com/tags/GraphViz/</loc>
+    <loc>https://rjyblog.github.io/tags/GraphViz/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Android%E8%B0%83%E8%AF%95/</loc>
+    <loc>https://rjyblog.github.io/tags/Android%E8%B0%83%E8%AF%95/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Android/</loc>
+    <loc>https://rjyblog.github.io/tags/Android/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Markdown/</loc>
+    <loc>https://rjyblog.github.io/tags/Markdown/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/C/</loc>
+    <loc>https://rjyblog.github.io/tags/C/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Python/</loc>
+    <loc>https://rjyblog.github.io/tags/Python/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Linux/</loc>
+    <loc>https://rjyblog.github.io/tags/Linux/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>https://rjyblog.github.io/tags/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/shell/</loc>
+    <loc>https://rjyblog.github.io/tags/shell/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Git/</loc>
+    <loc>https://rjyblog.github.io/tags/Git/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/Excel/</loc>
+    <loc>https://rjyblog.github.io/tags/Excel/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/tags/binder/</loc>
+    <loc>https://rjyblog.github.io/tags/binder/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
@@ -286,63 +286,63 @@
 
   
   <url>
-    <loc>http://example.com/categories/Hexo/</loc>
+    <loc>https://rjyblog.github.io/categories/Hexo/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/Android/</loc>
+    <loc>https://rjyblog.github.io/categories/Android/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/C-C/</loc>
+    <loc>https://rjyblog.github.io/categories/C-C/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E7%BC%96%E7%A8%8B/</loc>
+    <loc>https://rjyblog.github.io/categories/%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/Linux/</loc>
+    <loc>https://rjyblog.github.io/categories/Linux/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
+    <loc>https://rjyblog.github.io/categories/%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/Shell/</loc>
+    <loc>https://rjyblog.github.io/categories/Shell/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/</loc>
+    <loc>https://rjyblog.github.io/categories/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>http://example.com/categories/Office/</loc>
+    <loc>https://rjyblog.github.io/categories/Office/</loc>
     <lastmod>2020-11-29</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>

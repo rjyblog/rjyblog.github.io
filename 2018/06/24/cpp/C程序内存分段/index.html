@@ -18,25 +18,25 @@
 
 <script id="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"rjyblog.github.io","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
   <meta name="description" content="C&#x2F;C++ 程序的堆、栈、BSS等内存分段的介绍">
 <meta property="og:type" content="article">
 <meta property="og:title" content="C&#x2F;C++ 程序内存分段">
-<meta property="og:url" content="http://example.com/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/index.html">
+<meta property="og:url" content="https://rjyblog.github.io/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/index.html">
 <meta property="og:site_name" content="RJY&#39;s BLOG">
 <meta property="og:description" content="C&#x2F;C++ 程序的堆、栈、BSS等内存分段的介绍">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png">
+<meta property="og:image" content="https://rjyblog.github.io/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png">
 <meta property="article:published_time" content="2018-06-23T16:00:00.000Z">
 <meta property="article:modified_time" content="2020-11-27T12:04:51.976Z">
 <meta property="article:author" content="Jason">
 <meta property="article:tag" content="C++">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png">
+<meta name="twitter:image" content="https://rjyblog.github.io/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png">
 
-<link rel="canonical" href="http://example.com/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/">
+<link rel="canonical" href="https://rjyblog.github.io/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/">
 
 
 <script id="page-configurations">
@@ -192,7 +192,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.github.io/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
