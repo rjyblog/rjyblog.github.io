@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://rjyblog.github.io/2018/07/25/Markdown/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</loc>
+    <lastmod>2020-11-29</lastmod>
+  </url>
+  <url>
     <loc>https://rjyblog.github.io/2020/11/24/Hexo-User-Manual/</loc>
     <lastmod>2020-11-29</lastmod>
   </url>
@@ -11,10 +15,6 @@
   <url>
     <loc>https://rjyblog.github.io/2020/11/29/android/Android-Activity%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</loc>
     <lastmod>2020-11-29</lastmod>
-  </url>
-  <url>
-    <loc>https://rjyblog.github.io/2018/07/25/Markdown/Markdown%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95/</loc>
-    <lastmod>2020-11-28</lastmod>
   </url>
   <url>
     <loc>https://rjyblog.github.io/2020/11/26/GraphViz-dot/</loc>
