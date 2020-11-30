@@ -556,17 +556,207 @@
       </tags>
   </entry>
   <entry>
-    <title>Excel常用函数算法</title>
-    <url>/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
-    <content><![CDATA[<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
-<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+    <title>Hexo User Manual</title>
+    <url>/2020/11/24/Hexo-User-Manual/</url>
+    <content><![CDATA[<h2 id="VSCode-Hexo"><a href="#VSCode-Hexo" class="headerlink" title="VSCode + Hexo"></a>VSCode + Hexo</h2><h3 id="安装Paste-Image插件"><a href="#安装Paste-Image插件" class="headerlink" title="安装Paste Image插件"></a>安装<a href="https://marketplace.visualstudio.com/items?itemName=mushan.vscode-paste-image">Paste Image</a>插件</h3><p>安装完插件后，通过 <code>Ctrl + Shift + P</code> 快捷键打开setting.json</p>
+<img src="/2020/11/24/Hexo-User-Manual/2020-11-28-19-35-51.png" class="">
+
+<p>然后，在setting.json文件中添加两行配置</p>
+<div style="background-color: #F2F3F4; padding: 5px;">
+    "pasteImage.path": "${currentFileNameWithoutExt}/", <br>
+    "pasteImage.insertPattern": "{&#37; asset_img ${imageFileName} &#37;}",
+</div>
+
+<p>然后就可以使用<code>Ctrl + Alt + V</code>快捷键就可以粘贴图片到markdown文档中了。但是这个快捷键不一定好使。也可以通过<code>Ctrl + Shift + P</code>然后输入<code>past image</code>来粘贴。<br>插入的图片采用<code>asset_img</code>语法，关于asset_img详细信息可参考：<a href="https://hexo.io/docs/asset-folders">https://hexo.io/docs/asset-folders</a>。插入的图片将会放到markdown文件同名的文件夹中。</p>
+<h3 id="安装Markdown-Preview-Enhanced插件"><a href="#安装Markdown-Preview-Enhanced插件" class="headerlink" title="安装Markdown Preview Enhanced插件"></a>安装<a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">Markdown Preview Enhanced</a>插件</h3><p><a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">Markdown Preview Enhanced</a>插件无法展示使用<code>asset_img</code>插入的图片，需要修改插件的<code>parser.js</code>。通过快捷键<code>Ctrl+Shift+P</code>打开<code>parser.js</code>:</p>
+<img src="/2020/11/24/Hexo-User-Manual/2020-11-28-20-01-44.png" class="">
+<p>然后修改onWillParseMarkdown函数：</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">onWillParseMarkdown: <span class="function"><span class="keyword">function</span>(<span class="params">markdown</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> vscode = <span class="built_in">require</span>(<span class="string">&quot;vscode&quot;</span>);</span><br><span class="line">  <span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span> &#123;</span><br><span class="line">    markdown = markdown.replace(</span><br><span class="line">      /\&#123;%\s*asset_img\s*(\S+)\s*\S*\s*%\&#125;/g,</span><br><span class="line">      (whole, content) =&gt; &#123;</span><br><span class="line">        abs_filename = vscode.window.activeTextEditor.document.fileName</span><br><span class="line">        filename = path.basename(abs_filename);</span><br><span class="line">        filename = filename.substring(<span class="number">0</span>,filename.indexOf(<span class="string">&#x27;.&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`![](<span class="subst">$&#123;filename + <span class="string">&quot;/&quot;</span>+ content&#125;</span>)`</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> resolve(markdown)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+<p>参考文章：</p>
+<ul>
+<li><a href="https://maple-leaf-0219.github.io/2020/vscode-hexo-markdown%E5%AE%9A%E5%88%B6%E6%80%9D%E8%B7%AF/">vscode hexo markdown定制思路</a> </li>
+<li><a href="https://yichengsu.github.io/2019/07/Hexo-with-VSCode/">Hexo with VSCode</a></li>
+</ul>
+<h2 id="主页配置显示文章摘抄"><a href="#主页配置显示文章摘抄" class="headerlink" title="主页配置显示文章摘抄"></a>主页配置显示文章摘抄</h2><p>默认情况下，在主页中会把整个文章都显示了，导致主页特别乱。可以通过在文章中插入下面代码来截取摘抄：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure>
+<p>也可以通过description字段来单独撰写摘抄。</p>
+<h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h2><p>可以通过代码段标签<code>raw</code>来禁止Markdown引擎渲染标签内的内容。</p>
+<h2 id="VSCode中预览hexo的图片"><a href="#VSCode中预览hexo的图片" class="headerlink" title="VSCode中预览hexo的图片"></a>VSCode中预览hexo的图片</h2><h2 id="支持-plantuml-画图"><a href="#支持-plantuml-画图" class="headerlink" title="支持 plantuml 画图"></a>支持 plantuml 画图</h2><p><a href="https://github.com/miao1007/hexo-filter-plantuml">hexo-filter-plantuml</a><br>示例：</p>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="397px" preserveAspectRatio="none" style="width:372px;height:397px;" version="1.1" viewBox="0 0 372 397" width="372px" zoomAndPan="magnify"><defs><filter height="300%" id="fqdqozyzem12x" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="175.9297" style="stroke:#A80036;stroke-width:1.0;" width="10" x="93.5" y="119.4297"/><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="102.5313" style="stroke:#A80036;stroke-width:1.0;" width="10" x="204" y="163.6953"/><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="313.5" y="192.8281"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="23" x2="23" y1="88.2969" y2="313.3594"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="98.5" x2="98.5" y1="88.2969" y2="313.3594"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="208.5" x2="208.5" y1="88.2969" y2="313.3594"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="318.5" x2="318.5" y1="88.2969" y2="313.3594"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="31" x="5" y="84.9951">User</text><ellipse cx="23.5" cy="15" fill="#FEFECE" filter="url(#fqdqozyzem12x)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M23.5,23 L23.5,50 M10.5,31 L36.5,31 M23.5,50 L10.5,65 M23.5,50 L36.5,65 " fill="none" filter="url(#fqdqozyzem12x)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="31" x="5" y="325.3545">User</text><ellipse cx="23.5" cy="338.6563" fill="#FEFECE" filter="url(#fqdqozyzem12x)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M23.5,346.6563 L23.5,373.6563 M10.5,354.6563 L36.5,354.6563 M23.5,373.6563 L10.5,388.6563 M23.5,373.6563 L36.5,388.6563 " fill="none" filter="url(#fqdqozyzem12x)" style="stroke:#A80036;stroke-width:2.0;"/><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="86" x="53.5" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="72" x="60.5" y="72.9951">First Class</text><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="86" x="53.5" y="312.3594"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="72" x="60.5" y="332.3545">First Class</text><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="107" x="153.5" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="93" x="160.5" y="72.9951">Second Class</text><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="107" x="153.5" y="312.3594"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="93" x="160.5" y="332.3545">Second Class</text><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="84" x="274.5" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="70" x="281.5" y="72.9951">Last Class</text><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="84" x="274.5" y="312.3594"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="70" x="281.5" y="332.3545">Last Class</text><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="175.9297" style="stroke:#A80036;stroke-width:1.0;" width="10" x="93.5" y="119.4297"/><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="102.5313" style="stroke:#A80036;stroke-width:1.0;" width="10" x="204" y="163.6953"/><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="313.5" y="192.8281"/><polygon fill="#A80036" points="81.5,115.4297,91.5,119.4297,81.5,123.4297,85.5,119.4297" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;" x1="23.5" x2="87.5" y1="119.4297" y2="119.4297"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="51" x="30.5" y="114.3638">DoWork</text><polygon fill="#A80036" points="192,159.6953,202,163.6953,192,167.6953,196,163.6953" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;" x1="103.5" x2="198" y1="163.6953" y2="163.6953"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="43" x="110.5" y="143.4966">Create</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="53" x="110.5" y="158.6294">Request</text><polygon fill="#A80036" points="301.5,188.8281,311.5,192.8281,301.5,196.8281,305.5,192.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;" x1="214" x2="307.5" y1="192.8281" y2="192.8281"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="51" x="221" y="187.7622">DoWork</text><polygon fill="#A80036" points="225,217.9609,215,221.9609,225,225.9609,221,221.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="219" x2="317.5" y1="221.9609" y2="221.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="67" x="231" y="216.895">WorkDone</text><line style="stroke:#A80036;stroke-width:2.0;" x1="309.5" x2="327.5" y1="212.9609" y2="230.9609"/><line style="stroke:#A80036;stroke-width:2.0;" x1="309.5" x2="327.5" y1="230.9609" y2="212.9609"/><polygon fill="#A80036" points="114.5,262.2266,104.5,266.2266,114.5,270.2266,110.5,266.2266" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="108.5" x2="208" y1="266.2266" y2="266.2266"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="53" x="120.5" y="246.0278">Request</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="51" x="120.5" y="261.1606">Created</text><polygon fill="#A80036" points="34.5,291.3594,24.5,295.3594,34.5,299.3594,30.5,295.3594" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="28.5" x2="97.5" y1="295.3594" y2="295.3594"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="34" x="40.5" y="290.2935">Done</text><!--MD5=[ef506d86078b413be95d9332778f31c9]
+@startuml
+skinparam sequenceArrowThickness 2
+skinparam roundcorner 20
+skinparam maxmessagesize 60
+skinparam sequenceParticipant underline
+
+actor User
+participant "First Class" as A
+participant "Second Class" as B
+participant "Last Class" as C
+
+User -> A: DoWork
+activate A
+
+A -> B: Create Request
+activate B
+
+B -> C: DoWork
+activate C
+C - -> B: WorkDone
+destroy C
+
+B - -> A: Request Created
+deactivate B
+
+A - -> User: Done
+deactivate A
+@enduml
+
+PlantUML version 1.2020.21beta7(Unknown compile time)
+(GPL source distribution)
+Java Runtime: Java(TM) SE Runtime Environment
+JVM: Java HotSpot(TM) 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
+
+<h2 id="支持-GraphViz-画图"><a href="#支持-GraphViz-画图" class="headerlink" title="支持 GraphViz 画图"></a>支持 GraphViz 画图</h2><p>使用<a href="https://github.com/rjyblog/hexo-tag-viz.git">hexo-tag-viz</a>插件来绘制。支持把<code>dot</code>或<code>viz</code>代码块渲染成graphviz图形。<br>可以通过 <code>engine=xxx</code> 来选择不同的渲染引擎。支持的引擎包括 <code>circo</code>，<code>dot</code>，<code>neato</code>，<code>osage</code>，或者 <code>twopi</code>。默认使用 <code>dot</code> 引擎。</p>
+<div style="border:1px dotted black; background-color: #F2F3F4; padding: 5px;">
+    &#96;&#96;&#96; viz <br>
+    digraph { <br>
+        A -> {B; C; D} <br>
+    } <br>
+    &#96;&#96;&#96;
+</div>
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="206pt" height="116pt"
+ viewBox="0.00 0.00 206.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-112 202,-112 202,4 -4,4"/>
+<!-- A -->
+<g id="node1" class="node">
+<title>A</title>
+<ellipse fill="none" stroke="#000000" cx="99" cy="-90" rx="27" ry="18"/>
+<text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">A</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">B</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A&#45;&gt;B</title>
+<path fill="none" stroke="#000000" d="M83.7307,-74.7307C73.803,-64.803 60.6847,-51.6847 49.5637,-40.5637"/>
+<polygon fill="#000000" stroke="#000000" points="51.7933,-37.8436 42.2473,-33.2473 46.8436,-42.7933 51.7933,-37.8436"/>
+</g>
+<!-- C -->
+<g id="node3" class="node">
+<title>C</title>
+<ellipse fill="none" stroke="#000000" cx="99" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="99" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">C</text>
+</g>
+<!-- A&#45;&gt;C -->
+<g id="edge2" class="edge">
+<title>A&#45;&gt;C</title>
+<path fill="none" stroke="#000000" d="M99,-71.8314C99,-64.131 99,-54.9743 99,-46.4166"/>
+<polygon fill="#000000" stroke="#000000" points="102.5001,-46.4132 99,-36.4133 95.5001,-46.4133 102.5001,-46.4132"/>
+</g>
+<!-- D -->
+<g id="node4" class="node">
+<title>D</title>
+<ellipse fill="none" stroke="#000000" cx="171" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="171" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">D</text>
+</g>
+<!-- A&#45;&gt;D -->
+<g id="edge3" class="edge">
+<title>A&#45;&gt;D</title>
+<path fill="none" stroke="#000000" d="M114.2693,-74.7307C124.197,-64.803 137.3153,-51.6847 148.4363,-40.5637"/>
+<polygon fill="#000000" stroke="#000000" points="151.1564,-42.7933 155.7527,-33.2473 146.2067,-37.8436 151.1564,-42.7933"/>
+</g>
+</g>
+</svg>
+
+<p>通过engine参数指定引擎：</p>
+<div style="border:1px dotted black; background-color: #F2F3F4; padding: 5px;">
+    &#96;&#96;&#96; viz engine=neato<br>
+    digraph { <br>
+        A -> {B; C; D} <br>
+    } <br>
+    &#96;&#96;&#96;
+</div>
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="186pt" height="176pt"
+ viewBox="0.00 0.00 185.76 175.70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 171.7004)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-171.7004 181.7629,-171.7004 181.7629,4 -4,4"/>
+<!-- A -->
+<g id="node1" class="node">
+<title>A</title>
+<ellipse fill="none" stroke="#000000" cx="74.8817" cy="-89.712" rx="27" ry="18"/>
+<text text-anchor="middle" x="74.8817" y="-85.512" font-family="Times,serif" font-size="14.00" fill="#000000">A</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<ellipse fill="none" stroke="#000000" cx="150.7629" cy="-101.4894" rx="27" ry="18"/>
+<text text-anchor="middle" x="150.7629" y="-97.2894" font-family="Times,serif" font-size="14.00" fill="#000000">B</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A&#45;&gt;B</title>
+<path fill="none" stroke="#000000" d="M101.4213,-93.8312C105.6043,-94.4804 109.9911,-95.1613 114.3509,-95.838"/>
+<polygon fill="#000000" stroke="#000000" points="113.9479,-99.3172 124.3664,-97.3925 115.0216,-92.4001 113.9479,-99.3172"/>
+</g>
+<!-- C -->
+<g id="node3" class="node">
+<title>C</title>
+<ellipse fill="none" stroke="#000000" cx="47.5051" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="47.5051" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">C</text>
+</g>
+<!-- A&#45;&gt;C -->
+<g id="edge2" class="edge">
+<title>A&#45;&gt;C</title>
+<path fill="none" stroke="#000000" d="M68.1145,-71.9854C64.9982,-63.8223 61.2324,-53.958 57.7769,-44.9065"/>
+<polygon fill="#000000" stroke="#000000" points="61.031,-43.6167 54.1945,-35.5227 54.4913,-46.1133 61.031,-43.6167"/>
+</g>
+<!-- D -->
+<g id="node4" class="node">
+<title>D</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-149.7004" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-145.5004" font-family="Times,serif" font-size="14.00" fill="#000000">D</text>
+</g>
+<!-- A&#45;&gt;D -->
+<g id="edge3" class="edge">
+<title>A&#45;&gt;D</title>
+<path fill="none" stroke="#000000" d="M62.0503,-105.7878C57.2199,-111.8396 51.6141,-118.8627 46.3215,-125.4936"/>
+<polygon fill="#000000" stroke="#000000" points="43.3697,-123.5812 39.8668,-133.5802 48.8406,-127.948 43.3697,-123.5812"/>
+</g>
+</g>
+</svg>
+
+
+<!-- 参考：<https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz> -->
 ]]></content>
       <categories>
-        <category>Office</category>
+        <category>Hexo</category>
       </categories>
-      <tags>
-        <tag>Excel</tag>
-      </tags>
   </entry>
   <entry>
     <title>Markdown基本语法</title>
@@ -745,6 +935,28 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
+    <title>Excel常用函数算法</title>
+    <url>/2018/07/25/Office/Excel%E5%87%BD%E6%95%B0%E5%B8%B8%E7%94%A8%E7%AE%97%E6%B3%95/</url>
+    <content><![CDATA[<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
+<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Office</category>
+      </categories>
+      <tags>
+        <tag>Excel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android应用进程启动流程</title>
+    <url>/2020/11/29/android/Android-APP%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="启动流程图（点击可以看大图）："><a href="#启动流程图（点击可以看大图）：" class="headerlink" title="启动流程图（点击可以看大图）："></a>启动流程图（点击可以看大图）：</h2><p><img src="http://www.plantuml.com/plantuml/png/bLR9Rjim4BthAtYBdI16qlPa844SeoW2P37YeWNI4qsEBI8oAL1qdEHOjEUU-WNzWTxxFLq-eqEAacbhiNEIFVDcuUCiFCiCrMOnJw9eZyI20vagPIRgCKfHBfX8gJJaxccc35n8OOZI73GvFZgg0On1Fw2oW1pNG8PAIc16A5d2NjN0IkNhDUNjGXenNq_aJVH97Pw6AVR9d0eP1P9IxpFSts_Jzec6cSWCw5mmLkmUJBI6gTf8M99BnMWI6dMwMm8jv1WI9EHIgRGzmi41ufUnIA1Zz0Aws_AvoNgfIXBCO0_FOnPQHZbJ0wJ_GPYdAohfB3-ZO80MhXH6MZ78iakRFeyQiEZ5up0jRnWLaZALAcHTtWpy86YksMRH9tz_VVdtu-kpa_x-zldFzv-xH54fIC-NkwUBwJK0nmCts8uDnQAqbYmlu2YK8oo_UUThLLsbDlmRLeh33pZN6ApDOnWub5Thf99WIp5HnY0rGpMVKyb707e76wO1yxk6vQgH6wo2JaT2V0MsV4AI2iqkL_dieqi-qBDi8FaxCBUGBPAQSWkvwvFE-M8w1GtyenROxDsb_NIeddLRIRRZWNAIvLE10xKzOYyjCDhEYKqTk_z6igB80sLfu61JfU_nNECKcA29U2xe8QdWOVmmPgEyETP6Sc9AEXZWzAXBOgoF14PKWtJpeTR9EhUEIvTWBPMh_dLSrXuagB0sNUMIov-7phrZoil6ThZuugZuz9XcHH2ZQIwsXtmn-ISd9Vj3dFoyaVnWoQnwmlwjNJz-IqgAXu2x9couRArJcgQ9ODI6TEXGlm770yW7TU-QMR0hkurRqIRMQfdvx7fNO6B51tb33scIODbwKkrYxtG9Pi5YylRHpgzL3HI-Yyjv7xlYyi-13MaTpYvXqBrK0puwmAQTIt27RhMs3Dd1lYwkjrmHwOKu87SAG8sXBEvSL3oq9RXHeoi_WPUMHT_uN3WN4bzWlHaOUqT2paOYFEyBF5NIsVhwQ7GrnQIArhi5Xez4CdboywN5MUK--cI2Va9-_48APiCwuIyehmG_o5DqXYiB7zx_0G00" alt="应用进程启动流程" title="应用进程启动流程"></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+  </entry>
+  <entry>
     <title>APK 反编译</title>
     <url>/2019/05/10/android/APK%E5%8F%8D%E7%BC%96%E8%AF%91/</url>
     <content><![CDATA[<h1 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h1><ul>
@@ -767,25 +979,6 @@ void main(int argc, char* argv[]) { <br>
         <tag>Android调试</tag>
         <tag>Android</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Android应用进程启动流程</title>
-    <url>/2020/11/29/android/Android-APP%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="启动流程图（点击可以看大图）："><a href="#启动流程图（点击可以看大图）：" class="headerlink" title="启动流程图（点击可以看大图）："></a>启动流程图（点击可以看大图）：</h2><p><img src="http://www.plantuml.com/plantuml/png/bLR9Rjim4BthAtYBdI16qlPa844SeoW2P37YeWNI4qsEBI8oAL1qdEHOjEUU-WNzWTxxFLq-eqEAacbhiNEIFVDcuUCiFCiCrMOnJw9eZyI20vagPIRgCKfHBfX8gJJaxccc35n8OOZI73GvFZgg0On1Fw2oW1pNG8PAIc16A5d2NjN0IkNhDUNjGXenNq_aJVH97Pw6AVR9d0eP1P9IxpFSts_Jzec6cSWCw5mmLkmUJBI6gTf8M99BnMWI6dMwMm8jv1WI9EHIgRGzmi41ufUnIA1Zz0Aws_AvoNgfIXBCO0_FOnPQHZbJ0wJ_GPYdAohfB3-ZO80MhXH6MZ78iakRFeyQiEZ5up0jRnWLaZALAcHTtWpy86YksMRH9tz_VVdtu-kpa_x-zldFzv-xH54fIC-NkwUBwJK0nmCts8uDnQAqbYmlu2YK8oo_UUThLLsbDlmRLeh33pZN6ApDOnWub5Thf99WIp5HnY0rGpMVKyb707e76wO1yxk6vQgH6wo2JaT2V0MsV4AI2iqkL_dieqi-qBDi8FaxCBUGBPAQSWkvwvFE-M8w1GtyenROxDsb_NIeddLRIRRZWNAIvLE10xKzOYyjCDhEYKqTk_z6igB80sLfu61JfU_nNECKcA29U2xe8QdWOVmmPgEyETP6Sc9AEXZWzAXBOgoF14PKWtJpeTR9EhUEIvTWBPMh_dLSrXuagB0sNUMIov-7phrZoil6ThZuugZuz9XcHH2ZQIwsXtmn-ISd9Vj3dFoyaVnWoQnwmlwjNJz-IqgAXu2x9couRArJcgQ9ODI6TEXGlm770yW7TU-QMR0hkurRqIRMQfdvx7fNO6B51tb33scIODbwKkrYxtG9Pi5YylRHpgzL3HI-Yyjv7xlYyi-13MaTpYvXqBrK0puwmAQTIt27RhMs3Dd1lYwkjrmHwOKu87SAG8sXBEvSL3oq9RXHeoi_WPUMHT_uN3WN4bzWlHaOUqT2paOYFEyBF5NIsVhwQ7GrnQIArhi5Xez4CdboywN5MUK--cI2Va9-_48APiCwuIyehmG_o5DqXYiB7zx_0G00" alt="应用进程启动流程" title="应用进程启动流程"></p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Android Activity启动流程</title>
-    <url>/2020/11/29/android/Android-Activity%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="startActivity流程"><a href="#startActivity流程" class="headerlink" title="startActivity流程"></a>startActivity流程</h2><p><img src="http://www.plantuml.com/plantuml/png/nLNDIkmm5DxtARAx_Z-02t4GnC9KnCvu4GM9oT49TfAIfA8x1HSNtRYIo-XIn8te0mY-Z3FgMvZMTkmqqp8CWhicv_k-SywNatHHQInrr0wS5gE0zeJGk-B8SRR4x0Ag4SqEcJv6qzFpA05cEqu_L0bR5d8TL1Je0RpBbPPH6xZ6cWcUqE08Y3-GuO-5owNoCCVx81FgFcWVv24ZO3WIT2GvSWj0PuYMQukXOfiM9gx1yuSPOdRBWZNLLAQ639Bk9kqEJUlXux-OVPkM8KSYrmKv03eUjugr3aH8YgQcVbwwdDNaf0KZz4CE_2YCXq09QJIa6ResB0iIAQ19k272Wa4uNc8DPJ9EcNmnSpzVBaU_xifaWobiuSGFIzlb7AHzoaC4yaNFfixw8H2snyYW6zlyzRdJ_NVRkthe_N_iNjvrBn-xv_UzgwUtpjdxo_NR_OL3OPGkAepAXTBESE1NZwwb5uO18yaLRhGCdwOpOzocKG1r71dZlqVEGkTAodPYOu1J3vGoDtnYPQvUQwukhUpKbXhkXjlOd45oqYcIB9bvrCAS1f3Ab9gLcw-n8V7y_rh8yulBgkDANiFiKgz9GOmzNwUCjld7pSdxtUdNfAKpbZtWOtuiceCq_x9F" alt="startActivity流程" title="startActivity流程"></p>
-<h2 id="Activity启动流程"><a href="#Activity启动流程" class="headerlink" title="Activity启动流程"></a>Activity启动流程</h2><p><img src="http://www.plantuml.com/plantuml/png/bLNBRjim4BphAuZqK3k6ZVGO7OAuAj8QSDeWSLC4EHGRQHCHe4Y1fAssNrzIf0JBfYn51pt8cNqCTrVNIeFKsu95ESsGl0gXNyIVg3IBDAKbS4r-KPw9wXOulA7yoiGBC29aXf9SNdQ0ZnIhUsDWLPGDujF5HHGzY_aLMQQQxgZ-kyabGaPYaWFF6DwYKiRkOhty-JtvzdkPR5QFgyrJT00_DZ2RjJRMiELftkm7gA4CPhEOK4ur1KR_OHI2z31ZGXvGxcYAVdtnXjglJCwgcd4sdKOIzLRoKPbykBdvRAwOb2XVXIm6CrfnfUMsGAv1Ky6T6Xohbd88271YaZ1GQYt0dDI2cKVz7Q8sPidvkVDZCS1J74xIXGPQGvgtC0kuomL7fwypMxYFNb1C5EhEWVHxFzOd9YamrY1_yCH0DPvCjexSduY7xyVMnGaUWEo7RqCm2II2Q-FDzagqlstGNp0LqcuOFGxtka8KtieTI7DVG9RLzhmSmSVG2Vay7-muwEGGBBMkbevqIihvl9R80JyI5rExC3RIGCEu2N2FoZW-qI-XuU4p7iqDi0Q4EjJ9aqO8vP53mdIweHwxrgalXqdMrDCqEWRsZaNI6kWRYfqvRqhrNREpi6nbItQoEmvja6tzEhOqR-zbctw1mj6hidwVZagoxjn0YrqZpyo_ypy0" alt="Activity启动流程" title="Activity启动流程"></p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
   </entry>
   <entry>
     <title>Android Java虚拟机创建过程</title>
@@ -813,6 +1006,16 @@ void main(int argc, char* argv[]) { <br>
       <tags>
         <tag>Android</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Android Activity启动流程</title>
+    <url>/2020/11/29/android/Android-Activity%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="startActivity流程"><a href="#startActivity流程" class="headerlink" title="startActivity流程"></a>startActivity流程</h2><p><img src="http://www.plantuml.com/plantuml/png/nLNDIkmm5DxtARAx_Z-02t4GnC9KnCvu4GM9oT49TfAIfA8x1HSNtRYIo-XIn8te0mY-Z3FgMvZMTkmqqp8CWhicv_k-SywNatHHQInrr0wS5gE0zeJGk-B8SRR4x0Ag4SqEcJv6qzFpA05cEqu_L0bR5d8TL1Je0RpBbPPH6xZ6cWcUqE08Y3-GuO-5owNoCCVx81FgFcWVv24ZO3WIT2GvSWj0PuYMQukXOfiM9gx1yuSPOdRBWZNLLAQ639Bk9kqEJUlXux-OVPkM8KSYrmKv03eUjugr3aH8YgQcVbwwdDNaf0KZz4CE_2YCXq09QJIa6ResB0iIAQ19k272Wa4uNc8DPJ9EcNmnSpzVBaU_xifaWobiuSGFIzlb7AHzoaC4yaNFfixw8H2snyYW6zlyzRdJ_NVRkthe_N_iNjvrBn-xv_UzgwUtpjdxo_NR_OL3OPGkAepAXTBESE1NZwwb5uO18yaLRhGCdwOpOzocKG1r71dZlqVEGkTAodPYOu1J3vGoDtnYPQvUQwukhUpKbXhkXjlOd45oqYcIB9bvrCAS1f3Ab9gLcw-n8V7y_rh8yulBgkDANiFiKgz9GOmzNwUCjld7pSdxtUdNfAKpbZtWOtuiceCq_x9F" alt="startActivity流程" title="startActivity流程"></p>
+<h2 id="Activity启动流程"><a href="#Activity启动流程" class="headerlink" title="Activity启动流程"></a>Activity启动流程</h2><p><img src="http://www.plantuml.com/plantuml/png/bLNBRjim4BphAuZqK3k6ZVGO7OAuAj8QSDeWSLC4EHGRQHCHe4Y1fAssNrzIf0JBfYn51pt8cNqCTrVNIeFKsu95ESsGl0gXNyIVg3IBDAKbS4r-KPw9wXOulA7yoiGBC29aXf9SNdQ0ZnIhUsDWLPGDujF5HHGzY_aLMQQQxgZ-kyabGaPYaWFF6DwYKiRkOhty-JtvzdkPR5QFgyrJT00_DZ2RjJRMiELftkm7gA4CPhEOK4ur1KR_OHI2z31ZGXvGxcYAVdtnXjglJCwgcd4sdKOIzLRoKPbykBdvRAwOb2XVXIm6CrfnfUMsGAv1Ky6T6Xohbd88271YaZ1GQYt0dDI2cKVz7Q8sPidvkVDZCS1J74xIXGPQGvgtC0kuomL7fwypMxYFNb1C5EhEWVHxFzOd9YamrY1_yCH0DPvCjexSduY7xyVMnGaUWEo7RqCm2II2Q-FDzagqlstGNp0LqcuOFGxtka8KtieTI7DVG9RLzhmSmSVG2Vay7-muwEGGBBMkbevqIihvl9R80JyI5rExC3RIGCEu2N2FoZW-qI-XuU4p7iqDi0Q4EjJ9aqO8vP53mdIweHwxrgalXqdMrDCqEWRsZaNI6kWRYfqvRqhrNREpi6nbItQoEmvja6tzEhOqR-zbctw1mj6hidwVZagoxjn0YrqZpyo_ypy0" alt="Activity启动流程" title="Activity启动流程"></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
   </entry>
   <entry>
     <title>addr2line死机问题定位</title>
@@ -851,29 +1054,40 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>代码调试之打印堆栈</title>
-    <url>/2018/06/22/android/%E4%BB%A3%E7%A0%81%E8%B0%83%E8%AF%95%E4%B9%8B%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88/</url>
-    <content><![CDATA[<h2 id="java代码中打印堆栈"><a href="#java代码中打印堆栈" class="headerlink" title="java代码中打印堆栈"></a>java代码中打印堆栈</h2><p>Java代码打印堆栈比较简单， 堆栈信息获取和输出，都可以通过Throwable类的方法实现。目前通用的做法是在java进程出现需要注意的异常时，打印堆栈，然后再决定退出或挽救。通常的方法是使用exception的printStackTrace()方法：  </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也可以只打印堆栈不退出，这样就比较方便分析代码的动态运行情况。Java代码中插入堆栈打印的方法如下  </p>
-<p>推荐   </p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line">Log.d(TAG, android.util.Log.getStackTraceString(<span class="keyword">new</span> java.lang.Throwable()));</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android调试</tag>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>C++成员函数指针</title>
     <url>/2018/06/24/cpp/C++%E6%88%90%E5%91%98%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88/</url>
     <content><![CDATA[<p>对于类的普通成员函数和静态成员函数，定义函数指针的方法是不同的，如下：</p>
 <figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">func_normal</span><span class="params">()</span> </span>&#123;      <span class="comment">//普通成员函数</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">func_static</span><span class="params">()</span> </span>&#123;    <span class="comment">//静态成员函数（static）</span></span><br><span class="line">        <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; __func__ &lt;&lt; <span class="built_in">std</span>::<span class="built_in">endl</span>;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//g++ -std=c++11 to enable std::function</span></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">foo</span><span class="params">(<span class="built_in">std</span>::function&lt;<span class="keyword">void</span>()&gt; pf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    pf();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* normal function pointer */</span></span><br><span class="line">    <span class="keyword">void</span> (Test::*pfunc_n)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_n = &amp;Test::func_normal;</span><br><span class="line">    Test t;</span><br><span class="line">    (t.*pfunc_n)();</span><br><span class="line">    foo(<span class="built_in">std</span>::bind(&amp;Test::func_normal, &amp;t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* static function pointer */</span></span><br><span class="line">    <span class="keyword">void</span> (*pfunc_s)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_s = &amp;Test::func_static;</span><br><span class="line">    pfunc_s();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>如果一个非静态成员函数指针作为函数参数，则只能把对象传入函数中，然后通过对象调用函数指针。在C++11中引入了function，其本质也是把类传入了函数。</p>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C/C++ 程序内存分段</title>
+    <url>/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/</url>
+    <content><![CDATA[<!-- ![内存分段示意图](C程序内存分段/11907096-13cc0f17b647d1bc.png) -->
+<img src="/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png" class="">
+
+
+<h2 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h2><p>栈又称堆栈， 是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进后出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
+<h2 id="堆（heap）"><a href="#堆（heap）" class="headerlink" title="堆（heap）"></a>堆（heap）</h2><p>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
+<h2 id="BSS段（bss-segment）"><a href="#BSS段（bss-segment）" class="headerlink" title="BSS段（bss segment）"></a>BSS段（bss segment）</h2><p>BSS（Block Started by Symbol）属于静态内存分配，通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。特点是可读写。</p>
+<p>BSS段在磁盘上不是真的占用变量大小的空间，它仅仅记录了变量所需要的大小（占位符），也就是说，在该段中记录了所有未初始化全局变量与局部静态变量的大小总和，至于每个变量的大小则存储在符号表的size属性中。当可执行文件加载运行前，会为BSS段中的变量分配足够的空间并全部自动清零（因此，才有未初始化的全局变量的值为0的说法）。</p>
+<p>BSS段主要是为了节省可执行文件在磁盘上所占的空间，对未初始化的大型数组的节省效率比较明显。</p>
+<p>默认情况下，编译器会把初始化值为0的变量（比如static int a = 0）放在BSS段。但可以通过“#pragma explicit_zero_data on”把初始值为零的变量放到data段，而不是bss段。</p>
+<h2 id="数据段（data-segment）"><a href="#数据段（data-segment）" class="headerlink" title="数据段（data segment）"></a>数据段（data segment）</h2><p>通常是指用来存放程序中已初始化的全局变量的一块内存区域，会占用磁盘文件空间。数据段属于静态内存分配。</p>
+<h2 id="只读数据段（read-only-data-segment）"><a href="#只读数据段（read-only-data-segment）" class="headerlink" title="只读数据段（read only data segment）"></a>只读数据段（read only data segment）</h2><p>rodata用于存储使用const修饰的变量，或者只读类型的字符串等。</p>
+<h2 id="代码段（code-segment-text-segment）"><a href="#代码段（code-segment-text-segment）" class="headerlink" title="代码段（code segment/text segment）"></a>代码段（code segment/text segment）</h2><p>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读, 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a href="https://blog.csdn.net/virtual_func/article/details/48529249">关于BSS段的大小</a></li>
+<li><a href="https://blog.csdn.net/jxhui23/article/details/8064766">数据段、代码段、堆栈段、BSS段的区别</a></li>
+</ul>
 ]]></content>
       <categories>
         <category>C/C++</category>
@@ -921,72 +1135,6 @@ void main(int argc, char* argv[]) { <br>
       </categories>
       <tags>
         <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C/C++ 程序内存分段</title>
-    <url>/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/</url>
-    <content><![CDATA[<!-- ![内存分段示意图](C程序内存分段/11907096-13cc0f17b647d1bc.png) -->
-<img src="/2018/06/24/cpp/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5/11907096-13cc0f17b647d1bc.png" class="">
-
-
-<h2 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h2><p>栈又称堆栈， 是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进后出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
-<h2 id="堆（heap）"><a href="#堆（heap）" class="headerlink" title="堆（heap）"></a>堆（heap）</h2><p>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
-<h2 id="BSS段（bss-segment）"><a href="#BSS段（bss-segment）" class="headerlink" title="BSS段（bss segment）"></a>BSS段（bss segment）</h2><p>BSS（Block Started by Symbol）属于静态内存分配，通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。特点是可读写。</p>
-<p>BSS段在磁盘上不是真的占用变量大小的空间，它仅仅记录了变量所需要的大小（占位符），也就是说，在该段中记录了所有未初始化全局变量与局部静态变量的大小总和，至于每个变量的大小则存储在符号表的size属性中。当可执行文件加载运行前，会为BSS段中的变量分配足够的空间并全部自动清零（因此，才有未初始化的全局变量的值为0的说法）。</p>
-<p>BSS段主要是为了节省可执行文件在磁盘上所占的空间，对未初始化的大型数组的节省效率比较明显。</p>
-<p>默认情况下，编译器会把初始化值为0的变量（比如static int a = 0）放在BSS段。但可以通过“#pragma explicit_zero_data on”把初始值为零的变量放到data段，而不是bss段。</p>
-<h2 id="数据段（data-segment）"><a href="#数据段（data-segment）" class="headerlink" title="数据段（data segment）"></a>数据段（data segment）</h2><p>通常是指用来存放程序中已初始化的全局变量的一块内存区域，会占用磁盘文件空间。数据段属于静态内存分配。</p>
-<h2 id="只读数据段（read-only-data-segment）"><a href="#只读数据段（read-only-data-segment）" class="headerlink" title="只读数据段（read only data segment）"></a>只读数据段（read only data segment）</h2><p>rodata用于存储使用const修饰的变量，或者只读类型的字符串等。</p>
-<h2 id="代码段（code-segment-text-segment）"><a href="#代码段（code-segment-text-segment）" class="headerlink" title="代码段（code segment/text segment）"></a>代码段（code segment/text segment）</h2><p>通常是指用来存放程序执行代码的一块内存区域。这部分区域的大小在程序运行前就已经确定，并且内存区域通常属于只读, 某些架构也允许代码段为可写，即允许修改程序。在代码段中，也有可能包含一些只读的常数变量，例如字符串常量等。</p>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
-<li><a href="https://blog.csdn.net/virtual_func/article/details/48529249">关于BSS段的大小</a></li>
-<li><a href="https://blog.csdn.net/jxhui23/article/details/8064766">数据段、代码段、堆栈段、BSS段的区别</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>编程语言参考网站</title>
-    <url>/2018/06/24/cpp/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99/</url>
-    <content><![CDATA[<h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><hr>
-<ul>
-<li><a href="http://www.cplusplus.com/reference/">Standard C++ Library reference</a></li>
-<li><a href="https://zh.cppreference.com/">C++ 参考手册</a></li>
-<li><a href="https://en.wikibooks.org/wiki/C%2B%2B_Programming/All_Chapters">C++ Programming - Wikibooks</a></li>
-<li><a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">C++ Core Guidelines</a> by Bjarne Stroustrup &amp; Herb Sutter</li>
-<li><a href="http://www.stroustrup.com/bs_faq2.html">Bjarne Stroustrup’s C++ Style and Technique FAQ</a></li>
-<li><a href="https://www.boost.org/">Boost: C++ libraries</a></li>
-<li><a href="https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list">The Definitive C++ Book Guide and List</a></li>
-</ul>
-<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><hr>
-<ul>
-<li><a href="https://docs.python.org/3/library/index.html#the-python-standard-library" title="Permalink to this headline">The Python Standard Library</a></li>
-<li><a href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a></li>
-<li><a href="http://www.runoob.com/python3/python3-tutorial.html">Python 3 教程 - 菜鸟教程</a></li>
-<li><a href="http://www.runoob.com/python/python-tutorial.html">Python 2 教程 - 菜鸟教程</a></li>
-</ul>
-<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><hr>
-<ul>
-<li><a href="https://developer.android.google.cn/guide?hl=zh_cn">开发者指南</a></li>
-<li><a href="https://developer.android.google.cn/reference/">Android API reference</a></li>
-<li><a href="https://developer.android.com/guide/platform/">Android Platform Architecture</a></li>
-<li><a href="https://developer.android.google.cn/reference/android/media/MediaCodec">MediaCodec</a></li>
-<li><a href="https://developer.android.google.cn/training/articles/perf-jni">JNI tips</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-        <tag>C++</tag>
-        <tag>Python</tag>
       </tags>
   </entry>
   <entry>
@@ -1126,6 +1274,44 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
+    <title>编程语言参考网站</title>
+    <url>/2018/06/24/cpp/%E7%BC%96%E7%A8%8B%E8%AF%AD%E8%A8%80%E5%8F%82%E8%80%83%E7%BD%91%E7%AB%99/</url>
+    <content><![CDATA[<h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><hr>
+<ul>
+<li><a href="http://www.cplusplus.com/reference/">Standard C++ Library reference</a></li>
+<li><a href="https://zh.cppreference.com/">C++ 参考手册</a></li>
+<li><a href="https://en.wikibooks.org/wiki/C%2B%2B_Programming/All_Chapters">C++ Programming - Wikibooks</a></li>
+<li><a href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">C++ Core Guidelines</a> by Bjarne Stroustrup &amp; Herb Sutter</li>
+<li><a href="http://www.stroustrup.com/bs_faq2.html">Bjarne Stroustrup’s C++ Style and Technique FAQ</a></li>
+<li><a href="https://www.boost.org/">Boost: C++ libraries</a></li>
+<li><a href="https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list">The Definitive C++ Book Guide and List</a></li>
+</ul>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><hr>
+<ul>
+<li><a href="https://docs.python.org/3/library/index.html#the-python-standard-library" title="Permalink to this headline">The Python Standard Library</a></li>
+<li><a href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a></li>
+<li><a href="http://www.runoob.com/python3/python3-tutorial.html">Python 3 教程 - 菜鸟教程</a></li>
+<li><a href="http://www.runoob.com/python/python-tutorial.html">Python 2 教程 - 菜鸟教程</a></li>
+</ul>
+<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><hr>
+<ul>
+<li><a href="https://developer.android.google.cn/guide?hl=zh_cn">开发者指南</a></li>
+<li><a href="https://developer.android.google.cn/reference/">Android API reference</a></li>
+<li><a href="https://developer.android.com/guide/platform/">Android Platform Architecture</a></li>
+<li><a href="https://developer.android.google.cn/reference/android/media/MediaCodec">MediaCodec</a></li>
+<li><a href="https://developer.android.google.cn/training/articles/perf-jni">JNI tips</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>C++</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Linux清理Cached内存</title>
     <url>/2018/07/13/memory/Linux%E6%B8%85%E7%90%86cache/</url>
     <content><![CDATA[<p>Kernels 2.6.16 and newer provide a mechanism to have the kernel drop the page cache and/or inode and dentry caches on command, which can help free up a lot of memory. Now you can throw away that script that allocated a ton of memory just to get rid of the cache…</p>
@@ -1147,22 +1333,6 @@ void main(int argc, char* argv[]) { <br>
       </categories>
       <tags>
         <tag>Linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ANR分析</title>
-    <url>/2018/09/05/android/ANR%E5%88%86%E6%9E%90/</url>
-    <content><![CDATA[<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
-<li><a href="https://developer.android.com/topic/performance/vitals/anr">ANRs (Google)</a></li>
-<li><a href="http://zenandroid.io/deadlocks-and-anrs/">Deadlocks and ANRs</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android调试</tag>
-        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -1560,6 +1730,32 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
+    <title>awk命令使用说明</title>
+    <url>/2018/06/24/shell/awk%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
+    <content><![CDATA[<p><strong>查找</strong><br>查找以<code>ro.build.id=</code>开头的行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;/^ro.build.id=/ &#123;print $1&#125;&#x27;</span> build.prop   <span class="comment">#在build.prop文件中查找</span></span><br></pre></td></tr></table></figure>
+<p>下面的例子实现了同样的效果，但是采用了变量的形式，用起来会更加灵活</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">prop_name=ro.build.id</span><br><span class="line">awk -v identifier=<span class="string">&quot;<span class="variable">$&#123;prop_name&#125;</span>=&quot;</span> <span class="string">&#x27;$0 ~ &quot;^&quot; identifier &#123;print $1&#125;&#x27;</span> build.prop</span><br></pre></td></tr></table></figure>
+
+<p><strong>分割字符</strong><br>默认以空格为分隔符，比如：<code>input | awk &#39;&#123;print \$1&#125;&#39;</code><br>可以通过-F参数指定分隔符，比如： <code>input | awk -F &quot;-&gt;&quot; &#39;&#123;print $2&#125;&#39;</code></p>
+<p><strong>字符串替换</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>实例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>查找SYSTEM/开头的字符串，并把SYSTEM替换为system后输出<br>或者：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 /target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;/^SYSTEM\// &#123;print&#125;&#x27;</span> | awk <span class="string">&#x27;sub(/SYSTEM/,&quot;system&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>也能实现相同的效果</p>
+<p><strong>只输出最后一行</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --pretty=format:<span class="string">&quot;%H\ | awk &#x27;NF&#123;a=<span class="variable">$0</span>&#125; END&#123;print a&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Git 中文乱码问题</title>
     <url>/2019/01/13/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/Git%E4%B8%AD%E6%96%87%E4%B9%B1%E7%A0%81%E9%97%AE%E9%A2%98/</url>
     <content><![CDATA[<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><p><a href="http://www.worldhello.net/gotgit/08-git-misc/020-git-charset.html">Git字符集问题</a></p>
@@ -1690,164 +1886,37 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>awk命令使用说明</title>
-    <url>/2018/06/24/shell/awk%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E/</url>
-    <content><![CDATA[<p><strong>查找</strong><br>查找以<code>ro.build.id=</code>开头的行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;/^ro.build.id=/ &#123;print $1&#125;&#x27;</span> build.prop   <span class="comment">#在build.prop文件中查找</span></span><br></pre></td></tr></table></figure>
-<p>下面的例子实现了同样的效果，但是采用了变量的形式，用起来会更加灵活</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">prop_name=ro.build.id</span><br><span class="line">awk -v identifier=<span class="string">&quot;<span class="variable">$&#123;prop_name&#125;</span>=&quot;</span> <span class="string">&#x27;$0 ~ &quot;^&quot; identifier &#123;print $1&#125;&#x27;</span> build.prop</span><br></pre></td></tr></table></figure>
-
-<p><strong>分割字符</strong><br>默认以空格为分隔符，比如：<code>input | awk &#39;&#123;print \$1&#125;&#39;</code><br>可以通过-F参数指定分隔符，比如： <code>input | awk -F &quot;-&gt;&quot; &#39;&#123;print $2&#125;&#39;</code></p>
-<p><strong>字符串替换</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>实例：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>查找SYSTEM/开头的字符串，并把SYSTEM替换为system后输出<br>或者：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 /target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;/^SYSTEM\// &#123;print&#125;&#x27;</span> | awk <span class="string">&#x27;sub(/SYSTEM/,&quot;system&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>也能实现相同的效果</p>
-<p><strong>只输出最后一行</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --pretty=format:<span class="string">&quot;%H\ | awk &#x27;NF&#123;a=<span class="variable">$0</span>&#125; END&#123;print a&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+    <title>代码调试之打印堆栈</title>
+    <url>/2018/06/22/android/%E4%BB%A3%E7%A0%81%E8%B0%83%E8%AF%95%E4%B9%8B%E6%89%93%E5%8D%B0%E5%A0%86%E6%A0%88/</url>
+    <content><![CDATA[<h2 id="java代码中打印堆栈"><a href="#java代码中打印堆栈" class="headerlink" title="java代码中打印堆栈"></a>java代码中打印堆栈</h2><p>Java代码打印堆栈比较简单， 堆栈信息获取和输出，都可以通过Throwable类的方法实现。目前通用的做法是在java进程出现需要注意的异常时，打印堆栈，然后再决定退出或挽救。通常的方法是使用exception的printStackTrace()方法：  </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">func</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>也可以只打印堆栈不退出，这样就比较方便分析代码的动态运行情况。Java代码中插入堆栈打印的方法如下  </p>
+<p>推荐   </p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line">Log.d(TAG, android.util.Log.getStackTraceString(<span class="keyword">new</span> java.lang.Throwable()));</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
-        <category>Shell</category>
+        <category>Android</category>
       </categories>
       <tags>
-        <tag>shell</tag>
+        <tag>Android调试</tag>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
-    <title>Hexo User Manual</title>
-    <url>/2020/11/24/Hexo-User-Manual/</url>
-    <content><![CDATA[<h2 id="VSCode-Hexo"><a href="#VSCode-Hexo" class="headerlink" title="VSCode + Hexo"></a>VSCode + Hexo</h2><h3 id="安装Paste-Image插件"><a href="#安装Paste-Image插件" class="headerlink" title="安装Paste Image插件"></a>安装<a href="https://marketplace.visualstudio.com/items?itemName=mushan.vscode-paste-image">Paste Image</a>插件</h3><p>安装完插件后，通过 <code>Ctrl + Shift + P</code> 快捷键打开setting.json</p>
-<img src="/2020/11/24/Hexo-User-Manual/2020-11-28-19-35-51.png" class="">
-
-<p>然后，在setting.json文件中添加两行配置</p>
-<div style="background-color: #F2F3F4; padding: 5px;">
-    "pasteImage.path": "${currentFileNameWithoutExt}/", <br>
-    "pasteImage.insertPattern": "{&#37; asset_img ${imageFileName} &#37;}",
-</div>
-
-<p>然后就可以使用<code>Ctrl + Alt + V</code>快捷键就可以粘贴图片到markdown文档中了。但是这个快捷键不一定好使。也可以通过<code>Ctrl + Shift + P</code>然后输入<code>past image</code>来粘贴。<br>插入的图片采用<code>asset_img</code>语法，关于asset_img详细信息可参考：<a href="https://hexo.io/docs/asset-folders">https://hexo.io/docs/asset-folders</a>。插入的图片将会放到markdown文件同名的文件夹中。</p>
-<h3 id="安装Markdown-Preview-Enhanced插件"><a href="#安装Markdown-Preview-Enhanced插件" class="headerlink" title="安装Markdown Preview Enhanced插件"></a>安装<a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">Markdown Preview Enhanced</a>插件</h3><p><a href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">Markdown Preview Enhanced</a>插件无法展示使用<code>asset_img</code>插入的图片，需要修改插件的<code>parser.js</code>。通过快捷键<code>Ctrl+Shift+P</code>打开<code>parser.js</code>:</p>
-<img src="/2020/11/24/Hexo-User-Manual/2020-11-28-20-01-44.png" class="">
-<p>然后修改onWillParseMarkdown函数：</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">onWillParseMarkdown: <span class="function"><span class="keyword">function</span>(<span class="params">markdown</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> vscode = <span class="built_in">require</span>(<span class="string">&quot;vscode&quot;</span>);</span><br><span class="line">  <span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span> &#123;</span><br><span class="line">    markdown = markdown.replace(</span><br><span class="line">      /\&#123;%\s*asset_img\s*(\S+)\s*\S*\s*%\&#125;/g,</span><br><span class="line">      (whole, content) =&gt; &#123;</span><br><span class="line">        abs_filename = vscode.window.activeTextEditor.document.fileName</span><br><span class="line">        filename = path.basename(abs_filename);</span><br><span class="line">        filename = filename.substring(<span class="number">0</span>,filename.indexOf(<span class="string">&#x27;.&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`![](<span class="subst">$&#123;filename + <span class="string">&quot;/&quot;</span>+ content&#125;</span>)`</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> resolve(markdown)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-<p>参考文章：</p>
-<ul>
-<li><a href="https://maple-leaf-0219.github.io/2020/vscode-hexo-markdown%E5%AE%9A%E5%88%B6%E6%80%9D%E8%B7%AF/">vscode hexo markdown定制思路</a> </li>
-<li><a href="https://yichengsu.github.io/2019/07/Hexo-with-VSCode/">Hexo with VSCode</a></li>
+    <title>ANR分析</title>
+    <url>/2018/09/05/android/ANR%E5%88%86%E6%9E%90/</url>
+    <content><![CDATA[<h1 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h1><ul>
+<li><a href="https://developer.android.com/topic/performance/vitals/anr">ANRs (Google)</a></li>
+<li><a href="http://zenandroid.io/deadlocks-and-anrs/">Deadlocks and ANRs</a></li>
 </ul>
-<h2 id="主页配置显示文章摘抄"><a href="#主页配置显示文章摘抄" class="headerlink" title="主页配置显示文章摘抄"></a>主页配置显示文章摘抄</h2><p>默认情况下，在主页中会把整个文章都显示了，导致主页特别乱。可以通过在文章中插入下面代码来截取摘抄：</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure>
-<p>也可以通过description字段来单独撰写摘抄。</p>
-<h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h2><p>可以通过代码段标签<code>raw</code>来禁止Markdown引擎渲染标签内的内容。</p>
-<h2 id="VSCode中预览hexo的图片"><a href="#VSCode中预览hexo的图片" class="headerlink" title="VSCode中预览hexo的图片"></a>VSCode中预览hexo的图片</h2><h2 id="支持-plantuml-画图"><a href="#支持-plantuml-画图" class="headerlink" title="支持 plantuml 画图"></a>支持 plantuml 画图</h2><p><a href="https://github.com/miao1007/hexo-filter-plantuml">hexo-filter-plantuml</a><br>示例：</p>
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="397px" preserveAspectRatio="none" style="width:372px;height:397px;" version="1.1" viewBox="0 0 372 397" width="372px" zoomAndPan="magnify"><defs><filter height="300%" id="fqdqozyzem12x" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="175.9297" style="stroke:#A80036;stroke-width:1.0;" width="10" x="93.5" y="119.4297"/><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="102.5313" style="stroke:#A80036;stroke-width:1.0;" width="10" x="204" y="163.6953"/><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="313.5" y="192.8281"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="23" x2="23" y1="88.2969" y2="313.3594"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="98.5" x2="98.5" y1="88.2969" y2="313.3594"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="208.5" x2="208.5" y1="88.2969" y2="313.3594"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="318.5" x2="318.5" y1="88.2969" y2="313.3594"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="31" x="5" y="84.9951">User</text><ellipse cx="23.5" cy="15" fill="#FEFECE" filter="url(#fqdqozyzem12x)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M23.5,23 L23.5,50 M10.5,31 L36.5,31 M23.5,50 L10.5,65 M23.5,50 L36.5,65 " fill="none" filter="url(#fqdqozyzem12x)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="31" x="5" y="325.3545">User</text><ellipse cx="23.5" cy="338.6563" fill="#FEFECE" filter="url(#fqdqozyzem12x)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M23.5,346.6563 L23.5,373.6563 M10.5,354.6563 L36.5,354.6563 M23.5,373.6563 L10.5,388.6563 M23.5,373.6563 L36.5,388.6563 " fill="none" filter="url(#fqdqozyzem12x)" style="stroke:#A80036;stroke-width:2.0;"/><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="86" x="53.5" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="72" x="60.5" y="72.9951">First Class</text><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="86" x="53.5" y="312.3594"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="72" x="60.5" y="332.3545">First Class</text><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="107" x="153.5" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="93" x="160.5" y="72.9951">Second Class</text><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="107" x="153.5" y="312.3594"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="93" x="160.5" y="332.3545">Second Class</text><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="84" x="274.5" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="70" x="281.5" y="72.9951">Last Class</text><rect fill="#FEFECE" filter="url(#fqdqozyzem12x)" height="30.2969" rx="10" ry="10" style="stroke:#A80036;stroke-width:1.5;" width="84" x="274.5" y="312.3594"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacingAndGlyphs" text-decoration="underline" textLength="70" x="281.5" y="332.3545">Last Class</text><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="175.9297" style="stroke:#A80036;stroke-width:1.0;" width="10" x="93.5" y="119.4297"/><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="102.5313" style="stroke:#A80036;stroke-width:1.0;" width="10" x="204" y="163.6953"/><rect fill="#FFFFFF" filter="url(#fqdqozyzem12x)" height="29.1328" style="stroke:#A80036;stroke-width:1.0;" width="10" x="313.5" y="192.8281"/><polygon fill="#A80036" points="81.5,115.4297,91.5,119.4297,81.5,123.4297,85.5,119.4297" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;" x1="23.5" x2="87.5" y1="119.4297" y2="119.4297"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="51" x="30.5" y="114.3638">DoWork</text><polygon fill="#A80036" points="192,159.6953,202,163.6953,192,167.6953,196,163.6953" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;" x1="103.5" x2="198" y1="163.6953" y2="163.6953"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="43" x="110.5" y="143.4966">Create</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="53" x="110.5" y="158.6294">Request</text><polygon fill="#A80036" points="301.5,188.8281,311.5,192.8281,301.5,196.8281,305.5,192.8281" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;" x1="214" x2="307.5" y1="192.8281" y2="192.8281"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="51" x="221" y="187.7622">DoWork</text><polygon fill="#A80036" points="225,217.9609,215,221.9609,225,225.9609,221,221.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="219" x2="317.5" y1="221.9609" y2="221.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="67" x="231" y="216.895">WorkDone</text><line style="stroke:#A80036;stroke-width:2.0;" x1="309.5" x2="327.5" y1="212.9609" y2="230.9609"/><line style="stroke:#A80036;stroke-width:2.0;" x1="309.5" x2="327.5" y1="230.9609" y2="212.9609"/><polygon fill="#A80036" points="114.5,262.2266,104.5,266.2266,114.5,270.2266,110.5,266.2266" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="108.5" x2="208" y1="266.2266" y2="266.2266"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="53" x="120.5" y="246.0278">Request</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="51" x="120.5" y="261.1606">Created</text><polygon fill="#A80036" points="34.5,291.3594,24.5,295.3594,34.5,299.3594,30.5,295.3594" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="28.5" x2="97.5" y1="295.3594" y2="295.3594"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacingAndGlyphs" textLength="34" x="40.5" y="290.2935">Done</text><!--MD5=[ef506d86078b413be95d9332778f31c9]
-@startuml
-skinparam sequenceArrowThickness 2
-skinparam roundcorner 20
-skinparam maxmessagesize 60
-skinparam sequenceParticipant underline
-
-actor User
-participant "First Class" as A
-participant "Second Class" as B
-participant "Last Class" as C
-
-User -> A: DoWork
-activate A
-
-A -> B: Create Request
-activate B
-
-B -> C: DoWork
-activate C
-C - -> B: WorkDone
-destroy C
-
-B - -> A: Request Created
-deactivate B
-
-A - -> User: Done
-deactivate A
-@enduml
-
-PlantUML version 1.2020.21beta7(Unknown compile time)
-(GPL source distribution)
-Java Runtime: Java(TM) SE Runtime Environment
-JVM: Java HotSpot(TM) 64-Bit Server VM
-Default Encoding: UTF-8
-Language: en
-Country: US
---></g></svg>
-
-<h2 id="支持-GraphViz-画图"><a href="#支持-GraphViz-画图" class="headerlink" title="支持 GraphViz 画图"></a>支持 GraphViz 画图</h2><p>使用<a href="https://github.com/rjyblog/hexo-tag-viz.git">hexo-tag-viz</a>插件来绘制。支持把<code>dot</code>或<code>viz</code>代码块渲染成graphviz图形。</p>
-<!-- 可以通过 {engine="..."} 来选择不同的渲染引擎。 引擎 circo，dot，neato，osage，或者 twopi 是被支持的。默认下，使用 dot 引擎。 -->
-
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">digraph demo3 &#123;</span><br><span class="line">    A -&gt; &#123;B, C, D&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
- "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
-<!-- Generated by graphviz version 2.40.1 (20161225.0304)
- -->
-<!-- Title: demo3 Pages: 1 -->
-<svg width="206pt" height="116pt"
- viewBox="0.00 0.00 206.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
-<title>demo3</title>
-<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-112 202,-112 202,4 -4,4"/>
-<!-- A -->
-<g id="node1" class="node">
-<title>A</title>
-<ellipse fill="none" stroke="#000000" cx="99" cy="-90" rx="27" ry="18"/>
-<text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">A</text>
-</g>
-<!-- B -->
-<g id="node2" class="node">
-<title>B</title>
-<ellipse fill="none" stroke="#000000" cx="27" cy="-18" rx="27" ry="18"/>
-<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">B</text>
-</g>
-<!-- A&#45;&gt;B -->
-<g id="edge1" class="edge">
-<title>A&#45;&gt;B</title>
-<path fill="none" stroke="#000000" d="M83.7307,-74.7307C73.803,-64.803 60.6847,-51.6847 49.5637,-40.5637"/>
-<polygon fill="#000000" stroke="#000000" points="51.7933,-37.8436 42.2473,-33.2473 46.8436,-42.7933 51.7933,-37.8436"/>
-</g>
-<!-- C -->
-<g id="node3" class="node">
-<title>C</title>
-<ellipse fill="none" stroke="#000000" cx="99" cy="-18" rx="27" ry="18"/>
-<text text-anchor="middle" x="99" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">C</text>
-</g>
-<!-- A&#45;&gt;C -->
-<g id="edge2" class="edge">
-<title>A&#45;&gt;C</title>
-<path fill="none" stroke="#000000" d="M99,-71.8314C99,-64.131 99,-54.9743 99,-46.4166"/>
-<polygon fill="#000000" stroke="#000000" points="102.5001,-46.4132 99,-36.4133 95.5001,-46.4133 102.5001,-46.4132"/>
-</g>
-<!-- D -->
-<g id="node4" class="node">
-<title>D</title>
-<ellipse fill="none" stroke="#000000" cx="171" cy="-18" rx="27" ry="18"/>
-<text text-anchor="middle" x="171" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">D</text>
-</g>
-<!-- A&#45;&gt;D -->
-<g id="edge3" class="edge">
-<title>A&#45;&gt;D</title>
-<path fill="none" stroke="#000000" d="M114.2693,-74.7307C124.197,-64.803 137.3153,-51.6847 148.4363,-40.5637"/>
-<polygon fill="#000000" stroke="#000000" points="151.1564,-42.7933 155.7527,-33.2473 146.2067,-37.8436 151.1564,-42.7933"/>
-</g>
-</g>
-</svg>
-
-
-<!-- 参考：<https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz> -->
 ]]></content>
       <categories>
-        <category>Hexo</category>
+        <category>Android</category>
       </categories>
+      <tags>
+        <tag>Android调试</tag>
+        <tag>Android</tag>
+      </tags>
   </entry>
   <entry>
     <title>Android binder剖析之addService</title>
