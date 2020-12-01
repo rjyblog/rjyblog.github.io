@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://rjyblog.github.io/2020/11/23/android/Android-binder-addService/</loc>
+    <lastmod>2020-12-01</lastmod>
+  </url>
+  <url>
     <loc>https://rjyblog.github.io/2020/11/24/Hexo-User-Manual/</loc>
     <lastmod>2020-11-30</lastmod>
   </url>
@@ -102,10 +106,6 @@
   </url>
   <url>
     <loc>https://rjyblog.github.io/2018/06/22/android/addr2line%E6%AD%BB%E6%9C%BA%E9%97%AE%E9%A2%98%E5%AE%9A%E4%BD%8D/</loc>
-    <lastmod>2020-11-27</lastmod>
-  </url>
-  <url>
-    <loc>https://rjyblog.github.io/2020/11/23/android/Android-binder-addService/</loc>
     <lastmod>2020-11-27</lastmod>
   </url>
 </urlset> 
