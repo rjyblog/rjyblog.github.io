@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文基于Fresco 3.0.0，对Fresco源码进行了详细的解析。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fresco源码详解">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/863074da.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="本文基于Fresco 3.0.0，对Fresco源码进行了详细的解析。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/3d0cbe1a2000392ede96ee6008e2a66790364eb70d9f5dce9814d5c13fe18973.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/3b8b646146b7ed7f97b4ac8dc1e452360c0e92028b6fdb6bde09486a657f4440.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/d7b0c9c5fecd7db5bec3bdabba68d82216eacc82c7446c5039062b9b5fd37445.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/f93412cd3f67bd7662bc7b7adfac78e65498892dcf701fcf9bfa27c17dccf29f.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/6bd665683c2a4e8fb335660e36fd5bf39afe63e2fd5d7514c9224009acc5a3a0.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/6714089f47f5b2c44c9ddf1fe71664d16d7f107fa077bd383a75959df3dc8edc.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/d8bb99e1e27832045dd1c4bc3c7366df3f06e1137a4653f953a747f27e0f7d01.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/ab72a0c1ba7c452585987573b376d1c0e47b9ab66f03d89824d2dc4a8ffabe75.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/2758552ba52d1c2964a8202249256f35c0e5d7151c020c179200393a34c1d2cf.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/2dbaf0176ffa5bfdfb30868812f647e0196d431323436786701a33e9df802a4a.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/de9d201a9fac60c376b58e62c7c91739f92f43493932aefff88fcaa1a51c664e.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/46b2431a01edd8a25321682d99beb2af2e6dd2a13ba9a3368853e4f69aa314ff.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/7dbd382b937ad7c592c2008ebd8c8c57a2699c0135a43bccfdd9aec5f67bdbbc.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/ea7cb872dd9a8d77b49dec67f21412017210a081038a390a049b8f0e54255ac6.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/da17508b5db418465c0efcfeea3c23c1b2ce1f31c013ccbaeb76364fc91fda4c.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/bfe76b1d3f07530a68a0c4aa343e19634fe5bb5476ed4e9b05ec1a1ad40d232d.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/fb4ed904a2ac0c476b16183fb82d43e1e0fe2d8601f79e566a3d46abfad9b866.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/e37373f1794704d4127ab7c5ebea3d0de4dea09fc40d878e4443a7c3dfb92872.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/aa887992db9872b891a9220765ce70c98e46cd434e60f2c721d3da3c890d9fdc.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/b258dc8c68713aca122e5a81b9667dec14d2fc452817b9e84b196b14ff9ffd49.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/488a6e5343945cce4904011cce280fbd577b16eae34bf8ad20c4d9b94912a05a.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/9a98634d0756c0291469499bd2114cbbc39fa77911d7c45913531bfb1f285909.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/a02367457338b720be1a7fd6c9480801829f94d8a155da43519c48f40a510b44.svg">
+<meta property="article:published_time" content="2023-08-29T13:44:18.000Z">
+<meta property="article:modified_time" content="2023-10-18T07:40:44.944Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="Fresco">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rjyblog.gitee.io/assert/puml/3d0cbe1a2000392ede96ee6008e2a66790364eb70d9f5dce9814d5c13fe18973.svg">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/863074da.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/863074da.html","path":"posts/863074da.html","title":"Fresco源码详解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Fresco源码详解 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E5%8A%A0%E8%BD%BD%E8%BF%87%E7%A8%8B"><span class="nav-text">图片加载过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PipelineDraweeController%E7%9A%84%E6%9E%84%E9%80%A0%E8%BF%87%E7%A8%8B"><span class="nav-text">PipelineDraweeController的构造过程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98%E6%9C%BA%E5%88%B6"><span class="nav-text">三级缓存机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%BC%93%E5%AD%98%E6%B1%A0"><span class="nav-text">内存缓存池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E5%9D%97%E7%BC%93%E5%AD%98%E6%B1%A0-MemoryChunkPool"><span class="nav-text">内存块缓存池-MemoryChunkPool</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E8%8A%82%E5%86%85%E5%AD%98%E7%BC%93%E5%AD%98%E6%B1%A0-ByteArrayPool"><span class="nav-text">字节内存缓存池 ByteArrayPool</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E8%A7%A3%E7%A0%81%E5%99%A8"><span class="nav-text">图片解码器</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Bitmap%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8"><span class="nav-text">Bitmap内存占用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Bitmap%E5%A4%8D%E7%94%A8"><span class="nav-text">Bitmap复用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%A7%A3%E7%A0%81%E7%9A%84%E4%B8%B4%E6%97%B6%E7%BC%93%E5%AD%98"><span class="nav-text">解码的临时缓存</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87%E5%A4%84%E7%90%86%E7%94%9F%E4%BA%A7%E8%80%85%E5%BA%8F%E5%88%97"><span class="nav-text">图片处理生产者序列</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#NetworkFetchProducer"><span class="nav-text">NetworkFetchProducer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DiskCacheWriteProducer"><span class="nav-text">DiskCacheWriteProducer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DiskCacheReadProducer"><span class="nav-text">DiskCacheReadProducer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EncodedMemoryCacheProducer"><span class="nav-text">EncodedMemoryCacheProducer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DecodeProducer"><span class="nav-text">DecodeProducer</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BitmapMemoryCacheProducer"><span class="nav-text">BitmapMemoryCacheProducer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%8E%E7%BC%93%E5%AD%98%E8%8E%B7%E5%8F%96Bitmap"><span class="nav-text">从缓存获取Bitmap</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#BitmapPrepareProducer"><span class="nav-text">BitmapPrepareProducer</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/863074da.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Fresco源码详解 | 任建勇的博客">
+      <meta itemprop="description" content="本文基于Fresco 3.0.0，对Fresco源码进行了详细的解析。">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Fresco源码详解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-29 21:44:18" itemprop="dateCreated datePublished" datetime="2023-08-29T21:44:18+08:00">2023-08-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 15:40:44" itemprop="dateModified" datetime="2023-10-18T15:40:44+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">本文基于Fresco 3.0.0，对Fresco源码进行了详细的解析。</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!-- 
+`com.facebook.imagepipeline.image.EncodedImage#getInputStream`是什么？
+`com.facebook.imagepipeline.platform.DefaultDecoder#decodeFromStream`会首先通过`mDecodeBuffers.acquire()`获取byteBuffer，如果获取不到就通过`ByteBuffer.allocate`来申请内存。 
+-->
+
+<p>通过Fresco加载图片，最简单的方式是通过<code>SimpleDraweeView</code>来展示图片，示例代码如下：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.facebook.drawee.view.SimpleDraweeView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:id</span>=<span class="string">&quot;@+id/my_image_view&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">&quot;130dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">&quot;130dp&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">fresco:placeholderImage</span>=<span class="string">&quot;@drawable/my_drawable&quot;</span></span></span><br><span class="line"><span class="tag">  /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//示例代码在Fragment#onViewCreated中调用</span></span><br><span class="line"><span class="type">Uri</span> <span class="variable">uri</span> <span class="operator">=</span> Uri.parse(<span class="string">&quot;https://frescolib.org/static/sample-images/animal_a.png&quot;</span>);</span><br><span class="line"><span class="type">SimpleDraweeView</span> <span class="variable">draweeView</span> <span class="operator">=</span> (SimpleDraweeView) findViewById(R.id.my_image_view);</span><br><span class="line">draweeView.setImageURI(uri);</span><br></pre></td></tr></table></figure>
+
+<p>先看一下<code>SimpleDraweeView</code>相关的类图结构：</p>
+<img src="\assert\puml\3d0cbe1a2000392ede96ee6008e2a66790364eb70d9f5dce9814d5c13fe18973.svg"/>
+
+<h2 id="图片加载过程"><a href="#图片加载过程" class="headerlink" title="图片加载过程"></a>图片加载过程</h2><p>这个时序图是以文章开头的<code>SimpleDraweeView</code>的示例代码为例进行绘制。</p>
+<img src="\assert\puml\3b8b646146b7ed7f97b4ac8dc1e452360c0e92028b6fdb6bde09486a657f4440.svg"/>
+
+<p>上图中DateSource是一个<code>CloseableProducerToDataSourceAdapter</code>实例，如下图类图所示：</p>
+<img src="\assert\puml\d7b0c9c5fecd7db5bec3bdabba68d82216eacc82c7446c5039062b9b5fd37445.svg"/>
+
+<p>Producer就是图片的生产者队列，会执行网络请求、缓存读写、图片解码等等图片处理任务。下文会详细介绍生产者队列。</p>
+<h3 id="PipelineDraweeController的构造过程"><a href="#PipelineDraweeController的构造过程" class="headerlink" title="PipelineDraweeController的构造过程"></a>PipelineDraweeController的构造过程</h3><img src="\assert\puml\f93412cd3f67bd7662bc7b7adfac78e65498892dcf701fcf9bfa27c17dccf29f.svg"/>
+
+<p>上图中的Supplier是<code>Supplier&lt;DataSource&lt;CloseableReference&lt;CloseableImage&gt;&gt;&gt;</code>是一个内部类,这个类就是DataSource提供者。如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//AbstractDraweeControllerBuilder.java</span></span><br><span class="line">  <span class="keyword">protected</span> Supplier&lt;DataSource&lt;IMAGE&gt;&gt; <span class="title function_">getDataSourceSupplierForRequest</span><span class="params">(</span></span><br><span class="line"><span class="params">      <span class="keyword">final</span> REQUEST imageRequest,</span></span><br><span class="line"><span class="params">      <span class="keyword">final</span> <span class="type">boolean</span> bitmapCacheOnly)</span> &#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">Object</span> <span class="variable">callerContext</span> <span class="operator">=</span> getCallerContext();</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Supplier</span>&lt;DataSource&lt;IMAGE&gt;&gt;() &#123;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="keyword">public</span> DataSource&lt;IMAGE&gt; <span class="title function_">get</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> getDataSourceForRequest(imageRequest, callerContext, bitmapCacheOnly);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="meta">@Override</span></span><br><span class="line">      <span class="keyword">public</span> String <span class="title function_">toString</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> Objects.toStringHelper(<span class="built_in">this</span>)</span><br><span class="line">            .add(<span class="string">&quot;request&quot;</span>, imageRequest.toString())</span><br><span class="line">            .toString();</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;</span><br><span class="line"><span class="comment">//PipelineDraweeControllerBuilder.java</span></span><br><span class="line">  <span class="keyword">protected</span> DataSource&lt;CloseableReference&lt;CloseableImage&gt;&gt; <span class="title function_">getDataSourceForRequest</span><span class="params">(</span></span><br><span class="line"><span class="params">      DraweeController controller,</span></span><br><span class="line"><span class="params">      String controllerId,</span></span><br><span class="line"><span class="params">      ImageRequest imageRequest,</span></span><br><span class="line"><span class="params">      Object callerContext,</span></span><br><span class="line"><span class="params">      AbstractDraweeControllerBuilder.CacheLevel cacheLevel)</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> mImagePipeline.fetchDecodedImage(</span><br><span class="line">        imageRequest,</span><br><span class="line">        callerContext,</span><br><span class="line">        convertCacheLevelToRequestLevel(cacheLevel),</span><br><span class="line">        getRequestListener(controller),</span><br><span class="line">        controllerId);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>下面是与PipelineDraweeController构造相关的类图：</p>
+<img src="\assert\puml\6bd665683c2a4e8fb335660e36fd5bf39afe63e2fd5d7514c9224009acc5a3a0.svg"/>
+
+<h2 id="三级缓存机制"><a href="#三级缓存机制" class="headerlink" title="三级缓存机制"></a>三级缓存机制</h2><p>Fresco采用了三级缓存机制，两级内存，一级磁盘。</p>
+<img src="\assert\puml\6714089f47f5b2c44c9ddf1fe71664d16d7f107fa077bd383a75959df3dc8edc.svg"/>
+
+<h3 id="内存缓存池"><a href="#内存缓存池" class="headerlink" title="内存缓存池"></a>内存缓存池</h3><p>Fresco的第一级和第二级内存缓存都是采用<code>LruCountingMemoryCache</code>来进行内存管理。</p>
+<img src="\assert\puml\d8bb99e1e27832045dd1c4bc3c7366df3f06e1137a4653f953a747f27e0f7d01.svg"/>
+
+<p>LruCountingMemoryCache包含了两个CountingLruMap：<code>mCachedEntries</code>保存所有缓存数据，即缓存池；<code>mExclusiveEntries</code>是回收队列，用于保存不再被使用的数据，这些数据是可以被安全回收的。<code>CountingLruMap</code>中的数据通过<code>LinkedHashMap</code>来保存，同时CountingLruMap中有一个mSizeInBytes变量，表示缓存数据的总大小，在每次添加和删除数据时都会更新mSizeInBytes。</p>
+<p>缓存池中保存的是<code>Entry&lt;K, V&gt;</code>数据类型，然而添加和获取缓存数据都会通过<code>newClientReference</code>方法来创建一个<code>CloseableReference&lt;V&gt;</code>返回的是一个<code>CloseableReference&lt;V&gt;</code>类型的数据：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//LruCountingMemoryCache.java</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">synchronized</span> CloseableReference&lt;V&gt; <span class="title function_">newClientReference</span><span class="params">(<span class="keyword">final</span> Entry&lt;K, V&gt; entry)</span> &#123;</span><br><span class="line">    increaseClientCount(entry);</span><br><span class="line">    <span class="keyword">return</span> CloseableReference.of(</span><br><span class="line">        entry.valueRef.get(),</span><br><span class="line">        <span class="keyword">new</span> <span class="title class_">ResourceReleaser</span>&lt;V&gt;() &#123;</span><br><span class="line">          <span class="meta">@Override</span></span><br><span class="line">          <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">release</span><span class="params">(V unused)</span> &#123; <span class="comment">//当CloseableReference#close被调用时就会执行release方法</span></span><br><span class="line">            releaseClientReference(entry);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** Called when the client closes its reference. */</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">void</span> <span class="title function_">releaseClientReference</span><span class="params">(<span class="keyword">final</span> Entry&lt;K, V&gt; entry)</span> &#123;</span><br><span class="line">    Preconditions.checkNotNull(entry);</span><br><span class="line">    <span class="type">boolean</span> isExclusiveAdded;</span><br><span class="line">    CloseableReference&lt;V&gt; oldRefToClose;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">      decreaseClientCount(entry);</span><br><span class="line">      isExclusiveAdded = maybeAddToExclusives(entry);</span><br><span class="line">      oldRefToClose = referenceToClose(entry);</span><br><span class="line">    &#125;</span><br><span class="line">    CloseableReference.closeSafely(oldRefToClose);</span><br><span class="line">    maybeNotifyExclusiveEntryInsertion(isExclusiveAdded ? entry : <span class="literal">null</span>);</span><br><span class="line">    maybeUpdateCacheParams();</span><br><span class="line">    maybeEvictEntries();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** Adds the entry to the exclusively owned queue if it is viable for eviction. */</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="type">boolean</span> <span class="title function_">maybeAddToExclusives</span><span class="params">(Entry&lt;K, V&gt; entry)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!entry.isOrphan &amp;&amp; entry.clientCount == <span class="number">0</span>) &#123;</span><br><span class="line">      mExclusiveEntries.put(entry.key, entry); <span class="comment">//添加到回收队列中</span></span><br><span class="line">      <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>当数据消费者不再使用这条数据时，CloseableReference#close()就会被调用，进而调用到上面代码中的release回调方法，当这条数据的使用者数量为零时，就会把这条数据添加到<code>mExclusiveEntries</code>回收队列中，<code>mCachedEntries</code>依然会保留这条数据。当从缓存池get数据时，如果这条数据在回收队列中，将会从回收队列中移除掉，因为这条数据有了使用者，就不能被回收了。</p>
+<p>再来看下缓存池的配置参数：</p>
+<ul>
+<li>maxCacheSize 缓存的最大大小，以字节为单位；</li>
+<li>maxCacheEntries 缓存中能够保存的最大数量；</li>
+<li>maxEvictionQueueSize 回收队列用于存储准备回收的数据，这个字段表示回收队列的最大字节数；</li>
+<li>maxEvictionQueueEntries 回收队列可以保存的最大数量；</li>
+<li>maxCacheEntrySize 单个缓存数据的最大内存；</li>
+<li>paramsCheckIntervalMs 检查配置参数更新的间隔时间(以毫秒为单位)。当添加缓存、获取缓存等操作时，都会检查距离上次更新配置参数是否超过这个值，如果超过了，就会重新后去这些配置参数。</li>
+</ul>
+<p>上面这些参数用于确定缓存池的最大容量，当超过容量限制时就会触发回收动作，回收时只会删除已经在回收队列中的数据，不在回收队列中的数据说明还再被使用，是不能回收的。在添加、获取缓存数据时都会调用<code>maybeEvictEntries</code>来判断是否要对缓存池进行清理回收：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">maybeEvictEntries</span><span class="params">()</span> &#123;</span><br><span class="line">  ArrayList&lt;Entry&lt;K, V&gt;&gt; oldEntries;</span><br><span class="line">  <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">    <span class="comment">//计算回收队列要保留的数据个数</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">maxCount</span> <span class="operator">=</span></span><br><span class="line">        Math.min(</span><br><span class="line">            mMemoryCacheParams.maxEvictionQueueEntries,</span><br><span class="line">            mMemoryCacheParams.maxCacheEntries - getInUseCount());</span><br><span class="line">    <span class="comment">//计算回收队列要保留数据的总大小</span></span><br><span class="line">    <span class="type">int</span> <span class="variable">maxSize</span> <span class="operator">=</span></span><br><span class="line">        Math.min(</span><br><span class="line">            mMemoryCacheParams.maxEvictionQueueSize,</span><br><span class="line">            mMemoryCacheParams.maxCacheSize - getInUseSizeInBytes());</span><br><span class="line">    oldEntries = trimExclusivelyOwnedEntries(maxCount, maxSize);</span><br><span class="line">    makeOrphans(oldEntries);</span><br><span class="line">  &#125;</span><br><span class="line">  maybeClose(oldEntries);</span><br><span class="line">  maybeNotifyExclusiveEntryRemoval(oldEntries);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//获取正在被使用的数据的个数</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="type">int</span> <span class="title function_">getInUseCount</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> mCachedEntries.getCount() - mExclusiveEntries.getCount();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//执行回收工作</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">synchronized</span> ArrayList&lt;Entry&lt;K, V&gt;&gt; <span class="title function_">trimExclusivelyOwnedEntries</span><span class="params">(<span class="type">int</span> count, <span class="type">int</span> size)</span> &#123;</span><br><span class="line">  count = Math.max(count, <span class="number">0</span>);</span><br><span class="line">  size = Math.max(size, <span class="number">0</span>);</span><br><span class="line">  <span class="comment">// fast path without array allocation if no eviction is necessary</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="built_in">this</span>.mExclusiveEntries.getCount() &lt;= count &amp;&amp; mExclusiveEntries.getSizeInBytes() &lt;= size) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  ArrayList&lt;Entry&lt;K, V&gt;&gt; oldEntries = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">  <span class="comment">//循环从回收队列删除数据，直到同时满足小于等于size和count</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="built_in">this</span>.mExclusiveEntries.getCount() &gt; count || mExclusiveEntries.getSizeInBytes() &gt; size) &#123;</span><br><span class="line">    <span class="meta">@Nullable</span> <span class="type">K</span> <span class="variable">key</span> <span class="operator">=</span> mExclusiveEntries.getFirstKey(); <span class="comment">//获取回收队列中最早添加的数据</span></span><br><span class="line">    ......</span><br><span class="line">    mExclusiveEntries.remove(key); <span class="comment">//从回收队列中删除</span></span><br><span class="line">    oldEntries.add(mCachedEntries.remove(key)); <span class="comment">//从缓存池删除</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> oldEntries;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="内存块缓存池-MemoryChunkPool"><a href="#内存块缓存池-MemoryChunkPool" class="headerlink" title="内存块缓存池-MemoryChunkPool"></a>内存块缓存池-MemoryChunkPool</h3><img src="\assert\puml\ab72a0c1ba7c452585987573b376d1c0e47b9ab66f03d89824d2dc4a8ffabe75.svg"/>
+
+<p>Fresco默认使用<code>NativeMemoryChunkPool</code>，而如果要使用<code>AshmemMemoryChunkPool</code>则必须配置开发打开，并且8.1及以上的android版本才能使用（<code>ImagePipelineConfig#getMemoryChunkType</code>）。</p>
+<ul>
+<li>NativeMemoryChunk使用nativce内存，通过C函数malloc来申请内存；</li>
+<li>AshmemMemoryChunk使用匿名共享内存，通过<code>android.os.SharedMemory#create</code>来申请内存；</li>
+<li>BufferMemoryChunk使用Java堆上的内存，通过<code>java.nio.ByteBuffer#allocateDirect</code>来申请内存；</li>
+</ul>
+<p>MemoryChunkPool中维护了一个int数组（mBucketSizes），是内存块大小列表，数组的值来自<code>PoolParams#bucketSizes</code>的keys，此处不会使用其value值。<code>PoolParams#bucketSizes</code>是个SparseIntArray类型，相当于map类型，key、value都是int。key表示内存块大小、value表示该大小的内存块的个数。默认值如下<small>（<em>默认值在<code>DefaultNativeMemoryChunkPoolParams#get</code>赋值</em>）</small>：</p>
+<img src="\assert\puml\2758552ba52d1c2964a8202249256f35c0e5d7151c020c179200393a34c1d2cf.svg"/>
+
+<p>当需要获取内存块时，会调用<code>MemoryChunkPool#get(int size)</code>来获取一个MemoryChunk。比如要获取一个60KB大小的内存块，就会在mBucketSizes数组中找大于等于60KB的最小值，所以，最终内存块大小是64KB。申请内存块时，如果内存池中已经有对应大小的内存块就返回，否则会创建一个新的内存块，并申请内存。</p>
+<p><code>Bucket&lt;MemoryChunk&gt;</code>中维护的都是相同大小的内存块，使用一个Queue维护空闲的内存块，当内存块被取走后，就在Queue中删除了。当内存块使用完后再放入Queue中。</p>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li>NetworkFetchProducer中，图片从网络下载后，原始图片数据就会写入到一个MemoryChunk中。</li>
+</ul>
+<h3 id="字节内存缓存池-ByteArrayPool"><a href="#字节内存缓存池-ByteArrayPool" class="headerlink" title="字节内存缓存池 ByteArrayPool"></a>字节内存缓存池 ByteArrayPool</h3><img src="\assert\puml\2dbaf0176ffa5bfdfb30868812f647e0196d431323436786701a33e9df802a4a.svg"/>
+
+<p>字节缓存池与内存块缓存池的机制是一样的，区别是内存块缓存池使用了1KB、2KB、4KB等一系列大小的内存块，而字节内存缓存池只有16KB大小的一种缓存块。一般作为一个临时内存来使用，使用完成后立马放回缓存池，</p>
+<p><strong>使用场景：</strong></p>
+<ul>
+<li>网络请求数据从输入流中读数据到一个临时的buffer中，这个buffer就是从字节内存缓存池中拿到的；</li>
+<li>图片缓存到磁盘中时，内存的输入流中先读取数据到一个buffer中，然后从buffer写入到磁盘的输出流，其中buffer也是从字节内存缓存池中拿到；</li>
+</ul>
+<h2 id="图片解码器"><a href="#图片解码器" class="headerlink" title="图片解码器"></a>图片解码器</h2><img src="\assert\puml\de9d201a9fac60c376b58e62c7c91739f92f43493932aefff88fcaa1a51c664e.svg"/>
+
+<h3 id="Bitmap内存占用"><a href="#Bitmap内存占用" class="headerlink" title="Bitmap内存占用"></a>Bitmap内存占用</h3><ul>
+<li>Android 2.3.3 (API level 10)以及更早的Android版本中，Bitmap的像素数据保存在native内存中，像素数据内存的回收则在finalize()中进行回收，存在很大的不确定性，很容易导致OOM的发生；</li>
+<li>从Android 3.0 (API level 11) 到Android 7.1 (API level 25)，像素数据存放在Java Heap中，跟Bitmap对象一起回收。但由于图片是内存消耗大户，所以也很容易导致OOM，以及频繁的GC导致内存抖动问题。</li>
+<li>在Android 8.0 (API level 26)以及更高的版本中，像素数据保存在native heap中。通过一个辅助类<code>NativeAllocationRegistry</code>来实现native内存的回收。</li>
+</ul>
+<p>Android5.0及以上的版本，Fresco采用标准的Bitmap解码，通过BitmapFactoty.decodeXXX系列函数进行位图解码，pixel数据内存的分配完全由Android系统决定，可以参考<a href="/posts/68833f9e.html" title="Bitmap内存分配以及回收">Bitmap内存分配以及回收</a>，所以这里就不介绍了。</p>
+<p>本节重点介绍在Android5.0以下的系统上，Fresco是如何把pixel数据放在了共享内存中的？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//imagepipeline-native/src/main/java/com/facebook/imagepipeline/nativecode/DalvikPurgeableDecoder.java</span></span><br><span class="line">  <span class="keyword">public</span> CloseableReference&lt;Bitmap&gt; <span class="title function_">decodeJPEGFromEncodedImageWithColorSpace</span><span class="params">(</span></span><br><span class="line"><span class="params">      <span class="keyword">final</span> EncodedImage encodedImage,</span></span><br><span class="line"><span class="params">      Bitmap.Config bitmapConfig,</span></span><br><span class="line"><span class="params">      <span class="meta">@Nullable</span> Rect regionToDecode,</span></span><br><span class="line"><span class="params">      <span class="type">int</span> length,</span></span><br><span class="line"><span class="params">      <span class="meta">@Nullable</span> <span class="keyword">final</span> ColorSpace colorSpace)</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//设置解码配置信息，函数实现见下方代码</span></span><br><span class="line">    BitmapFactory.<span class="type">Options</span> <span class="variable">options</span> <span class="operator">=</span></span><br><span class="line">        getBitmapFactoryOptions(encodedImage.getSampleSize(), bitmapConfig); </span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) &#123;</span><br><span class="line">      OreoUtils.setColorSpace(options, colorSpace);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">final</span> CloseableReference&lt;PooledByteBuffer&gt; bytesRef = encodedImage.getByteBufferRef();</span><br><span class="line">    Preconditions.checkNotNull(bytesRef);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="comment">//最终会调用BitmapFactory.decodeByteArray或BitmapFactory.decodeFileDescriptor来解码位图</span></span><br><span class="line">      <span class="type">Bitmap</span> <span class="variable">bitmap</span> <span class="operator">=</span> decodeJPEGByteArrayAsPurgeable(bytesRef, length, options);</span><br><span class="line"></span><br><span class="line">      <span class="comment">//通过jni最终调用framework中的AndroidBitmap_lockPixels（c++函数），待会儿再介绍作用</span></span><br><span class="line">      <span class="keyword">return</span> pinBitmap(bitmap); </span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      CloseableReference.closeSafely(bytesRef);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">static</span> BitmapFactory.Options <span class="title function_">getBitmapFactoryOptions</span><span class="params">(</span></span><br><span class="line"><span class="params">      <span class="type">int</span> sampleSize, Bitmap.Config bitmapConfig)</span> &#123;</span><br><span class="line">    BitmapFactory.<span class="type">Options</span> <span class="variable">options</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">BitmapFactory</span>.Options();</span><br><span class="line">    options.inDither = <span class="literal">true</span>; <span class="comment">// known to improve picture quality at low cost</span></span><br><span class="line">    options.inPreferredConfig = bitmapConfig;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Decode the image into a &#x27;purgeable&#x27; bitmap that lives on the ashmem heap</span></span><br><span class="line">    <span class="comment">//BitmapFactory.cpp中doDecode时会读取这个配置，从而使用共享内存</span></span><br><span class="line">    options.inPurgeable = <span class="literal">true</span>;</span><br><span class="line">    <span class="comment">// Enable copy of of bitmap to enable purgeable decoding by filedescriptor</span></span><br><span class="line">    options.inInputShareable = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Sample size should ONLY be different than 1 when downsampling is enabled in the pipeline</span></span><br><span class="line">    options.inSampleSize = sampleSize;</span><br><span class="line">    options.inMutable = <span class="literal">true</span>; <span class="comment">// no known perf difference; allows postprocessing to work</span></span><br><span class="line">    <span class="keyword">return</span> options;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>继续看以下android framework 中bitmap解码的实现：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//android-4.4.4_r1\frameworks\base\core\jni\android\graphics\BitmapFactory.cpp</span></span><br><span class="line"><span class="function"><span class="type">static</span> jobject <span class="title">doDecode</span><span class="params">(JNIEnv* env, SkStreamRewindable* stream, jobject padding,</span></span></span><br><span class="line"><span class="params"><span class="function">        jobject options, <span class="type">bool</span> allowPurgeable, <span class="type">bool</span> forcePurgeable = <span class="literal">false</span>)</span> </span>&#123;</span><br><span class="line">    ...... <span class="comment">//代码省略</span></span><br><span class="line">    <span class="type">bool</span> isPurgeable = forcePurgeable || (allowPurgeable &amp;&amp; <span class="built_in">optionsPurgeable</span>(env, options));</span><br><span class="line">    ......</span><br><span class="line">    <span class="type">const</span> <span class="type">bool</span> willScale = scale != <span class="number">1.0f</span>;</span><br><span class="line">    isPurgeable &amp;= !willScale;  <span class="comment">//如果配置了按比例缩放，则isPurgeable不生效</span></span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//如果配置了isPurgeable，将会使用kDecodeBounds_Mode解码模式，即只解析长宽等信息，不会申请piexel内存</span></span><br><span class="line">    SkImageDecoder::Mode decodeMode = isPurgeable ? SkImageDecoder::kDecodeBounds_Mode : mode;</span><br><span class="line"></span><br><span class="line">    <span class="function">JavaPixelAllocator <span class="title">javaAllocator</span><span class="params">(env)</span></span>;</span><br><span class="line">    <span class="function">RecyclingPixelAllocator <span class="title">recyclingAllocator</span><span class="params">(outputBitmap-&gt;pixelRef(), existingBufferSize)</span></span>;</span><br><span class="line">    <span class="function">ScaleCheckingAllocator <span class="title">scaleCheckingAllocator</span><span class="params">(scale, existingBufferSize)</span></span>;</span><br><span class="line">    SkBitmap::Allocator* outputAllocator = (javaBitmap != <span class="literal">NULL</span>) ?</span><br><span class="line">            (SkBitmap::Allocator*)&amp;recyclingAllocator : (SkBitmap::Allocator*)&amp;javaAllocator;</span><br><span class="line">    <span class="keyword">if</span> (decodeMode != SkImageDecoder::kDecodeBounds_Mode) &#123;</span><br><span class="line">        <span class="comment">//isPurgeable为true时，不会走入这个if判断，所以decoder不会设置allocator</span></span><br><span class="line">        <span class="keyword">if</span> (!willScale) &#123;</span><br><span class="line">            <span class="comment">// If the java allocator is being used to allocate the pixel memory, the decoder</span></span><br><span class="line">            <span class="comment">// need not write zeroes, since the memory is initialized to 0.</span></span><br><span class="line">            decoder-&gt;<span class="built_in">setSkipWritingZeroes</span>(outputAllocator == &amp;javaAllocator);</span><br><span class="line">            decoder-&gt;<span class="built_in">setAllocator</span>(outputAllocator);</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (javaBitmap != <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="comment">// check for eventual scaled bounds at allocation time, so we don&#x27;t decode the bitmap</span></span><br><span class="line">            <span class="comment">// only to find the scaled result too large to fit in the allocation</span></span><br><span class="line">            decoder-&gt;<span class="built_in">setAllocator</span>(&amp;scaleCheckingAllocator);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">    SkBitmap decodingBitmap;</span><br><span class="line">    <span class="comment">//使用SkImageDecoder::kDecodeBounds_Mode模式进行解码，所以decodingBitmap中没有pixel数据</span></span><br><span class="line">    <span class="keyword">if</span> (!decoder-&gt;<span class="built_in">decode</span>(stream, &amp;decodingBitmap, prefConfig, decodeMode)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">nullObjectReturn</span>(<span class="string">&quot;decoder-&gt;decode returned false&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">// if we&#x27;re in justBounds mode, return now (skip the java bitmap)</span></span><br><span class="line">    <span class="comment">//此处并没有使用decodeMode来判断，所以不会返回，还会继续执行后面的代码</span></span><br><span class="line">    <span class="keyword">if</span> (mode == SkImageDecoder::kDecodeBounds_Mode) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">    SkPixelRef* pr;</span><br><span class="line">    <span class="keyword">if</span> (isPurgeable) &#123;</span><br><span class="line">        <span class="comment">//installPixelRef函数实现见下文</span></span><br><span class="line">        pr = <span class="built_in">installPixelRef</span>(outputBitmap, stream, sampleSize, doDither);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">// if we get here, we&#x27;re in kDecodePixels_Mode and will therefore</span></span><br><span class="line">        <span class="comment">// already have a pixelref installed.</span></span><br><span class="line">        pr = outputBitmap-&gt;<span class="built_in">pixelRef</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (pr == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">nullObjectReturn</span>(<span class="string">&quot;Got null SkPixelRef&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">// now create the java bitmap</span></span><br><span class="line">    <span class="keyword">return</span> GraphicsJNI::<span class="built_in">createBitmap</span>(env, outputBitmap, javaAllocator.<span class="built_in">getStorageObj</span>(),</span><br><span class="line">            bitmapCreateFlags, ninePatchChunk, layoutBounds, <span class="number">-1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> SkPixelRef* <span class="title">installPixelRef</span><span class="params">(SkBitmap* bitmap, SkStreamRewindable* stream,</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="type">int</span> sampleSize, <span class="type">bool</span> ditherImage)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    SkImageInfo bitmapInfo;</span><br><span class="line">    <span class="keyword">if</span> (!bitmap-&gt;<span class="built_in">asImageInfo</span>(&amp;bitmapInfo)) &#123;</span><br><span class="line">        <span class="built_in">ALOGW</span>(<span class="string">&quot;bitmap has unknown configuration so no memory has been allocated&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    SkImageRef* pr;</span><br><span class="line">    <span class="comment">// only use ashmem for large images, since mmaps come at a price</span></span><br><span class="line">    <span class="comment">//当Bitmap内存超过32K时，才会使用共享内存</span></span><br><span class="line">    <span class="keyword">if</span> (bitmap-&gt;<span class="built_in">getSize</span>() &gt;= <span class="number">32</span> * <span class="number">1024</span>) &#123;</span><br><span class="line">        pr = <span class="keyword">new</span> <span class="built_in">SkImageRef_ashmem</span>(bitmapInfo, stream, sampleSize);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//会走到SkBitmap::allocPixels默认申请内存native内存的分支，并通过一个全局缓存池进行管理</span></span><br><span class="line">        pr = <span class="keyword">new</span> <span class="built_in">SkImageRef_GlobalPool</span>(bitmapInfo, stream, sampleSize);</span><br><span class="line">    &#125;</span><br><span class="line">    pr-&gt;<span class="built_in">setDitherImage</span>(ditherImage);</span><br><span class="line">    bitmap-&gt;<span class="built_in">setPixelRef</span>(pr)-&gt;<span class="built_in">unref</span>();</span><br><span class="line">    pr-&gt;<span class="built_in">isOpaque</span>(bitmap);</span><br><span class="line">    <span class="keyword">return</span> pr;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上面代码可以看出，当isPurgeable==true时，并没有解码pixel数据，而且内存也没有申请，那么什么时候进行解码呢？还记得Fresco调用BitmapFactory解码后有个pinBitmap的函数调用吧，这个函数通过jni调用AndroidBitmap_lockPixels函数，进而调用到<code>SkImageRef::onLockPixels</code>，从而触发pixel解码。下面代码介绍了触发解码的过程，以及共享内存的分配：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//android-4.4.4_r1\external\skia\src\images\SkImageRef.cpp</span></span><br><span class="line"><span class="comment">//Fresco的pinBitmap最终就会调用这个函数，进而触发pixel解码，pixel数据存放在共享内存</span></span><br><span class="line"><span class="function"><span class="type">void</span>* <span class="title">SkImageRef::onLockPixels</span><span class="params">(SkColorTable** ct)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == fBitmap.<span class="built_in">getPixels</span>()) &#123;</span><br><span class="line">        (<span class="type">void</span>)<span class="keyword">this</span>-&gt;<span class="built_in">prepareBitmap</span>(SkImageDecoder::kDecodePixels_Mode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (ct) &#123;</span><br><span class="line">        *ct = fBitmap.<span class="built_in">getColorTable</span>();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> fBitmap.<span class="built_in">getPixels</span>();</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//SkImageRef_ashmem就是SkImageRef的子类，prepareBitmap会调用onDecode</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">SkImageRef::prepareBitmap</span><span class="params">(SkImageDecoder::Mode mode)</span> </span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    SkImageDecoder* codec;</span><br><span class="line">    <span class="keyword">if</span> (fFactory) &#123; <span class="comment">//默认是null，不走这个分支</span></span><br><span class="line">        codec = fFactory-&gt;<span class="built_in">newDecoder</span>(fStream);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        codec = SkImageDecoder::<span class="built_in">Factory</span>(fStream);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (codec) &#123;</span><br><span class="line">        <span class="function">SkAutoTDelete&lt;SkImageDecoder&gt; <span class="title">ad</span><span class="params">(codec)</span></span>;</span><br><span class="line"></span><br><span class="line">        codec-&gt;<span class="built_in">setSampleSize</span>(fSampleSize);</span><br><span class="line">        codec-&gt;<span class="built_in">setDitherImage</span>(fDoDither);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//此处就是SkImageRef_ashmem::onDecode，见下面函数定义</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>-&gt;<span class="built_in">onDecode</span>(codec, fStream, &amp;fBitmap, fBitmap.<span class="built_in">config</span>(), mode)) &#123;</span><br><span class="line">            <span class="built_in">SkDEBUGCODE</span>(SkImageInfo info;)</span><br><span class="line">            <span class="built_in">SkASSERT</span>(!fBitmap.<span class="built_in">asImageInfo</span>(&amp;info) || <span class="keyword">this</span>-&gt;<span class="built_in">info</span>().fColorType == info.fColorType);</span><br><span class="line">            <span class="built_in">SkASSERT</span>(<span class="keyword">this</span>-&gt;<span class="built_in">info</span>().fWidth == fBitmap.<span class="built_in">width</span>());</span><br><span class="line">            <span class="built_in">SkASSERT</span>(<span class="keyword">this</span>-&gt;<span class="built_in">info</span>().fHeight == fBitmap.<span class="built_in">height</span>());</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//android-4.4.4_r1\external\skia\src\images\SkImageRef_ashmem.cpp</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">SkImageRef_ashmem::onDecode</span><span class="params">(SkImageDecoder* codec, SkStreamRewindable* stream,</span></span></span><br><span class="line"><span class="params"><span class="function">                                 SkBitmap* bitmap, SkBitmap::Config config,</span></span></span><br><span class="line"><span class="params"><span class="function">                                 SkImageDecoder::Mode mode)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (SkImageDecoder::kDecodeBounds_Mode == mode) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>-&gt;INHERITED::<span class="built_in">onDecode</span>(codec, stream, bitmap, config, mode);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Ashmem memory is guaranteed to be initialized to 0.</span></span><br><span class="line">    codec-&gt;<span class="built_in">setSkipWritingZeroes</span>(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//这就是我们的主角，共享内存分配器</span></span><br><span class="line">    <span class="function">AshmemAllocator <span class="title">alloc</span><span class="params">(&amp;fRec, <span class="keyword">this</span>-&gt;getURI())</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//向解码器中注册共享内存分配器。如果不注册将会采用默认的内存分配器</span></span><br><span class="line">    codec-&gt;<span class="built_in">setAllocator</span>(&amp;alloc);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//调用父类的onDecode，父类会调用codec-&gt;decode进行位图解码，见下面函数定义</span></span><br><span class="line">    <span class="type">bool</span> success = <span class="keyword">this</span>-&gt;INHERITED::<span class="built_in">onDecode</span>(codec, stream, bitmap, config,</span><br><span class="line">                                             mode);</span><br><span class="line">    <span class="comment">// remove the allocator, since its on the stack</span></span><br><span class="line">    codec-&gt;<span class="built_in">setAllocator</span>(<span class="literal">NULL</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (success) &#123;</span><br><span class="line">        <span class="comment">// remember the colortable (if any)</span></span><br><span class="line">        <span class="built_in">SkRefCnt_SafeAssign</span>(fCT, bitmap-&gt;<span class="built_in">getColorTable</span>());</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (fRec.fPinned) &#123;</span><br><span class="line">            <span class="built_in">ashmem_unpin_region</span>(fRec.fFD, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">            fRec.fPinned = <span class="literal">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">this</span>-&gt;<span class="built_in">closeFD</span>();</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">SkImageRef::onDecode</span><span class="params">(SkImageDecoder* codec, SkStreamRewindable* stream,</span></span></span><br><span class="line"><span class="params"><span class="function">                          SkBitmap* bitmap, SkBitmap::Config config,</span></span></span><br><span class="line"><span class="params"><span class="function">                          SkImageDecoder::Mode mode)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> codec-&gt;<span class="built_in">decode</span>(stream, bitmap, config, mode);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//android-4.4.4_r1\external\skia\src\images\SkImageDecoder_libjpeg.cpp</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">SkJPEGImageDecoder::onDecode</span><span class="params">(SkStream* stream, SkBitmap* bm, Mode mode)</span> </span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">if</span> (SkImageDecoder::kDecodeBounds_Mode == mode) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="keyword">this</span>-&gt;<span class="built_in">allocPixelRef</span>(bm, <span class="literal">NULL</span>)) &#123; <span class="comment">//调用父类函数</span></span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">return_false</span>(cinfo, *bm, <span class="string">&quot;allocPixelRef&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//android-4.4.4_r1\external\skia\src\core\SkBitmap.cpp</span></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">SkImageDecoder::allocPixelRef</span><span class="params">(SkBitmap* bitmap,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   SkColorTable* ctable)</span> <span class="type">const</span> </span>&#123;</span><br><span class="line">    <span class="comment">//调用bitmap分配pixel内存，fAllocator就是前面我们设置的共享内存分配器</span></span><br><span class="line">    <span class="keyword">return</span> bitmap-&gt;<span class="built_in">allocPixels</span>(fAllocator, ctable);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">SkBitmap::allocPixels</span><span class="params">(Allocator* allocator, SkColorTable* ctable)</span> </span>&#123;</span><br><span class="line">    <span class="comment">//这是默认内存分配器，因为我们传入了allocator参数，所以不会使用默认内存分配器</span></span><br><span class="line">    <span class="comment">//上面代码中介绍的SkImageRef_GlobalPool就会使用这个默认的内存分配器</span></span><br><span class="line">    HeapAllocator stdalloc;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="literal">NULL</span> == allocator) &#123;</span><br><span class="line">        allocator = &amp;stdalloc;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//调用AshmemAllocator::allocPixelRef来分配内存</span></span><br><span class="line">    <span class="keyword">return</span> allocator-&gt;<span class="built_in">allocPixelRef</span>(<span class="keyword">this</span>, ctable);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">AshmemAllocator</span> : <span class="keyword">public</span> SkBitmap::Allocator &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">AshmemAllocator</span>(SkAshmemRec* rec, <span class="type">const</span> <span class="type">char</span> name[])</span><br><span class="line">        : <span class="built_in">fRec</span>(rec), <span class="built_in">fName</span>(name) &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">virtual</span> <span class="type">bool</span> <span class="title">allocPixelRef</span><span class="params">(SkBitmap* bm, SkColorTable* ct)</span> </span>&#123;</span><br><span class="line">        <span class="type">const</span> <span class="type">size_t</span> size = <span class="built_in">roundToPageSize</span>(bm-&gt;<span class="built_in">getSize</span>());</span><br><span class="line">        <span class="type">int</span> fd = fRec-&gt;fFD;</span><br><span class="line">        <span class="type">void</span>* addr = fRec-&gt;fAddr;</span><br><span class="line"></span><br><span class="line">        <span class="built_in">SkASSERT</span>(!fRec-&gt;fPinned);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="number">-1</span> == fd) &#123;</span><br><span class="line">            <span class="built_in">SkASSERT</span>(<span class="literal">NULL</span> == addr);</span><br><span class="line">            <span class="built_in">SkASSERT</span>(<span class="number">0</span> == fRec-&gt;fSize);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//打开/dev/ashmem虚拟设备，然后ioctl配置name和size</span></span><br><span class="line">            fd = <span class="built_in">ashmem_create_region</span>(fName, size);</span><br><span class="line">            ......</span><br><span class="line"></span><br><span class="line">            <span class="comment">//调用mmap分配内存</span></span><br><span class="line">            addr = <span class="built_in">mmap</span>(<span class="literal">NULL</span>, size, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd, <span class="number">0</span>);</span><br><span class="line">            ......</span><br><span class="line"></span><br><span class="line">            fRec-&gt;fFD = fd;</span><br><span class="line">            fRec-&gt;fAddr = addr;</span><br><span class="line">            fRec-&gt;fSize = size;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="built_in">SkASSERT</span>(addr);</span><br><span class="line">            <span class="built_in">SkASSERT</span>(size == fRec-&gt;fSize);</span><br><span class="line">            (<span class="type">void</span>)<span class="built_in">ashmem_pin_region</span>(fd, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        bm-&gt;<span class="built_in">setPixels</span>(addr, ct);</span><br><span class="line">        fRec-&gt;fPinned = <span class="literal">true</span>;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="comment">// we just point to our caller&#x27;s memory, these are not copies</span></span><br><span class="line">    SkAshmemRec* fRec;</span><br><span class="line">    <span class="type">const</span> <span class="type">char</span>*  fName;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Bitmap复用"><a href="#Bitmap复用" class="headerlink" title="Bitmap复用"></a>Bitmap复用</h3><p>通过<code>android.graphics.BitmapFactory#decodeStream(...)</code>接口进行图片解码时可以通过设置<code>BitmapFactory.Options#inBitmap</code>来复用旧的Bitmap实例，这样可以避免频繁申请内存。但是有如下限制条件：</p>
+<ol>
+<li>被复用的Bitmap的isMutable属性必须为true；</li>
+<li>Android4.4及以上版本，只要新图片需要的pixels内存小于等于inBitmap的即可；</li>
+<li>Android4.4以下版本有额外的限制，图片必须是jpeg或png格式，而且pixels内存大小必须相等，且inSampleSize必须是1；而且新图片的inPreferredConfig属性将会被inBitmap覆盖。</li>
+</ol>
+<p>解码时Bitmap的复用代码在<code>DefaultDecoder#decodeFromStream</code>中。被复用的Bitmap保存在BitmapPool中。当一个Bitmap不再被使用后（引用计数为0）就会被放到BitmapPool中：</p>
+<img src="\assert\puml\46b2431a01edd8a25321682d99beb2af2e6dd2a13ba9a3368853e4f69aa314ff.svg"/>
+
+<p>BitmapPool默认情况下使用BucketsBitmapPool和DummyBitmapPool，Android5.0及以上使用BucketsBitmapPool。</p>
+<p>Bitmap是如何被放到BitmapPool中的呢？<code>DefaultDecoder.decodeFromStream</code>生成Bitmap后并不是直接返回一个Bitmap，而是一个CloseableReference，CloseableReference就会把Bitmap与BitmapPool进行关联，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//DefaultDecoder.java</span></span><br><span class="line">  <span class="keyword">private</span> CloseableReference&lt;Bitmap&gt; <span class="title function_">decodeFromStream</span><span class="params">(</span></span><br><span class="line"><span class="params">      InputStream inputStream,</span></span><br><span class="line"><span class="params">      BitmapFactory.Options options,</span></span><br><span class="line"><span class="params">      <span class="meta">@Nullable</span> Rect regionToDecode,</span></span><br><span class="line"><span class="params">      <span class="meta">@Nullable</span> <span class="keyword">final</span> ColorSpace colorSpace)</span> &#123;</span><br><span class="line">    ...... <span class="comment">//代码省略</span></span><br><span class="line">    <span class="keyword">return</span> CloseableReference.of(decodedBitmap, mBitmapPool);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>每次<code>CloseableReference#close</code>都会导致Bitmap的引用计数减一，当计数为零后，就会调用到<code>BitmapPool#release</code>，把Bitmap放到BitmapPool中。release的含义就是把不再使用的Bitmap放到缓存池中备用。</p>
+<img src="\assert\puml\7dbd382b937ad7c592c2008ebd8c8c57a2699c0135a43bccfdd9aec5f67bdbbc.svg"/>
+
+<p><strong><em>什么时候引用计数加一呢？</em></strong> 调用<code>CloseableReference</code>子类clone方法克隆一个新的CloseableReference时，就等价于增加了一个使用者，应用计数就会加一。 新和旧的CloseableReference持有同一个SharedReference实例。</p>
+<p><strong><em>BitmapPool</em></strong> 不会无限扩张，最大支持多少个Bitmap？是否有清理策略？</p>
+<img src="\assert\puml\ea7cb872dd9a8d77b49dec67f21412017210a081038a390a049b8f0e54255ac6.svg"/>
+
+<p><code>com.facebook.imagepipeline.memory.DefaultNativeMemoryChunkPoolParams#get</code></p>
+<h3 id="解码的临时缓存"><a href="#解码的临时缓存" class="headerlink" title="解码的临时缓存"></a>解码的临时缓存</h3><p>DefaultDecoder在解码图片生成BitMap时可以设置临时缓存，防止频繁GC，通过<code>android.graphics.BitmapFactory.Options#inTempStorage</code>来设置图片解码临时缓存，api文档中临时缓存大小建议为16K左右。临时缓存使用Pools.Pool&lt;ByteBuffer&gt;，是<code>SynchronizedPool</code>，缓存的个数默认是java虚拟机可使用的处理器个数<small>（可等同于cpu的核心数，但不是完全对等）</small>。这个是解码器独用的内存池，在Java堆上申请内存。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// PlatformDecoderFactory.kt</span></span><br><span class="line">  <span class="function"><span class="keyword">fun</span> <span class="title">createPool</span><span class="params">(poolFactory: <span class="type">PoolFactory</span>, useDecodeBufferHelper: <span class="type">Boolean</span>)</span></span>: Pools.Pool&lt;ByteBuffer&gt; &#123;</span><br><span class="line">    <span class="keyword">if</span> (useDecodeBufferHelper) &#123;</span><br><span class="line">      <span class="keyword">return</span> DecodeBufferHelper.INSTANCE</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">val</span> maxNumThreads = poolFactory.flexByteArrayPoolMaxNumThreads</span><br><span class="line">    <span class="keyword">val</span> pool: Pools.Pool&lt;ByteBuffer&gt; = SynchronizedPool(maxNumThreads)</span><br><span class="line">    <span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">0</span> until maxNumThreads) &#123;</span><br><span class="line">      <span class="comment">//release这个函数含义是：将实例释放到缓存池中，提供给后续使用。</span></span><br><span class="line">      <span class="comment">//每个buffer的默认大小是16K</span></span><br><span class="line">      pool.release(ByteBuffer.allocate(DecodeBufferHelper.getRecommendedDecodeBufferSize()))</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> pool</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="图片处理生产者序列"><a href="#图片处理生产者序列" class="headerlink" title="图片处理生产者序列"></a>图片处理生产者序列</h2><p>Fresco从一个图片的URL下载图片并解码成Bitmap需要经过一个生产者序列的处理。在<code>ImagePipeline#fetchDecodedImage</code>中开始生成队列并执行任务序列。下图展示了图片处理的所有生产者，其中有些序列默认是不使用的，除非进行特别配置或者特定场景。图中箭头的方向是图片数据流动的方向，而调用顺序正好相反，后面的Producer持有前面的Producer，当然这个持有只是对Producer接口的依赖，并不是直接依赖实现类。</p>
+<img src="\assert\puml\da17508b5db418465c0efcfeea3c23c1b2ce1f31c013ccbaeb76364fc91fda4c.svg"/>
+
+<h3 id="NetworkFetchProducer"><a href="#NetworkFetchProducer" class="headerlink" title="NetworkFetchProducer"></a>NetworkFetchProducer</h3><p>Fresco默认使用<code>HttpURLConnection</code>而不是Okhttp来请求网络图片，在生成ImagePipelineConfig时需要使用<code>OkHttpImagePipelineConfigFactory</code>来使用Okhttp来请求网络。</p>
+<img src="\assert\puml\bfe76b1d3f07530a68a0c4aa343e19634fe5bb5476ed4e9b05ec1a1ad40d232d.svg"/>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//NetworkFetchProducer.java</span></span><br><span class="line">  <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onResponse</span><span class="params">(</span></span><br><span class="line"><span class="params">      FetchState fetchState, InputStream responseData, <span class="type">int</span> responseContentLength)</span></span><br><span class="line">      <span class="keyword">throws</span> IOException &#123;</span><br><span class="line">    <span class="keyword">final</span> PooledByteBufferOutputStream pooledOutputStream;</span><br><span class="line">    <span class="keyword">if</span> (responseContentLength &gt; <span class="number">0</span>) &#123;</span><br><span class="line">      pooledOutputStream = mPooledByteBufferFactory.newOutputStream(responseContentLength);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      pooledOutputStream = mPooledByteBufferFactory.newOutputStream();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">byte</span>[] ioArray = mByteArrayPool.get(READ_SIZE);</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="type">int</span> length;</span><br><span class="line">      <span class="comment">//responseData（InputStream）对应okhttp3.ResponseBody#byteStream，原始图片byte数据流</span></span><br><span class="line">      <span class="comment">//循环从InputStream中读取数据到ioArray中</span></span><br><span class="line">      <span class="keyword">while</span> ((length = responseData.read(ioArray)) &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">          <span class="comment">//将图片数据写入到pooledOutputStream是MemoryPooledByteBufferOutputStream类型</span></span><br><span class="line">          pooledOutputStream.write(ioArray, <span class="number">0</span>, length);</span><br><span class="line">          maybeHandleIntermediateResult(pooledOutputStream, fetchState);</span><br><span class="line">          <span class="type">float</span> <span class="variable">progress</span> <span class="operator">=</span> calculateProgress(pooledOutputStream.size(), responseContentLength);</span><br><span class="line">          fetchState.getConsumer().onProgressUpdate(progress);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">      mNetworkFetcher.onFetchCompletion(fetchState, pooledOutputStream.size());</span><br><span class="line">      handleFinalResult(pooledOutputStream, fetchState);</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      mByteArrayPool.release(ioArray);</span><br><span class="line">      pooledOutputStream.close();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>NetworkFetchProducer从网络请求的图片数据写入到<code>MemoryPooledByteBufferOutputStream</code>中。<code>MemoryPooledByteBufferOutputStream</code>从内存池中申请内存块（详情参考<a href="#%E5%86%85%E5%AD%98%E5%9D%97%E7%BC%93%E5%AD%98%E6%B1%A0-memorychunkpool">内存块缓存池</a>一节），在OutputStream的close中会把申请的内存块放回到内存池中。</p>
+<p>NetworkFetchProducer处理结束时返回一个<code>EncodedImage</code>类型数据，class结构如下，图片数据保存在MemoryChunk中。</p>
+<img src="\assert\puml\fb4ed904a2ac0c476b16183fb82d43e1e0fe2d8601f79e566a3d46abfad9b866.svg"/>
+
+<h3 id="DiskCacheWriteProducer"><a href="#DiskCacheWriteProducer" class="headerlink" title="DiskCacheWriteProducer"></a>DiskCacheWriteProducer</h3><p>DiskCacheWriteProducer用于缓存原始图片数据，包括两级缓存：内存和磁盘。</p>
+<img src="\assert\puml\e37373f1794704d4127ab7c5ebea3d0de4dea09fc40d878e4443a7c3dfb92872.svg"/>
+
+<p>DiskCacheWriteProducer接收到下级Producer的EncodedImage后就会调用<code>BufferedDiskCache#put()</code>进行缓存。BufferedDiskCache在缓存图片时，会先把图片（EncodedImage）保存到StagingArea（mMap）中，即内存缓存，下次获取时也会优先从StagingArea中获取内存中的图片缓存。然后，在子线程中写入磁盘缓存。</p>
+<h3 id="DiskCacheReadProducer"><a href="#DiskCacheReadProducer" class="headerlink" title="DiskCacheReadProducer"></a>DiskCacheReadProducer</h3><img src="\assert\puml\aa887992db9872b891a9220765ce70c98e46cd434e60f2c721d3da3c890d9fdc.svg"/>
+
+<p>DiskCacheReadProducer也持有两个BufferedDiskCache，与DiskCacheWriteProducer中的同一个对象实例。从DiskCacheWriteProducer的分析中我们知道图片会优先保存到内存中（StagingArea）,读取时也优先使用内存中的缓存。</p>
+<p>DiskCacheReadProducer启动后会先从缓存读取图片，如果存在缓存的图片就不会再调用下一级Producer，直接把结果返回给上一级。如果没有读取到缓存的图片，就会继续调用下一级Producer。</p>
+<h3 id="EncodedMemoryCacheProducer"><a href="#EncodedMemoryCacheProducer" class="headerlink" title="EncodedMemoryCacheProducer"></a>EncodedMemoryCacheProducer</h3><img src="\assert\puml\b258dc8c68713aca122e5a81b9667dec14d2fc452817b9e84b196b14ff9ffd49.svg"/>
+
+<p>EncodedMemoryCacheProducer执行时，会首先从MemoryCache读取缓存在内存中的图片，如果有缓存，则将缓存的图片传递给上一级生产者，不再执行下一级生产者。</p>
+<img src="\assert\puml\488a6e5343945cce4904011cce280fbd577b16eae34bf8ad20c4d9b94912a05a.svg"/>
+
+<p>加入缓存或者获取缓存等操作，都会触发缓存的清理，清理时如果超过了最大数量或者最大存储空间，都会进行清理，被清理掉的都是不被使用的图片，而且时最老的优先被清理。</p>
+<h3 id="DecodeProducer"><a href="#DecodeProducer" class="headerlink" title="DecodeProducer"></a>DecodeProducer</h3><img src="\assert\puml\9a98634d0756c0291469499bd2114cbbc39fa77911d7c45913531bfb1f285909.svg"/>
+
+<h3 id="BitmapMemoryCacheProducer"><a href="#BitmapMemoryCacheProducer" class="headerlink" title="BitmapMemoryCacheProducer"></a>BitmapMemoryCacheProducer</h3><img src="\assert\puml\a02367457338b720be1a7fd6c9480801829f94d8a155da43519c48f40a510b44.svg"/>
+
+<p>配置参数的默认值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//imagepipeline/src/main/java/com/facebook/imagepipeline/cache/DefaultBitmapMemoryCacheParamsSupplier.java</span></span><br><span class="line">  <span class="keyword">public</span> MemoryCacheParams <span class="title function_">get</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">MemoryCacheParams</span>(</span><br><span class="line">        getMaxCacheSize(), <span class="comment">//maxCacheSize等于APP最大堆内存的四分之一，代码见后面</span></span><br><span class="line">        MAX_CACHE_ENTRIES, <span class="comment">//maxCacheEntries = 256</span></span><br><span class="line">        MAX_EVICTION_QUEUE_SIZE, <span class="comment">//maxEvictionQueueSize = Integer.MAX_VALUE</span></span><br><span class="line">        MAX_EVICTION_QUEUE_ENTRIES, <span class="comment">//maxEvictionQueueEntries = Integer.MAX_VALUE</span></span><br><span class="line">        MAX_CACHE_ENTRY_SIZE, <span class="comment">//maxCacheEntrySize = Integer.MAX_VALUE</span></span><br><span class="line">        PARAMS_CHECK_INTERVAL_MS); <span class="comment">//paramsCheckIntervalMs = 5 minutes</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">private</span> <span class="type">int</span> <span class="title function_">getMaxCacheSize</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="comment">//mActivityManager.getMemoryClass()是获取的没有设置android:largeHeap属性的APP的最大堆内存；</span></span><br><span class="line">    <span class="comment">//也就是获取系统属性dalvik.vm.heapgrowthlimit的值</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">int</span> <span class="variable">maxMemory</span> <span class="operator">=</span></span><br><span class="line">        Math.min(mActivityManager.getMemoryClass() * ByteConstants.MB, Integer.MAX_VALUE);</span><br><span class="line">    <span class="keyword">if</span> (maxMemory &lt; <span class="number">32</span> * ByteConstants.MB) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">4</span> * ByteConstants.MB;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (maxMemory &lt; <span class="number">64</span> * ByteConstants.MB) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="number">6</span> * ByteConstants.MB;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> maxMemory / <span class="number">4</span>; <span class="comment">//app最大堆内存的四分之一</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h4 id="从缓存获取Bitmap"><a href="#从缓存获取Bitmap" class="headerlink" title="从缓存获取Bitmap"></a>从缓存获取Bitmap</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//LruCountingMemoryCache.java</span></span><br><span class="line">  <span class="keyword">public</span> CloseableReference&lt;V&gt; <span class="title function_">get</span><span class="params">(<span class="keyword">final</span> K key)</span> &#123;</span><br><span class="line">    Preconditions.checkNotNull(key);</span><br><span class="line">    Entry&lt;K, V&gt; oldExclusive;</span><br><span class="line">    CloseableReference&lt;V&gt; clientRef = <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">      oldExclusive = mExclusiveEntries.remove(key); <span class="comment">//首先从回收列表移除</span></span><br><span class="line">      Entry&lt;K, V&gt; entry = mCachedEntries.get(key);  <span class="comment">//从LinkedHashMap中获取缓存的Bitmap</span></span><br><span class="line">      <span class="keyword">if</span> (entry != <span class="literal">null</span>) &#123;</span><br><span class="line">        clientRef = newClientReference(entry);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    maybeNotifyExclusiveEntryRemoval(oldExclusive);</span><br><span class="line">    maybeUpdateCacheParams(); <span class="comment">//查看是否需要更新配置参数，前面已经介绍</span></span><br><span class="line">    maybeEvictEntries();</span><br><span class="line">    <span class="keyword">return</span> clientRef;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//如果内存超过最大限制，就会开始清理回收列表中存在的Bitmap</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">maybeEvictEntries</span><span class="params">()</span> &#123;</span><br><span class="line">    ArrayList&lt;Entry&lt;K, V&gt;&gt; oldEntries;</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="built_in">this</span>) &#123;</span><br><span class="line">      <span class="type">int</span> <span class="variable">maxCount</span> <span class="operator">=</span></span><br><span class="line">          Math.min(</span><br><span class="line">              mMemoryCacheParams.maxEvictionQueueEntries, <span class="comment">//maxEvictionQueueEntries默认是Integer.MAX_VALUE</span></span><br><span class="line">              mMemoryCacheParams.maxCacheEntries - getInUseCount()); <span class="comment">//maxCacheEntries默认是256</span></span><br><span class="line">      <span class="type">int</span> <span class="variable">maxSize</span> <span class="operator">=</span></span><br><span class="line">          Math.min(</span><br><span class="line">              mMemoryCacheParams.maxEvictionQueueSize, <span class="comment">//maxEvictionQueueSize默认值Integer.MAX_VALUE</span></span><br><span class="line">              mMemoryCacheParams.maxCacheSize - getInUseSizeInBytes()); <span class="comment">//maxCacheSize是APP最大堆内存的四分之一</span></span><br><span class="line">      oldEntries = trimExclusivelyOwnedEntries(maxCount, maxSize);</span><br><span class="line">      makeOrphans(oldEntries);</span><br><span class="line">    &#125;</span><br><span class="line">    maybeClose(oldEntries);</span><br><span class="line">    maybeNotifyExclusiveEntryRemoval(oldEntries);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="type">int</span> <span class="title function_">getInUseCount</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> mCachedEntries.getCount() - mExclusiveEntries.getCount();</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="type">int</span> <span class="title function_">getInUseSizeInBytes</span><span class="params">()</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> mCachedEntries.getSizeInBytes() - mExclusiveEntries.getSizeInBytes();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">synchronized</span> ArrayList&lt;Entry&lt;K, V&gt;&gt; <span class="title function_">trimExclusivelyOwnedEntries</span><span class="params">(<span class="type">int</span> count, <span class="type">int</span> size)</span> &#123;</span><br><span class="line">    count = Math.max(count, <span class="number">0</span>);</span><br><span class="line">    size = Math.max(size, <span class="number">0</span>);</span><br><span class="line">    <span class="comment">// fast path without array allocation if no eviction is necessary</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">this</span>.mExclusiveEntries.getCount() &lt;= count &amp;&amp; mExclusiveEntries.getSizeInBytes() &lt;= size) &#123;</span><br><span class="line">      <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ArrayList&lt;Entry&lt;K, V&gt;&gt; oldEntries = <span class="keyword">new</span> <span class="title class_">ArrayList</span>&lt;&gt;();</span><br><span class="line">    <span class="keyword">while</span> (<span class="built_in">this</span>.mExclusiveEntries.getCount() &gt; count || mExclusiveEntries.getSizeInBytes() &gt; size) &#123;</span><br><span class="line">      <span class="meta">@Nullable</span> <span class="type">K</span> <span class="variable">key</span> <span class="operator">=</span> mExclusiveEntries.getFirstKey();</span><br><span class="line">      <span class="keyword">if</span> (key == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (mIgnoreSizeMismatch) &#123;</span><br><span class="line">          mExclusiveEntries.resetSize();</span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(</span><br><span class="line">            String.format(</span><br><span class="line">                <span class="string">&quot;key is null, but exclusiveEntries count: %d, size: %d&quot;</span>,</span><br><span class="line">                <span class="built_in">this</span>.mExclusiveEntries.getCount(), mExclusiveEntries.getSizeInBytes()));</span><br><span class="line">      &#125;</span><br><span class="line">      mExclusiveEntries.remove(key);</span><br><span class="line">      oldEntries.add(mCachedEntries.remove(key));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> oldEntries;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="BitmapPrepareProducer"><a href="#BitmapPrepareProducer" class="headerlink" title="BitmapPrepareProducer"></a>BitmapPrepareProducer</h3><p>BitmapPrepareProducer只有一个作用，就是调用<code>Bitmap#prepareToDraw()</code>。prepareToDraw接口会构建一个用于绘制的缓存。从Android7.0开始，这个接口会在RenderThread线程上启动GPU的异步上传。开启硬件加速后，Bitmap必须上传到GPU才能被渲染。Bitmap第一次绘制时会默认就执行GPU上传动作，但是这个有几毫秒的耗时，图片越大耗时越高。通过调用prepareToDraw可以提前完成上传GPU的动作，这样可以节省第一帧的显示时间。</p>
+<hr>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://developer.android.google.cn/topic/performance/graphics/manage-memory">Managing Bitmap Memory</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/wytiger/p/5690039.html">Fresco内存机制(Ashmem匿名共享内存）</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.kaelli.com/9.html">Android网络加载图片库对比：Fresco、Glide、Picasso</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.jianshu.com/p/6f042f9e47a8">Android | Bitmap的Java对象GC之后，对应的native内存会回收吗？</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/niuba123456/article/details/86548437">Android图片缓存框架 - Fresco设置和清除缓存(十一)</a></p>
+<!-- 生产者序列图按照执行序列 -->
+<!-- ```plantuml
+@startuml
+skinparam componentStyle rectangle
+component [DelayProducer] #back:white;line.dotted
+[DelayProducer] -> [BitmapPrepareProducer]
+component [PostprocessedBitmapMemoryCacheProducer] #back:white;line.dotted
+[BitmapPrepareProducer] -> [PostprocessedBitmapMemoryCacheProducer]
+[PostprocessedBitmapMemoryCacheProducer] -> [PostprocessorProducer]
+component [PostprocessorProducer] #back:white;line.dotted
+[PostprocessorProducer] -\-> [BitmapProbeProducer]
+component [BitmapProbeProducer] #back:white;line.dotted
+[BitmapProbeProducer] -left-> [BitmapMemoryCacheGetProducer]
+[BitmapMemoryCacheGetProducer] -left-> [ThreadHandoffProducer]
+[ThreadHandoffProducer] -left-> [BitmapMemoryCacheKeyMultiplexProducer]
+[BitmapMemoryCacheKeyMultiplexProducer] -\-> [BitmapMemoryCacheProducer]
+[BitmapMemoryCacheProducer] -> [DecodeProducer]
+[DecodeProducer] -> [ResizeAndRotateProducer]
+[ResizeAndRotateProducer] -> [AddImageTransformMetaDataProducer]
+[AddImageTransformMetaDataProducer] -\-> [EncodedCacheKeyMultiplexProducer]
+component [EncodedProbeProducer] #back:white;line.dotted
+[EncodedCacheKeyMultiplexProducer] -left-> [EncodedProbeProducer]
+[EncodedProbeProducer] -left-> [EncodedMemoryCacheProducer]
+[EncodedMemoryCacheProducer] -left-> [DiskCacheReadProducer]
+[DiskCacheReadProducer] -\-> [DiskCacheWriteProducer]
+[DiskCacheWriteProducer] -> [PartialDiskCacheProducer]
+component [PartialDiskCacheProducer] #back:white;line.dotted
+[PartialDiskCacheProducer] -> [WebpTranscodeProducer]
+component [WebpTranscodeProducer] #back:white;line.dotted
+[WebpTranscodeProducer] -> [NetworkFetchProducer]
+@enduml
+``` -->
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/Fresco/" rel="tag"># Fresco</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/fd3db9c4.html" rel="prev" title="Java CAS详解">
+                  <i class="fa fa-angle-left"></i> Java CAS详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/32780962.html" rel="next" title="PlantUML样式指南">
+                  PlantUML样式指南 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

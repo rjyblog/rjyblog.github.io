@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Hexo博客配置杂记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo User Manual">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/27579.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="Hexo博客配置杂记">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/Hexo-User-Manual_2023-08-17-13-48-48.png">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/Hexo-User-Manual_2023-08-17-13-52-11.png">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/1d53824bd7fa0b3d17aac8c76458f982f27073724b65122619003355855bc71e.svg">
+<meta property="article:published_time" content="2020-11-24T10:18:00.000Z">
+<meta property="article:modified_time" content="2023-09-19T07:02:41.858Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Markdown">
+<meta property="article:tag" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rjyblog.gitee.io/images/Hexo-User-Manual_2023-08-17-13-48-48.png">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/27579.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/27579.html","path":"posts/27579.html","title":"Hexo User Manual"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Hexo User Manual | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#VSCode-Hexo"><span class="nav-text">VSCode + Hexo</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Paste-Image%E6%8F%92%E4%BB%B6"><span class="nav-text">安装Paste Image插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Markdown-Preview-Enhanced%E6%8F%92%E4%BB%B6"><span class="nav-text">安装Markdown Preview Enhanced插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BB%E9%A1%B5%E9%85%8D%E7%BD%AE%E6%98%BE%E7%A4%BA%E6%96%87%E7%AB%A0%E6%91%98%E6%8A%84"><span class="nav-text">主页配置显示文章摘抄</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5"><span class="nav-text">代码段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VSCode%E4%B8%AD%E9%A2%84%E8%A7%88hexo%E7%9A%84%E5%9B%BE%E7%89%87"><span class="nav-text">VSCode中预览hexo的图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%AF%E6%8C%81-plantuml-%E7%94%BB%E5%9B%BE"><span class="nav-text">支持 plantuml 画图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%AF%E6%8C%81-GraphViz-%E7%94%BB%E5%9B%BE"><span class="nav-text">支持 GraphViz 画图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5%E6%9C%AC%E7%AB%99%E6%96%87%E7%AB%A0"><span class="nav-text">链接本站文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/27579.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Hexo User Manual | 任建勇的博客">
+      <meta itemprop="description" content="Hexo博客配置杂记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Hexo User Manual
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-24 18:18:00" itemprop="dateCreated datePublished" datetime="2020-11-24T18:18:00+08:00">2020-11-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-19 15:02:41" itemprop="dateModified" datetime="2023-09-19T15:02:41+08:00">2023-09-19</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Hexo博客配置杂记</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="VSCode-Hexo"><a href="#VSCode-Hexo" class="headerlink" title="VSCode + Hexo"></a>VSCode + Hexo</h2><h3 id="安装Paste-Image插件"><a href="#安装Paste-Image插件" class="headerlink" title="安装Paste Image插件"></a>安装<a target="_blank" rel="noopener external nofollow noreferrer" href="https://marketplace.visualstudio.com/items?itemName=mushan.vscode-paste-image">Paste Image</a>插件</h3><p>安装完插件后，通过 <code>Ctrl + Shift + P</code> 快捷键打开setting.json<br><img src="/images/Hexo-User-Manual_2023-08-17-13-48-48.png" alt="Open Settings(JSON)"></p>
+<p>然后，在setting.json文件中添加两行配置</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">&quot;pasteImage.path&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;currentFileNameWithoutExt&#125;/&quot;</span><span class="punctuation">,</span></span><br><span class="line"><span class="attr">&quot;pasteImage.insertPattern&quot;</span><span class="punctuation">:</span> <span class="string">&quot;&#123;% asset_img $&#123;imageFileName&#125; %&#125;&quot;</span><span class="punctuation">,</span></span><br></pre></td></tr></table></figure>
+
+<p>然后就可以使用<code>Ctrl + Alt + V</code>快捷键就可以粘贴图片到markdown文档中了。但是这个快捷键不一定好使。也可以通过<code>Ctrl + Shift + P</code>然后输入<code>past image</code>来粘贴。<br>插入的图片采用<code>asset_img</code>语法，关于asset_img详细信息可参考：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io/docs/asset-folders">https://hexo.io/docs/asset-folders</a>。插入的图片将会放到markdown文件同名的文件夹中。</p>
+<h3 id="安装Markdown-Preview-Enhanced插件"><a href="#安装Markdown-Preview-Enhanced插件" class="headerlink" title="安装Markdown Preview Enhanced插件"></a>安装<a target="_blank" rel="noopener external nofollow noreferrer" href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">Markdown Preview Enhanced</a>插件</h3><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced">Markdown Preview Enhanced</a>插件无法展示使用<code>asset_img</code>插入的图片，需要修改插件的<code>parser.js</code>。通过快捷键<code>Ctrl+Shift+P</code>打开<code>parser.js</code>:<br><img src="/images/Hexo-User-Manual_2023-08-17-13-52-11.png" alt="Extent Parser"><br>然后修改onWillParseMarkdown函数：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">onWillParseMarkdown</span>: <span class="keyword">function</span>(<span class="params">markdown</span>) &#123;</span><br><span class="line">  <span class="keyword">var</span> vscode = <span class="built_in">require</span>(<span class="string">&quot;vscode&quot;</span>);</span><br><span class="line">  <span class="keyword">var</span> path = <span class="built_in">require</span>(<span class="string">&quot;path&quot;</span>);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>)=&gt;</span> &#123;</span><br><span class="line">    markdown = markdown.<span class="title function_">replace</span>(</span><br><span class="line">      <span class="regexp">/\&#123;%\s*asset_img\s*(\S+)\s*\S*\s*%\&#125;/g</span>,</span><br><span class="line">      <span class="function">(<span class="params">whole, content</span>) =&gt;</span> &#123;</span><br><span class="line">        abs_filename = vscode.<span class="property">window</span>.<span class="property">activeTextEditor</span>.<span class="property">document</span>.<span class="property">fileName</span></span><br><span class="line">        filename = path.<span class="title function_">basename</span>(abs_filename);</span><br><span class="line">        filename = filename.<span class="title function_">substring</span>(<span class="number">0</span>,filename.<span class="title function_">indexOf</span>(<span class="string">&#x27;.&#x27;</span>))</span><br><span class="line">        <span class="keyword">return</span> <span class="string">`![](<span class="subst">$&#123;filename + <span class="string">&quot;/&quot;</span>+ content&#125;</span>)`</span>;</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">return</span> <span class="title function_">resolve</span>(markdown)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+
+<p>参考文章：</p>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://maple-leaf-0219.github.io/2020/vscode-hexo-markdown%E5%AE%9A%E5%88%B6%E6%80%9D%E8%B7%AF/">vscode hexo markdown定制思路</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://yichengsu.github.io/2019/07/Hexo-with-VSCode/">Hexo with VSCode</a></li>
+</ul>
+<h2 id="主页配置显示文章摘抄"><a href="#主页配置显示文章摘抄" class="headerlink" title="主页配置显示文章摘抄"></a>主页配置显示文章摘抄</h2><p>默认情况下，在主页中会把整个文章都显示了，导致主页特别乱。可以通过在文章中插入下面代码来截取摘抄：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- more --&gt;</span><br></pre></td></tr></table></figure>
+
+<p>也可以通过description字段来单独撰写摘抄。</p>
+<h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h2><p>可以通过代码段标签<code>raw</code>来禁止Markdown引擎渲染标签内的内容。</p>
+<h2 id="VSCode中预览hexo的图片"><a href="#VSCode中预览hexo的图片" class="headerlink" title="VSCode中预览hexo的图片"></a>VSCode中预览hexo的图片</h2><h2 id="支持-plantuml-画图"><a href="#支持-plantuml-画图" class="headerlink" title="支持 plantuml 画图"></a>支持 plantuml 画图</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/miao1007/hexo-filter-plantuml">hexo-filter-plantuml</a><br>示例：</p>
+<img src="\assert\puml\1d53824bd7fa0b3d17aac8c76458f982f27073724b65122619003355855bc71e.svg"/>
+
+<h2 id="支持-GraphViz-画图"><a href="#支持-GraphViz-画图" class="headerlink" title="支持 GraphViz 画图"></a>支持 GraphViz 画图</h2><p>使用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/rjyblog/hexo-tag-viz.git">hexo-tag-viz</a>插件来绘制。支持把<code>dot</code>或<code>viz</code>代码块渲染成graphviz图形。<br>可以通过 <code>engine=xxx</code> 来选择不同的渲染引擎。支持的引擎包括 <code>circo</code>，<code>dot</code>，<code>neato</code>，<code>osage</code>，或者 <code>twopi</code>。默认使用 <code>dot</code> 引擎。</p>
+<div style="border:1px dotted black; background-color: #F2F3F4; padding: 5px;">
+    &#96;&#96;&#96; viz <br>
+    digraph { <br>
+        A -> {B; C; D} <br>
+    } <br>
+    &#96;&#96;&#96;
+</div>
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="206pt" height="116pt"
+ viewBox="0.00 0.00 206.00 116.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 112)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-112 202,-112 202,4 -4,4"/>
+<!-- A -->
+<g id="node1" class="node">
+<title>A</title>
+<ellipse fill="none" stroke="#000000" cx="99" cy="-90" rx="27" ry="18"/>
+<text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">A</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">B</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A&#45;&gt;B</title>
+<path fill="none" stroke="#000000" d="M83.7307,-74.7307C73.803,-64.803 60.6847,-51.6847 49.5637,-40.5637"/>
+<polygon fill="#000000" stroke="#000000" points="51.7933,-37.8436 42.2473,-33.2473 46.8436,-42.7933 51.7933,-37.8436"/>
+</g>
+<!-- C -->
+<g id="node3" class="node">
+<title>C</title>
+<ellipse fill="none" stroke="#000000" cx="99" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="99" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">C</text>
+</g>
+<!-- A&#45;&gt;C -->
+<g id="edge2" class="edge">
+<title>A&#45;&gt;C</title>
+<path fill="none" stroke="#000000" d="M99,-71.8314C99,-64.131 99,-54.9743 99,-46.4166"/>
+<polygon fill="#000000" stroke="#000000" points="102.5001,-46.4132 99,-36.4133 95.5001,-46.4133 102.5001,-46.4132"/>
+</g>
+<!-- D -->
+<g id="node4" class="node">
+<title>D</title>
+<ellipse fill="none" stroke="#000000" cx="171" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="171" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">D</text>
+</g>
+<!-- A&#45;&gt;D -->
+<g id="edge3" class="edge">
+<title>A&#45;&gt;D</title>
+<path fill="none" stroke="#000000" d="M114.2693,-74.7307C124.197,-64.803 137.3153,-51.6847 148.4363,-40.5637"/>
+<polygon fill="#000000" stroke="#000000" points="151.1564,-42.7933 155.7527,-33.2473 146.2067,-37.8436 151.1564,-42.7933"/>
+</g>
+</g>
+</svg>
+
+
+<p>通过engine参数指定引擎：</p>
+<div style="border:1px dotted black; background-color: #F2F3F4; padding: 5px;">
+    &#96;&#96;&#96; viz engine=neato<br>
+    digraph { <br>
+        A -> {B; C; D} <br>
+    } <br>
+    &#96;&#96;&#96;
+</div>
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="186pt" height="176pt"
+ viewBox="0.00 0.00 185.76 175.70" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 171.7004)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-171.7004 181.7629,-171.7004 181.7629,4 -4,4"/>
+<!-- A -->
+<g id="node1" class="node">
+<title>A</title>
+<ellipse fill="none" stroke="#000000" cx="74.8817" cy="-89.712" rx="27" ry="18"/>
+<text text-anchor="middle" x="74.8817" y="-85.512" font-family="Times,serif" font-size="14.00" fill="#000000">A</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<ellipse fill="none" stroke="#000000" cx="150.7629" cy="-101.4894" rx="27" ry="18"/>
+<text text-anchor="middle" x="150.7629" y="-97.2894" font-family="Times,serif" font-size="14.00" fill="#000000">B</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A&#45;&gt;B</title>
+<path fill="none" stroke="#000000" d="M101.4213,-93.8312C105.6043,-94.4804 109.9911,-95.1613 114.3509,-95.838"/>
+<polygon fill="#000000" stroke="#000000" points="113.9479,-99.3172 124.3664,-97.3925 115.0216,-92.4001 113.9479,-99.3172"/>
+</g>
+<!-- C -->
+<g id="node3" class="node">
+<title>C</title>
+<ellipse fill="none" stroke="#000000" cx="47.5051" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="47.5051" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">C</text>
+</g>
+<!-- A&#45;&gt;C -->
+<g id="edge2" class="edge">
+<title>A&#45;&gt;C</title>
+<path fill="none" stroke="#000000" d="M68.1145,-71.9854C64.9982,-63.8223 61.2324,-53.958 57.7769,-44.9065"/>
+<polygon fill="#000000" stroke="#000000" points="61.031,-43.6167 54.1945,-35.5227 54.4913,-46.1133 61.031,-43.6167"/>
+</g>
+<!-- D -->
+<g id="node4" class="node">
+<title>D</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-149.7004" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-145.5004" font-family="Times,serif" font-size="14.00" fill="#000000">D</text>
+</g>
+<!-- A&#45;&gt;D -->
+<g id="edge3" class="edge">
+<title>A&#45;&gt;D</title>
+<path fill="none" stroke="#000000" d="M62.0503,-105.7878C57.2199,-111.8396 51.6141,-118.8627 46.3215,-125.4936"/>
+<polygon fill="#000000" stroke="#000000" points="43.3697,-123.5812 39.8668,-133.5802 48.8406,-127.948 43.3697,-123.5812"/>
+</g>
+</g>
+</svg>
+
+
+<!-- 参考：<https://shd101wyy.github.io/markdown-preview-enhanced/#/diagrams?id=graphviz> -->
+
+<h2 id="链接本站文章"><a href="#链接本站文章" class="headerlink" title="链接本站文章"></a>链接本站文章</h2><p>官方介绍：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://hexo.io/zh-cn/docs/tag-plugins#%E5%BC%95%E7%94%A8%E6%96%87%E7%AB%A0">引用文章</a></p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;% post_link android/Android-Activity启动流程 %&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对应的完整路径是：<code>source/_posts/android/Android-Activity启动流程.md</code>。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Markdown/" rel="tag"># Markdown</a>
+              <a href="/tags/Hexo/" rel="tag"># Hexo</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/27252.html" rel="prev" title="Android binder剖析之addService">
+                  <i class="fa fa-angle-left"></i> Android binder剖析之addService
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/34020.html" rel="next" title="GraphViz dot">
+                  GraphViz dot <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

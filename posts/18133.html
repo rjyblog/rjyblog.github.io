@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="常用的Markdown基本语法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Markdown基本语法">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/18133.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="常用的Markdown基本语法">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-07-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-10-17T08:07:24.368Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Markdown">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/18133.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/18133.html","path":"posts/18133.html","title":"Markdown基本语法"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Markdown基本语法 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E9%A2%98"><span class="nav-text">标题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%97%E8%A1%A8"><span class="nav-text">列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E6%AE%B5"><span class="nav-text">代码段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E5%AD%97%E6%A0%BC%E5%BC%8F"><span class="nav-text">文字格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%93%BE%E6%8E%A5"><span class="nav-text">链接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%BE%E7%89%87"><span class="nav-text">图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E5%89%B2%E7%BA%BF"><span class="nav-text">分割线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%95%E7%94%A8"><span class="nav-text">引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E6%A0%BC"><span class="nav-text">表格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6"><span class="nav-text">特殊字符</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%8D%E6%96%9C%E6%9D%A0"><span class="nav-text">反斜杠</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Unicode%E7%BC%96%E7%A0%81"><span class="nav-text">使用Unicode编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A6%81%E6%AD%A2%E8%B6%85%E9%93%BE%E6%8E%A5"><span class="nav-text">禁止超链接</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A1%A8%E6%83%85%E7%AC%A6%E5%8F%B7"><span class="nav-text">表情符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F"><span class="nav-text">数学公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%A6%E5%8F%B7"><span class="nav-text">符号</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%BB%E5%8A%A1%E5%88%97%E8%A1%A8"><span class="nav-text">任务列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/18133.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Markdown基本语法 | 任建勇的博客">
+      <meta itemprop="description" content="常用的Markdown基本语法">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Markdown基本语法
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-25 00:00:00" itemprop="dateCreated datePublished" datetime="2018-07-25T00:00:00+08:00">2018-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-17 16:07:24" itemprop="dateModified" datetime="2023-10-17T16:07:24+08:00">2023-10-17</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">常用的Markdown基本语法</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>Markdown语法的标志可以使用#表示，共支持6级标题</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 一级标题</span></span><br><span class="line"><span class="section">## 二级标题</span></span><br><span class="line"><span class="section">### 三级标题</span></span><br><span class="line"><span class="section">#### 四级标题</span></span><br><span class="line"><span class="section">##### 五级标题</span></span><br><span class="line"><span class="section">###### 六级标题</span></span><br></pre></td></tr></table></figure>
+
+<p>为了美观，也可以采用下面这种对称形式</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 一级标题 #</span></span><br><span class="line"><span class="section">## 二级标题 ##</span></span><br><span class="line"><span class="section">### 三级标题 ###</span></span><br><span class="line"><span class="section">#### 四级标题 ####</span></span><br><span class="line"><span class="section">##### 五级标题 #####</span></span><br><span class="line"><span class="section">###### 六级标题 ######</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p><strong>无序列表</strong> 使用星号（*）、加号（+）或是减号（-）作为列表标记，三种标记符产生的效果完全相同，比如：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">*</span> Red</span><br><span class="line"><span class="bullet">*</span> Blue</span><br><span class="line"><span class="bullet">*</span> Green</span><br></pre></td></tr></table></figure>
+
+<p>上述文字产生的列表如下：</p>
+<ul>
+<li>Red</li>
+<li>Blue</li>
+<li>Green</li>
+</ul>
+<p><strong>有序列表</strong> 则使用一个数字+英文句点进行表示，如下：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">1.</span> Red</span><br><span class="line"><span class="bullet">2.</span> Blue</span><br><span class="line"><span class="bullet">3.</span> Green</span><br><span class="line"><span class="bullet">2.</span> Black</span><br></pre></td></tr></table></figure>
+
+<p>很重要的一点是，列表标记上使用的数字并不会影响输出的结果。上述问题显示效果如下：</p>
+<ol>
+<li>Red</li>
+<li>Blue</li>
+<li>Green</li>
+<li>Black</li>
+</ol>
+<hr>
+<h2 id="代码段"><a href="#代码段" class="headerlink" title="代码段"></a>代码段</h2><p>Markdown的代码块使用反向单引号 ` 来标记。如果代码只有一行，可以使用单个 ` 包起来，比如 ` int a =  b + c ; `，显示效果为：<code>int a = b + c;</code><br>对于多行代码，需要使用 ``` 进行包裹，如下：</p>
+<div style="border:1px dotted black; background-color: #F2F3F4; padding: 5px;">
+&#96;&#96;&#96; <br>
+int a = 1; <br>
+a += 1; <br>
+&#96;&#96;&#96; <br>
+</div>
+
+<p>上述文字的显示效果如下：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">int a = 1;</span><br><span class="line">a += 1;</span><br></pre></td></tr></table></figure>
+
+<p>另外，代码段也可以使用4个空格开头进行表示。</p>
+<p>为代码高亮指定编程语言，可以在```后面加上编程语言来, ``` cpp</p>
+<div style="border:1px dotted black; background-color: #F2F3F4; padding: 5px;">
+&#96;&#96;&#96; cpp <br>
+void main(int argc, char* argv[]) { <br>
+    // do something <br>
+} <br>
+&#96;&#96;&#96;
+</div>
+
+<p>上述代码展示效果如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span> </span>&#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考链接：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/creating-and-highlighting-code-blocks#syntax-highlighting">GitHub: Syntax highlighting</a></p>
+<hr>
+<h2 id="文字格式"><a href="#文字格式" class="headerlink" title="文字格式"></a>文字格式</h2><p><code>*斜体*，**粗体**，***粗斜体***，~~删除线~~</code><br>上述文字的显示效果：<em>斜体</em>，<strong>粗体</strong>，**<em>粗斜体**</em>，<del>删除线</del>。需要注意，符号标记和文字之间不能有空格。</p>
+<p>文字上标和下标：<code>&lt;sub&gt;下标文字&lt;/sub&gt;  &lt;sup&gt;上标文字&lt;/sup&gt;</code>。效果：这是<sub>下标文字</sub> ，这是 <sup>上标文字</sup>。</p>
+<p><strong>字体大小</strong>可以使用html的语法标签：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">big</span>&gt;</span>大号字体<span class="tag">&lt;/<span class="name">big</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">small</span>&gt;</span>小号字体<span class="tag">&lt;/<span class="name">small</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>字体大小效果：这是<big>大号字体</big>，这是<small>小号字体</small></p>
+<p><strong>字体颜色</strong>可以使用html的font标签：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">font</span> <span class="attr">color</span>=<span class="string">&quot;red&quot;</span>&gt;</span>This is some text!<span class="tag">&lt;/<span class="name">font</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>字体颜色效果：<font color="red">红色文字</font>。</p>
+<hr>
+<h2 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h2><p>链接的格式为：&#91; text &#93;(<a target="_blank" rel="noopener external nofollow noreferrer" href="http://example.com/">http://example.com</a> “title”)  。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">这是一个 [<span class="string">我的主页</span>](<span class="link">https://www.jianshu.com/u/ee2923f61e8d &quot;主页&quot;</span>) 链接示例。</span><br></pre></td></tr></table></figure>
+
+<p>显示效果：这是一个 <a target="_blank" rel="noopener external nofollow noreferrer" href="https://rjyblog.github.io/" title="主页">我的主页</a> 链接示例。</p>
+<p>如果想创建一个本文中章节的链接，需要使用下面格式：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[<span class="string">本文章节</span>](<span class="link">#章节标题</span>)</span><br></pre></td></tr></table></figure>
+
+<p>备注：如果使用vscode编辑markdown，在输入#时会有章节标题的提示，选择即可。</p>
+<hr>
+<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><p>图片的格式为： !&#91;Alt text&#93;(/path/to/img.jpg “Optional title”) 。</p>
+<p>详细叙述如下：</p>
+<ul>
+<li>一个惊叹号 !</li>
+<li>接着一个方括号，里面放上图片的替代文字</li>
+<li>接着一个普通括号，里面放上图片的网址，最后还可以用引号包住并加上 选择性的 ‘title’ 文字。</li>
+</ul>
+<hr>
+<h2 id="分割线"><a href="#分割线" class="headerlink" title="分割线"></a>分割线</h2><p>可以在一行中用三个及以上的星号、减号、底线来建立一个分隔线，行内不能有其他东西。下面每种写法都可以建立分隔线 *** ，--- ，___ 。</p>
+<hr>
+<h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>引用使用 &gt; 进行标识。在引用文字结束时，和后面文字间隔一个空行即可结束引用。在引用区块中也可以使用其他的 Markdown 语法，包括标题、列表、代码区块等。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="quote">&gt; 这是一段引用文字。</span></span><br><span class="line"><span class="quote">&gt; 引用文字的第二句，呵呵呵！</span></span><br></pre></td></tr></table></figure>
+
+<p>显示效果如下：</p>
+<blockquote>
+<p>这是一段引用文字。<br>引用文字的第二句，呵呵呵！</p>
+</blockquote>
+<p>引用也支持嵌套，只需要根据需要加上不同数量的 &gt; 即可。</p>
+<hr>
+<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>表格实例如下。注意其中的冒号 : ，可以用于实现居中、左对齐、右对齐的效果。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">| name       |  city                 |   deposit       |</span><br><span class="line">|------------|:---------------------:|----------------:|</span><br><span class="line">| Abbi       | Shanghai              |  $1600          |</span><br><span class="line">| Gabriel    | Guangzhou             | $12             |</span><br><span class="line">| Jason      | Beijing               | $1              |</span><br></pre></td></tr></table></figure>
+
+<p>显示效果如下：</p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th align="center">city</th>
+<th align="right">deposit</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Abbi</td>
+<td align="center">Shanghai</td>
+<td align="right">$1600</td>
+</tr>
+<tr>
+<td>Gabriel</td>
+<td align="center">Guangzhou</td>
+<td align="right">$12</td>
+</tr>
+<tr>
+<td>Jason</td>
+<td align="center">Beijing</td>
+<td align="right">$1</td>
+</tr>
+</tbody></table>
+<p>注意，表格前面要有一个空行。</p>
+<hr>
+<h2 id="特殊字符"><a href="#特殊字符" class="headerlink" title="特殊字符"></a>特殊字符</h2><h3 id="反斜杠"><a href="#反斜杠" class="headerlink" title="反斜杠"></a>反斜杠</h3><p>Markdown 可以利用反斜杠来插入一些在语法中有特殊意义的符号，也就是把特殊符号显示为普通符号。<br>Markdown 支持以下这些符号前面加上反斜杠来帮助插入普通的符号：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">\   反斜线</span><br><span class="line">`   反引号</span><br><span class="line"><span class="bullet">*</span>   星号</span><br><span class="line">_   底线</span><br><span class="line">&#123;&#125;  花括号</span><br><span class="line">[]  方括号</span><br><span class="line">&lt;&gt;  尖括号</span><br><span class="line">()  圆括号</span><br><span class="line"><span class="section">#   井字号</span></span><br><span class="line"><span class="bullet">+</span>   加号</span><br><span class="line"><span class="bullet">-</span>   减号</span><br><span class="line">.   英文句点</span><br><span class="line">!   惊叹号</span><br><span class="line">|   竖线</span><br></pre></td></tr></table></figure>
+
+<h3 id="使用Unicode编码"><a href="#使用Unicode编码" class="headerlink" title="使用Unicode编码"></a>使用Unicode编码</h3><p>如果需要在Markdown文档中使用Markdown的保留字符，比如 &#124; &#96; &#91; &#93; 等具有特殊意义的字符时，就需要进行转义，否则文章的展示就会有问题。一般情况可以使用加反斜杠 \ 来进行转义。但是反斜杠并不是所有情况都好使，最彻底的方式就是使用Unicode编码来解决。</p>
+<table>
+<thead>
+<tr>
+<th>原字符</th>
+<th>Unicode编码</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#124;</td>
+<td><code>&amp;#124;</code></td>
+</tr>
+<tr>
+<td>&#96;</td>
+<td><code>&amp;#96;</code></td>
+</tr>
+<tr>
+<td>&#91;</td>
+<td><code>&amp;#91;</code></td>
+</tr>
+<tr>
+<td>&#93;</td>
+<td><code>&amp;#93;</code></td>
+</tr>
+<tr>
+<td>&#35;</td>
+<td><code>&amp;#35;</code></td>
+</tr>
+</tbody></table>
+<p>另外，如果期望输入额外的空格可以使用<code>&amp;#160;</code>。</p>
+<p>=&gt; <a target="_blank" rel="noopener external nofollow noreferrer" href="https://tool.oschina.net/encode">Unicode在线转码</a></p>
+<h3 id="禁止超链接"><a href="#禁止超链接" class="headerlink" title="禁止超链接"></a>禁止超链接</h3><p>如果一个url格式的字符串不想展示为超链接的格式，有两种方式可以做到：</p>
+<ol>
+<li>使用反引号包裹，比如 &#96;www&#xfeff;.baidu.com&#96; , 展示效果为<code>www.baidu.com</code></li>
+<li>通过<code>&amp;#xfeff;</code>（<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.codetable.net/hex/feff">Zero Width No-Break Space</a>）Unicode编码来把超链接打断，比如 <code>http&amp;#xfeff;://www.baidu.com</code>，展示效果为 http&#xfeff;://<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.baidu.com/">www.baidu.com</a></li>
+</ol>
+<hr>
+<h2 id="表情符号"><a href="#表情符号" class="headerlink" title="表情符号"></a>表情符号</h2><p>插入表情符号的方式有两种：</p>
+<ol>
+<li>通过复制粘贴的方式插入，比如从<a target="_blank" rel="noopener external nofollow noreferrer" href="https://emojipedia.org/">Emojipedia</a>网站复制粘贴过来。</li>
+<li>插入表情符号的代码，<a target="_blank" rel="noopener external nofollow noreferrer" href="https://gist.github.com/rxaviers/7360908">https://gist.github.com/rxaviers/7360908</a>这个网站收录的几乎所有的表情符号代码。通过代码的方式插入的表情符号在不同的应用软件上展示效果会有些差异。</li>
+</ol>
+<hr>
+<h2 id="数学公式"><a href="#数学公式" class="headerlink" title="数学公式"></a>数学公式</h2><p>数学符号使用美元符来包裹，比如<code>$2^n$</code>，显示效果是$2^n$。如果数学表达式中包含markdown的保留字符，则需要使用 <font color=red>$&#96;数学公式&#96;$</font> 的样式。<br>参考文章：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions">Writing mathematical expressions</a>、<a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/441454622">MarkDown数学公式</a></p>
+<h2 id="符号"><a href="#符号" class="headerlink" title="符号"></a>符号</h2><p>Markdown可以支持所有的HTML的符号，参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.w3schools.com/html/html_symbols.asp">HTML Symbols</a>。</p>
+<table>
+<thead>
+<tr>
+<th>代码</th>
+<th>样式</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>&amp;uarr;</code></td>
+<td>&uarr;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>&amp;darr;</code></td>
+<td>&darr;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>&amp;larr;</code></td>
+<td>&larr;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>&amp;rarr;</code></td>
+<td>&rarr;</td>
+<td></td>
+</tr>
+<tr>
+<td><code>&amp;harr;</code></td>
+<td>&harr;</td>
+<td>Double headed arrow</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="任务列表"><a href="#任务列表" class="headerlink" title="任务列表"></a>任务列表</h2><p>使用<code>* [ ]</code>或者<code>- [ ]</code>两种格式都可以，推荐使用前者：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">*</span> [ ] 未完成任务一</span><br><span class="line"><span class="bullet">*</span> [ ] 未完成任务二</span><br><span class="line"><span class="bullet">*</span> [x] 已完成任务</span><br><span class="line"></span><br><span class="line"><span class="bullet">-</span> [ ] 未完成任务一</span><br><span class="line"><span class="bullet">-</span> [ ] 未完成任务二</span><br><span class="line"><span class="bullet">-</span> [x] 已完成任务</span><br></pre></td></tr></table></figure>
+
+<p>显示效果如下：</p>
+<ul>
+<li><input disabled="" type="checkbox"> 未完成任务一</li>
+<li><input disabled="" type="checkbox"> 未完成任务二</li>
+<li><input checked="" disabled="" type="checkbox"> 已完成任务</li>
+</ul>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.markdownguide.org/basic-syntax/">Markdown Guide-Basic Syntax</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.github.com/en/free-pro-team@latest/github/writing-on-github/working-with-advanced-formatting">GitHub: Working with advanced formatting</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.markdownguide.org/hacks/">Workarounds for things not officially supported by Markdown.</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.jianshu.com/p/q81RER">献给写作者的 Markdown 新手指南</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://wowubuntu.com/markdown/#philosophy">Markdown 语法说明</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.jianshu.com/p/qqGjLN">为什么作家应该用 Markdown 保存自己的文稿</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://reimbar.org/dev/arrows/">How to do arrows in Markdown</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.jianshu.com/p/d63887d0c706">Markdown箭头的输入方法汇总</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Markdown/" rel="tag"># Markdown</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/62746.html" rel="prev" title="Excel常用函数算法">
+                  <i class="fa fa-angle-left"></i> Excel常用函数算法
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/45980.html" rel="next" title="ANR分析">
+                  ANR分析 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

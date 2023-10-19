@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Android13: Activity启动流程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android13: Activity启动流程">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/93b40782.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="Android13: Activity启动流程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/af8cd81dee6672e6f6a20a10468fb62bfb7ef4461d0bf7676b888ad21293248a.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/Android/Activity_Transaction%E7%B1%BB%E5%9B%BE.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/263aec74e1347cf395906f401c5d05e5870918c03946c34837af9d65139e0d5c.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/8f597172f5a16153dcbfe468e77efa4ee4b7059593673287f4583b3af72fe22d.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/3bcfe12610278113939a68ac5bb2704fc69439c70b49710d89fff49917d51b30.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/3d503e05c50ab5418d77a651aaf07091465229526edbb7a50e14feee684abb65.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/Android/DecorView%E7%A4%BA%E4%BE%8B.png">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/10b3fa2523947201df50f6639920ed45fbdb4275b64aa4ca708e4adab6eefd67.svg">
+<meta property="article:published_time" content="2023-10-07T03:11:56.000Z">
+<meta property="article:modified_time" content="2023-10-18T00:42:26.448Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rjyblog.gitee.io/assert/puml/af8cd81dee6672e6f6a20a10468fb62bfb7ef4461d0bf7676b888ad21293248a.svg">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/93b40782.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/93b40782.html","path":"posts/93b40782.html","title":"Android13: Activity启动流程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Android13: Activity启动流程 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5%EF%BC%9A%E6%89%A7%E8%A1%8CstartActivity"><span class="nav-text">第一阶段：执行startActivity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5%EF%BC%9Apause%E5%BD%93%E5%89%8Dactivity"><span class="nav-text">第二阶段：pause当前activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5%EF%BC%9A%E5%90%AF%E5%8A%A8%E6%96%B0Activity"><span class="nav-text">第三阶段：启动新Activity</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5%EF%BC%9AView%E6%B7%BB%E5%8A%A0%E5%88%B0Window"><span class="nav-text">第四阶段：View添加到Window</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E6%96%B0APP%E8%BF%9B%E7%A8%8B"><span class="nav-text">启动新APP进程</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/93b40782.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Android13: Activity启动流程 | 任建勇的博客">
+      <meta itemprop="description" content="Android13: Activity启动流程">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android13: Activity启动流程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-07 11:11:56" itemprop="dateCreated datePublished" datetime="2023-10-07T11:11:56+08:00">2023-10-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 08:42:26" itemprop="dateModified" datetime="2023-10-18T08:42:26+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Android13: Activity启动流程</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><!-- toc -->
+
+<p>本文以时序图的形式来展示activity的启动过程，相比于贴源码会更加直观。本文的讲解的流程是基于<code>MainActivity</code>使用standard模式启动<code>SecondActivity</code>，且两个Activity都在同一个应用中，最后的部分也会讲解一下进程的启动。</p>
+<h2 id="第一阶段：执行startActivity"><a href="#第一阶段：执行startActivity" class="headerlink" title="第一阶段：执行startActivity"></a>第一阶段：执行startActivity</h2><pre class="mermaid">
+
+zenuml
+group App {
+    &lt;&lt;App&gt;&gt; act as Activity
+    &lt;&lt;App&gt;&gt; ins as Instrumentation
+}
+group AMS {
+    &lt;&lt;AMS&gt;&gt; atms as ActivityTaskManagerService #F0F8FF
+    ActivityStarter #F0F8FF
+}
+act.startActivity {
+    act.startActivityForResult {
+        ins.execStartActivity {
+            atms.startActivity {
+                atms.startActivityAsUser {
+                    &#x2F;&#x2F;没有缓存则创建
+                    new ActivityStarter()
+                    ActivityStarter.&quot;① execute&quot;
+                }
+            }
+        }
+    }
+}
+</pre>
+
+<pre class="mermaid">
+
+zenuml
+&lt;&lt;AMS&gt;&gt; ActivityStarter #F0F8FF
+ActivityStarter.&quot;① execute&quot; {
+    executeRequest {
+        new ActivityRecord()
+        startActivityUnchecked {
+            startActivityInner {
+                Task.addChild
+                Task.startActivityLocked
+                RootWindowContainer.resumeFocusedTasksTopActivities {
+                    Task.resumeTopActivityUncheckedLocked {
+                        resumeTopActivityInnerLocked {
+                            TaskFragment.resumeTopActivity {
+                                &#x2F;&#x2F;pause当前activity
+                                &quot;② startPausing()&quot;
+                                if (! isProcessRunning) {
+                                    ActivityTaskManagerService.startProcessAsync
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            handleStartResult
+            postStartActivityProcessing
+        }
+    }
+}
+</pre>
+
+<h2 id="第二阶段：pause当前activity"><a href="#第二阶段：pause当前activity" class="headerlink" title="第二阶段：pause当前activity"></a>第二阶段：pause当前activity</h2><p>启动<code>SecondActivity</code>之前会先执行<code>MainActivity</code>的<strong>pause</strong>操作：</p>
+<img src="\assert\puml\af8cd81dee6672e6f6a20a10468fb62bfb7ef4461d0bf7676b888ad21293248a.svg"/>
+
+<p>在Android 9之前的版本，<code>ActivityThread</code>中通过<code>LAUNCH_ACTIVITY</code>消息来启动activity，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//android\app\ActivityThread.java</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleMessage</span><span class="params">(Message msg)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (DEBUG_MESSAGES) Slog.v(TAG, <span class="string">&quot;&gt;&gt;&gt; handling: &quot;</span> + codeToString(msg.what));</span><br><span class="line">            <span class="keyword">switch</span> (msg.what) &#123;</span><br><span class="line">                <span class="keyword">case</span> LAUNCH_ACTIVITY: &#123;</span><br><span class="line">                    Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, <span class="string">&quot;activityStart&quot;</span>);</span><br><span class="line">                    <span class="keyword">final</span> <span class="type">ActivityClientRecord</span> <span class="variable">r</span> <span class="operator">=</span> (ActivityClientRecord) msg.obj;</span><br><span class="line"></span><br><span class="line">                    r.packageInfo = getPackageInfoNoCheck(</span><br><span class="line">                            r.activityInfo.applicationInfo, r.compatInfo);</span><br><span class="line">                    handleLaunchActivity(r, <span class="literal">null</span>, <span class="string">&quot;LAUNCH_ACTIVITY&quot;</span>);</span><br><span class="line">                    Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</span><br><span class="line">                &#125; <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<p>但从Andorid 9开始，<code>ActivityThread</code>去掉了<code>LAUNCH_ACTIVITY</code> <code>PAUSE_ACTIVITY</code> <code>RESUME_ACTIVITY</code>等消息，而是改成了EXECUTE_TRANSACTION，通过ClientTransaction这套机制来执行activity生命周期流程，相关源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleMessage</span><span class="params">(Message msg)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (DEBUG_MESSAGES) Slog.v(TAG, <span class="string">&quot;&gt;&gt;&gt; handling: &quot;</span> + codeToString(msg.what));</span><br><span class="line">    <span class="keyword">switch</span> (msg.what) &#123;</span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">case</span> EXECUTE_TRANSACTION:</span><br><span class="line">            <span class="keyword">final</span> <span class="type">ClientTransaction</span> <span class="variable">transaction</span> <span class="operator">=</span> (ClientTransaction) msg.obj;</span><br><span class="line">            mTransactionExecutor.execute(transaction);</span><br><span class="line">            <span class="keyword">if</span> (isSystem()) &#123;</span><br><span class="line">                <span class="comment">// Client transactions inside system process are recycled on the client side</span></span><br><span class="line">                <span class="comment">// instead of ClientLifecycleManager to avoid being cleared before this</span></span><br><span class="line">                <span class="comment">// message is handled.</span></span><br><span class="line">                transaction.recycle();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// TODO(lifecycler): Recycle locally scheduled transactions.</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<p>下面是<code>ClientTransaction</code>类图：</p>
+<p><img src="/images/Android/Activity_Transaction%E7%B1%BB%E5%9B%BE.drawio.svg" alt="Activity Transaction"></p>
+<h2 id="第三阶段：启动新Activity"><a href="#第三阶段：启动新Activity" class="headerlink" title="第三阶段：启动新Activity"></a>第三阶段：启动新Activity</h2><p>下面继续Activity启动流程：</p>
+<img src="\assert\puml\263aec74e1347cf395906f401c5d05e5870918c03946c34837af9d65139e0d5c.svg"/>
+
+<p>执行<code>SecondAcitivity</code>的启动流程：</p>
+<img src="\assert\puml\8f597172f5a16153dcbfe468e77efa4ee4b7059593673287f4583b3af72fe22d.svg"/>
+
+<img src="\assert\puml\3bcfe12610278113939a68ac5bb2704fc69439c70b49710d89fff49917d51b30.svg"/>
+
+<h2 id="第四阶段：View添加到Window"><a href="#第四阶段：View添加到Window" class="headerlink" title="第四阶段：View添加到Window"></a>第四阶段：View添加到Window</h2><img src="\assert\puml\3d503e05c50ab5418d77a651aaf07091465229526edbb7a50e14feee684abb65.svg"/>
+
+<p>通过<a target="_blank" rel="noopener external nofollow noreferrer" href="https://developer.android.google.cn/studio/profile/hierarchy-viewer">Hierarchy Viewer</a>看下DecorView结构：</p>
+<p><img src="/images/Android/DecorView%E7%A4%BA%E4%BE%8B.png" alt="DecorView示例"></p>
+<p>用户自定义的View会被添加到PhoneWindow.mContentParent中，而mContentParent是DecorView的一个子孙View。</p>
+<p>下面是Activity、Task之间的类图关系：</p>
+<img src="\assert\puml\10b3fa2523947201df50f6639920ed45fbdb4275b64aa4ca708e4adab6eefd67.svg"/>
+
+<h2 id="启动新APP进程"><a href="#启动新APP进程" class="headerlink" title="启动新APP进程"></a>启动新APP进程</h2><p>如果需要启动的activity不在同一个app中，就需要启动新的进程。</p>
+<pre class="mermaid">
+
+zenuml
+ActivityTaskManagerService.startProcessAsync {
+    H.sendMessage {
+        ActivityManagerService.startProcess {
+            startProcessLocked {
+                ProcessList.startProcessLocked {
+                    newProcessRecordLocked {
+                        new ProcessRecord()
+                    }
+                    &#x2F;&#x2F;with ProcessRecord
+                    startProcessLocked {
+                        ProcessList.&quot;配置runtimeFlags&quot;
+                        &#x2F;&#x2F;异步启动线程
+                        ProcessList -&gt; ActivityManagerService : mProcStartHandler.post
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+
+<pre class="mermaid">
+
+zenuml
+ActivityManagerService.&quot;mProcStartHandler.dispatchMessage&quot; {
+    ProcessList.handleProcessStart {
+        startProcess {
+            ProcessStartResult &#x3D; Process.start {
+                ProcessStartResult &#x3D; ZygoteProcess.start {
+                    startViaZygote {
+                        ZygoteProcess.&quot;组装参数列表args&quot;
+                        zygoteSendArgsAndGetResult {
+                            &#x2F;&#x2F;通过LocalSocket向zygote发送进程启动参数
+                            &#x2F;&#x2F;并阻塞读取进程pid
+                            attemptZygoteSendArgsAndGetResult
+                        }
+                    }
+                }
+            }
+        }
+        handleProcessStartedLocked {
+            ActivityManagerService.addPidLocked {
+                ActivityTaskManagerService.&quot;onProcessMapped(pid, WindowProcessController)&quot; {
+                    ActivityTaskManagerService.&quot;mProcessMap.put(pid, proc)&quot;
+                }
+            }
+        }
+    }
+}
+</pre>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//android-13.0.0_r41\frameworks\base\core\java\android\os\ZygoteProcess.java</span></span><br><span class="line">    <span class="keyword">private</span> Process.ProcessStartResult <span class="title function_">attemptZygoteSendArgsAndGetResult</span><span class="params">(</span></span><br><span class="line"><span class="params">            ZygoteState zygoteState, String msgStr)</span> <span class="keyword">throws</span> ZygoteStartFailedEx &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">BufferedWriter</span> <span class="variable">zygoteWriter</span> <span class="operator">=</span> zygoteState.mZygoteOutputWriter;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">DataInputStream</span> <span class="variable">zygoteInputStream</span> <span class="operator">=</span> zygoteState.mZygoteInputStream;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//通过LocalSocket将进程启动参数传输给zygote进程</span></span><br><span class="line">            zygoteWriter.write(msgStr);</span><br><span class="line">            zygoteWriter.flush();</span><br><span class="line"></span><br><span class="line">            Process.<span class="type">ProcessStartResult</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Process</span>.ProcessStartResult();</span><br><span class="line">            <span class="comment">//读取新进程的pid</span></span><br><span class="line">            result.pid = zygoteInputStream.readInt();</span><br><span class="line">            result.usingWrapper = zygoteInputStream.readBoolean();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (result.pid &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ZygoteStartFailedEx</span>(<span class="string">&quot;fork() failed&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">            zygoteState.close();</span><br><span class="line">            Log.e(LOG_TAG, <span class="string">&quot;IO Exception while communicating with Zygote - &quot;</span></span><br><span class="line">                    + ex.toString());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ZygoteStartFailedEx</span>(ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>新的app进程启动运行的入口是<code>ActivityThread.main</code>函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//初始化主线程Looper</span></span><br><span class="line">    Looper.prepareMainLooper();</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//创建ActivityThread</span></span><br><span class="line">    <span class="type">ActivityThread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ActivityThread</span>();</span><br><span class="line">    thread.attach(<span class="literal">false</span>, startSeq);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sMainThreadHandler == <span class="literal">null</span>) &#123;</span><br><span class="line">        sMainThreadHandler = thread.getHandler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//启动主线程消息循环</span></span><br><span class="line">    Looper.loop();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Main thread loop unexpectedly exited&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<pre class="mermaid">
+
+zenuml
+group App {
+    ApplicationThread
+    Application
+    ActivityThread
+    mH
+}
+group AMS {
+    ActivityManagerService
+}
+ActivityThread.attach {
+    ActivityManagerService.attachApplication {
+        Binder.getCallingPid
+        attachApplicationLocked {
+            &quot;根据pid获取ProcessRecord&quot;
+            ApplicationThread.bindApplication {
+                mH.sendMessage(BIND_APPLICATION)
+            }
+        }
+    }
+}
+ActivityThread.handleMessage(BIND_APPLICATION) {
+    handleBindApplication {
+        new Application()
+        Application.attachBaseContext()
+        Application.onCreate()
+    }
+}
+</pre>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/c09f2087.html" rel="prev" title="Android UI 绘制流程">
+                  <i class="fa fa-angle-left"></i> Android UI 绘制流程
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

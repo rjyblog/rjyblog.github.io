@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Android绘制流程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android UI 绘制流程">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/c09f2087.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="Android绘制流程">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/Android/RenderThread%E7%B1%BB%E5%9B%BE.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/a2609f9a24281980efa2d633714b309d2a804e8c5bd095293bf1a8ab4c05d48e.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/34e7821a5de7dca39e750acd8af70d8acd45b77d2ea011476ce5e7163cb3ab8c.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/Android/Canvas%E7%B1%BB%E5%9B%BE.drawio.svg">
+<meta property="article:published_time" content="2023-09-26T01:45:29.000Z">
+<meta property="article:modified_time" content="2023-09-27T03:48:16.868Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rjyblog.gitee.io/images/Android/RenderThread%E7%B1%BB%E5%9B%BE.drawio.svg">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/c09f2087.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/c09f2087.html","path":"posts/c09f2087.html","title":"Android UI 绘制流程"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Android UI 绘制流程 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#measure-%E6%B5%81%E7%A8%8B"><span class="nav-text">measure 流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#layout-%E6%B5%81%E7%A8%8B"><span class="nav-text">layout 流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#draw-%E6%B5%81%E7%A8%8B"><span class="nav-text">draw() 流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B2%A1%E6%9C%89%E5%BC%80%E5%90%AF%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F"><span class="nav-text">没有开启硬件加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%80%E5%90%AF%E4%BA%86%E7%A1%AC%E4%BB%B6%E5%8A%A0%E9%80%9F"><span class="nav-text">开启了硬件加速</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RenderThread%E5%A6%82%E4%BD%95%E5%90%AF%E5%8A%A8%E8%BF%90%E8%A1%8C"><span class="nav-text">RenderThread如何启动运行</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%99%84%E5%BD%95%E4%B8%80%EF%BC%9ACanvas-Java%E5%B1%82%E4%B8%8ENative%E6%BA%90%E7%A0%81%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB"><span class="nav-text">附录一：Canvas Java层与Native源码对应关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A4%BA%E4%BE%8B%EF%BC%9AdrawCircle"><span class="nav-text">示例：drawCircle</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BE%85%E5%8A%9E"><span class="nav-text">待办</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/c09f2087.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Android UI 绘制流程 | 任建勇的博客">
+      <meta itemprop="description" content="Android绘制流程">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android UI 绘制流程
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-26 09:45:29" itemprop="dateCreated datePublished" datetime="2023-09-26T09:45:29+08:00">2023-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-27 11:48:16" itemprop="dateModified" datetime="2023-09-27T11:48:16+08:00">2023-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Android绘制流程</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="measure-流程"><a href="#measure-流程" class="headerlink" title="measure 流程"></a>measure 流程</h2><p>measure结果放在<code>mMeasuredWidth</code>和<code>mMeasuredHeight</code>中。</p>
+<h2 id="layout-流程"><a href="#layout-流程" class="headerlink" title="layout 流程"></a>layout 流程</h2><p>layout的作用是计算view及其view的大小和位置，</p>
+<h2 id="draw-流程"><a href="#draw-流程" class="headerlink" title="draw() 流程"></a>draw() 流程</h2><p>入口：ViewRootImpl#draw</p>
+<h3 id="没有开启硬件加速"><a href="#没有开启硬件加速" class="headerlink" title="没有开启硬件加速"></a>没有开启硬件加速</h3><p>执行drawSoftware方法。</p>
+<ol>
+<li>获取Canvas：canvas = mSurface.lockCanvas(dirty);</li>
+<li>执行View#draw：mView.draw(canvas);</li>
+<li>surface.unlockCanvasAndPost(canvas);</li>
+</ol>
+<p>执行<code>android-12.1.0_r27\frameworks\base\core\jni\android_view_Surface.cpp</code>的nativeUnlockCanvasAndPost方法</p>
+<h3 id="开启了硬件加速"><a href="#开启了硬件加速" class="headerlink" title="开启了硬件加速"></a>开启了硬件加速</h3><p>最终会通过RenderThread进行渲染<code>ViewRootImpl#draw</code>中调用<code>mAttachInfo.mThreadedRenderer.draw(mView, mAttachInfo, this);</code></p>
+<p><img src="/images/Android/RenderThread%E7%B1%BB%E5%9B%BE.drawio.svg" alt="RenderThread类图"></p>
+<img src="\assert\puml\a2609f9a24281980efa2d633714b309d2a804e8c5bd095293bf1a8ab4c05d48e.svg"/>
+
+<img src="\assert\puml\34e7821a5de7dca39e750acd8af70d8acd45b77d2ea011476ce5e7163cb3ab8c.svg"/>
+
+<h3 id="RenderThread如何启动运行"><a href="#RenderThread如何启动运行" class="headerlink" title="RenderThread如何启动运行"></a>RenderThread如何启动运行</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">RenderThread&amp; <span class="title">RenderThread::getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    [[clang::no_destroy]] <span class="type">static</span> sp&lt;RenderThread&gt; sInstance = []() &#123;</span><br><span class="line">        sp&lt;RenderThread&gt; thread = sp&lt;RenderThread&gt;::<span class="built_in">make</span>();</span><br><span class="line">        thread-&gt;<span class="built_in">start</span>(<span class="string">&quot;RenderThread&quot;</span>);  <span class="comment">//开始执行threadLoop</span></span><br><span class="line">        <span class="keyword">return</span> thread;</span><br><span class="line">    &#125;();</span><br><span class="line">    gHasRenderThreadInstance = <span class="literal">true</span>;</span><br><span class="line">    <span class="keyword">return</span> *sInstance;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">RenderThread::threadLoop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="built_in">setpriority</span>(PRIO_PROCESS, <span class="number">0</span>, PRIORITY_DISPLAY);</span><br><span class="line">    Looper::<span class="built_in">setForThread</span>(mLooper);</span><br><span class="line">    <span class="keyword">if</span> (gOnStartHook) &#123;</span><br><span class="line">        <span class="built_in">gOnStartHook</span>(<span class="string">&quot;RenderThread&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">initThreadLocals</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span> (<span class="literal">true</span>) &#123; <span class="comment">//loop forever</span></span><br><span class="line">        <span class="built_in">waitForWork</span>();</span><br><span class="line">        <span class="built_in">processQueue</span>(); <span class="comment">//执行WorkQueue中的任务</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (mPendingRegistrationFrameCallbacks.<span class="built_in">size</span>() &amp;&amp; !mFrameCallbackTaskPending) &#123;</span><br><span class="line">            mVsyncSource-&gt;<span class="built_in">drainPendingEvents</span>();</span><br><span class="line">            mFrameCallbacks.<span class="built_in">insert</span>(mPendingRegistrationFrameCallbacks.<span class="built_in">begin</span>(),</span><br><span class="line">                                   mPendingRegistrationFrameCallbacks.<span class="built_in">end</span>());</span><br><span class="line">            mPendingRegistrationFrameCallbacks.<span class="built_in">clear</span>();</span><br><span class="line">            <span class="built_in">requestVsync</span>();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!mFrameCallbackTaskPending &amp;&amp; !mVsyncRequested &amp;&amp; mFrameCallbacks.<span class="built_in">size</span>()) &#123;</span><br><span class="line">            <span class="comment">// <span class="doctag">TODO:</span> Clean this up. This is working around an issue where a combination</span></span><br><span class="line">            <span class="comment">// of bad timing and slow drawing can result in dropping a stale vsync</span></span><br><span class="line">            <span class="comment">// on the floor (correct!) but fails to schedule to listen for the</span></span><br><span class="line">            <span class="comment">// next vsync (oops), so none of the callbacks are run.</span></span><br><span class="line">            <span class="built_in">requestVsync</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>会生成一个RecordingCanvas来记录所有的绘制步骤：</p>
+<p><img src="/images/Android/Canvas%E7%B1%BB%E5%9B%BE.drawio.svg" alt="Canvas类图"></p>
+<p>在使用硬件加速时，onDraw的canvas实际上是RecordingCanvas。RecordingCanvas最终的产物是DisplayList，然后交给RenderThread去执行真正的绘制流程。</p>
+<h2 id="附录一：Canvas-Java层与Native源码对应关系"><a href="#附录一：Canvas-Java层与Native源码对应关系" class="headerlink" title="附录一：Canvas Java层与Native源码对应关系"></a>附录一：Canvas Java层与Native源码对应关系</h2><p>本节从源码角度说明了Java层的Canvas与Native层函数之间的对应关系。</p>
+<ol>
+<li><p><code>android.graphics.Canvas</code>、<code>android.graphics.BaseCanvas</code>、<code>android.graphics.BaseRecordingCanvas</code>这三个类中的jni方法都在<code>frameworks\base\libs\hwui\jni\android_graphics_Canvas.cpp</code>中定义：</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">register_android_graphics_Canvas</span><span class="params">(JNIEnv* env)</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> ret = <span class="number">0</span>;</span><br><span class="line">    ret |= <span class="built_in">RegisterMethodsOrDie</span>(env, <span class="string">&quot;android/graphics/Canvas&quot;</span>, gMethods, <span class="built_in">NELEM</span>(gMethods));</span><br><span class="line">    ret |= <span class="built_in">RegisterMethodsOrDie</span>(env, <span class="string">&quot;android/graphics/BaseCanvas&quot;</span>, gDrawMethods, <span class="built_in">NELEM</span>(gDrawMethods));</span><br><span class="line">    ret |= <span class="built_in">RegisterMethodsOrDie</span>(env, <span class="string">&quot;android/graphics/BaseRecordingCanvas&quot;</span>, gDrawMethods, <span class="built_in">NELEM</span>(gDrawMethods));</span><br><span class="line">    <span class="keyword">return</span> ret;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>android.graphics.RecordingCanvas</code>对应的jni方法在<code>frameworks\base\libs\hwui\jni\android_graphics_DisplayListCanvas.cpp</code>中定义;</p>
+ <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">const</span> <span class="type">char</span>* <span class="type">const</span> kClassPathName = <span class="string">&quot;android/graphics/RecordingCanvas&quot;</span>;</span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">register_android_view_DisplayListCanvas</span><span class="params">(JNIEnv* env)</span> </span>&#123;</span><br><span class="line">    jclass runnableClass = <span class="built_in">FindClassOrDie</span>(env, <span class="string">&quot;java/lang/Runnable&quot;</span>);</span><br><span class="line">    gRunnableMethodId = <span class="built_in">GetMethodIDOrDie</span>(env, runnableClass, <span class="string">&quot;run&quot;</span>, <span class="string">&quot;()V&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">RegisterMethodsOrDie</span>(env, kClassPathName, gMethods, <span class="built_in">NELEM</span>(gMethods));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>native Canvas对应的是<code>SkiaRecordingCanvas</code>，创建代码对应：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//android-12.1.0_r27\frameworks\base\graphics\java\android\graphics\RecordingCanvas.java</span></span><br><span class="line">    <span class="keyword">private</span> <span class="title function_">RecordingCanvas</span><span class="params">(<span class="meta">@NonNull</span> RenderNode node, <span class="type">int</span> width, <span class="type">int</span> height)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(nCreateDisplayListCanvas(node.mNativeRenderNode, width, height));</span><br><span class="line">        mDensity = <span class="number">0</span>; <span class="comment">// disable bitmap density scaling</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="meta">@CriticalNative</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="type">long</span> <span class="title function_">nCreateDisplayListCanvas</span><span class="params">(<span class="type">long</span> node, <span class="type">int</span> width, <span class="type">int</span> height)</span>;</span><br></pre></td></tr></table></figure>
+
+<p>RecordingCanvas构造函数中调用了native函数nCreateDisplayListCanvas，并最终将结果赋值给了父类<code>Canvas#mNativeCanvasWrapper</code>变量，这个变量存储的就是native层的Canvas对象指针，对应c++层<code>SkiaRecordingCanvas</code>类。<code>nCreateDisplayListCanvas</code>源码实现如下：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//android\android-12.1.0_r27\frameworks\base\libs\hwui\jni\android_graphics_DisplayListCanvas.cpp</span></span><br><span class="line"><span class="function"><span class="type">static</span> jlong <span class="title">android_view_DisplayListCanvas_createDisplayListCanvas</span><span class="params">(CRITICAL_JNI_PARAMS_COMMA jlong renderNodePtr,</span></span></span><br><span class="line"><span class="params"><span class="function">        jint width, jint height)</span> </span>&#123;</span><br><span class="line">    RenderNode* renderNode = <span class="built_in">reinterpret_cast</span>&lt;RenderNode*&gt;(renderNodePtr);</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">reinterpret_cast</span>&lt;jlong&gt;(Canvas::<span class="built_in">create_recording_canvas</span>(width, height, renderNode));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//android\android-12.1.0_r27\frameworks\base\libs\hwui\hwui\Canvas.cpp</span></span><br><span class="line"><span class="function">Canvas* <span class="title">Canvas::create_recording_canvas</span><span class="params">(<span class="type">int</span> width, <span class="type">int</span> height, uirenderer::RenderNode* renderNode)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> uirenderer::skiapipeline::<span class="built_in">SkiaRecordingCanvas</span>(renderNode, width, height);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="示例：drawCircle"><a href="#示例：drawCircle" class="headerlink" title="示例：drawCircle"></a>示例：drawCircle</h3><p><strong>Java层drawCircle</strong></p>
+<p>比如我们在View的onDraw函数中画一个圆，代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">onDraw</span><span class="params">(Canvas canvas)</span> &#123;</span><br><span class="line">   mPaint.setColor(getResources().getColor(R.color.red));</span><br><span class="line">   canvas.drawCircle(<span class="number">50f</span>, <span class="number">50f</span>, <span class="number">10f</span>, mPaint); <span class="comment">//void drawCircle(float cx, float cy, float radius, @NonNull Paint paint)</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>onDraw函数的canvas参数实际上是<code>RecordingCanvas</code>类。因为RecordingCanvas没有重写这个drawCircle函数，所以调用的父类<code>BaseRecordingCanvas</code>的drawCircle函数及其对应的jni函数<code>nDrawCircle</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//frameworks\base\graphics\java\android\graphics\BaseRecordingCanvas.java</span></span><br><span class="line"><span class="meta">@FastNative</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title function_">nDrawCircle</span><span class="params">(<span class="type">long</span> nativeCanvas, <span class="type">float</span> cx, <span class="type">float</span> cy, <span class="type">float</span> radius, <span class="type">long</span> nativePaint)</span>;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title function_">drawCircle</span><span class="params">(<span class="type">float</span> cx, <span class="type">float</span> cy, <span class="type">float</span> radius, <span class="meta">@NonNull</span> Paint paint)</span> &#123;</span><br><span class="line">    nDrawCircle(mNativeCanvasWrapper, cx, cy, radius, paint.getNativeInstance());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>Native层drawCircle</strong></p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//frameworks\base\libs\hwui\jni\android_graphics_Canvas.cpp</span></span><br><span class="line"><span class="function"><span class="type">static</span> Canvas* <span class="title">get_canvas</span><span class="params">(jlong canvasHandle)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">reinterpret_cast</span>&lt;Canvas*&gt;(canvasHandle);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">drawCircle</span><span class="params">(JNIEnv* env, jobject, jlong canvasHandle, jfloat cx, jfloat cy,</span></span></span><br><span class="line"><span class="params"><span class="function">                       jfloat radius, jlong paintHandle)</span> </span>&#123;</span><br><span class="line">    <span class="type">const</span> Paint* paint = <span class="built_in">reinterpret_cast</span>&lt;Paint*&gt;(paintHandle);</span><br><span class="line">    <span class="built_in">get_canvas</span>(canvasHandle)-&gt;<span class="built_in">drawCircle</span>(cx, cy, radius, *paint);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>canvasHandle就是mNativeCanvasWrapper，对应C++的<code>SkiaRecordingCanvas</code>类。SkiaRecordingCanvas中并没有复写drawCirle(其实也有一个drawCircle但是参数签名不匹配)，所以调用父类SkiaCanvas的drawCircle函数。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">void</span> <span class="title">SkiaCanvas::drawCircle</span><span class="params">(<span class="type">float</span> x, <span class="type">float</span> y, <span class="type">float</span> radius, <span class="type">const</span> Paint&amp; paint)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">CC_UNLIKELY</span>(radius &lt;= <span class="number">0</span> || paint.<span class="built_in">nothingToDraw</span>())) <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">applyLooper</span>(&amp;paint, [&amp;](<span class="type">const</span> SkPaint&amp; p) &#123; mCanvas-&gt;<span class="built_in">drawCircle</span>(x, y, radius, p); &#125;); <span class="comment">//调用mCanvas-&gt;drawCircle</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>SkCanvas* SkiaCanvas::mCanvas</code>成员变量是在子类SkiaRecordingCanvas初始化过程中通过调用<code>SkiaCanvas::reset(&amp;mRecorder);</code>来设置，mCanvas是<code>RecordingCanvas</code>。也就是说RecordingCanvas是SkCanvas的子类。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">RecordingCanvas</span> <span class="keyword">final</span> : <span class="keyword">public</span> SkCanvasVirtualEnforcer&lt;SkNoDrawCanvas&gt; &#123; ...... &#125;</span><br></pre></td></tr></table></figure>
+
+<p>SkCanvasVirtualEnforcer是一个模板类，在skia库中定义，RecordingCanvas实际上继承自SkNoDrawCanvas，SkNoDrawCanvas以同样的方式继承自SkCanvas。</p>
+<p>RecordingCanvas和SkNoDrawCanvas都没有复写SkCanvas::drawCircle</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//external\skia\include\core\SkScalar.h</span></span><br><span class="line"><span class="keyword">typedef</span> <span class="type">float</span> SkScalar;</span><br><span class="line"><span class="comment">//external\skia\src\core\SkCanvas.cpp</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">SkCanvas::drawCircle</span><span class="params">(SkScalar cx, SkScalar cy, SkScalar radius, <span class="type">const</span> SkPaint&amp; paint)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (radius &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        radius = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    SkRect  r;</span><br><span class="line">    r.<span class="built_in">setLTRB</span>(cx - radius, cy - radius, cx + radius, cy + radius);</span><br><span class="line">    <span class="keyword">this</span>-&gt;<span class="built_in">drawOval</span>(r, paint);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">SkCanvas::drawOval</span><span class="params">(<span class="type">const</span> SkRect&amp; r, <span class="type">const</span> SkPaint&amp; paint)</span> </span>&#123;</span><br><span class="line">    <span class="built_in">TRACE_EVENT0</span>(<span class="string">&quot;skia&quot;</span>, TRACE_FUNC);</span><br><span class="line">    <span class="comment">// To avoid redundant logic in our culling code and various backends, we always sort rects</span></span><br><span class="line">    <span class="comment">// before passing them along.</span></span><br><span class="line">    <span class="keyword">this</span>-&gt;<span class="built_in">onDrawOval</span>(r.<span class="built_in">makeSorted</span>(), paint); <span class="comment">//最终调用的是子类的onDrawOval函数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//frameworks\base\libs\hwui\RecordingCanvas.h</span></span><br><span class="line">DisplayListData* RecordingCanvas::fDL;</span><br><span class="line"><span class="comment">//F:\github\android\android-12.1.0_r27\frameworks\base\libs\hwui\RecordingCanvas.cpp</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">RecordingCanvas::onDrawOval</span><span class="params">(<span class="type">const</span> SkRect&amp; oval, <span class="type">const</span> SkPaint&amp; paint)</span> </span>&#123;</span><br><span class="line">    fDL-&gt;<span class="built_in">drawOval</span>(oval, paint);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">DisplayListData::drawOval</span><span class="params">(<span class="type">const</span> SkRect&amp; oval, <span class="type">const</span> SkPaint&amp; paint)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">this</span>-&gt;<span class="built_in">push</span>&lt;DrawOval&gt;(<span class="number">0</span>, oval, paint);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> <span class="title class_">DrawOval</span> <span class="keyword">final</span> : Op &#123;</span><br><span class="line">    <span class="type">static</span> <span class="type">const</span> <span class="keyword">auto</span> kType = Type::DrawOval;</span><br><span class="line">    <span class="built_in">DrawOval</span>(<span class="type">const</span> SkRect&amp; oval, <span class="type">const</span> SkPaint&amp; paint) : <span class="built_in">oval</span>(oval), <span class="built_in">paint</span>(paint) &#123;&#125;</span><br><span class="line">    SkRect oval;</span><br><span class="line">    SkPaint paint;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">draw</span><span class="params">(SkCanvas* c, <span class="type">const</span> SkMatrix&amp;)</span> <span class="type">const</span> </span>&#123; c-&gt;<span class="built_in">drawOval</span>(oval, paint); &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="待办"><a href="#待办" class="headerlink" title="待办"></a>待办</h3><ul>
+<li><input disabled="" type="checkbox"> <code>View#buildLayer</code>的作用是什么？</li>
+<li><input disabled="" type="checkbox"> RenderThread会使用surface.lockHardwareCanvas()吗？</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/68833f9e.html" rel="prev" title="Bitmap内存分配以及回收">
+                  <i class="fa fa-angle-left"></i> Bitmap内存分配以及回收
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/93b40782.html" rel="next" title="Android13: Activity启动流程">
+                  Android13: Activity启动流程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

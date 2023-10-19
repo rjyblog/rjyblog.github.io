@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Java float和double存储结构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java float和double存储结构">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/2230f1f1.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="Java float和double存储结构">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/Java%E6%B5%AE%E7%82%B9%E6%95%B0%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84.drawio.svg">
+<meta property="article:published_time" content="2023-09-17T06:19:09.000Z">
+<meta property="article:modified_time" content="2023-09-17T08:32:41.265Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rjyblog.gitee.io/images/Java%E6%B5%AE%E7%82%B9%E6%95%B0%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84.drawio.svg">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/2230f1f1.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/2230f1f1.html","path":"posts/2230f1f1.html","title":"Java float和double存储结构"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Java float和double存储结构 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E8%BD%AC%E6%8D%A2%E4%BA%8C%E8%BF%9B%E5%88%B6"><span class="nav-text">浮点数转换二进制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/2230f1f1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Java float和double存储结构 | 任建勇的博客">
+      <meta itemprop="description" content="Java float和double存储结构">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Java float和double存储结构
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-17 14:19:09 / 修改时间：16:32:41" itemprop="dateCreated datePublished" datetime="2023-09-17T14:19:09+08:00">2023-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Java float和double存储结构</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p><img src="/images/Java%E6%B5%AE%E7%82%B9%E6%95%B0%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84.drawio.svg" alt="Java浮点数存储结构"></p>
+<h2 id="浮点数转换二进制"><a href="#浮点数转换二进制" class="headerlink" title="浮点数转换二进制"></a>浮点数转换二进制</h2><p>以<code>18.725</code>为例进行说明。</p>
+<p><strong>整数部分转二进制</strong>：除2取余法。整数部分除以2取余数，商取整继续除以2取余数，直到商为0。</p>
+<table>
+<thead>
+<tr>
+<th>整数除法</th>
+<th>商</th>
+<th>余数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$18/2$</td>
+<td>9</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$9/2$</td>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$4/2$</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$2/2$</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$1/2$</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>18转换为二进制就是<code>10010</code>，上面表格中余数的倒序。</p>
+<p><strong>小数部分转二进制</strong>：乘2取整法。小数部分乘以2，取整数部分，剩下的小数部分继续乘以2取整数部分，直到结果为0。如果永远不为零，则到达期望的精度后终止运算。</p>
+<table>
+<thead>
+<tr>
+<th>乘法公式</th>
+<th>小数部分</th>
+<th>整数部分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$0.725*2=1.45$</td>
+<td>0.45</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.45*2=0.9$</td>
+<td>0.9</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$0.9*2=1.8$</td>
+<td>0.8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.8*2=1.6$</td>
+<td>0.6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.6*2=1.2$</td>
+<td>0.2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.2*2=0.4$</td>
+<td>0.4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$0.4*2=0.8$</td>
+<td>0.8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$0.8*2=1.6$</td>
+<td>0.6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.6*2=1.2$</td>
+<td>0.2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.2*2=0.4$</td>
+<td>0.4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+</tr>
+</tbody></table>
+<p>0.725的二进制数是<code>0.1011100110</code>（后面还有无限长，这里忽略）。所以18.725的二级制就是<code>10010.1011100110</code>。按照规定，二进制小数点左边只能有1为且固定为1，所以需要进行右移操作，得出结果是：$1.00101011100110*2^4$</p>
+<ul>
+<li>符号位：正数，符号位为0；</li>
+<li>指数位：实际为4，按照规定要加上127（即指数最高位赋值为1），指数位存储的是131，二级制为<code>10000011</code>，。</li>
+<li>底数位：取小数部分，即 <code>0.00101011100110</code>；</li>
+</ul>
+<p>为什么指数位要加上127呢？这是因为float类型指数位是8位，取值范围位-126~127，为了消除负数带来的实际计算上的影响（比如比较大小，加减法等），可以在实际存储的时候，给指数做一个简单的映射，加上一个偏移量，比如float的指数偏移量为 127，这样就不会有负数出现了。另外double类型是加上1024。</p>
+<p>18.725存储的float二进制数据是：<code>0 10000011 00101011100110...</code>。</p>
+<p>可以通过下面代码进行验证：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">System.out.println(Integer.toBinaryString(Float.floatToRawIntBits(<span class="number">18.725f</span>)));</span><br><span class="line"><span class="comment">//输出结果位：0 10000011 00101011100110011001101（高位0实际上没有输出，这里手动补上了）</span></span><br><span class="line"></span><br><span class="line">System.out.println(Long.toBinaryString(Double.doubleToRawLongBits(<span class="number">18.725</span>)));</span><br><span class="line"><span class="comment">//输出结果：0 10000000011 0010101110011001100110011001100110011001100110011010</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.shuxuele.com/numbers/scientific-notation.html">科学记数法</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.sojson.com/hexconvert.html">在线进制转换</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.cnblogs.com/Java-Script/p/11123897.html">Java语言中：float、double数据类型在内存中是如何存储的</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.runoob.com/w3cnote/java-the-different-float-double.html">Java 浮点类型 float 和 double 的主要区别</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://blog.csdn.net/weixin_47713503/article/details/108699001">IEEE754 浮点数：简读+案例=秒懂</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/ca4438af.html" rel="prev" title="HashMap源码分析">
+                  <i class="fa fa-angle-left"></i> HashMap源码分析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/e679f521.html" rel="next" title="图解RecyclerView缓存机制">
+                  图解RecyclerView缓存机制 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文详细介绍了缓存拦截器的处理逻辑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="okhttp详解系列四：缓存拦截器">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/37107c2e.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="本文详细介绍了缓存拦截器的处理逻辑">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/a7c0bdd59919f997a0f328cab949b239bbdfea6800e2c566711274a30eb74d38.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/cbb3925bc62c9909f231adee2eb732dff565165fb344f8e7583a3abc765351db.svg">
+<meta property="article:published_time" content="2023-08-17T07:12:30.000Z">
+<meta property="article:modified_time" content="2023-09-21T02:47:23.109Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="okhttp">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rjyblog.gitee.io/assert/puml/a7c0bdd59919f997a0f328cab949b239bbdfea6800e2c566711274a30eb74d38.svg">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/37107c2e.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/37107c2e.html","path":"posts/37107c2e.html","title":"okhttp详解系列四：缓存拦截器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>okhttp详解系列四：缓存拦截器 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="nav-text">缓存使用方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%93%E5%AD%98%E6%8B%A6%E6%88%AA%E5%99%A8%E6%B5%81%E7%A8%8B"><span class="nav-text">缓存拦截器流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CacheStrategy"><span class="nav-text">CacheStrategy</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E5%B9%B4%E9%BE%84%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="nav-text">响应年龄的计算方法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%93%8D%E5%BA%94%E4%BF%9D%E9%B2%9C%E6%9C%9F%E7%9A%84%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95"><span class="nav-text">响应保鲜期的计算方法</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%85%A5Cache"><span class="nav-text">写入Cache</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/37107c2e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="okhttp详解系列四：缓存拦截器 | 任建勇的博客">
+      <meta itemprop="description" content="本文详细介绍了缓存拦截器的处理逻辑">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          okhttp详解系列四：缓存拦截器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-17 15:12:30" itemprop="dateCreated datePublished" datetime="2023-08-17T15:12:30+08:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-21 10:47:23" itemprop="dateModified" datetime="2023-09-21T10:47:23+08:00">2023-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/okhttp/" itemprop="url" rel="index"><span itemprop="name">okhttp</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">本文详细介绍了缓存拦截器的处理逻辑</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><ul>
+<li><a href="/posts/78efaca4.html" title="okhttp详解系列一：开篇">okhttp详解系列一：开篇</a></li>
+<li><a href="/posts/8e83ed63.html" title="okhttp详解系列二：重试重定向拦截器">okhttp详解系列二：重试重定向拦截器</a></li>
+<li><a href="/posts/6e2b1d41.html" title="okhttp详解系列三：桥拦截器 BridgeInterceptor">okhttp详解系列三：桥拦截器 BridgeInterceptor</a></li>
+<li><a href="/posts/37107c2e.html" title="okhttp详解系列四：缓存拦截器">okhttp详解系列四：缓存拦截器</a></li>
+<li><a href="/posts/ee27d764.html" title="okhttp详解系列五：连接拦截器 ConnectInterceptor">okhttp详解系列五：连接拦截器 ConnectInterceptor</a></li>
+<li><a href="/posts/73cf04e1.html" title="okhttp详解系列六：服务请求拦截器 CallServerInterceptor">okhttp详解系列六：服务请求拦截器 CallServerInterceptor</a>
+
+</li>
+</ul>
+<h2 id="缓存使用方法"><a href="#缓存使用方法" class="headerlink" title="缓存使用方法"></a>缓存使用方法</h2><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">val</span> client: OkHttpClient = OkHttpClient.Builder()</span><br><span class="line">    .cache(Cache(</span><br><span class="line">        directory = File(<span class="string">&quot;/dir/http_cache&quot;</span>),</span><br><span class="line">        maxSize = <span class="number">5L</span> * <span class="number">1024L</span> * <span class="number">1024L</span> <span class="comment">// 5MiB</span></span><br><span class="line">    ))</span><br><span class="line">    .build()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>缓存机制只实现了get请求的缓存，不支持其他的请求类型，比如POST。下面的官方的说明：</p>
+<blockquote>
+<p>Don’t cache non-GET responses. We’re technically allowed to cache HEAD requests and some POST requests, but the complexity of doing so is high and the benefit is low.</p>
+</blockquote>
+<img src="\assert\puml\a7c0bdd59919f997a0f328cab949b239bbdfea6800e2c566711274a30eb74d38.svg"/>
+
+<p><strong>Cache-Control</strong>请求头是控制缓存策略的关键，server、client端都可以进行设置。<strong>Cache-Control</strong>决定了哪些response可以被缓存，以及缓存的response是否满足当前的request。协议定义可以参考<a target="_blank" rel="noopener external nofollow noreferrer" href="https://tools.ietf.org/html/rfc7234#section-5.2">RFC 7234, 5.2</a>。</p>
+<h2 id="缓存拦截器流程"><a href="#缓存拦截器流程" class="headerlink" title="缓存拦截器流程"></a>缓存拦截器流程</h2><p>缓存拦截器的处理流程如下：</p>
+<ol>
+<li>首先通过url的md5值去读取本地可用缓存（后面会校验缓存是否可用）；</li>
+<li>计算得到CacheStrategy，实际上就是计算得到<strong>networkRequest</strong>和<strong>cacheResponse</strong>，如果两者都为null，就直接报504错误；如果networkRequest是null，表示直接使用缓存。</li>
+</ol>
+<img src="\assert\puml\cbb3925bc62c9909f231adee2eb732dff565165fb344f8e7583a3abc765351db.svg"/>
+
+<h2 id="CacheStrategy"><a href="#CacheStrategy" class="headerlink" title="CacheStrategy"></a>CacheStrategy</h2><p>CacheStrategy的生成使用的条件比较多，比如request CacheControl、response CacheControl、条件请求等，这块就不详细介绍了。其中要计算响应的年龄和响应的保鲜期，下面详细介绍两者的计算方法。</p>
+<h3 id="响应年龄的计算方法"><a href="#响应年龄的计算方法" class="headerlink" title="响应年龄的计算方法"></a>响应年龄的计算方法</h3><p>响应的年龄是自它生成<small>（或者通过源服务器成功验证）</small>之后所经过的时长，计算方法如下：</p>
+<ul>
+<li>第一步：计算原始响应时长，”接收到响应的时间” 减去 “响应的服务时间”（表示生成该response的时间，响应头中的Date字段，如果没有，则取接收到响应的时间）</small>，得到的时间差与<strong>Age</strong>字段进行比较，取最大值；</li>
+<li>第二步：计算响应时长，“接收到响应的时间”减去“发送响应的时间”；</li>
+<li>第三步：计算本地年龄<small>（被缓存的response在本地的保存时长）</small>，当前时间减去接收到response的时间；</li>
+<li>最后，把上述三者加和就得到了响应的最终年龄；</li>
+</ul>
+<p>响应头的Age字段有必要解释一下：如果存在Age字段，则表示这个response是基于缓存生成的，来自缓存服务器，而不是来自原始服务器。所以Age表示该次响应到源服务器提供服务的时间差。</p>
+<h3 id="响应保鲜期的计算方法"><a href="#响应保鲜期的计算方法" class="headerlink" title="响应保鲜期的计算方法"></a>响应保鲜期的计算方法</h3><p>一个被缓存的response，如果超过了保鲜期，就表示这个被缓存的response必须再次通过源服务器的验证后才能继续使用；还在保鲜期内的response就可以不经过源服务器的验证就能使用。</p>
+<ul>
+<li>如果response Cache-Control中指定了max-age<small>（<em>单位秒</em>）</small>，保鲜期就取max-age的值。</li>
+<li>如果没有max-age，被缓存响应中指定了Expires<small>（<em>时钟时间</em>）</small>，则保鲜期就是Expires减去响应服务时间<small>（响应头中的Date字段，如果没有则取接收到响应的时间）</small>后得到时间差。</li>
+<li>如果Expires也没有，被缓存响应中存在Last-Modified响应头，则保鲜期就是服务时间<small>（如果没有就使用请求发送的时间）</small>减去Last-Modified的时间差的**10%**。</li>
+<li>如果上述信息都没有就默认是0。</li>
+<li>最后，上述计算得到的保鲜期与request Cache-Control的max-age的值进行比较，取小值。</li>
+</ul>
+<p>Request Cache-Control中还有两个字段会影响保鲜期的时长：</p>
+<ol>
+<li><strong>max-stale</strong> 是client端额外给保鲜期增加的时长，就像有的人比较节省，买的东西刚过了保鲜期没几天，就认为还可以继续用，再多用几天。</li>
+<li><strong>min-fresh</strong> 是client端给保鲜期减掉的时长，就好比有的人比较讲究，买的食品马上就到保质期了（实际还差几天）就不想吃了。</li>
+</ol>
+<p>所以，最终计算的保鲜期还要加上<strong>max-stale</strong>，再减去<strong>min-fresh</strong>。</p>
+<h2 id="写入Cache"><a href="#写入Cache" class="headerlink" title="写入Cache"></a>写入Cache</h2><p>这块逻辑相对比较简单。</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="function"><span class="keyword">fun</span> <span class="title">put</span><span class="params">(response: <span class="type">Response</span>)</span></span>: CacheRequest? &#123;</span><br><span class="line">  <span class="keyword">val</span> requestMethod = response.request.method</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (HttpMethod.invalidatesCache(response.request.method)) &#123;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      remove(response.request)</span><br><span class="line">    &#125; <span class="keyword">catch</span> (_: IOException) &#123;</span><br><span class="line">      <span class="comment">// The cache cannot be written.</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//如果不是GET请求，则不缓存</span></span><br><span class="line">  <span class="keyword">if</span> (requestMethod != <span class="string">&quot;GET&quot;</span>) &#123;</span><br><span class="line">    <span class="comment">// Don&#x27;t cache non-GET responses. We&#x27;re technically allowed to cache HEAD requests and some</span></span><br><span class="line">    <span class="comment">// POST requests, but the complexity of doing so is high and the benefit is low.</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">//如果Vary响应头中包含*则不缓存</span></span><br><span class="line">  <span class="keyword">if</span> (response.hasVaryAll()) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">val</span> entry = Entry(response)</span><br><span class="line">  <span class="keyword">var</span> editor: DiskLruCache.Editor? = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="comment">//使用url的md5作为key获取一个editer</span></span><br><span class="line">    editor = cache.edit(key(response.request.url)) ?: <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">    <span class="comment">//把response写入到缓存，会把发送时间戳和收到响应的时间戳都写到缓存里面，获取的时候会用来校验</span></span><br><span class="line">    entry.writeTo(editor)</span><br><span class="line">    <span class="keyword">return</span> RealCacheRequest(editor)</span><br><span class="line">  &#125; <span class="keyword">catch</span> (_: IOException) &#123;</span><br><span class="line">    abortQuietly(editor)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/okhttp/" rel="tag"># okhttp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/78efaca4.html" rel="prev" title="okhttp详解系列一：开篇">
+                  <i class="fa fa-angle-left"></i> okhttp详解系列一：开篇
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/6e2b1d41.html" rel="next" title="okhttp详解系列三：桥拦截器 BridgeInterceptor">
+                  okhttp详解系列三：桥拦截器 BridgeInterceptor <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

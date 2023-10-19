@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="ARouter源码分析">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ARouter源码分析">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/23659d3d.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="ARouter源码分析">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/14839b5514dff2c0a839d51f68c811292e56bd33b5988c7c6384e5efed0b1125.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/8c841c6a106cbce011da43e1304cda634eb07e00eb974b6d4ace6c445b68f853.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/0fa0483c755ccb731d00fdb245db3433900ef3e77be044d71e3e92c8d6fb9bdc.svg">
+<meta property="article:published_time" content="2023-09-14T09:23:33.000Z">
+<meta property="article:modified_time" content="2023-10-18T01:34:04.463Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="ARouter">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rjyblog.gitee.io/assert/puml/14839b5514dff2c0a839d51f68c811292e56bd33b5988c7c6384e5efed0b1125.svg">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/23659d3d.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/23659d3d.html","path":"posts/23659d3d.html","title":"ARouter源码分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ARouter源码分析 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E8%B7%AF%E7%94%B1%E8%A1%A8"><span class="nav-text">生成路由表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASM%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5"><span class="nav-text">ASM代码注入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E6%9F%A5%E6%89%BE"><span class="nav-text">路由查找</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/23659d3d.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ARouter源码分析 | 任建勇的博客">
+      <meta itemprop="description" content="ARouter源码分析">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ARouter源码分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-14 17:23:33" itemprop="dateCreated datePublished" datetime="2023-09-14T17:23:33+08:00">2023-09-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 09:34:04" itemprop="dateModified" datetime="2023-10-18T09:34:04+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">ARouter源码分析</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><img src="\assert\puml\14839b5514dff2c0a839d51f68c811292e56bd33b5988c7c6384e5efed0b1125.svg"/>
+
+<p>初始化调用时序</p>
+<img src="\assert\puml\8c841c6a106cbce011da43e1304cda634eb07e00eb974b6d4ace6c445b68f853.svg"/>
+
+<h2 id="生成路由表"><a href="#生成路由表" class="headerlink" title="生成路由表"></a>生成路由表</h2><p>ARouter是通过在编译阶段使用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://kotlinlang.org/docs/kapt.html">kapt</a>解析Route注解，再通过<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/square/javapoet">javapoet</a>来生成路由表相关代码。注解处理器在<code>arouter-compiler/src/main/java/com/alibaba/android/arouter/compiler/processor/RouteProcessor.java</code>。</p>
+<p>比如<code>module-kotlin</code>模块有三个activity，路由分别是：</p>
+<ul>
+<li>/one/first</li>
+<li>/one/second</li>
+<li>/two/test</li>
+</ul>
+<p>生成的路由表如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//生成目录位于module-kotlin/build/generated/source/kapt/debug/com/alibaba/android/arouter/routes</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ARouter$$Root$$modulekotlin</span> <span class="keyword">implements</span> <span class="title class_">IRouteRoot</span> &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">loadInto</span><span class="params">(Map&lt;String, Class&lt;? extends IRouteGroup&gt;&gt; routes)</span> &#123;</span><br><span class="line">    routes.put(<span class="string">&quot;one&quot;</span>, ARouter$$Group$$one.class);</span><br><span class="line">    routes.put(<span class="string">&quot;two&quot;</span>, ARouter$$Group$$two.class);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ARouter$$Group$$one</span> <span class="keyword">implements</span> <span class="title class_">IRouteGroup</span> &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">loadInto</span><span class="params">(Map&lt;String, RouteMeta&gt; atlas)</span> &#123;</span><br><span class="line">    atlas.put(<span class="string">&quot;/one/first&quot;</span>, RouteMeta.build(RouteType.ACTIVITY, FistActivity.class, <span class="string">&quot;/one/first&quot;</span>, <span class="string">&quot;one&quot;</span>, <span class="literal">null</span>, -<span class="number">1</span>, -<span class="number">2147483648</span>));</span><br><span class="line">    atlas.put(<span class="string">&quot;/one/second&quot;</span>, RouteMeta.build(RouteType.ACTIVITY, SecondActivity.class, <span class="string">&quot;/one/second&quot;</span>, <span class="string">&quot;two&quot;</span>, <span class="literal">null</span>, -<span class="number">1</span>, -<span class="number">2147483648</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ARouter$$Group$$two</span> <span class="keyword">implements</span> <span class="title class_">IRouteGroup</span> &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">loadInto</span><span class="params">(Map&lt;String, RouteMeta&gt; atlas)</span> &#123;</span><br><span class="line">    atlas.put(<span class="string">&quot;/two/test&quot;</span>, RouteMeta.build(RouteType.ACTIVITY, TestActivity.class, <span class="string">&quot;/two/test&quot;</span>, <span class="string">&quot;two&quot;</span>, <span class="literal">null</span>, -<span class="number">1</span>, -<span class="number">2147483648</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译自动生成的代码包含一个Root（<code>IRouteRoot</code>）和两个Group（<code>IRouteGroup</code>）。Root是module模块下路由表入口类，使用模块名称命名生成类<code>ARouter$$Root$$modulekotlin</code>。Group是二级路由路径的第一级<small>（/one/first中的one）</small>，本例中分别是one和two，分别对应类<code>ARouter$$Group$$one</code>和<code>ARouter$$Group$$two</code>，每个Group类下面才是真正的路由。</p>
+<p>从代码中可以看出来<code>ARouter$$Root$$modulekotlin</code>会把两个Group对应的class添加到group列表中。那么，<code>com.alibaba.android.arouter.routes.ARouter$$Root$$modulekotlin#loadInto</code>方法什么时候被执行呢？代码中找不到调用的地方，实际上是在<code>LogisticsCenter#loadRouterMap</code>方法中调用，这个方法会在编译期间动态插入代码。见<a href="#asm%E4%BB%A3%E7%A0%81%E6%B3%A8%E5%85%A5">下一节</a>介绍。</p>
+<p>备注：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://kotlinlang.org/docs/kapt.html">kapt</a>相当于java apt，kapt同时支持kotlin和java代码的注解。kapt生成的代码在<code>module-kotlin/build/generated/source/kapt</code>目录下，apt生成的代码在<code>module-java/build/generated/ap_generated_sources</code>目录下。</p>
+<h2 id="ASM代码注入"><a href="#ASM代码注入" class="headerlink" title="ASM代码注入"></a>ASM代码注入</h2><p>在ARouter初始化流程中会调用<code>com.alibaba.android.arouter.core.LogisticsCenter#loadRouterMap</code>方法，该方法负责填充Group表。原始代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//LogisticsCenter.java</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">loadRouterMap</span><span class="params">()</span> &#123;</span><br><span class="line">        registerByPlugin = <span class="literal">false</span>;</span><br><span class="line">        <span class="comment">// auto generate register code by gradle plugin: arouter-auto-register</span></span><br><span class="line">        <span class="comment">// looks like below:</span></span><br><span class="line">        <span class="comment">// registerRouteRoot(new ARouter..Root..modulejava());</span></span><br><span class="line">        <span class="comment">// registerRouteRoot(new ARouter..Root..modulekotlin());</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法中没有任何注册逻辑。实际上这个方法会在编译期间通过<a target="_blank" rel="noopener external nofollow noreferrer" href="https://asm.ow2.io/asm4-guide.pdf">ASM</a>来修改方法的实现。ASM注入代码后：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//LogisticsCenter.class</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">loadRouterMap</span><span class="params">()</span> &#123;</span><br><span class="line">    registerByPlugin = <span class="literal">false</span>;</span><br><span class="line">    register(<span class="string">&quot;com.alibaba.android.arouter.routes.ARouter$$Root$$modulejava&quot;</span>);</span><br><span class="line">    register(<span class="string">&quot;com.alibaba.android.arouter.routes.ARouter$$Root$$modulekotlin&quot;</span>);</span><br><span class="line">    register(<span class="string">&quot;com.alibaba.android.arouter.routes.ARouter$$Root$$arouterapi&quot;</span>);</span><br><span class="line">    register(<span class="string">&quot;com.alibaba.android.arouter.routes.ARouter$$Interceptors$$modulejava&quot;</span>);</span><br><span class="line">    register(<span class="string">&quot;com.alibaba.android.arouter.routes.ARouter$$Providers$$modulejava&quot;</span>);</span><br><span class="line">    register(<span class="string">&quot;com.alibaba.android.arouter.routes.ARouter$$Providers$$modulekotlin&quot;</span>);</span><br><span class="line">    register(<span class="string">&quot;com.alibaba.android.arouter.routes.ARouter$$Providers$$arouterapi&quot;</span>);</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码注入在arouter-gradle-plugin插件中实现，代码对应在<code>arouter-gradle-plugin/src/main/groovy/com/alibaba/android/arouter/register/launch/PluginLaunch.groovy</code>文件中，插件会注册一个RegisterTransform，这个Transform会在<code>*.class</code>转换成dex文件之前运行。</p>
+<p>注入的代码是调用register函数，定义如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//LogisticsCenter.java</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">register</span><span class="params">(String className)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!TextUtils.isEmpty(className)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                Class&lt;?&gt; clazz = Class.forName(className);</span><br><span class="line">                <span class="comment">//1.通过反射调用类构造方法</span></span><br><span class="line">                <span class="type">Object</span> <span class="variable">obj</span> <span class="operator">=</span> clazz.getConstructor().newInstance(); </span><br><span class="line">                <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> IRouteRoot) &#123;</span><br><span class="line">                    registerRouteRoot((IRouteRoot) obj);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> IProviderGroup) &#123;</span><br><span class="line">                    registerProvider((IProviderGroup) obj);</span><br><span class="line">                &#125; <span class="keyword">else</span> <span class="keyword">if</span> (obj <span class="keyword">instanceof</span> IInterceptorGroup) &#123;</span><br><span class="line">                    registerInterceptor((IInterceptorGroup) obj);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    logger.info(TAG, <span class="string">&quot;register failed, class name: &quot;</span> + className</span><br><span class="line">                            + <span class="string">&quot; should implements one of IRouteRoot/IProviderGroup/IInterceptorGroup.&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">                logger.error(TAG,<span class="string">&quot;register class error:&quot;</span> + className, e);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">registerRouteRoot</span><span class="params">(IRouteRoot routeRoot)</span> &#123;</span><br><span class="line">        markRegisteredByPlugin();</span><br><span class="line">        <span class="keyword">if</span> (routeRoot != <span class="literal">null</span>) &#123;</span><br><span class="line">            <span class="comment">//2.调用loadInto方法</span></span><br><span class="line">            routeRoot.loadInto(Warehouse.groupsIndex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上述代码可以看到先通过反射方式创建<code>com.alibaba.android.arouter.routes.ARouter$$Root$$modulekotlin</code>类的实例对象，然后调用它的loadInto方法。最终效果是group被注册到<code>Warehouse.groupsIndex</code>这个map中，相当于下面这段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Warehouse.groupsIndex.put(<span class="string">&quot;kotlin&quot;</span>, ARouter$$Group$$kotlin.class)</span><br></pre></td></tr></table></figure>
+
+<p><strong>备注：</strong> 如果期望编译时打印代码注入相关的日志，可以使用下面命令行进行编译</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./gradlew clean &amp;&amp; ./gradlew -i :app:assembleDebug | tee build_log.txt</span><br></pre></td></tr></table></figure>
+
+<h2 id="路由查找"><a href="#路由查找" class="headerlink" title="路由查找"></a>路由查找</h2><p>ARouter初始化完成之后，如果没有发生路由跳转，路由表就还是空的，但group表是有数据。当发生路由跳转时，会首先查找路由表，由于是首次跳转，路由表中找不到路由，就会在group表中查找路由对应的group类，把这个group下面的所有路由注册到路由表，然后再进行跳转。当下次再跳转时路由表中就存在对应的路由了。</p>
+<img src="\assert\puml\0fa0483c755ccb731d00fdb245db3433900ef3e77be044d71e3e92c8d6fb9bdc.svg"/>
+
+<p>我们通过跳转路由名为<code>/kotlin/test</code>的activity来介绍一下源码实现。使用下面方法打开activity：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ARouter.getInstance().build(<span class="string">&quot;/kotlin/test&quot;</span>).navigation();</span><br></pre></td></tr></table></figure>
+
+<p>navigation有好几个重载方法，最终都会走到下面的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">ARouter</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">public</span> Object <span class="title function_">navigation</span><span class="params">(Context mContext, Postcard postcard, <span class="type">int</span> requestCode, NavigationCallback callback)</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> _ARouter.getInstance().navigation(mContext, postcard, requestCode, callback);</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//_ARouter.java</span></span><br><span class="line">    <span class="keyword">protected</span> Object <span class="title function_">navigation</span><span class="params">(<span class="keyword">final</span> Context context, <span class="keyword">final</span> Postcard postcard, <span class="keyword">final</span> <span class="type">int</span> requestCode, <span class="keyword">final</span> NavigationCallback callback)</span> &#123;</span><br><span class="line">        ......</span><br><span class="line">        <span class="comment">// Set context to postcard.</span></span><br><span class="line">        postcard.setContext(<span class="literal">null</span> == context ? mContext : context);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            LogisticsCenter.completion(postcard); <span class="comment">//执行上面流程图的逻辑，代码就不贴了</span></span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoRouteFoundException ex) &#123;</span><br><span class="line">            ......</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> != callback) &#123;</span><br><span class="line">            callback.onFound(postcard);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!postcard.isGreenChannel()) &#123;   <span class="comment">// It must be run in async thread, maybe interceptor cost too mush time made ANR.</span></span><br><span class="line">            interceptorService.doInterceptions(postcard, <span class="keyword">new</span> <span class="title class_">InterceptorCallback</span>() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onContinue</span><span class="params">(Postcard postcard)</span> &#123;</span><br><span class="line">                    _navigation(postcard, requestCode, callback);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">onInterrupt</span><span class="params">(Throwable exception)</span> &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="literal">null</span> != callback) &#123;</span><br><span class="line">                        callback.onInterrupt(postcard);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    logger.info(Consts.TAG, <span class="string">&quot;Navigation failed, termination by interceptor : &quot;</span> + exception.getMessage());</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> _navigation(postcard, requestCode, callback);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Object <span class="title function_">_navigation</span><span class="params">(<span class="keyword">final</span> Postcard postcard, <span class="keyword">final</span> <span class="type">int</span> requestCode, <span class="keyword">final</span> NavigationCallback callback)</span> &#123;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">Context</span> <span class="variable">currentContext</span> <span class="operator">=</span> postcard.getContext();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">switch</span> (postcard.getType()) &#123;</span><br><span class="line">            <span class="keyword">case</span> ACTIVITY:</span><br><span class="line">                <span class="comment">// Build intent</span></span><br><span class="line">                <span class="keyword">final</span> <span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>(currentContext, postcard.getDestination());</span><br><span class="line">                intent.putExtras(postcard.getExtras());</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Set flags.</span></span><br><span class="line">                <span class="type">int</span> <span class="variable">flags</span> <span class="operator">=</span> postcard.getFlags();</span><br><span class="line">                <span class="keyword">if</span> (<span class="number">0</span> != flags) &#123;</span><br><span class="line">                    intent.setFlags(flags);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Non activity, need FLAG_ACTIVITY_NEW_TASK</span></span><br><span class="line">                <span class="keyword">if</span> (!(currentContext <span class="keyword">instanceof</span> Activity)) &#123;</span><br><span class="line">                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Set Actions</span></span><br><span class="line">                <span class="type">String</span> <span class="variable">action</span> <span class="operator">=</span> postcard.getAction();</span><br><span class="line">                <span class="keyword">if</span> (!TextUtils.isEmpty(action)) &#123;</span><br><span class="line">                    intent.setAction(action);</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// Navigation in main looper.</span></span><br><span class="line">                runInMainThread(<span class="keyword">new</span> <span class="title class_">Runnable</span>() &#123;</span><br><span class="line">                    <span class="meta">@Override</span></span><br><span class="line">                    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">                        startActivity(requestCode, currentContext, intent, postcard, callback);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;);</span><br><span class="line"></span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            ......</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>找到路由<code>/kotlin/test</code>对应的group类后（本例中对应<code>ARouter$$Group$$kotlin.class</code>），就会利用反射调用group类的初始化，然后调用其loadInto方法将路由注册到路由表<code>Warehouse#routes</code>中，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">LogisticsCenter</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//本例中groupName=&quot;kotlin&quot;，group=null</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">addRouteGroupDynamic</span><span class="params">(String groupName, IRouteGroup group)</span> <span class="keyword">throws</span> NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException &#123;</span><br><span class="line">        <span class="keyword">if</span> (Warehouse.groupsIndex.containsKey(groupName))&#123;</span><br><span class="line">            <span class="comment">//利用反射调用group类的构造方法，然后调用loadInto方法</span></span><br><span class="line">            Warehouse.groupsIndex.get(groupName).getConstructor().newInstance().loadInto(Warehouse.routes);</span><br><span class="line">            <span class="comment">//将对应的group类在group表中删除，因为路由注册到路由表后，group类就可以回收了</span></span><br><span class="line">            Warehouse.groupsIndex.remove(groupName);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// cover old group.</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> != group) &#123;</span><br><span class="line">            group.loadInto(Warehouse.routes);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://juejin.cn/post/6914485867029463054">一文学会Android Gradle Transform基础使用</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://cloud.tencent.com/developer/article/1920027">Android APK编译流程</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zhuanlan.zhihu.com/p/263806589">AOP 利器 ——ASM 基础入门</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/ARouter/" rel="tag"># ARouter</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/faedbb97.html" rel="prev" title="LeakCanary源码详解">
+                  <i class="fa fa-angle-left"></i> LeakCanary源码详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/ca4438af.html" rel="next" title="HashMap源码分析">
+                  HashMap源码分析 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

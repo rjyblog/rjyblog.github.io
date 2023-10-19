@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="okhttp详解_RetryAndFollowUpInterceptor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="okhttp详解系列二：重试重定向拦截器">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/8e83ed63.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="okhttp详解_RetryAndFollowUpInterceptor">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-19T08:26:55.000Z">
+<meta property="article:modified_time" content="2023-09-21T02:56:11.222Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="okhttp">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/8e83ed63.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/8e83ed63.html","path":"posts/8e83ed63.html","title":"okhttp详解系列二：重试重定向拦截器"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>okhttp详解系列二：重试重定向拦截器 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BA%94%E7%94%A8%E6%8B%A6%E6%88%AA%E5%99%A8%E5%8F%AA%E4%BC%9A%E8%A2%AB%E6%89%A7%E8%A1%8C%E4%B8%80%E6%AC%A1%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="nav-text">应用拦截器只会被执行一次的原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-text">参考文章</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/8e83ed63.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="okhttp详解系列二：重试重定向拦截器 | 任建勇的博客">
+      <meta itemprop="description" content="okhttp详解_RetryAndFollowUpInterceptor">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          okhttp详解系列二：重试重定向拦截器
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-08-19 16:26:55" itemprop="dateCreated datePublished" datetime="2023-08-19T16:26:55+08:00">2023-08-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-21 10:56:11" itemprop="dateModified" datetime="2023-09-21T10:56:11+08:00">2023-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/okhttp/" itemprop="url" rel="index"><span itemprop="name">okhttp</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">okhttp详解_RetryAndFollowUpInterceptor</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><ul>
+<li><a href="/posts/78efaca4.html" title="okhttp详解系列一：开篇">okhttp详解系列一：开篇</a></li>
+<li><a href="/posts/8e83ed63.html" title="okhttp详解系列二：重试重定向拦截器">okhttp详解系列二：重试重定向拦截器</a></li>
+<li><a href="/posts/6e2b1d41.html" title="okhttp详解系列三：桥拦截器 BridgeInterceptor">okhttp详解系列三：桥拦截器 BridgeInterceptor</a></li>
+<li><a href="/posts/37107c2e.html" title="okhttp详解系列四：缓存拦截器">okhttp详解系列四：缓存拦截器</a></li>
+<li><a href="/posts/ee27d764.html" title="okhttp详解系列五：连接拦截器 ConnectInterceptor">okhttp详解系列五：连接拦截器 ConnectInterceptor</a></li>
+<li><a href="/posts/73cf04e1.html" title="okhttp详解系列六：服务请求拦截器 CallServerInterceptor">okhttp详解系列六：服务请求拦截器 CallServerInterceptor</a>
+
+</li>
+</ul>
+<p>重试和重定向拦截器主要负责三件事：1) 出错后判断是否重试；2) 处理重定向；3) 处理用户认证（401和407响应码）；</p>
+<p>来看下源码：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercept</span><span class="params">(chain: <span class="type">Interceptor</span>.<span class="type">Chain</span>)</span></span>: Response &#123;</span><br><span class="line">  <span class="keyword">val</span> realChain = chain <span class="keyword">as</span> RealInterceptorChain</span><br><span class="line">  <span class="keyword">var</span> request = chain.request</span><br><span class="line">  <span class="keyword">val</span> call = realChain.call</span><br><span class="line">  <span class="keyword">var</span> followUpCount = <span class="number">0</span></span><br><span class="line">  <span class="keyword">var</span> priorResponse: Response? = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">var</span> newExchangeFinder = <span class="literal">true</span></span><br><span class="line">  <span class="keyword">var</span> recoveredFailures = listOf&lt;IOException&gt;()</span><br><span class="line">  <span class="comment">// 1、重试和重定向的场景依然是在while循环中，不会退出该拦截器</span></span><br><span class="line">  <span class="keyword">while</span> (<span class="literal">true</span>) &#123;</span><br><span class="line">    <span class="comment">// 2、根据需要创建 ExchangeFinder</span></span><br><span class="line">    call.enterNetworkInterceptorExchange(request, newExchangeFinder)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> response: Response</span><br><span class="line">    <span class="keyword">var</span> closeActiveExchange = <span class="literal">true</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (call.isCanceled()) &#123;</span><br><span class="line">        <span class="keyword">throw</span> IOException(<span class="string">&quot;Canceled&quot;</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 3、realChain指向下一个拦截器，发生重试或者重定向后，</span></span><br><span class="line">        <span class="comment">// 会从下一个拦截器开始执行，前面的应用拦截器和此拦截器都不会被执行了</span></span><br><span class="line">        response = realChain.proceed(request)</span><br><span class="line">        newExchangeFinder = <span class="literal">true</span></span><br><span class="line">      &#125; <span class="keyword">catch</span> (e: RouteException) &#123;</span><br><span class="line">        <span class="comment">// The attempt to connect via a route failed. The request will not have been sent.</span></span><br><span class="line">        <span class="keyword">if</span> (!recover(e.lastConnectException, call, request, requestSendStarted = <span class="literal">false</span>)) &#123;</span><br><span class="line">          <span class="keyword">throw</span> e.firstConnectException.withSuppressed(recoveredFailures)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          recoveredFailures += e.firstConnectException</span><br><span class="line">        &#125;</span><br><span class="line">        newExchangeFinder = <span class="literal">false</span></span><br><span class="line">        <span class="comment">// 4、错误可以恢复，继续while循环</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">      &#125; <span class="keyword">catch</span> (e: IOException) &#123;</span><br><span class="line">        <span class="comment">// An attempt to communicate with a server failed. The request may have been sent.</span></span><br><span class="line">        <span class="keyword">if</span> (!recover(e, call, request, requestSendStarted = e !<span class="keyword">is</span> ConnectionShutdownException)) &#123;</span><br><span class="line">          <span class="keyword">throw</span> e.withSuppressed(recoveredFailures)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          recoveredFailures += e</span><br><span class="line">        &#125;</span><br><span class="line">        newExchangeFinder = <span class="literal">false</span></span><br><span class="line">        <span class="comment">// 5、错误可以恢复，继续while循环</span></span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      ......</span><br><span class="line"></span><br><span class="line">      <span class="keyword">val</span> exchange = call.interceptorScopedExchange</span><br><span class="line">      <span class="comment">// 6、followUpRequest是判断是否重试的主要逻辑，包括重定向、超时重试、用户认证等场景</span></span><br><span class="line">      <span class="keyword">val</span> followUp = followUpRequest(response, exchange)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (followUp == <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">if</span> (exchange != <span class="literal">null</span> &amp;&amp; exchange.isDuplex) &#123;</span><br><span class="line">          call.timeoutEarlyExit()</span><br><span class="line">        &#125;</span><br><span class="line">        closeActiveExchange = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="keyword">val</span> followUpBody = followUp.body</span><br><span class="line">      <span class="keyword">if</span> (followUpBody != <span class="literal">null</span> &amp;&amp; followUpBody.isOneShot()) &#123;</span><br><span class="line">        closeActiveExchange = <span class="literal">false</span></span><br><span class="line">        <span class="keyword">return</span> response</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      response.body?.closeQuietly()</span><br><span class="line"></span><br><span class="line">      <span class="keyword">if</span> (++followUpCount &gt; MAX_FOLLOW_UPS) &#123;</span><br><span class="line">        <span class="keyword">throw</span> ProtocolException(<span class="string">&quot;Too many follow-up requests: <span class="variable">$followUpCount</span>&quot;</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      request = followUp</span><br><span class="line">      priorResponse = response</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">      call.exitNetworkInterceptorExchange(closeActiveExchange)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="应用拦截器只会被执行一次的原因"><a href="#应用拦截器只会被执行一次的原因" class="headerlink" title="应用拦截器只会被执行一次的原因"></a>应用拦截器只会被执行一次的原因</h2><p>我们都知道okhttp支持两种类型的用户层拦截器：应用拦截器(Application Interceptors)和网络拦截器(Network Interceptors)。应用拦截器每次发起请求都会被保证执行一次，即使发生了重试和重定向也是被执行一次。而网络拦截器在重试和重定向的场景都会被执行多次，而且缓存的场景可能不会被执行。这种差异是什么原因导致的呢？</p>
+<p>RetryAndFollowUpInterceptor拦截器使用了一个while循环，当需要重试或者重定向时，不会退出循环，继续执行<code>chain.proceed()</code>，这个chain就是RealInterceptorChain。在分析RealInterceptorChain的proceed()方法时，我们知道每次执行下一个拦截器时，都会把RealInterceptorChain拷贝一份，chain的index就指向下一个拦截器。所以重试和重定向的情况都会从下一个拦截器开始，而用户注册的程序拦截器在RetryAndFollowUpInterceptor前面，这就是即使发生了重试和重定向程序拦截器也会只被执行一次的根本原因。而网络拦截器排在RetryAndFollowUpInterceptor后面，所以会被执行多次。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Authentication">HTTP 身份验证</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/okhttp/" rel="tag"># okhttp</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/6e2b1d41.html" rel="prev" title="okhttp详解系列三：桥拦截器 BridgeInterceptor">
+                  <i class="fa fa-angle-left"></i> okhttp详解系列三：桥拦截器 BridgeInterceptor
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/ee27d764.html" rel="next" title="okhttp详解系列五：连接拦截器 ConnectInterceptor">
+                  okhttp详解系列五：连接拦截器 ConnectInterceptor <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

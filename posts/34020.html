@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="本文介绍Graphviz dot的常用知识点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GraphViz dot">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/34020.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="本文介绍Graphviz dot的常用知识点">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-26T08:28:39.000Z">
+<meta property="article:modified_time" content="2023-10-08T03:12:55.258Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="GraphViz">
+<meta property="article:tag" content="Markdown">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/34020.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/34020.html","path":"posts/34020.html","title":"GraphViz dot"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>GraphViz dot | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E5%85%B7"><span class="nav-text">工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%B5%84%E6%96%99"><span class="nav-text">学习资料</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%E4%BB%8B%E7%BB%8D"><span class="nav-text">常用属性介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8A%82%E7%82%B9%EF%BC%88node%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">节点（node）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BE%B9%EF%BC%88edge%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">边（edge）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%BE%EF%BC%88graph%EF%BC%89%E5%B1%9E%E6%80%A7"><span class="nav-text">图（graph）属性</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEnode%E5%92%8Cedge%E7%9A%84%E9%BB%98%E8%AE%A4%E5%B1%9E%E6%80%A7"><span class="nav-text">设置node和edge的默认属性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E7%82%B9%E8%BF%9E%E7%BA%BF"><span class="nav-text">多点连线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9E%82%E7%9B%B4%E6%96%B9%E5%90%91%E5%B8%83%E5%B1%80"><span class="nav-text">垂直方向布局</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A8%AA%E5%90%91%E5%B8%83%E5%B1%80%E7%A4%BA%E4%BE%8B"><span class="nav-text">横向布局示例</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/34020.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="GraphViz dot | 任建勇的博客">
+      <meta itemprop="description" content="本文介绍Graphviz dot的常用知识点">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          GraphViz dot
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-26 16:28:39" itemprop="dateCreated datePublished" datetime="2020-11-26T16:28:39+08:00">2020-11-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-08 11:12:55" itemprop="dateModified" datetime="2023-10-08T11:12:55+08:00">2023-10-08</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">本文介绍Graphviz dot的常用知识点</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>在线编译工具：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://viz-js.com/">http://viz-js.com</a><br>VSCode安装插件：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz">Graphviz (dot) language support for Visual Studio Code</a><br>命令行：dot，比如，<code>dot -Tpng -ofile.png file.dot</code>可以导出图片。在Ubuntu系统中，通过<code>sudo apt install graphviz</code>安装即可使用。</p>
+<p>添加系统环境变量：</p>
+<p>GRAPHVIZ_DOT = D:\Program Files\Graphviz\bin\dot.exe</p>
+<h2 id="学习资料"><a href="#学习资料" class="headerlink" title="学习资料"></a>学习资料</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/index">Graphviz (dot) examples</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html">Node, Edge and Graph Attributes</a></p>
+<h2 id="常用属性介绍"><a href="#常用属性介绍" class="headerlink" title="常用属性介绍"></a>常用属性介绍</h2><h3 id="节点（node）属性"><a href="#节点（node）属性" class="headerlink" title="节点（node）属性"></a>节点（node）属性</h3><p>节点的形状主要有三种：<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/shapes.html#polygon">Polygon-based Nodes</a>, <a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/shapes.html#record">Record-based Nodes</a>, <a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/shapes.html#epsf">User-defined Nodes</a>。点击链接可看到详细介绍。</p>
+<table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:shape">shape</a></td>
+<td>节点形状，box长方形、circle圆形等，参考<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/shapes.html">Node Shapes</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#k:color">color</a></td>
+<td>边框颜色</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:style">style</a></td>
+<td>节点样式，filled, invisible, diagonals等，参考<a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/shapes.html#d:style">Styles for Nodes</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:fillcolor">fillcolor</a></td>
+<td>填充颜色, 只有在style=filled时才生效</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:fontcolor">fontcolor</a></td>
+<td>文字颜色</td>
+</tr>
+</tbody></table>
+<h3 id="边（edge）属性"><a href="#边（edge）属性" class="headerlink" title="边（edge）属性"></a>边（edge）属性</h3><p>边也可以认为就是节点之间的连接线</p>
+<table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:label">label</a></td>
+<td>文字描述</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:headlabel">headlabel</a></td>
+<td>连接线头部文字描述，比如A -&gt; B, A端是尾部，B端是头部</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:taillabel">taillabel</a></td>
+<td>连接线尾部文字描述</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:headport">headport</a></td>
+<td>连接线头部指向节点的位置，n(north), s(south), w(west), e(east)</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#a:tailport">tailport</a></td>
+<td>连接线尾部指向节点的位置</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#k:color">color</a></td>
+<td>连接线颜色</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:fontcolor">labelfontcolor</a></td>
+<td>文字颜色，还有fontname和</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:arrowhead">arrowhead</a></td>
+<td>箭头样式</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:splines">splines</a></td>
+<td>连接线样式，直线、曲线、折线等，splines=false设置为直线。</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:dir">dir</a></td>
+<td>连接线方向</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:headclip">headclip</a></td>
+<td>连接线头部指向节点边缘或节点中心，默认是边缘</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:tailclip">tailclip</a></td>
+<td>连接线尾部指向节点边缘或节点中心，默认是边缘</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:weight">weight</a></td>
+<td>连接线布局系数，值越大则线越短、越直、越垂直</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:constraint">constraint</a></td>
+<td>为false时，该连接线不用于节点布局的计算</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:decorate">decorate</a></td>
+<td>为true时，连接线标签通过下划线附着到连接线上</td>
+</tr>
+</tbody></table>
+<h3 id="图（graph）属性"><a href="#图（graph）属性" class="headerlink" title="图（graph）属性"></a>图（graph）属性</h3><table>
+<thead>
+<tr>
+<th>属性名称</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:rankdir">rankdir</a></td>
+<td>图形布局方向，默认TB，表示top -&gt; bottom。值为LR表示left -&gt; right。</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:ranksep">ranksep</a></td>
+<td>最小间隔</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:group">group</a></td>
+<td>对节点有效，同组节点的连接线将保持在一个直线方向。<a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverflow.com/questions/19308847/graphviz-vertical-ordering">示例</a></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.graphviz.org/doc/info/attrs.html#d:compound">compound</a></td>
+<td>如果为ture，则允许clusters集群之间留出边。默认不允许。</td>
+</tr>
+</tbody></table>
+<h3 id="设置node和edge的默认属性"><a href="#设置node和edge的默认属性" class="headerlink" title="设置node和edge的默认属性"></a>设置node和edge的默认属性</h3><p>node和edge是两个特殊关键字，用于设置默认属性</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [attr=value, ...]</span><br><span class="line">    edge [attr=value, ...]</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="多点连线"><a href="#多点连线" class="headerlink" title="多点连线"></a>多点连线</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">digraph &#123;</span><br><span class="line">    node [shape=box]</span><br><span class="line">    A -&gt; &#123;B, C, D&#125; -&gt; E</span><br><span class="line">    node [shape=&quot;&quot;]</span><br><span class="line">    &#123;P, Q&#125; -&gt; &#123;M, N&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="350pt" height="188pt"
+ viewBox="0.00 0.00 350.00 188.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 184)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-184 346,-184 346,4 -4,4"/>
+<!-- A -->
+<g id="node1" class="node">
+<title>A</title>
+<polygon fill="none" stroke="#000000" points="126,-180 72,-180 72,-144 126,-144 126,-180"/>
+<text text-anchor="middle" x="99" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">A</text>
+</g>
+<!-- B -->
+<g id="node2" class="node">
+<title>B</title>
+<polygon fill="none" stroke="#000000" points="54,-108 0,-108 0,-72 54,-72 54,-108"/>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">B</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A&#45;&gt;B</title>
+<path fill="none" stroke="#000000" d="M80.8314,-143.8314C72.2848,-135.2848 61.9443,-124.9443 52.6198,-115.6198"/>
+<polygon fill="#000000" stroke="#000000" points="54.9592,-113.0095 45.4133,-108.4133 50.0095,-117.9592 54.9592,-113.0095"/>
+</g>
+<!-- C -->
+<g id="node3" class="node">
+<title>C</title>
+<polygon fill="none" stroke="#000000" points="126,-108 72,-108 72,-72 126,-72 126,-108"/>
+<text text-anchor="middle" x="99" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">C</text>
+</g>
+<!-- A&#45;&gt;C -->
+<g id="edge2" class="edge">
+<title>A&#45;&gt;C</title>
+<path fill="none" stroke="#000000" d="M99,-143.8314C99,-136.131 99,-126.9743 99,-118.4166"/>
+<polygon fill="#000000" stroke="#000000" points="102.5001,-118.4132 99,-108.4133 95.5001,-118.4133 102.5001,-118.4132"/>
+</g>
+<!-- D -->
+<g id="node4" class="node">
+<title>D</title>
+<polygon fill="none" stroke="#000000" points="198,-108 144,-108 144,-72 198,-72 198,-108"/>
+<text text-anchor="middle" x="171" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">D</text>
+</g>
+<!-- A&#45;&gt;D -->
+<g id="edge3" class="edge">
+<title>A&#45;&gt;D</title>
+<path fill="none" stroke="#000000" d="M117.1686,-143.8314C125.7152,-135.2848 136.0557,-124.9443 145.3802,-115.6198"/>
+<polygon fill="#000000" stroke="#000000" points="147.9905,-117.9592 152.5867,-108.4133 143.0408,-113.0095 147.9905,-117.9592"/>
+</g>
+<!-- E -->
+<g id="node5" class="node">
+<title>E</title>
+<polygon fill="none" stroke="#000000" points="126,-36 72,-36 72,0 126,0 126,-36"/>
+<text text-anchor="middle" x="99" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">E</text>
+</g>
+<!-- B&#45;&gt;E -->
+<g id="edge4" class="edge">
+<title>B&#45;&gt;E</title>
+<path fill="none" stroke="#000000" d="M45.1686,-71.8314C53.7152,-63.2848 64.0557,-52.9443 73.3802,-43.6198"/>
+<polygon fill="#000000" stroke="#000000" points="75.9905,-45.9592 80.5867,-36.4133 71.0408,-41.0095 75.9905,-45.9592"/>
+</g>
+<!-- C&#45;&gt;E -->
+<g id="edge5" class="edge">
+<title>C&#45;&gt;E</title>
+<path fill="none" stroke="#000000" d="M99,-71.8314C99,-64.131 99,-54.9743 99,-46.4166"/>
+<polygon fill="#000000" stroke="#000000" points="102.5001,-46.4132 99,-36.4133 95.5001,-46.4133 102.5001,-46.4132"/>
+</g>
+<!-- D&#45;&gt;E -->
+<g id="edge6" class="edge">
+<title>D&#45;&gt;E</title>
+<path fill="none" stroke="#000000" d="M152.8314,-71.8314C144.2848,-63.2848 133.9443,-52.9443 124.6198,-43.6198"/>
+<polygon fill="#000000" stroke="#000000" points="126.9592,-41.0095 117.4133,-36.4133 122.0095,-45.9592 126.9592,-41.0095"/>
+</g>
+<!-- P -->
+<g id="node6" class="node">
+<title>P</title>
+<ellipse fill="none" stroke="#000000" cx="243" cy="-162" rx="27" ry="18"/>
+<text text-anchor="middle" x="243" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">P</text>
+</g>
+<!-- M -->
+<g id="node8" class="node">
+<title>M</title>
+<ellipse fill="none" stroke="#000000" cx="243" cy="-90" rx="27" ry="18"/>
+<text text-anchor="middle" x="243" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">M</text>
+</g>
+<!-- P&#45;&gt;M -->
+<g id="edge7" class="edge">
+<title>P&#45;&gt;M</title>
+<path fill="none" stroke="#000000" d="M243,-143.8314C243,-136.131 243,-126.9743 243,-118.4166"/>
+<polygon fill="#000000" stroke="#000000" points="246.5001,-118.4132 243,-108.4133 239.5001,-118.4133 246.5001,-118.4132"/>
+</g>
+<!-- N -->
+<g id="node9" class="node">
+<title>N</title>
+<ellipse fill="none" stroke="#000000" cx="315" cy="-90" rx="27" ry="18"/>
+<text text-anchor="middle" x="315" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">N</text>
+</g>
+<!-- P&#45;&gt;N -->
+<g id="edge8" class="edge">
+<title>P&#45;&gt;N</title>
+<path fill="none" stroke="#000000" d="M258.2693,-146.7307C268.197,-136.803 281.3153,-123.6847 292.4363,-112.5637"/>
+<polygon fill="#000000" stroke="#000000" points="295.1564,-114.7933 299.7527,-105.2473 290.2067,-109.8436 295.1564,-114.7933"/>
+</g>
+<!-- Q -->
+<g id="node7" class="node">
+<title>Q</title>
+<ellipse fill="none" stroke="#000000" cx="315" cy="-162" rx="27" ry="18"/>
+<text text-anchor="middle" x="315" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">Q</text>
+</g>
+<!-- Q&#45;&gt;M -->
+<g id="edge9" class="edge">
+<title>Q&#45;&gt;M</title>
+<path fill="none" stroke="#000000" d="M299.7307,-146.7307C289.803,-136.803 276.6847,-123.6847 265.5637,-112.5637"/>
+<polygon fill="#000000" stroke="#000000" points="267.7933,-109.8436 258.2473,-105.2473 262.8436,-114.7933 267.7933,-109.8436"/>
+</g>
+<!-- Q&#45;&gt;N -->
+<g id="edge10" class="edge">
+<title>Q&#45;&gt;N</title>
+<path fill="none" stroke="#000000" d="M315,-143.8314C315,-136.131 315,-126.9743 315,-118.4166"/>
+<polygon fill="#000000" stroke="#000000" points="318.5001,-118.4132 315,-108.4133 311.5001,-118.4133 318.5001,-118.4132"/>
+</g>
+</g>
+</svg>
+
+
+<h2 id="垂直方向布局"><a href="#垂直方向布局" class="headerlink" title="垂直方向布局"></a>垂直方向布局</h2><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: g Pages: 1 -->
+<svg width="117pt" height="260pt"
+ viewBox="0.00 0.00 117.00 260.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)">
+<title>g</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-256 113,-256 113,4 -4,4"/>
+<!-- B -->
+<g id="node1" class="node">
+<title>B</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-162" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">B</text>
+</g>
+<!-- C -->
+<g id="node2" class="node">
+<title>C</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-90" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">C</text>
+</g>
+<!-- B&#45;&gt;C -->
+<!-- D -->
+<g id="node3" class="node">
+<title>D</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">D</text>
+</g>
+<!-- C&#45;&gt;D -->
+<!-- A -->
+<g id="node4" class="node">
+<title>A</title>
+<ellipse fill="none" stroke="#000000" cx="82" cy="-234" rx="27" ry="18"/>
+<text text-anchor="middle" x="82" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">A</text>
+</g>
+<!-- A&#45;&gt;B -->
+<g id="edge1" class="edge">
+<title>A&#45;&gt;B</title>
+<path fill="none" stroke="#000000" d="M69.5196,-217.6621C62.4876,-208.4564 53.5653,-196.7764 45.7117,-186.4953"/>
+<polygon fill="#000000" stroke="#000000" points="48.2828,-184.0953 39.431,-178.2733 42.72,-188.3446 48.2828,-184.0953"/>
+</g>
+<!-- A&#45;&gt;C -->
+<g id="edge2" class="edge">
+<title>A&#45;&gt;C</title>
+<path fill="none" stroke="#000000" d="M80.2095,-215.8083C77.9112,-197.1875 72.9655,-167.7008 63,-144 58.6764,-133.7173 52.313,-123.3119 46.134,-114.4164"/>
+<polygon fill="#000000" stroke="#000000" points="48.7998,-112.1301 40.0989,-106.0847 43.1307,-116.2365 48.7998,-112.1301"/>
+</g>
+<!-- A&#45;&gt;D -->
+<g id="edge3" class="edge">
+<title>A&#45;&gt;D</title>
+<path fill="none" stroke="#000000" d="M83.3568,-215.9827C84.4121,-197.7504 85.2162,-168.7923 82,-144 77.7424,-111.1796 76.5858,-102.1784 63,-72 58.421,-61.8285 51.9997,-51.4482 45.8458,-42.5419"/>
+<polygon fill="#000000" stroke="#000000" points="48.5295,-40.2781 39.8592,-34.1891 42.8399,-44.356 48.5295,-40.2781"/>
+</g>
+</g>
+</svg>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">digraph g&#123;</span><br><span class="line"> &#123;node[group=a]; B;C;D;&#125;</span><br><span class="line"> A -&gt; B;</span><br><span class="line"> A -&gt; C;</span><br><span class="line"> A -&gt; D;</span><br><span class="line"> B -&gt;C -&gt;D [style=invis];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: g Pages: 1 -->
+<svg width="152pt" height="260pt"
+ viewBox="0.00 0.00 152.00 260.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 256)">
+<title>g</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-256 148,-256 148,4 -4,4"/>
+<!-- l1 -->
+<!-- l2 -->
+<!-- l1&#45;&gt;l2 -->
+<g id="edge2" class="edge">
+<title>l1&#45;&gt;l2</title>
+<path fill="none" stroke="#000000" d="M72,-161.9478C72,-159.8016 72,-92.1637 72,-90.0506"/>
+</g>
+<!-- B2 -->
+<g id="node5" class="node">
+<title>B2</title>
+<ellipse fill="none" stroke="#000000" cx="117" cy="-162" rx="27" ry="18"/>
+<text text-anchor="middle" x="117" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">B2</text>
+</g>
+<!-- l1&#45;&gt;B2 -->
+<g id="edge5" class="edge">
+<title>l1&#45;&gt;B2</title>
+<path fill="none" stroke="#000000" d="M72.3516,-162C74.8042,-162 77.2568,-162 79.7094,-162"/>
+<polygon fill="#000000" stroke="#000000" points="79.7924,-165.5001 89.7924,-162 79.7923,-158.5001 79.7924,-165.5001"/>
+</g>
+<!-- l3 -->
+<!-- l2&#45;&gt;l3 -->
+<g id="edge3" class="edge">
+<title>l2&#45;&gt;l3</title>
+<path fill="none" stroke="#000000" d="M72,-89.9478C72,-87.8016 72,-20.1637 72,-18.0506"/>
+</g>
+<!-- C2 -->
+<g id="node7" class="node">
+<title>C2</title>
+<ellipse fill="none" stroke="#000000" cx="117" cy="-90" rx="27" ry="18"/>
+<text text-anchor="middle" x="117" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">C2</text>
+</g>
+<!-- l2&#45;&gt;C2 -->
+<g id="edge7" class="edge">
+<title>l2&#45;&gt;C2</title>
+<path fill="none" stroke="#000000" d="M72.3516,-90C74.8042,-90 77.2568,-90 79.7094,-90"/>
+<polygon fill="#000000" stroke="#000000" points="79.7924,-93.5001 89.7924,-90 79.7923,-86.5001 79.7924,-93.5001"/>
+</g>
+<!-- D2 -->
+<g id="node9" class="node">
+<title>D2</title>
+<ellipse fill="none" stroke="#000000" cx="117" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="117" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">D2</text>
+</g>
+<!-- l3&#45;&gt;D2 -->
+<g id="edge9" class="edge">
+<title>l3&#45;&gt;D2</title>
+<path fill="none" stroke="#000000" d="M72.3516,-18C74.8042,-18 77.2568,-18 79.7094,-18"/>
+<polygon fill="#000000" stroke="#000000" points="79.7924,-21.5001 89.7924,-18 79.7923,-14.5001 79.7924,-21.5001"/>
+</g>
+<!-- B1 -->
+<g id="node4" class="node">
+<title>B1</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-162" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">B1</text>
+</g>
+<!-- B1&#45;&gt;l1 -->
+<g id="edge4" class="edge">
+<title>B1&#45;&gt;l1</title>
+<path fill="none" stroke="#000000" d="M64.274,-162C66.7559,-162 69.2379,-162 71.7198,-162"/>
+<polygon fill="#000000" stroke="#000000" points="64.0703,-158.5001 54.0703,-162 64.0703,-165.5001 64.0703,-158.5001"/>
+</g>
+<!-- C1 -->
+<g id="node6" class="node">
+<title>C1</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-90" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">C1</text>
+</g>
+<!-- C1&#45;&gt;l2 -->
+<g id="edge6" class="edge">
+<title>C1&#45;&gt;l2</title>
+<path fill="none" stroke="#000000" d="M64.274,-90C66.7559,-90 69.2379,-90 71.7198,-90"/>
+<polygon fill="#000000" stroke="#000000" points="64.0703,-86.5001 54.0703,-90 64.0703,-93.5001 64.0703,-86.5001"/>
+</g>
+<!-- D1 -->
+<g id="node8" class="node">
+<title>D1</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-18" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">D1</text>
+</g>
+<!-- D1&#45;&gt;l3 -->
+<g id="edge8" class="edge">
+<title>D1&#45;&gt;l3</title>
+<path fill="none" stroke="#000000" d="M64.274,-18C66.7559,-18 69.2379,-18 71.7198,-18"/>
+<polygon fill="#000000" stroke="#000000" points="64.0703,-14.5001 54.0703,-18 64.0703,-21.5001 64.0703,-14.5001"/>
+</g>
+<!-- A -->
+<g id="node10" class="node">
+<title>A</title>
+<ellipse fill="none" stroke="#000000" cx="72" cy="-234" rx="27" ry="18"/>
+<text text-anchor="middle" x="72" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">A</text>
+</g>
+<!-- A&#45;&gt;l1 -->
+<g id="edge1" class="edge">
+<title>A&#45;&gt;l1</title>
+<path fill="none" stroke="#000000" d="M72,-215.8314C72,-195.1685 72,-164.0205 72,-162.0939"/>
+</g>
+</g>
+</svg>
+
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">digraph g&#123;</span><br><span class="line"> &#123;node[style=invis, shape=point, width=0, height=0]; l1; l2; l3&#125;</span><br><span class="line"> &#123;rank=same; l1; B1; B2&#125;</span><br><span class="line"> &#123;rank=same; l2; C1; C2&#125;</span><br><span class="line"> &#123;rank=same; l3; D1; D2&#125;</span><br><span class="line"></span><br><span class="line"> A -&gt; l1 -&gt; l2 -&gt; l3 [dir=none]</span><br><span class="line"> B1 -&gt; l1 [dir=back]</span><br><span class="line"> l1 -&gt; B2</span><br><span class="line"> C1 -&gt; l2 [dir=back]</span><br><span class="line"> l2 -&gt; C2</span><br><span class="line"> D1 -&gt; l3 [dir=back]</span><br><span class="line"> l3 -&gt; D2</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>参考：</p>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverflow.com/questions/19308847/graphviz-vertical-ordering">Graphviz Vertical Ordering</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://renenyffenegger.ch/notes/tools/Graphviz/examples/organization-chart">Graphviz example: organization chart</a></li>
+</ul>
+<h2 id="横向布局示例"><a href="#横向布局示例" class="headerlink" title="横向布局示例"></a>横向布局示例</h2><?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: G Pages: 1 -->
+<svg width="332pt" height="247pt"
+ viewBox="0.00 0.00 332.00 247.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 243)">
+<title>G</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-243 328,-243 328,4 -4,4"/>
+<g id="clust1" class="cluster">
+<title>clusterCG</title>
+<polygon fill="none" stroke="#0000ff" points="172,-46 172,-231 242,-231 242,-46 172,-46"/>
+<text text-anchor="middle" x="207" y="-214.4" font-family="Times,serif" font-size="14.00" fill="#000000">C</text>
+</g>
+<!-- 1 -->
+<g id="node1" class="node">
+<title>1</title>
+<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">1</text>
+</g>
+<!-- 2 -->
+<g id="node2" class="node">
+<title>2</title>
+<text text-anchor="middle" x="117" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">2</text>
+</g>
+<!-- 1&#45;&gt;2 -->
+<g id="edge1" class="edge">
+<title>1&#45;&gt;2</title>
+<path fill="none" stroke="#000000" d="M54.003,-18C65.2905,-18 78.3867,-18 89.705,-18"/>
+</g>
+<!-- 3 -->
+<g id="node3" class="node">
+<title>3</title>
+<text text-anchor="middle" x="207" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">3</text>
+</g>
+<!-- 2&#45;&gt;3 -->
+<g id="edge2" class="edge">
+<title>2&#45;&gt;3</title>
+<path fill="none" stroke="#000000" d="M144.003,-18C155.2905,-18 168.3867,-18 179.705,-18"/>
+</g>
+<!-- 4 -->
+<g id="node4" class="node">
+<title>4</title>
+<text text-anchor="middle" x="297" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">4</text>
+</g>
+<!-- 3&#45;&gt;4 -->
+<g id="edge3" class="edge">
+<title>3&#45;&gt;4</title>
+<path fill="none" stroke="#000000" d="M234.003,-18C245.2905,-18 258.3867,-18 269.705,-18"/>
+</g>
+<!-- A -->
+<g id="node5" class="node">
+<title>A</title>
+<ellipse fill="none" stroke="#000000" cx="27" cy="-180" rx="27" ry="18"/>
+<text text-anchor="middle" x="27" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">A</text>
+</g>
+<!-- A1 -->
+<g id="node6" class="node">
+<title>A1</title>
+<ellipse fill="none" stroke="#000000" cx="117" cy="-180" rx="27" ry="18"/>
+<text text-anchor="middle" x="117" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">A1</text>
+</g>
+<!-- A&#45;&gt;A1 -->
+<g id="edge4" class="edge">
+<title>A&#45;&gt;A1</title>
+<path fill="none" stroke="#000000" d="M54.003,-180C62.0277,-180 70.9665,-180 79.5309,-180"/>
+<polygon fill="#000000" stroke="#000000" points="79.7051,-183.5001 89.705,-180 79.705,-176.5001 79.7051,-183.5001"/>
+</g>
+<!-- A2 -->
+<g id="node7" class="node">
+<title>A2</title>
+<ellipse fill="none" stroke="#000000" cx="207" cy="-180" rx="27" ry="18"/>
+<text text-anchor="middle" x="207" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">A2</text>
+</g>
+<!-- A1&#45;&gt;A2 -->
+<g id="edge5" class="edge">
+<title>A1&#45;&gt;A2</title>
+<path fill="none" stroke="#000000" d="M144.003,-180C152.0277,-180 160.9665,-180 169.5309,-180"/>
+<polygon fill="#000000" stroke="#000000" points="169.7051,-183.5001 179.705,-180 169.705,-176.5001 169.7051,-183.5001"/>
+</g>
+<!-- A3 -->
+<g id="node8" class="node">
+<title>A3</title>
+<ellipse fill="none" stroke="#000000" cx="297" cy="-180" rx="27" ry="18"/>
+<text text-anchor="middle" x="297" y="-175.8" font-family="Times,serif" font-size="14.00" fill="#000000">A3</text>
+</g>
+<!-- A2&#45;&gt;A3 -->
+<g id="edge6" class="edge">
+<title>A2&#45;&gt;A3</title>
+<path fill="none" stroke="#000000" d="M234.003,-180C242.0277,-180 250.9665,-180 259.5309,-180"/>
+<polygon fill="#000000" stroke="#000000" points="259.7051,-183.5001 269.705,-180 259.705,-176.5001 259.7051,-183.5001"/>
+</g>
+<!-- B -->
+<g id="node9" class="node">
+<title>B</title>
+<ellipse fill="none" stroke="#000000" cx="207" cy="-126" rx="27" ry="18"/>
+<text text-anchor="middle" x="207" y="-121.8" font-family="Times,serif" font-size="14.00" fill="#000000">B</text>
+</g>
+<!-- C -->
+<g id="node10" class="node">
+<title>C</title>
+<ellipse fill="none" stroke="#000000" cx="207" cy="-72" rx="27" ry="18"/>
+<text text-anchor="middle" x="207" y="-67.8" font-family="Times,serif" font-size="14.00" fill="#000000">C</text>
+</g>
+</g>
+</svg>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"> digraph G &#123;</span><br><span class="line"> newrank=true</span><br><span class="line"> rankdir = LR;</span><br><span class="line"> node [shape = none]</span><br><span class="line"></span><br><span class="line"> 1-&gt;2-&gt;3-&gt;4[arrowhead=none]</span><br><span class="line"></span><br><span class="line"> node [shape = ellipse]</span><br><span class="line"></span><br><span class="line"> A-&gt;A1-&gt;A2-&gt;A3;</span><br><span class="line"></span><br><span class="line"> subgraph clusterCG&#123;</span><br><span class="line">  shape = rect;</span><br><span class="line">  rank=same;</span><br><span class="line"></span><br><span class="line">  A2;</span><br><span class="line">  B;</span><br><span class="line">  C;</span><br><span class="line">  color=blue;</span><br><span class="line">  label=&quot;C&quot;;</span><br><span class="line"> &#125;</span><br><span class="line"></span><br><span class="line"> &#123; rank=same; 1; A;&#125;</span><br><span class="line"> &#123; rank=same; 2; A1&#125;</span><br><span class="line"> &#123; rank=same; 3; A2&#125;</span><br><span class="line"> &#123; rank=same; 4; A3;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>参考：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverflow.com/questions/13041728/how-to-change-graphviz-subgraph-rank">How to change Graphviz subgraph rank?</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/GraphViz/" rel="tag"># GraphViz</a>
+              <a href="/tags/Markdown/" rel="tag"># Markdown</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/27579.html" rel="prev" title="Hexo User Manual">
+                  <i class="fa fa-angle-left"></i> Hexo User Manual
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/60405.html" rel="next" title="Android应用进程启动流程">
+                  Android应用进程启动流程 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

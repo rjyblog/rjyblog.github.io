@@ -1,0 +1,1434 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta property="og:type" content="website">
+<meta property="og:title" content="任建勇的博客">
+<meta property="og:url" content="https://rjyblog.gitee.io/index.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Android, Java, Kotlin, Flutter, 前端技术, 设计模式">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":true,"isPost":false,"lang":"zh-CN","comments":"","permalink":"","path":"index.html","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">任建勇的博客</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/93b40782.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/93b40782.html" class="post-title-link" itemprop="url">Android13: Activity启动流程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-10-07 11:11:56" itemprop="dateCreated datePublished" datetime="2023-10-07T11:11:56+08:00">2023-10-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 08:42:26" itemprop="dateModified" datetime="2023-10-18T08:42:26+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Android13: Activity启动流程</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <!-- toc -->
+
+<p>本文以时序图的形式来展示activity的启动过程，相比于贴源码会更加直观。本文的讲解的流程是基于<code>MainActivity</code>使用standard模式启动<code>SecondActivity</code>，且两个Activity都在同一个应用中，最后的部分也会讲解一下进程的启动。</p>
+<h2 id="第一阶段：执行startActivity"><a href="#第一阶段：执行startActivity" class="headerlink" title="第一阶段：执行startActivity"></a>第一阶段：执行startActivity</h2><pre class="mermaid">
+
+zenuml
+group App {
+    &lt;&lt;App&gt;&gt; act as Activity
+    &lt;&lt;App&gt;&gt; ins as Instrumentation
+}
+group AMS {
+    &lt;&lt;AMS&gt;&gt; atms as ActivityTaskManagerService #F0F8FF
+    ActivityStarter #F0F8FF
+}
+act.startActivity {
+    act.startActivityForResult {
+        ins.execStartActivity {
+            atms.startActivity {
+                atms.startActivityAsUser {
+                    &#x2F;&#x2F;没有缓存则创建
+                    new ActivityStarter()
+                    ActivityStarter.&quot;① execute&quot;
+                }
+            }
+        }
+    }
+}
+</pre>
+
+<pre class="mermaid">
+
+zenuml
+&lt;&lt;AMS&gt;&gt; ActivityStarter #F0F8FF
+ActivityStarter.&quot;① execute&quot; {
+    executeRequest {
+        new ActivityRecord()
+        startActivityUnchecked {
+            startActivityInner {
+                Task.addChild
+                Task.startActivityLocked
+                RootWindowContainer.resumeFocusedTasksTopActivities {
+                    Task.resumeTopActivityUncheckedLocked {
+                        resumeTopActivityInnerLocked {
+                            TaskFragment.resumeTopActivity {
+                                &#x2F;&#x2F;pause当前activity
+                                &quot;② startPausing()&quot;
+                                if (! isProcessRunning) {
+                                    ActivityTaskManagerService.startProcessAsync
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            handleStartResult
+            postStartActivityProcessing
+        }
+    }
+}
+</pre>
+
+<h2 id="第二阶段：pause当前activity"><a href="#第二阶段：pause当前activity" class="headerlink" title="第二阶段：pause当前activity"></a>第二阶段：pause当前activity</h2><p>启动<code>SecondActivity</code>之前会先执行<code>MainActivity</code>的<strong>pause</strong>操作：</p>
+<img src="\assert\puml\af8cd81dee6672e6f6a20a10468fb62bfb7ef4461d0bf7676b888ad21293248a.svg">
+
+<p>在Android 9之前的版本，<code>ActivityThread</code>中通过<code>LAUNCH_ACTIVITY</code>消息来启动activity，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//android\app\ActivityThread.java</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleMessage</span><span class="params">(Message msg)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (DEBUG_MESSAGES) Slog.v(TAG, <span class="string">&quot;&gt;&gt;&gt; handling: &quot;</span> + codeToString(msg.what));</span><br><span class="line">            <span class="keyword">switch</span> (msg.what) &#123;</span><br><span class="line">                <span class="keyword">case</span> LAUNCH_ACTIVITY: &#123;</span><br><span class="line">                    Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, <span class="string">&quot;activityStart&quot;</span>);</span><br><span class="line">                    <span class="keyword">final</span> <span class="type">ActivityClientRecord</span> <span class="variable">r</span> <span class="operator">=</span> (ActivityClientRecord) msg.obj;</span><br><span class="line"></span><br><span class="line">                    r.packageInfo = getPackageInfoNoCheck(</span><br><span class="line">                            r.activityInfo.applicationInfo, r.compatInfo);</span><br><span class="line">                    handleLaunchActivity(r, <span class="literal">null</span>, <span class="string">&quot;LAUNCH_ACTIVITY&quot;</span>);</span><br><span class="line">                    Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</span><br><span class="line">                &#125; <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<p>但从Andorid 9开始，<code>ActivityThread</code>去掉了<code>LAUNCH_ACTIVITY</code> <code>PAUSE_ACTIVITY</code> <code>RESUME_ACTIVITY</code>等消息，而是改成了EXECUTE_TRANSACTION，通过ClientTransaction这套机制来执行activity生命周期流程，相关源码如下：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/93b40782.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/c09f2087.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/c09f2087.html" class="post-title-link" itemprop="url">Android UI 绘制流程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-26 09:45:29" itemprop="dateCreated datePublished" datetime="2023-09-26T09:45:29+08:00">2023-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-27 11:48:16" itemprop="dateModified" datetime="2023-09-27T11:48:16+08:00">2023-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Android绘制流程</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="measure-流程"><a href="#measure-流程" class="headerlink" title="measure 流程"></a>measure 流程</h2><p>measure结果放在<code>mMeasuredWidth</code>和<code>mMeasuredHeight</code>中。</p>
+<h2 id="layout-流程"><a href="#layout-流程" class="headerlink" title="layout 流程"></a>layout 流程</h2><p>layout的作用是计算view及其view的大小和位置，</p>
+<h2 id="draw-流程"><a href="#draw-流程" class="headerlink" title="draw() 流程"></a>draw() 流程</h2><p>入口：ViewRootImpl#draw</p>
+<h3 id="没有开启硬件加速"><a href="#没有开启硬件加速" class="headerlink" title="没有开启硬件加速"></a>没有开启硬件加速</h3><p>执行drawSoftware方法。</p>
+<ol>
+<li>获取Canvas：canvas = mSurface.lockCanvas(dirty);</li>
+<li>执行View#draw：mView.draw(canvas);</li>
+<li>surface.unlockCanvasAndPost(canvas);</li>
+</ol>
+<p>执行<code>android-12.1.0_r27\frameworks\base\core\jni\android_view_Surface.cpp</code>的nativeUnlockCanvasAndPost方法</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/c09f2087.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/68833f9e.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/68833f9e.html" class="post-title-link" itemprop="url">Bitmap内存分配以及回收</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-22 10:36:32" itemprop="dateCreated datePublished" datetime="2023-09-22T10:36:32+08:00">2023-09-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 11:10:27" itemprop="dateModified" datetime="2023-10-18T11:10:27+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="Bitmap内存分配"><a href="#Bitmap内存分配" class="headerlink" title="Bitmap内存分配"></a>Bitmap内存分配</h2><ul>
+<li>Android 2.3.3 (API level 10)以及更早的Android版本中，Bitmap的像素数据保存在native内存中，像素数据内存的回收则在finalize()中进行回收，存在很大的不确定性，很容易导致OOM的发生；</li>
+<li>从Android 3.0 (API level 11) 到Android 7.1 (API level 25)，像素数据存放在Java Heap中，跟Bitmap对象一起回收。但由于图片是内存消耗大户，所以也很容易导致OOM，以及频繁的GC导致内存抖动问题。</li>
+<li>在Android 8.0 (API level 26)以及更高的版本中，像素数据保存在native heap中。通过一个辅助类<code>NativeAllocationRegistry</code>来实现native内存的回收。</li>
+</ul>
+<p>在android.graphics.BitmapFactory类中有一系列函数可以解码生成Bitmap：</p>
+<ul>
+<li>Bitmap decodeByteArray(byte[] data, int offset, int length)</li>
+<li>Bitmap decodeByteArray(byte[] data, int offset, int length, Options opts)</li>
+<li>Bitmap decodeFile(String pathName)</li>
+<li>Bitmap decodeFile(String pathName, Options opts)</li>
+<li>…… 等等</li>
+</ul>
+<p>这些方法都会调用到jni层<code>frameworks\base\libs\hwui\jni\BitmapFactory.cpp</code>,最终都会走到<code>doDecode</code>方法：</p>
+<h3 id="Android-12位图解码，使用native内存"><a href="#Android-12位图解码，使用native内存" class="headerlink" title="Android 12位图解码，使用native内存"></a>Android 12位图解码，使用native内存</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//frameworks\base\libs\hwui\jni\BitmapFactory.cpp</span></span><br><span class="line"><span class="function"><span class="type">static</span> jobject <span class="title">doDecode</span><span class="params">(JNIEnv* env, std::unique_ptr&lt;SkStreamRewindable&gt; stream,</span></span></span><br><span class="line"><span class="params"><span class="function">                        jobject padding, jobject options, jlong inBitmapHandle,</span></span></span><br><span class="line"><span class="params"><span class="function">                        jlong colorSpaceHandle)</span> </span>&#123;</span><br><span class="line">    ...... <span class="comment">//代码省略</span></span><br><span class="line">    <span class="comment">// Scale is necessary due to density differences.</span></span><br><span class="line">    <span class="keyword">if</span> (scale != <span class="number">1.0f</span>) &#123;</span><br><span class="line">        willScale = <span class="literal">true</span>;</span><br><span class="line">        scaledWidth = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(scaledWidth * scale + <span class="number">0.5f</span>);</span><br><span class="line">        scaledHeight = <span class="built_in">static_cast</span>&lt;<span class="type">int</span>&gt;(scaledHeight * scale + <span class="number">0.5f</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    android::Bitmap* reuseBitmap = <span class="literal">nullptr</span>;</span><br><span class="line">    <span class="type">unsigned</span> <span class="type">int</span> existingBufferSize = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (javaBitmap != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        reuseBitmap = &amp;bitmap::<span class="built_in">toBitmap</span>(inBitmapHandle);</span><br><span class="line">        <span class="keyword">if</span> (reuseBitmap-&gt;<span class="built_in">isImmutable</span>()) &#123;</span><br><span class="line">            <span class="built_in">ALOGW</span>(<span class="string">&quot;Unable to reuse an immutable bitmap as an image decoder target.&quot;</span>);</span><br><span class="line">            javaBitmap = <span class="literal">nullptr</span>;</span><br><span class="line">            reuseBitmap = <span class="literal">nullptr</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            existingBufferSize = reuseBitmap-&gt;<span class="built_in">getAllocationByteCount</span>();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    HeapAllocator defaultAllocator;</span><br><span class="line">    <span class="function">RecyclingPixelAllocator <span class="title">recyclingAllocator</span><span class="params">(reuseBitmap, existingBufferSize)</span></span>;</span><br><span class="line">    <span class="function">ScaleCheckingAllocator <span class="title">scaleCheckingAllocator</span><span class="params">(scale, existingBufferSize)</span></span>;</span><br><span class="line">    SkBitmap::HeapAllocator heapAllocator;</span><br><span class="line">    SkBitmap::Allocator* decodeAllocator;</span><br><span class="line">    <span class="keyword">if</span> (javaBitmap != <span class="literal">nullptr</span> &amp;&amp; willScale) &#123;</span><br><span class="line">        <span class="comment">// This will allocate pixels using a HeapAllocator, since there will be an extra</span></span><br><span class="line">        <span class="comment">// scaling step that copies these pixels into Java memory.  This allocator</span></span><br><span class="line">        <span class="comment">// also checks that the recycled javaBitmap is large enough.</span></span><br><span class="line">        decodeAllocator = &amp;scaleCheckingAllocator;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (javaBitmap != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">        decodeAllocator = &amp;recyclingAllocator;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (willScale || isHardware) &#123;</span><br><span class="line">        <span class="comment">// This will allocate pixels using a HeapAllocator,</span></span><br><span class="line">        <span class="comment">// for scale case: there will be an extra scaling step.</span></span><br><span class="line">        <span class="comment">// for hardware case: there will be extra swizzling &amp; upload to gralloc step.</span></span><br><span class="line">        decodeAllocator = &amp;heapAllocator;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        decodeAllocator = &amp;defaultAllocator;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">    SkBitmap decodingBitmap; <span class="comment">//SkBitmap 是skia库中的类</span></span><br><span class="line">    <span class="comment">//decodingBitmap.tryAllocPixels的作用是分配piexel内存，最终调用的是</span></span><br><span class="line">    <span class="comment">//decodeAllocator-&gt;allocPixelRef(this);</span></span><br><span class="line">    <span class="keyword">if</span> (!decodingBitmap.<span class="built_in">setInfo</span>(bitmapInfo) ||</span><br><span class="line">            !decodingBitmap.<span class="built_in">tryAllocPixels</span>(decodeAllocator)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Use SkAndroidCodec to perform the decode.</span></span><br><span class="line">    SkAndroidCodec::AndroidOptions codecOptions;</span><br><span class="line">    codecOptions.fZeroInitialized = decodeAllocator == &amp;defaultAllocator ?</span><br><span class="line">            SkCodec::kYes_ZeroInitialized : SkCodec::kNo_ZeroInitialized;</span><br><span class="line">    codecOptions.fSampleSize = sampleSize;</span><br><span class="line">    <span class="comment">//codec指的是SkAndroidCodec，是skia库中的类。下面这句代码就是真正的解码了</span></span><br><span class="line">    SkCodec::Result result = codec-&gt;<span class="built_in">getAndroidPixels</span>(decodeInfo, decodingBitmap.<span class="built_in">getPixels</span>(), </span><br><span class="line">            decodingBitmap.<span class="built_in">rowBytes</span>(), &amp;codecOptions);</span><br><span class="line">    </span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//按比例缩放位图</span></span><br><span class="line">    SkBitmap outputBitmap;</span><br><span class="line">    <span class="keyword">if</span> (willScale) &#123;</span><br><span class="line">        <span class="comment">// Set the allocator for the outputBitmap.</span></span><br><span class="line">        SkBitmap::Allocator* outputAllocator;</span><br><span class="line">        <span class="keyword">if</span> (javaBitmap != <span class="literal">nullptr</span>) &#123;</span><br><span class="line">            outputAllocator = &amp;recyclingAllocator;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            outputAllocator = &amp;defaultAllocator;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        SkColorType scaledColorType = decodingBitmap.<span class="built_in">colorType</span>();</span><br><span class="line">        <span class="comment">// <span class="doctag">FIXME:</span> If the alphaType is kUnpremul and the image has alpha, the</span></span><br><span class="line">        <span class="comment">// colors may not be correct, since Skia does not yet support drawing</span></span><br><span class="line">        <span class="comment">// to/from unpremultiplied bitmaps.</span></span><br><span class="line">        outputBitmap.<span class="built_in">setInfo</span>(</span><br><span class="line">                bitmapInfo.<span class="built_in">makeWH</span>(scaledWidth, scaledHeight).<span class="built_in">makeColorType</span>(scaledColorType));</span><br><span class="line">        <span class="keyword">if</span> (!outputBitmap.<span class="built_in">tryAllocPixels</span>(outputAllocator)) &#123;</span><br><span class="line">            <span class="comment">// This should only fail on OOM.  The recyclingAllocator should have</span></span><br><span class="line">            <span class="comment">// enough memory since we check this before decoding using the</span></span><br><span class="line">            <span class="comment">// scaleCheckingAllocator.</span></span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">nullObjectReturn</span>(<span class="string">&quot;allocation failed for scaled bitmap&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        SkPaint paint;</span><br><span class="line">        <span class="comment">// kSrc_Mode instructs us to overwrite the uninitialized pixels in</span></span><br><span class="line">        <span class="comment">// outputBitmap.  Otherwise we would blend by default, which is not</span></span><br><span class="line">        <span class="comment">// what we want.</span></span><br><span class="line">        paint.<span class="built_in">setBlendMode</span>(SkBlendMode::kSrc);</span><br><span class="line"></span><br><span class="line">        <span class="function">SkCanvas <span class="title">canvas</span><span class="params">(outputBitmap, SkCanvas::ColorBehavior::kLegacy)</span></span>;</span><br><span class="line">        canvas.<span class="built_in">scale</span>(scaleX, scaleY);</span><br><span class="line">        decodingBitmap.<span class="built_in">setImmutable</span>(); <span class="comment">// so .asImage() doesn&#x27;t make a copy</span></span><br><span class="line">        canvas.<span class="built_in">drawImage</span>(decodingBitmap.<span class="built_in">asImage</span>(), <span class="number">0.0f</span>, <span class="number">0.0f</span>,</span><br><span class="line">                         <span class="built_in">SkSamplingOptions</span>(SkFilterMode::kLinear), &amp;paint);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        outputBitmap.<span class="built_in">swap</span>(decodingBitmap);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//硬件位图</span></span><br><span class="line">    <span class="keyword">if</span> (isHardware) &#123;</span><br><span class="line">        <span class="comment">//GPU中分配位图内存。原outputBitmap是否需要释放呢？在哪释放？</span></span><br><span class="line">        sk_sp&lt;Bitmap&gt; hardwareBitmap = Bitmap::<span class="built_in">allocateHardwareBitmap</span>(outputBitmap);</span><br><span class="line">        <span class="keyword">if</span> (!hardwareBitmap.<span class="built_in">get</span>()) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">nullObjectReturn</span>(<span class="string">&quot;Failed to allocate a hardware bitmap&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//创建java层Bitmap，此处的hardwareBitmap.release()不是资源回收的意思，而是取出sk_sp中的Bitmap实例。</span></span><br><span class="line">        <span class="keyword">return</span> bitmap::<span class="built_in">createBitmap</span>(env, hardwareBitmap.<span class="built_in">release</span>(), bitmapCreateFlags,</span><br><span class="line">                ninePatchChunk, ninePatchInsets, <span class="number">-1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// now create the java bitmap</span></span><br><span class="line">    <span class="keyword">return</span> bitmap::<span class="built_in">createBitmap</span>(env, defaultAllocator.<span class="built_in">getStorageObjAndReset</span>(),</span><br><span class="line">            bitmapCreateFlags, ninePatchChunk, ninePatchInsets, <span class="number">-1</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="默认pixel内存分配"><a href="#默认pixel内存分配" class="headerlink" title="默认pixel内存分配"></a>默认pixel内存分配</h4><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">bool</span> <span class="title">HeapAllocator::allocPixelRef</span><span class="params">(SkBitmap* bitmap)</span> </span>&#123;</span><br><span class="line">    mStorage = android::Bitmap::<span class="built_in">allocateHeapBitmap</span>(bitmap);</span><br><span class="line">    <span class="keyword">return</span> !!mStorage;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//frameworks\base\libs\hwui\hwui\Bitmap.cpp</span></span><br><span class="line"><span class="function">sk_sp&lt;Bitmap&gt; <span class="title">Bitmap::allocateHeapBitmap</span><span class="params">(SkBitmap* bitmap)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">allocateBitmap</span>(bitmap, &amp;Bitmap::allocateHeapBitmap);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="type">static</span> sk_sp&lt;Bitmap&gt; <span class="title">allocateBitmap</span><span class="params">(SkBitmap* bitmap, AllocPixelRef alloc)</span> </span>&#123;</span><br><span class="line">    <span class="type">const</span> SkImageInfo&amp; info = bitmap-&gt;<span class="built_in">info</span>();</span><br><span class="line">    <span class="keyword">if</span> (info.<span class="built_in">colorType</span>() == kUnknown_SkColorType) &#123;</span><br><span class="line">        <span class="built_in">LOG_ALWAYS_FATAL</span>(<span class="string">&quot;unknown bitmap configuration&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="type">size_t</span> size;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// we must respect the rowBytes value already set on the bitmap instead of</span></span><br><span class="line">    <span class="comment">// attempting to compute our own.</span></span><br><span class="line">    <span class="type">const</span> <span class="type">size_t</span> rowBytes = bitmap-&gt;<span class="built_in">rowBytes</span>();</span><br><span class="line">    <span class="keyword">if</span> (!Bitmap::<span class="built_in">computeAllocationSize</span>(rowBytes, bitmap-&gt;<span class="built_in">height</span>(), &amp;size)) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">auto</span> wrapper = <span class="built_in">alloc</span>(size, info, rowBytes); <span class="comment">//使用入参的alloc函数分配内存</span></span><br><span class="line">    <span class="keyword">if</span> (wrapper) &#123;</span><br><span class="line">        wrapper-&gt;<span class="built_in">getSkBitmap</span>(bitmap);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> wrapper;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">sk_sp&lt;Bitmap&gt; <span class="title">Bitmap::allocateHeapBitmap</span><span class="params">(<span class="type">size_t</span> size, <span class="type">const</span> SkImageInfo&amp; info, <span class="type">size_t</span> rowBytes)</span> </span>&#123;</span><br><span class="line">    <span class="type">void</span>* addr = <span class="built_in">calloc</span>(size, <span class="number">1</span>); <span class="comment">//调用Linux C库函数分配内存</span></span><br><span class="line">    <span class="keyword">if</span> (!addr) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">nullptr</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="built_in">sk_sp</span>&lt;Bitmap&gt;(<span class="keyword">new</span> <span class="built_in">Bitmap</span>(addr, size, info, rowBytes)); <span class="comment">//返回最终的Bitmap对象</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="比例缩放或硬件位图场景内存分配"><a href="#比例缩放或硬件位图场景内存分配" class="headerlink" title="比例缩放或硬件位图场景内存分配"></a>比例缩放或硬件位图场景内存分配</h4>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/68833f9e.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/f45b8d80.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/f45b8d80.html" class="post-title-link" itemprop="url">Java注解原理</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-21 17:46:38" itemprop="dateCreated datePublished" datetime="2023-09-21T17:46:38+08:00">2023-09-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 16:02:14" itemprop="dateModified" datetime="2023-10-18T16:02:14+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Java注解原理</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>注解的使用场景可以分为两种：一）编译期间通过注解解析器处理；2）运行期间反射使用；</p>
+<h2 id="注解保留策略"><a href="#注解保留策略" class="headerlink" title="注解保留策略"></a>注解保留策略</h2><ul>
+<li><code>RetentionPolicy.SOURCE</code> : 编译期可见，但不会写入到.class文件；</li>
+<li><code>RetentionPolicy#CLASS</code> : 会写入到.class文件中，但是会被JVM忽略（这是默认策略）；</li>
+<li><code>RetentionPolicy#RUNTIME</code> ：注解会被写入到.class文件中，并且JVM运行期间也可见，可以通过反射放射获取到；</li>
+</ul>
+<h3 id="注解的定义"><a href="#注解的定义" class="headerlink" title="注解的定义"></a>注解的定义</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.CONSTRUCTOR, ElementType.PARAMETER&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.CLASS)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyClass &#123;</span><br><span class="line">    String <span class="title function_">name</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.CONSTRUCTOR&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyRuntime1 &#123;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">id</span><span class="params">()</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.CONSTRUCTOR&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyRuntime2 &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Target(&#123;ElementType.TYPE, ElementType.METHOD, ElementType.FIELD, ElementType.CONSTRUCTOR&#125;)</span></span><br><span class="line"><span class="meta">@Retention(RetentionPolicy.SOURCE)</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MySource &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译完成后，每个注解都会生成自己的.class文件，看一下MyClass这个注解的.class文件的内容：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line">$ javap -p -v me/demo/MyClass.class</span><br><span class="line">Picked up JAVA_TOOL_OPTIONS: -Duser.language=en -Dfile.encoding=UTF-8</span><br><span class="line">Classfile /F:/demo/JavaDemo/out/production/JavaDemo/me/demo/MyClass.class</span><br><span class="line">  Last modified Sep 21, 2023; size 472 bytes</span><br><span class="line">  MD5 checksum cb49d6b6a5ed7ab9c2b85d731996fb5f</span><br><span class="line">  Compiled from &quot;MyClass.java&quot;</span><br><span class="line">public interface me.demo.MyClass extends java.lang.annotation.Annotation</span><br><span class="line">  minor version: 0</span><br><span class="line">  major version: 61</span><br><span class="line">  flags: (0x2601) ACC_PUBLIC, ACC_INTERFACE, ACC_ABSTRACT, ACC_ANNOTATION</span><br><span class="line">  this_class: #1                          // me/demo/MyClass</span><br><span class="line">  super_class: #3                         // java/lang/Object</span><br><span class="line">  interfaces: 1, fields: 0, methods: 1, attributes: 2</span><br><span class="line">Constant pool:</span><br><span class="line">   #1 = Class              #2             // me/demo/MyClass</span><br><span class="line">   #2 = Utf8               me/demo/MyClass</span><br><span class="line">   #3 = Class              #4             // java/lang/Object</span><br><span class="line">   #4 = Utf8               java/lang/Object</span><br><span class="line">   #5 = Class              #6             // java/lang/annotation/Annotation</span><br><span class="line">   #6 = Utf8               java/lang/annotation/Annotation</span><br><span class="line">   #7 = Utf8               name</span><br><span class="line">   #8 = Utf8               ()Ljava/lang/String;</span><br><span class="line">   #9 = Utf8               SourceFile</span><br><span class="line">  #10 = Utf8               MyClass.java</span><br><span class="line">  #11 = Utf8               RuntimeVisibleAnnotations</span><br><span class="line">  #12 = Utf8               Ljava/lang/annotation/Target;</span><br><span class="line">  #13 = Utf8               value</span><br><span class="line">  #14 = Utf8               Ljava/lang/annotation/ElementType;</span><br><span class="line">  #15 = Utf8               TYPE</span><br><span class="line">  #16 = Utf8               METHOD</span><br><span class="line">  #17 = Utf8               FIELD</span><br><span class="line">  #18 = Utf8               CONSTRUCTOR</span><br><span class="line">  #19 = Utf8               PARAMETER</span><br><span class="line">  #20 = Utf8               Ljava/lang/annotation/Retention;</span><br><span class="line">  #21 = Utf8               Ljava/lang/annotation/RetentionPolicy;</span><br><span class="line">  #22 = Utf8               CLASS</span><br><span class="line">&#123;</span><br><span class="line">  public abstract java.lang.String name();</span><br><span class="line">    descriptor: ()Ljava/lang/String;</span><br><span class="line">    flags: (0x0401) ACC_PUBLIC, ACC_ABSTRACT</span><br><span class="line">&#125;</span><br><span class="line">SourceFile: &quot;MyClass.java&quot;</span><br><span class="line">RuntimeVisibleAnnotations:</span><br><span class="line">  0: #12(#13=[e#14.#15,e#14.#16,e#14.#17,e#14.#18,e#14.#19])</span><br><span class="line">    java.lang.annotation.Target(</span><br><span class="line">      value=[Ljava/lang/annotation/ElementType;.TYPE,Ljava/lang/annotation/ElementType;.METHOD,Ljava/lang/annotation/ElementType;.FIELD,Ljava/lang/annotation/ElementType;.CONSTRUCTOR,Ljava/lang/annotation/ElementType;.PARAMETER]</span><br><span class="line">    )</span><br><span class="line">  1: #20(#13=e#21.#22)</span><br><span class="line">    java.lang.annotation.Retention(</span><br><span class="line">      value=Ljava/lang/annotation/RetentionPolicy;.CLASS</span><br><span class="line">    )</span><br></pre></td></tr></table></figure>
+
+<p>从MyClass.class文件第7行代码<code>public interface MyClass extends java.lang.annotation.Annotation</code>可以看出来MyClass实际上是继承自Annotation的接口类。这一点从<code>java.lang.Class#getAnnotation</code>这个方法也可以看出来：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//java/lang/Class.java</span></span><br><span class="line">    <span class="keyword">public</span> &lt;A <span class="keyword">extends</span> <span class="title class_">Annotation</span>&gt; A <span class="title function_">getAnnotation</span><span class="params">(Class&lt;A&gt; annotationClass)</span> &#123;</span><br><span class="line">        Objects.requireNonNull(annotationClass);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> (A) annotationData().annotations.get(annotationClass);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="注解的使用"><a href="#注解的使用" class="headerlink" title="注解的使用"></a>注解的使用</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/f45b8d80.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/d01e7370.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/d01e7370.html" class="post-title-link" itemprop="url">Android View Measure源码分析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-19 11:10:48 / 修改时间：16:21:32" itemprop="dateCreated datePublished" datetime="2023-09-19T11:10:48+08:00">2023-09-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Android View Measure源码分析</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>在<a href="/posts/11962.html" title="Android Activity启动流程">Android Activity启动流程</a>文章中已经介绍了，在activity的onResume之后，<code>ViewRootImpl#setView(View view, WindowManager.LayoutParams attrs, ...)</code>，其中view就是DecorView，ViewRootImpl#setView中就会调用<code>requestLayout</code>，然后调用<code>scheduleTraversals</code>。这是首次调用，后续view的改动都会调用到<code>scheduleTraversals</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//android-12.1.0_r27\frameworks\base\core\java\android\view\ViewRootImpl.java</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">scheduleTraversals</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!mTraversalScheduled) &#123;</span><br><span class="line">            mTraversalScheduled = <span class="literal">true</span>;</span><br><span class="line">            <span class="comment">//添加同步屏障，主线程的同步消息都会进制执行，保证vsync信号到来时TraversalRunnable能够立刻被执行</span></span><br><span class="line">            mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();</span><br><span class="line">            mChoreographer.postCallback(</span><br><span class="line">                    Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, <span class="literal">null</span>);</span><br><span class="line">            notifyRendererOfFramePending();</span><br><span class="line">            pokeDrawLockIfNeeded();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="type">TraversalRunnable</span> <span class="variable">mTraversalRunnable</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TraversalRunnable</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">TraversalRunnable</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">            doTraversal();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">doTraversal</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (mTraversalScheduled) &#123;</span><br><span class="line">            mTraversalScheduled = <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">//删除同步屏障</span></span><br><span class="line">            mHandler.getLooper().getQueue().removeSyncBarrier(mTraversalBarrier);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (mProfile) &#123;</span><br><span class="line">                Debug.startMethodTracing(<span class="string">&quot;ViewAncestor&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            performTraversals();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (mProfile) &#123;</span><br><span class="line">                Debug.stopMethodTracing();</span><br><span class="line">                mProfile = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/d01e7370.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/e679f521.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/e679f521.html" class="post-title-link" itemprop="url">图解RecyclerView缓存机制</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-19 09:20:14" itemprop="dateCreated datePublished" datetime="2023-09-19T09:20:14+08:00">2023-09-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 14:00:25" itemprop="dateModified" datetime="2023-10-18T14:00:25+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <img src="\assert\puml\6983a52eff2e3aac41f6890b280b7f38ee1ef2df019c995b6ddd90706c68334a.svg">
+
+<h2 id="删除View缓存使用图解"><a href="#删除View缓存使用图解" class="headerlink" title="删除View缓存使用图解"></a>删除View缓存使用图解</h2><p><img src="/images/RecyclerView/remove_item.drawio.svg" alt="RecyclerView移除元素"></p>
+<p>在垂直布局的RecyclerView中展示了Item0~Item4这5个TextView，我们现在把Item2删掉。数据更新后，我们调用<code>Adapter#notifyItemRemoved(2)</code>来提交更新。</p>
+<p><img src="/images/RecyclerView/remove_item_cache_use_sequence.drawio.svg" alt="RecyclerView删除Item"></p>
+<p><strong>dispatchLayoutStep1阶段：</strong></p>
+<ol>
+<li>调用detachViewFromParent把Item0~Item4这五个View从RecyclerView中detache掉，然后放入把ViewHolder放入mAttachedScrap进行缓存。ViewHodler都会被标记为FLAG_TMP_DETACHED，并且Item2会被标记为FLAG_REMOVED；</li>
+<li>然后layout进行填充，把Item0~Item4从mAttachedScrap中取出，然后调用attachViewToParent重新加入到RecyclerView中。</li>
+<li>调用onCreateViewHolder创建一个新ViewHolder（Item5），执行onBindViewHolder，并addView到RecyclerView中。</li>
+</ol>
+<p><strong>dispatchLayoutStep2阶段：</strong></p>
+<ol>
+<li>调用detachViewFromParent把Item0~Item5这六个View从RecyclerView中detache掉，然后把ViewHolder放入mAttachedScrap进行缓存。ViewHolder都会被标记为FLAG_TMP_DETACHED，并且Item2会被标记为FLAG_REMOVED；</li>
+<li>除了Item2的ViewHolder之外，把其他ViewHolder从mAttachedScrap缓存中取出，然后调用attachViewToParent重新加入到RecyclerView中。</li>
+</ol>
+<p><strong>dispatchLayoutStep3阶段：</strong></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/e679f521.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/2230f1f1.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/2230f1f1.html" class="post-title-link" itemprop="url">Java float和double存储结构</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2023-09-17 14:19:09 / 修改时间：16:32:41" itemprop="dateCreated datePublished" datetime="2023-09-17T14:19:09+08:00">2023-09-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Java float和double存储结构</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="/images/Java%E6%B5%AE%E7%82%B9%E6%95%B0%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84.drawio.svg" alt="Java浮点数存储结构"></p>
+<h2 id="浮点数转换二进制"><a href="#浮点数转换二进制" class="headerlink" title="浮点数转换二进制"></a>浮点数转换二进制</h2><p>以<code>18.725</code>为例进行说明。</p>
+<p><strong>整数部分转二进制</strong>：除2取余法。整数部分除以2取余数，商取整继续除以2取余数，直到商为0。</p>
+<table>
+<thead>
+<tr>
+<th>整数除法</th>
+<th>商</th>
+<th>余数</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$18/2$</td>
+<td>9</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$9/2$</td>
+<td>4</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$4/2$</td>
+<td>2</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$2/2$</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$1/2$</td>
+<td>0</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>18转换为二进制就是<code>10010</code>，上面表格中余数的倒序。</p>
+<p><strong>小数部分转二进制</strong>：乘2取整法。小数部分乘以2，取整数部分，剩下的小数部分继续乘以2取整数部分，直到结果为0。如果永远不为零，则到达期望的精度后终止运算。</p>
+<table>
+<thead>
+<tr>
+<th>乘法公式</th>
+<th>小数部分</th>
+<th>整数部分</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$0.725*2=1.45$</td>
+<td>0.45</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.45*2=0.9$</td>
+<td>0.9</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$0.9*2=1.8$</td>
+<td>0.8</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.8*2=1.6$</td>
+<td>0.6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.6*2=1.2$</td>
+<td>0.2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.2*2=0.4$</td>
+<td>0.4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$0.4*2=0.8$</td>
+<td>0.8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>$0.8*2=1.6$</td>
+<td>0.6</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.6*2=1.2$</td>
+<td>0.2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>$0.2*2=0.4$</td>
+<td>0.4</td>
+<td>0</td>
+</tr>
+<tr>
+<td>……</td>
+<td>……</td>
+<td>……</td>
+</tr>
+</tbody></table>
+<p>0.725的二进制数是<code>0.1011100110</code>（后面还有无限长，这里忽略）。所以18.725的二级制就是<code>10010.1011100110</code>。按照规定，二进制小数点左边只能有1为且固定为1，所以需要进行右移操作，得出结果是：$1.00101011100110*2^4$</p>
+<ul>
+<li>符号位：正数，符号位为0；</li>
+<li>指数位：实际为4，按照规定要加上127（即指数最高位赋值为1），指数位存储的是131，二级制为<code>10000011</code>，。</li>
+<li>底数位：取小数部分，即 <code>0.00101011100110</code>；</li>
+</ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/2230f1f1.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/ca4438af.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/ca4438af.html" class="post-title-link" itemprop="url">HashMap源码分析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-16 16:05:07" itemprop="dateCreated datePublished" datetime="2023-09-16T16:05:07+08:00">2023-09-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 16:16:24" itemprop="dateModified" datetime="2023-10-18T16:16:24+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">HashMap源码分析</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>HashMap存储结构采用数组+链表<small>（java8以后当链表长度超过8后采用红黑树来存储）</small>，当存储数据时会先计算key的哈希值，然后使用哈希值计算数组指针，如果数组指针位置已经存在数据，且key不相同，就会采用链表形式存储数据。存储结构如下图：</p>
+<p><img src="/images/HashMap%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84.drawio.svg" alt="HashMap存储结构"></p>
+<p>在jdk1.8中HashMap引入了红黑树，当链表中的元素达到阈值后，并且数组长度大于64，就会将链表转换为红黑树。引入红黑树的主要目的是解决哈希冲突导致的链化严重的问题。</p>
+<h2 id="哈希值与数组指针"><a href="#哈希值与数组指针" class="headerlink" title="哈希值与数组指针"></a>哈希值与数组指针</h2><p>哈希值计算方法：获取key的hashCode，然后hashCode右移16位，最后将两者进行异或运算。源码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">hash</span><span class="params">(Object key)</span> &#123;</span><br><span class="line">    <span class="type">int</span> h;</span><br><span class="line">    <span class="keyword">return</span> (key == <span class="literal">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>为什么没有直接使用key.hashCode()的值呢？这是因为数组长度都是2的幕，比如默认数组长度16=$2^4$，即<code>1&lt;&lt;4</code>，长度掩码就是<code>15=16-1</code>，二进制掩码就是<code>1111</code>。hash与掩码进行按位与运算后得到数组指针，相当于只取了hash的低4位，高位没有用到，增加了指针冲突的概率。因此将hashCode进行右移16位，再进行异或运算，这样做就是在运算中同时使用了高位和低位。</p>
+<p>HashMap是通过数组来存储元素。当通过key来后去元素值的时候，首先计算出key的哈希值，然后通过哈希值来计算得到数组坐标，看下put操作中如何计算数组坐标：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> V <span class="title function_">putVal</span><span class="params">(<span class="type">int</span> hash, K key, V value, <span class="type">boolean</span> onlyIfAbsent,</span></span><br><span class="line"><span class="params">               <span class="type">boolean</span> evict)</span> &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="type">int</span> n, i;</span><br><span class="line">    <span class="keyword">if</span> ((tab = table) == <span class="literal">null</span> || (n = tab.length) == <span class="number">0</span>)</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    <span class="keyword">if</span> ((p = tab[i = (n - <span class="number">1</span>) &amp; hash]) == <span class="literal">null</span>)  <span class="comment">//从数组中取出node赋值给p</span></span><br><span class="line">        tab[i] = newNode(hash, key, value, <span class="literal">null</span>);</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>从代码中可以看出，计算数组坐标的算法是：<code>(n - 1) &amp; hash</code>，其中<code>n</code>表示数组长度。所以坐标指针是hash和长度掩码进行与运算。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/ca4438af.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/23659d3d.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/23659d3d.html" class="post-title-link" itemprop="url">ARouter源码分析</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-14 17:23:33" itemprop="dateCreated datePublished" datetime="2023-09-14T17:23:33+08:00">2023-09-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 09:34:04" itemprop="dateModified" datetime="2023-10-18T09:34:04+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">ARouter源码分析</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><img src="\assert\puml\14839b5514dff2c0a839d51f68c811292e56bd33b5988c7c6384e5efed0b1125.svg">
+
+<p>初始化调用时序</p>
+<img src="\assert\puml\8c841c6a106cbce011da43e1304cda634eb07e00eb974b6d4ace6c445b68f853.svg">
+
+<h2 id="生成路由表"><a href="#生成路由表" class="headerlink" title="生成路由表"></a>生成路由表</h2><p>ARouter是通过在编译阶段使用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://kotlinlang.org/docs/kapt.html">kapt</a>解析Route注解，再通过<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/square/javapoet">javapoet</a>来生成路由表相关代码。注解处理器在<code>arouter-compiler/src/main/java/com/alibaba/android/arouter/compiler/processor/RouteProcessor.java</code>。</p>
+<p>比如<code>module-kotlin</code>模块有三个activity，路由分别是：</p>
+<ul>
+<li>/one/first</li>
+<li>/one/second</li>
+<li>/two/test</li>
+</ul>
+<p>生成的路由表如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//生成目录位于module-kotlin/build/generated/source/kapt/debug/com/alibaba/android/arouter/routes</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ARouter$$Root$$modulekotlin</span> <span class="keyword">implements</span> <span class="title class_">IRouteRoot</span> &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">loadInto</span><span class="params">(Map&lt;String, Class&lt;? extends IRouteGroup&gt;&gt; routes)</span> &#123;</span><br><span class="line">    routes.put(<span class="string">&quot;one&quot;</span>, ARouter$$Group$$one.class);</span><br><span class="line">    routes.put(<span class="string">&quot;two&quot;</span>, ARouter$$Group$$two.class);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ARouter$$Group$$one</span> <span class="keyword">implements</span> <span class="title class_">IRouteGroup</span> &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">loadInto</span><span class="params">(Map&lt;String, RouteMeta&gt; atlas)</span> &#123;</span><br><span class="line">    atlas.put(<span class="string">&quot;/one/first&quot;</span>, RouteMeta.build(RouteType.ACTIVITY, FistActivity.class, <span class="string">&quot;/one/first&quot;</span>, <span class="string">&quot;one&quot;</span>, <span class="literal">null</span>, -<span class="number">1</span>, -<span class="number">2147483648</span>));</span><br><span class="line">    atlas.put(<span class="string">&quot;/one/second&quot;</span>, RouteMeta.build(RouteType.ACTIVITY, SecondActivity.class, <span class="string">&quot;/one/second&quot;</span>, <span class="string">&quot;two&quot;</span>, <span class="literal">null</span>, -<span class="number">1</span>, -<span class="number">2147483648</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">ARouter$$Group$$two</span> <span class="keyword">implements</span> <span class="title class_">IRouteGroup</span> &#123;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">loadInto</span><span class="params">(Map&lt;String, RouteMeta&gt; atlas)</span> &#123;</span><br><span class="line">    atlas.put(<span class="string">&quot;/two/test&quot;</span>, RouteMeta.build(RouteType.ACTIVITY, TestActivity.class, <span class="string">&quot;/two/test&quot;</span>, <span class="string">&quot;two&quot;</span>, <span class="literal">null</span>, -<span class="number">1</span>, -<span class="number">2147483648</span>));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/23659d3d.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/faedbb97.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/faedbb97.html" class="post-title-link" itemprop="url">LeakCanary源码详解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-12 15:27:58" itemprop="dateCreated datePublished" datetime="2023-09-12T15:27:58+08:00">2023-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 10:25:18" itemprop="dateModified" datetime="2023-10-18T10:25:18+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">LeakCanary源码详解</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文基于LeakCanary 2.12进行分析。</p>
+<img src="\assert\puml\5956ed6f46404b9ae4f0a580bdbdd8c8aa7a05645c598e56d57926aa4dc676c6.svg">
+
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>引入LeakCanary时，只需要引入maven库的坐标即可，如下：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">  <span class="comment">// debugImplementation because LeakCanary should only run in debug builds.</span></span><br><span class="line">  debugImplementation <span class="string">&#x27;com.squareup.leakcanary:leakcanary-android:2.12&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而不需要进行任何的代码改动就可以使用LeakCanary了。另外，引入leakcanary时使用的是debugImplementation表示只在debug版本中才会集成leakcanary，release版本不会集成。</p>
+<p>那么，leakcanary如何完成初始化呢？</p>
+<p>leakcanary使用了<code>ContentProvider</code>来进行初始化，当app启动时系统会自动初始化注册的ContentProvider。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">provider</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:name</span>=<span class="string">&quot;leakcanary.internal.MainProcessAppWatcherInstaller&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:authorities</span>=<span class="string">&quot;$&#123;applicationId&#125;.leakcanary-installer&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:enabled</span>=<span class="string">&quot;@bool/leak_canary_watcher_auto_install&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:exported</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="keyword">class</span> <span class="title class_">MainProcessAppWatcherInstaller</span> : <span class="type">ContentProvider</span>() &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">()</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> application = context!!.applicationContext <span class="keyword">as</span> Application</span><br><span class="line">    AppWatcher.manualInstall(application)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">  ......</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/faedbb97.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

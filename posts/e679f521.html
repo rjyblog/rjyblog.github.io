@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="删除View缓存使用图解 在垂直布局的RecyclerView中展示了Item0~Item4这5个TextView，我们现在把Item2删掉。数据更新后，我们调用Adapter#notifyItemRemoved(2)来提交更新。  dispatchLayoutStep1阶段：  调用detachViewFromParent把Item0~Item4这五个View从RecyclerView中de">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图解RecyclerView缓存机制">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/e679f521.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="删除View缓存使用图解 在垂直布局的RecyclerView中展示了Item0~Item4这5个TextView，我们现在把Item2删掉。数据更新后，我们调用Adapter#notifyItemRemoved(2)来提交更新。  dispatchLayoutStep1阶段：  调用detachViewFromParent把Item0~Item4这五个View从RecyclerView中de">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/6983a52eff2e3aac41f6890b280b7f38ee1ef2df019c995b6ddd90706c68334a.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/RecyclerView/remove_item.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/RecyclerView/remove_item_cache_use_sequence.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/RecyclerView/change_item_text.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/RecyclerView/change_item_sequence.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/RecyclerView/insert_item.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/RecyclerView/insert_item_sequence.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/RecyclerView_mCachedViews.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/76f8ab8a3fb6ee6a9369938431227223977ffa07a052ab0d2e28b2717b3b958e.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/0a7e545135b0fbe088833b032e660b43b3e0161f5467deb88d9a9808f97aebc0.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/1c5df462ff8a3457540cbbdc11fbbea04d24298c5e8d5c63b197023a240f39e7.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/RecyclerView/RecyclerView%E6%9F%A5%E6%89%BE%E7%BC%93%E5%AD%98%E6%B5%81%E7%A8%8B%E5%9B%BE.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/assert/puml/bb8bb9acb56eae0a874798df209257546867cc37e9b22c9b0786aa8d233b0bc2.svg">
+<meta property="article:published_time" content="2023-09-19T01:20:14.000Z">
+<meta property="article:modified_time" content="2023-10-18T06:00:25.168Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rjyblog.gitee.io/assert/puml/6983a52eff2e3aac41f6890b280b7f38ee1ef2df019c995b6ddd90706c68334a.svg">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/e679f521.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/e679f521.html","path":"posts/e679f521.html","title":"图解RecyclerView缓存机制"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>图解RecyclerView缓存机制 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4View%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8%E5%9B%BE%E8%A7%A3"><span class="nav-text">删除View缓存使用图解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9View%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8%E5%9B%BE%E8%A7%A3"><span class="nav-text">修改View缓存使用图解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E5%85%A5View%E7%BC%93%E5%AD%98%E4%BD%BF%E7%94%A8%E5%9B%BE%E8%A7%A3"><span class="nav-text">插入View缓存使用图解</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%A2%84%E5%8A%A0%E8%BD%BD%E7%BC%93%E5%AD%98-mCachedViews"><span class="nav-text">预加载缓存 mCachedViews</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%BB%91%E5%8A%A8%E6%97%B6%E9%A2%84%E5%8A%A0%E8%BD%BD%E6%B5%81%E7%A8%8B"><span class="nav-text">滑动时预加载流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#mAttachedScrap"><span class="nav-text">mAttachedScrap</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E7%BC%93%E5%AD%98%E8%8E%B7%E5%8F%96ViewHolder"><span class="nav-text">从缓存获取ViewHolder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ItemAnimator"><span class="nav-text">ItemAnimator</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/e679f521.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="图解RecyclerView缓存机制 | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          图解RecyclerView缓存机制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-19 09:20:14" itemprop="dateCreated datePublished" datetime="2023-09-19T09:20:14+08:00">2023-09-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 14:00:25" itemprop="dateModified" datetime="2023-10-18T14:00:25+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><img src="\assert\puml\6983a52eff2e3aac41f6890b280b7f38ee1ef2df019c995b6ddd90706c68334a.svg"/>
+
+<h2 id="删除View缓存使用图解"><a href="#删除View缓存使用图解" class="headerlink" title="删除View缓存使用图解"></a>删除View缓存使用图解</h2><p><img src="/images/RecyclerView/remove_item.drawio.svg" alt="RecyclerView移除元素"></p>
+<p>在垂直布局的RecyclerView中展示了Item0~Item4这5个TextView，我们现在把Item2删掉。数据更新后，我们调用<code>Adapter#notifyItemRemoved(2)</code>来提交更新。</p>
+<p><img src="/images/RecyclerView/remove_item_cache_use_sequence.drawio.svg" alt="RecyclerView删除Item"></p>
+<p><strong>dispatchLayoutStep1阶段：</strong></p>
+<ol>
+<li>调用detachViewFromParent把Item0~Item4这五个View从RecyclerView中detache掉，然后放入把ViewHolder放入mAttachedScrap进行缓存。ViewHodler都会被标记为FLAG_TMP_DETACHED，并且Item2会被标记为FLAG_REMOVED；</li>
+<li>然后layout进行填充，把Item0~Item4从mAttachedScrap中取出，然后调用attachViewToParent重新加入到RecyclerView中。</li>
+<li>调用onCreateViewHolder创建一个新ViewHolder（Item5），执行onBindViewHolder，并addView到RecyclerView中。</li>
+</ol>
+<p><strong>dispatchLayoutStep2阶段：</strong></p>
+<ol>
+<li>调用detachViewFromParent把Item0~Item5这六个View从RecyclerView中detache掉，然后把ViewHolder放入mAttachedScrap进行缓存。ViewHolder都会被标记为FLAG_TMP_DETACHED，并且Item2会被标记为FLAG_REMOVED；</li>
+<li>除了Item2的ViewHolder之外，把其他ViewHolder从mAttachedScrap缓存中取出，然后调用attachViewToParent重新加入到RecyclerView中。</li>
+</ol>
+<p><strong>dispatchLayoutStep3阶段：</strong></p>
+<ol>
+<li>从mAttachedScrap取出Item2，然后把Item2 View添加到mHiddenViews中；</li>
+<li>在Item2 ItemAnimator的onAnimationFinished事件中把Item2从mAttachedScrap中移除，添加到RecycledViewPool中。</li>
+</ol>
+<h2 id="修改View缓存使用图解"><a href="#修改View缓存使用图解" class="headerlink" title="修改View缓存使用图解"></a>修改View缓存使用图解</h2><p><img src="/images/RecyclerView/change_item_text.drawio.svg" alt="RecyclerView修改Item"></p>
+<p>RecyclerView中包含Item0~Item4共五个TextView，我们把Item2的文案更新为”New 2”。通过调用<code>Adapter#notifyItemChanged(2)</code>来通知RecyclerView进行更新。</p>
+<p><img src="/images/RecyclerView/change_item_sequence.drawio.svg" alt="RecyclerView修改"></p>
+<h2 id="插入View缓存使用图解"><a href="#插入View缓存使用图解" class="headerlink" title="插入View缓存使用图解"></a>插入View缓存使用图解</h2><p><img src="/images/RecyclerView/insert_item.drawio.svg" alt="RecyclerView插入Item"></p>
+<p><img src="/images/RecyclerView/insert_item_sequence.drawio.svg" alt="RecyclerView插入Item时序"></p>
+<h2 id="预加载缓存-mCachedViews"><a href="#预加载缓存-mCachedViews" class="headerlink" title="预加载缓存 mCachedViews"></a>预加载缓存 mCachedViews</h2><p>预加载的view会放在这里，这个数组最大默认是2。首次绘制出来，如果没有滑动屏幕，mCachedViews为空，当滑动UI后会将预加载的一个，以及划出的加入缓存中。</p>
+<p><img src="/images/RecyclerView_mCachedViews.drawio.svg" alt="mCachedViews存储元素"></p>
+<p>如果是向下滑动，则屏幕下面的元素会缓存两个，比如上图右边向下把H滑出屏幕，而C会露出，则mCachedViews中保存的是[B, H, I]。</p>
+<h3 id="滑动时预加载流程"><a href="#滑动时预加载流程" class="headerlink" title="滑动时预加载流程"></a>滑动时预加载流程</h3><p><code>androidx.recyclerview.widget.RecyclerView#onTouchEvent</code>接收到<code>MotionEvent.ACTION_MOVE</code>事件时，如果判断滑动超过一定的距离时，就任务用户自滑动操作。然后就会调用<code>GapWorker#postFromTraversal</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//androidx/recyclerview/widget/GapWorker.java</span></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">postFromTraversal</span><span class="params">(RecyclerView recyclerView, <span class="type">int</span> prefetchDx, <span class="type">int</span> prefetchDy)</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (recyclerView.isAttachedToWindow()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (RecyclerView.DEBUG &amp;&amp; !mRecyclerViews.contains(recyclerView)) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">IllegalStateException</span>(<span class="string">&quot;attempting to post unregistered view!&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">if</span> (mPostTimeNs == <span class="number">0</span>) &#123;</span><br><span class="line">                mPostTimeNs = recyclerView.getNanoTime();</span><br><span class="line">                recyclerView.post(<span class="built_in">this</span>); <span class="comment">//将自己转到主线程去执行</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">//设置用户滑动的距离</span></span><br><span class="line">        recyclerView.mPrefetchRegistry.setPrefetchVector(prefetchDx, prefetchDy);</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<img src="\assert\puml\76f8ab8a3fb6ee6a9369938431227223977ffa07a052ab0d2e28b2717b3b958e.svg"/>
+
+<h2 id="mAttachedScrap"><a href="#mAttachedScrap" class="headerlink" title="mAttachedScrap"></a>mAttachedScrap</h2><p>先看下源码执行流程：</p>
+<img src="\assert\puml\0a7e545135b0fbe088833b032e660b43b3e0161f5467deb88d9a9808f97aebc0.svg"/>
+
+<p>从上面时序图可以看出，最终调用到了父类<code>View#requestLayout()</code>，然后调用<code>mParent.requestLayout();</code>，沿着view层级一直调用到<code>android.view.ViewRootImpl#requestLayout()</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//android-31\android\view\ViewRootImpl.java</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">requestLayout</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!mHandlingLayoutInLayoutRequest) &#123;</span><br><span class="line">            checkThread();</span><br><span class="line">            mLayoutRequested = <span class="literal">true</span>;</span><br><span class="line">            scheduleTraversals();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">scheduleTraversals</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!mTraversalScheduled) &#123;</span><br><span class="line">            mTraversalScheduled = <span class="literal">true</span>;</span><br><span class="line">            <span class="comment">//添加同步屏障，保障vsync信号会优先执行</span></span><br><span class="line">            mTraversalBarrier = mHandler.getLooper().getQueue().postSyncBarrier();</span><br><span class="line">            <span class="comment">//等待下一个vsync信号来执行TraversalRunnable</span></span><br><span class="line">            mChoreographer.postCallback(</span><br><span class="line">                    Choreographer.CALLBACK_TRAVERSAL, mTraversalRunnable, <span class="literal">null</span>);</span><br><span class="line">            notifyRendererOfFramePending();</span><br><span class="line">            pokeDrawLockIfNeeded();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">TraversalRunnable</span> <span class="keyword">implements</span> <span class="title class_">Runnable</span> &#123;</span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">            doTraversal();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">TraversalRunnable</span> <span class="variable">mTraversalRunnable</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">TraversalRunnable</span>();</span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">doTraversal</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (mTraversalScheduled) &#123;</span><br><span class="line">            mTraversalScheduled = <span class="literal">false</span>;</span><br><span class="line">            <span class="comment">//移除同步屏障</span></span><br><span class="line">            mHandler.getLooper().getQueue().removeSyncBarrier(mTraversalBarrier);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (mProfile) &#123;</span><br><span class="line">                Debug.startMethodTracing(<span class="string">&quot;ViewAncestor&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            performTraversals();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (mProfile) &#123;</span><br><span class="line">                Debug.stopMethodTracing();</span><br><span class="line">                mProfile = <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>从上面可以看出，requestLayout不会立马执行，而是等待下一个vsync信号到来再执行，最终执行<code>android.view.ViewRootImpl#performTraversals</code>，这个函数很长有800多行，这里就不贴代码了，这里面就会View的绘制的measure、layout、draw三大流程。分别对应：<code>ViewRootImpl#measureHierarchy</code>、<code>ViewRootImpl#performLayout</code>、<code>ViewRootImpl#performDraw</code>。</p>
+<img src="\assert\puml\1c5df462ff8a3457540cbbdc11fbbea04d24298c5e8d5c63b197023a240f39e7.svg"/>
+
+<h2 id="从缓存获取ViewHolder"><a href="#从缓存获取ViewHolder" class="headerlink" title="从缓存获取ViewHolder"></a>从缓存获取ViewHolder</h2><p>首次创建ViewHolder，以及从缓存中获取都是通过<code>androidx.recyclerview.widget.RecyclerView.Recycler#getViewForPosition(int)</code>，这个方法会优先使用缓存中ViewHolder，如果找不到，就会调用createViewHolder和bindViewHolder创建一个新的，并返回ViewHodler的itemView：</p>
+<p><img src="/images/RecyclerView/RecyclerView%E6%9F%A5%E6%89%BE%E7%BC%93%E5%AD%98%E6%B5%81%E7%A8%8B%E5%9B%BE.drawio.svg" alt="ViewHolder查找创建流程"></p>
+<h2 id="ItemAnimator"><a href="#ItemAnimator" class="headerlink" title="ItemAnimator"></a>ItemAnimator</h2><img src="\assert\puml\bb8bb9acb56eae0a874798df209257546867cc37e9b22c9b0786aa8d233b0bc2.svg"/>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/2230f1f1.html" rel="prev" title="Java float和double存储结构">
+                  <i class="fa fa-angle-left"></i> Java float和double存储结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/d01e7370.html" rel="next" title="Android View Measure源码分析">
+                  Android View Measure源码分析 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

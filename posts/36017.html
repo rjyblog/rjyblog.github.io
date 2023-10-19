@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Linux Shell脚本编程中变量使用介绍">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shell 变量全解">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/36017.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="Linux Shell脚本编程中变量使用介绍">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-19T06:08:57.541Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="shell">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/36017.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/36017.html","path":"posts/36017.html","title":"Shell 变量全解"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Shell 变量全解 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E4%BB%8B%E7%BB%8D"><span class="nav-text">变量介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-text">环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E5%80%BC%E5%8F%98%E9%87%8F"><span class="nav-text">数值变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E7%BB%84"><span class="nav-text">数组</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%95%B0%E7%BB%84%E5%8F%98%E9%87%8F%E6%93%8D%E4%BD%9C"><span class="nav-text">数组变量操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AD%97%E7%AC%A6%E4%B8%B2%E8%BD%AC%E5%8C%96%E4%B8%BA%E6%95%B0%E7%BB%84"><span class="nav-text">字符串转化为数组</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E6%AE%8A%E5%8F%98%E9%87%8F"><span class="nav-text">特殊变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8C%87%E5%AE%9A%E5%8F%98%E9%87%8F%E7%B1%BB%E5%9E%8B%EF%BC%9Atypeset-%E4%B8%8E-declare"><span class="nav-text">指定变量类型：typeset 与 declare</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F%E5%BA%94%E7%94%A8%E4%B8%BE%E4%BE%8B"><span class="nav-text">变量应用举例</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%81%8D%E5%8E%86%E5%AD%97%E7%AC%A6%E4%B8%B2"><span class="nav-text">遍历字符串</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-text">参考文档</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/36017.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Shell 变量全解 | 任建勇的博客">
+      <meta itemprop="description" content="Linux Shell脚本编程中变量使用介绍">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Shell 变量全解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-22T00:00:00+08:00">2018-06-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-19 14:08:57" itemprop="dateModified" datetime="2023-08-19T14:08:57+08:00">2023-08-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Linux Shell脚本编程中变量使用介绍</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="变量介绍"><a href="#变量介绍" class="headerlink" title="变量介绍"></a>变量介绍</h2><p>shell变量是一种很“弱”的变量，默认情况下，一个变量保存一个串，shell不关心这个串是什么含义。所以若要进行数学运算，必须使用一些命令例如let、declare、expr、双括号等。</p>
+<p>shell变量可分为两类：局部变量和环境变量。局部变量只在创建它们的shell中可用。而环境变量则可以在创建它们的shell及其派生出来的任意子进程中使用。有些变量是用户创建的，其他的则是专用shell变量。</p>
+<p>变量名必须以字母或下划线字符开头。其余的字符可以是字母、数字(0~9)或下划线字符。任何其他的字符都标志着变量名的终止。名字是大小写敏感的。</p>
+<p>给变量赋值时，等号周围不能有任何空白符。为了给变量赋空值，可以在等号后跟一个换行符。</p>
+<p>用set命令可以查看所有的变量，unset var命令可以清除变量var，var相当于没有定义过。readonly var可以把var变为只读变量，定义之后不能对var进行任何更改。</p>
+<p>shell变量常见引用方式如下：</p>
+<!-- <style>
+.tablelines table, .tablelines td, .tablelines th {
+        border: 1px solid #C0C0C0;
+        padding: 0.25em;
+        }
+</style> -->
+
+<table>
+<thead>
+<tr>
+<th>引用格式</th>
+<th>含义介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>${var}</td>
+<td>变量值。也可以写成$var，但是不推荐。</td>
+</tr>
+<tr>
+<td>${&#35;var}</td>
+<td>变量长度。例如var=&quot;HelloWorld&quot;，则${&#35;var}返回值为10。 注意，引号””是界定符号，而不是变量中的字符。</td>
+</tr>
+<tr>
+<td>${var:start_index}</td>
+<td>返回从start_index开始一直到字符串结尾。<br/>start_index为0表示从第一个字符开始，<br/>start_index为0-x表示从倒数第x个字符开始。<br/>例如var=&quot;0123456789&quot;。则${var:0}返回&quot;0123456789&quot;，${var:6}返回&quot;6789&quot;，${var:0-3}返回”789”。</td>
+</tr>
+<tr>
+<td>${var:start_index:length}</td>
+<td>返回从start_index开始的length个字符，length可以为负数。var=&quot;0123456789&quot;，${var:2:5}返回&quot;23456&quot;，${var:5:-2}返回&quot;567&quot;（-2表示剩余2个字符不要），${var:0-3:-1}返回&quot;78&quot;。</td>
+</tr>
+<tr>
+<td>${var&#35;string}</td>
+<td>返回从左边删除string后的字符串，尽量短的去匹配。例如var=&quot;https&#xfeff;://127.0.0.1/index.php&quot;， ${var&#35;*/}返回&quot;/127.0.0.1/index.php&quot;</td>
+</tr>
+<tr>
+<td>${var&#35;&#35;string}</td>
+<td>返回从左边删除string后的字符串，尽量长的去匹配。例如var=&quot;https&#xfeff;://127.0.0.1/index.php&quot;，${var&#35;&#35;*/}返回&quot;index.php&quot;</td>
+</tr>
+<tr>
+<td>${var%string}</td>
+<td>返回从右边删除string后的字符串，尽量短的去匹配。例如var=&quot;https&#xfeff;://127.0.0.1/index.php&quot;，${var%/*}返回&quot;https&#xfeff;://127.0.0.1&quot;</td>
+</tr>
+<tr>
+<td>${var%string}</td>
+<td>返回从右边删除string后的字符串，尽量长的去匹配。例如var=&quot;https&#xfeff;://127.0.0.1/index.php&quot;，${var%/*}返回&quot;https:&quot;</td>
+</tr>
+<tr>
+<td>${var:-newstring}</td>
+<td>如果var为空，或者未定义，则返回newstring；否则返回原值。</td>
+</tr>
+<tr>
+<td>${var:=newstring}</td>
+<td>如果var为空，或者未定义，则返回newstring，并把newstring赋值给var；否则返回原值。</td>
+</tr>
+<tr>
+<td>${var:+newstring}</td>
+<td>如果var不为空，则返回newstring；如果var为空，则返回空值。</td>
+</tr>
+<tr>
+<td>${var:?newstring}</td>
+<td>如果var为空或者未定义，则将newstring写入标准错误流，本语句失败；如果var不为空，则返回原值。</td>
+</tr>
+<tr>
+<td>${var/substring/newstring}</td>
+<td>返回var中第一个substring被替换成newstring的字符串。例如var=&quot;2345432&quot;, ${var/3/Hello}返回&quot;2Hello45432&quot;</td>
+</tr>
+<tr>
+<td>${var//substring/newstring}</td>
+<td>返回var中所有substring被替换成newstring的字符串。例如var=&quot;2345432&quot;, ${var//3/Hello}返回&quot;2Hello454Hello2&quot;</td>
+</tr>
+<tr>
+<td>$(command)</td>
+<td>返回command命令执行后的所输出的结果。例如$(date)，返回date命令执行后的输出，同<code>date</code>命令</td>
+</tr>
+<tr>
+<td>$((算数表达式))</td>
+<td>返回双括号中算数运算的结果。例如$((20+5*6))，返回50</td>
+</tr>
+</tbody></table>
+<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>环境变量的定义方法如下：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export var=value</span><br></pre></td></tr></table></figure>
+
+<p>shell在初始化的时候会在执行profile等初始化脚本，脚本中定义了一些环境变量，这些变量会在创建子进程时传递给子进程。<br>用env命令可以查看当前的环境变量。常用的系统环境变量如下：</p>
+<table>
+<thead>
+<tr>
+<th>环境变量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>_</td>
+<td>上一条命令的最后一个参数 <code>$_</code></td>
+</tr>
+<tr>
+<td>BASH</td>
+<td>展开为调用bash实例时使用的全路径名</td>
+</tr>
+<tr>
+<td>CDPATH</td>
+<td>cd命令的搜索路径。它是以冒号分隔的目录列表，shell通过它来搜索cd命令指定的目标目录。例如.:~:/usr</td>
+</tr>
+<tr>
+<td>EDITOR</td>
+<td>内置编辑器emacs、gmacs或vi的路径名</td>
+</tr>
+<tr>
+<td>ENV</td>
+<td>每一个新的bash shell(包括脚本)启动时执行的环境文件。通常赋予这个变量的文件名是.bashrc。</td>
+</tr>
+<tr>
+<td>EUID</td>
+<td>展开为在shell启动时被初始化的当前用户的有效ID</td>
+</tr>
+<tr>
+<td>GROUPS</td>
+<td>当前用户所属的组</td>
+</tr>
+<tr>
+<td>HISTFILE</td>
+<td>指定保存命令行历史的文件。默认值是~/.bash_history。如果被复位，交互式shell退出时将不保存命令行历史</td>
+</tr>
+<tr>
+<td>HISTSIZE</td>
+<td>记录在命令行历史文件中的命令数。默认是500</td>
+</tr>
+<tr>
+<td>HOME</td>
+<td>主目录。未指定目录时，cd命令将转向该目录</td>
+</tr>
+<tr>
+<td>IFS</td>
+<td>内部字段分隔符，一般是空格符、制表符和换行符，用于由命令替换，循环结构中的表和读取的输入产生的词的字段划分</td>
+</tr>
+<tr>
+<td>LANG</td>
+<td>用来为没有以LC_开头的变量明确选取的种类确定locale类</td>
+</tr>
+<tr>
+<td>OLDPWD</td>
+<td>前一个工作目录</td>
+</tr>
+<tr>
+<td>PATH</td>
+<td>命令搜索路径。一个由冒号分隔的目录列表，shell用它来搜索命令，一个普通值为 /usr/gnu/bin:/usr/local/bin:/usr/ucb:/usr/bin</td>
+</tr>
+<tr>
+<td>PPID</td>
+<td>父进程的进程ID</td>
+</tr>
+<tr>
+<td>PS1</td>
+<td>主提示符串，默认值是$</td>
+</tr>
+<tr>
+<td>PS2</td>
+<td>次提示符串，默认值是&gt;</td>
+</tr>
+<tr>
+<td>PS3</td>
+<td>与select命令一起使用的选择提示符串，默认值是&#35;?</td>
+</tr>
+<tr>
+<td>PS4</td>
+<td>当开启追踪时使用的调试提示符串，默认值是+。追踪可以用set –x开启</td>
+</tr>
+<tr>
+<td>PWD</td>
+<td>当前工作目录。由cd设置</td>
+</tr>
+<tr>
+<td>RANDOM</td>
+<td>每次引用该变量，就产生一个随机整数。随机数序列可以通过给RANDOM赋值来初始化。如果RANDOM被复位，即使随后再设置，它也将失去特定的属性</td>
+</tr>
+<tr>
+<td>REPLY</td>
+<td>当没有给read提供参数时设置</td>
+</tr>
+<tr>
+<td>SHELL</td>
+<td>当调用shell时，它扫描环境变量以寻找该名字。shell给PATH、PS1、PS2、MAILCHECK和IFS设置默认值。HOME和MAIL由login(1)设置</td>
+</tr>
+<tr>
+<td>SHELLOPTS</td>
+<td>包含一列开启的shell选项，比如braceexpand、hashall、monitor等</td>
+</tr>
+<tr>
+<td>UID</td>
+<td>展开为当前用户的用户ID，在shell启动时初始化</td>
+</tr>
+</tbody></table>
+<p>可以为某个命令单独设置环境变量，而不会影响后续的命令执行，比如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LD_LIBRARY_PATH=./lib:$LD_LIBRARY_PATH ./make_ext4fs</span><br></pre></td></tr></table></figure>
+
+<h2 id="数值变量"><a href="#数值变量" class="headerlink" title="数值变量"></a>数值变量</h2><p>shell中默认把变量值当作字符串，例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">age=22</span><br><span class="line">age=<span class="variable">$&#123;age&#125;</span>+1</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;age&#125;</span> </span><br></pre></td></tr></table></figure>
+
+<p>输出结果为22+1，而不是23，因为shell将其解释为字符串，而不是数学运算。</p>
+<p>可以用let命令使其进行数学运算，例如：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">let age=$&#123;age&#125;+1</span><br></pre></td></tr></table></figure>
+
+<p>也可以用typeset或者declare把变量定义为整型。例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">typeset</span> -i age=22     </span><br><span class="line">age=<span class="variable">$&#123;age&#125;</span>+1</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;age&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>typeset的 -i 选项把age定义为整型的了。此后每次运算，都把age的右值识别为算术表达式或数字。最终的输出结果是23</p>
+<h2 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h2><p>在shell中可以使用数组，例如：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">array[0]=0</span><br><span class="line">array[1]=1</span><br><span class="line">array[2]=2</span><br></pre></td></tr></table></figure>
+
+<p>则array就是一个数组，也可以这样给数组初始化：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">array=(0 1 2) // 元素之间以空格分隔</span><br></pre></td></tr></table></figure>
+
+<h3 id="数组变量操作"><a href="#数组变量操作" class="headerlink" title="数组变量操作"></a>数组变量操作</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>介绍</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#36;{array[$*]}</td>
+<td>访问array中某个元素</td>
+</tr>
+<tr>
+<td>&#36;{&#35;array[*]}</td>
+<td>返回数组元素个数</td>
+</tr>
+<tr>
+<td>&#36;{array[*]} <br> &#36;{array[@]}</td>
+<td>的返回值即数组的所有元素组成的串</td>
+</tr>
+<tr>
+<td>&#36;{array[*]:0:2}</td>
+<td>返回第一个和第二个元素组成的串。0表示开始的位置，2表示要返回的元素个数，开始位置可以为0-2(0减去2)之类的，表示从倒数第二个元素开始。</td>
+</tr>
+<tr>
+<td>&#36;array[&#36;{&#35;array[*]}]=value</td>
+<td>追加数组元素</td>
+</tr>
+<tr>
+<td>unset array[$i]</td>
+<td>删除某个数组元素</td>
+</tr>
+<tr>
+<td>unset array</td>
+<td>删除整个数据</td>
+</tr>
+</tbody></table>
+<p>下面写个稍微复杂点的例子：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> ((i=<span class="number">0</span>; i&lt;<span class="number">100</span>; i++))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    array[<span class="variable">$i</span>]=<span class="variable">$i</span></span><br><span class="line"><span class="keyword">done</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> ((i=<span class="number">0</span>; i&lt;<span class="number">100</span>; i++))</span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$&#123;array[$i]&#125;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="字符串转化为数组"><a href="#字符串转化为数组" class="headerlink" title="字符串转化为数组"></a>字符串转化为数组</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">str=<span class="string">&quot;one two three four&quot;</span></span><br><span class="line">arr=(<span class="variable">$str</span>)</span><br></pre></td></tr></table></figure>
+
+<p><strong>如果字符串分隔符不是空格，则采用下面方法分割成数组：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/sh</span></span><br><span class="line">str=<span class="string">&quot;one,two,three,four&quot;</span></span><br><span class="line">OLD_IFS=<span class="string">&quot;<span class="variable">$IFS</span>&quot;</span></span><br><span class="line">IFS=<span class="string">&quot;,&quot;</span></span><br><span class="line">arr=(<span class="variable">$str</span>)</span><br><span class="line">IFS=<span class="string">&quot;<span class="variable">$OLD_IFS</span>&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> var <span class="keyword">in</span> <span class="variable">$&#123;arr[@]&#125;</span></span><br><span class="line"><span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">&quot;<span class="variable">$var</span>&quot;</span></span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<p>OLD_IFS用于保存原分隔符，用于后续恢复。</p>
+<h2 id="特殊变量"><a href="#特殊变量" class="headerlink" title="特殊变量"></a>特殊变量</h2><table>
+<thead>
+<tr>
+<th>变量</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>$0</td>
+<td>当前脚本的文件名</td>
+</tr>
+<tr>
+<td>$n</td>
+<td><strong>n</strong>是正整数。<code>$0</code>当前脚本名称，<code>$1</code>是第一个参数，<code>$2</code>是第二个参数，等等</td>
+</tr>
+<tr>
+<td>$#</td>
+<td>传入脚本的参数的个数</td>
+</tr>
+<tr>
+<td>$*</td>
+<td>所有的位置参数(作为单个字符串)</td>
+</tr>
+<tr>
+<td>$@</td>
+<td>所有的位置参数(每个都作为独立的字符串)。</td>
+</tr>
+<tr>
+<td>$?</td>
+<td>当前shell进程中，上一个命令的返回值，如果上一个命令成功执行则$?的值为0，否则为其他非零值，常用做if语句条件</td>
+</tr>
+<tr>
+<td>$$</td>
+<td>当前shell进程的pid</td>
+</tr>
+<tr>
+<td>$!</td>
+<td>后台运行的最后一个进程的pid</td>
+</tr>
+<tr>
+<td>$-</td>
+<td>显示shell使用的当前选项</td>
+</tr>
+<tr>
+<td>$_</td>
+<td>之前命令的最后一个参数</td>
+</tr>
+</tbody></table>
+<p><code>$*</code>和<code>$@</code>都表示传给脚本或者函数的参数列表，当使用双引号包裹时，<code>&quot;$*&quot;</code>是一个字符串，而<code>&quot;$@&quot;</code>则像一个数组：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">for var in &quot;$*&quot;;do</span><br><span class="line">    echo $var</span><br><span class="line">done</span><br><span class="line">echo &quot;-------------&quot;</span><br><span class="line">for var in &quot;$@&quot;;do</span><br><span class="line">    echo $var</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p>上述代码输入结果为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ ./test.sh xxx yyy zzz</span><br><span class="line">xxx yyy zzz</span><br><span class="line">-------------</span><br><span class="line">xxx</span><br><span class="line">yyy</span><br><span class="line">zzz</span><br></pre></td></tr></table></figure>
+
+<h2 id="指定变量类型：typeset-与-declare"><a href="#指定变量类型：typeset-与-declare" class="headerlink" title="指定变量类型：typeset 与 declare"></a>指定变量类型：typeset 与 declare</h2><p>declare和typeset是bash的内建命令，它们是完全相同的，可以用来限定变量的属性，如整型、大小写、宽度、左右对齐等。这是在某些编程语言中使用的定义类型不严格的方式。<br>当用typeset或declare改变一个变量的属性时,这种改变是永久的。<br>命令declare是bash版本2之后才有的，命令typeset也可以在ksh脚本中运行。</p>
+<p>常用命令参数：</p>
+<ul>
+<li>-r 设置变量为只读</li>
+<li>-i 设置变量为整数</li>
+<li>-a 设置变量为数组array</li>
+<li>-f 如果后面没有参数的话会列出之前脚本定义的所有函数，如果有参数的话列出以参数命名的函数</li>
+<li>-x 设置变量在脚本外也可以访问到</li>
+<li>-u 将一个变量的字符变成大写</li>
+<li>-l 将一个变量的字符变成小写</li>
+</ul>
+<h2 id="变量应用举例"><a href="#变量应用举例" class="headerlink" title="变量应用举例"></a>变量应用举例</h2><h3 id="遍历字符串"><a href="#遍历字符串" class="headerlink" title="遍历字符串"></a>遍历字符串</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">local</span> var=<span class="variable">$1</span></span><br><span class="line"><span class="built_in">local</span> len=<span class="variable">$&#123;&amp;#35;var&#125;</span></span><br><span class="line"><span class="built_in">local</span> i=0</span><br><span class="line"><span class="keyword">while</span> [ <span class="variable">$i</span> -lt <span class="variable">$len</span> ];<span class="keyword">do</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="variable">$&#123;var:$i:1&#125;</span></span><br><span class="line">    <span class="built_in">typeset</span> i=$((i+<span class="number">1</span>))</span><br><span class="line"><span class="keyword">done</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://mywiki.wooledge.org/BashFAQ/054">How can I tell whether a variable contains a valid number?</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/shell/" rel="tag"># shell</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/41513.html" rel="next" title="代码调试之打印堆栈">
+                  代码调试之打印堆栈 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

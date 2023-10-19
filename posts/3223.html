@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="Git 常用命令">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Git 常用命令">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/3223.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="Git 常用命令">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-07-24T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-08-17T01:46:48.304Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="Git">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/3223.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/3223.html","path":"posts/3223.html","title":"Git 常用命令"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Git 常用命令 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE"><span class="nav-text">常用全局配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%94%A8%E6%88%B7%E4%BF%A1%E6%81%AF"><span class="nav-text">配置用户信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%88%AB%E5%90%8D"><span class="nav-text">配置别名</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E7%BC%96%E8%BE%91%E5%99%A8vim"><span class="nav-text">配置编辑器vim</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%A0%81%E5%90%88%E5%B9%B6%E5%B7%A5%E5%85%B7"><span class="nav-text">配置代码合并工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E9%AB%98%E4%BA%AE%E6%98%BE%E7%A4%BA"><span class="nav-text">配置高亮显示</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E9%85%8D%E7%BD%AE"><span class="nav-text">查看所有配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%BB%A3%E7%A0%81"><span class="nav-text">下载代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E5%8D%95%E4%B8%AA%E5%88%86%E6%94%AF"><span class="nav-text">下载单个分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E6%93%8D%E4%BD%9C"><span class="nav-text">分支操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E4%BB%A3%E7%A0%81%E5%8E%86%E5%8F%B2"><span class="nav-text">查看代码历史</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E6%9C%AA%E6%8F%90%E4%BA%A4%E7%9A%84commit"><span class="nav-text">查看本地未提交的commit</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9F%90%E6%AC%A1commit%E5%90%8E%E7%9A%84%E6%8F%90%E4%BA%A4"><span class="nav-text">查看某次commit后的提交</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E5%B9%B6%E6%8F%90%E4%BA%A4"><span class="nav-text">修改代码并提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9E%E9%80%80%E4%BB%A3%E7%A0%81"><span class="nav-text">回退代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%88%E5%B9%B6%E5%88%86%E6%94%AF"><span class="nav-text">合并分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%A3%E5%86%B3%E5%86%B2%E7%AA%81"><span class="nav-text">解决冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E6%9C%AC%E5%9C%B0%E5%88%86%E6%94%AF%E8%B7%9F%E8%B8%AA%E7%9A%84%E8%BF%9C%E7%A8%8B%E5%88%86%E6%94%AF"><span class="nav-text">查看本地分支跟踪的远程分支</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-text">参考链接</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/3223.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Git 常用命令 | 任建勇的博客">
+      <meta itemprop="description" content="Git 常用命令">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Git 常用命令
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-25 00:00:00" itemprop="dateCreated datePublished" datetime="2018-07-25T00:00:00+08:00">2018-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 09:46:48" itemprop="dateModified" datetime="2023-08-17T09:46:48+08:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">代码管理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Git 常用命令</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="常用全局配置"><a href="#常用全局配置" class="headerlink" title="常用全局配置"></a>常用全局配置</h2><p>git配置使用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-config">git config</a>来完成。</p>
+<h3 id="配置用户信息"><a href="#配置用户信息" class="headerlink" title="配置用户信息"></a>配置用户信息</h3><p>要配置成自己的真实用户名（姓名全拼）和邮箱</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;John Doe&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;johndoe@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置别名"><a href="#配置别名" class="headerlink" title="配置别名"></a>配置别名</h3><p>比如<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-checkout">git checkout</a>通过配置别名，可以使用git co来达到<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-checkout">git checkout</a>的效果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.co checkout</span><br><span class="line">git config --global alias.br branch</span><br><span class="line">git config --global alias.ci commit</span><br><span class="line">git config --global alias.st status</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置编辑器vim"><a href="#配置编辑器vim" class="headerlink" title="配置编辑器vim"></a>配置编辑器vim</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.editor vim</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置代码合并工具"><a href="#配置代码合并工具" class="headerlink" title="配置代码合并工具"></a>配置代码合并工具</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global merge.tool vimdiff</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置高亮显示"><a href="#配置高亮显示" class="headerlink" title="配置高亮显示"></a>配置高亮显示</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git config --global color.ui <span class="literal">true</span></span><br><span class="line">git config --global color.status auto</span><br><span class="line">git config --global color.branch auto</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看所有配置"><a href="#查看所有配置" class="headerlink" title="查看所有配置"></a>查看所有配置</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --list</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载代码"><a href="#下载代码" class="headerlink" title="下载代码"></a>下载代码</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/libgit2/libgit2</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/libgit2/libgit2 -b &lt;branch name&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="下载单个分支"><a href="#下载单个分支" class="headerlink" title="下载单个分支"></a>下载单个分支</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/libgit2/libgit2 -b master --single-branch</span><br></pre></td></tr></table></figure>
+
+<p>查看工程下的.git/config文件可以看到下面一句“fetch = +refs/heads/dev:refs/remotes/origin/master”，表示只拉取一个分支。</p>
+<p>如果还想在工程中拉取其他分支，比如develop，则可以执行命令<code>git remote set-branches --add origin develop</code><br>参考链接：<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/book/en/v2/Git-Internals-The-Refspec">Git Internals - The Refspec</a></p>
+<h2 id="分支操作"><a href="#分支操作" class="headerlink" title="分支操作"></a>分支操作</h2><p>创建一个名为new_branch的分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch new_branch  </span><br></pre></td></tr></table></figure>
+
+<p>创建本地branch_name分支，并且跟踪远端仓库的同名分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -t remote/branch_name</span><br></pre></td></tr></table></figure>
+
+<p>删除本地分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch -D branch_name</span><br></pre></td></tr></table></figure>
+<p>删除远端remote仓库的名为branch_name的分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push remote :branch_name</span><br></pre></td></tr></table></figure>
+<p>从一个分支切到另一个分支，注意此分支必须是已经有的分支</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout branch</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看代码历史"><a href="#查看代码历史" class="headerlink" title="查看代码历史"></a>查看代码历史</h2><h3 id="查看本地未提交的commit"><a href="#查看本地未提交的commit" class="headerlink" title="查看本地未提交的commit"></a>查看本地未提交的commit</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> @&#123;u&#125;..</span><br></pre></td></tr></table></figure>
+
+<p>或者</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> origin/master..HEAD</span><br></pre></td></tr></table></figure>
+
+<h3 id="查看某次commit后的提交"><a href="#查看某次commit后的提交" class="headerlink" title="查看某次commit后的提交"></a>查看某次commit后的提交</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log 4341b6229727799a90305c0f3e909470c527351f..HEAD</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改代码并提交"><a href="#修改代码并提交" class="headerlink" title="修改代码并提交"></a>修改代码并提交</h2><ol>
+<li><p>代码修改后，可以通过如下命令将修改的代码标记为track状态（可根据实际情况选择其中一条或者多条命令)。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git add &lt;files...&gt;</span><br><span class="line">git <span class="built_in">mv</span> &lt;old&gt; &lt;new&gt;</span><br><span class="line">git <span class="built_in">rm</span> &lt;files...&gt;</span><br><span class="line">git <span class="built_in">rm</span> -r &lt;<span class="built_in">dirs</span>...&gt;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将标记为track状态的文件提交</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit</span><br></pre></td></tr></table></figure>
+
+<p> 提交修改，该命令会调用编辑器用于书写log信息。也可使使用<code>git commit     -m &quot;commit messages&quot;</code></p>
+</li>
+<li><p>提交代码到远程仓库<br> 如果本地分支已经配置为跟踪远端分支（比如：git co -t origin/develop)，可以直接使用<code>git push</code>。如果还没有设置跟踪远端分支，则需要使用下面命令：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push remote branch</span><br></pre></td></tr></table></figure>
+
+<p> remote 表示远程仓库名称，branch表示分支名称。此命令只适用于本地仓库与远程仓库同名的情况。当分支名称不同是，需要同时指定本地分支和远端分支。</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push remote local_branch:remote_branch</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<h2 id="回退代码"><a href="#回退代码" class="headerlink" title="回退代码"></a>回退代码</h2><p>回退代码会用到git的reset和checkout两个指令：</p>
+<ul>
+<li><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-reset">git reset</a> 是把本地代码回退掉，要切到最新，则需要通过<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-pull">git pull</a>拉取服务器上的最新代码；一般只有在需要永远放弃某些修改的情况下，才使用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-reset">git reset</a>命令。</p>
+</li>
+<li><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-checkout">git checkout</a> 是切到过去的时间点，还可以切换来。相当于切到了一个新的分支，还可以切换原来分支。</p>
+</li>
+<li><p>*注意**，本节的示例中的所有<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-reset">git reset</a>都可以可以换成<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-checkout">git checkout</a>。</p>
+</li>
+<li><p>将代码回退到三天前</p>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$ git <span class="built_in">log</span> --before=<span class="string">&quot;3 days&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span></span><br><span class="line">619ee7a53952d4c94270aa39e9ecdf9ac3aca473</span><br><span class="line">$ git reset --hard 619ee7a53952d4c94270aa39e9ecdf9ac3aca473</span><br></pre></td></tr></table></figure>
+
+<p>也可以合起来用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --before=<span class="string">&quot;3 days&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span> | xargs git reset --hard</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>回退代码到某一天</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --before=<span class="string">&quot;2013-10-10&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span> | xargs git reset --hard</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>回退代码到某一天的某个时间点</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --before=<span class="string">&quot;2013-10-10 09:15:00 +0800&quot;</span> -1 --pretty=format:<span class="string">&quot;%H&quot;</span> | xargs git    checkout</span><br></pre></td></tr></table></figure>
+
+<p>  其中 +0800 表示东八区时间</p>
+</li>
+<li><p>查看某个时间段的日志</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span> --since=<span class="string">&quot;2013-10-10 09:15:00 +0800&quot;</span> --before=<span class="string">&quot;2013-10-10 23:59:00 +0800&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>将服务器代码回退到某个点并提交到某个分支（服务器回退不可恢复，确保准确后回退，做好备份）</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard commit_id</span><br><span class="line">git push --force sunniwell base</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="合并分支"><a href="#合并分支" class="headerlink" title="合并分支"></a>合并分支</h2><p>合并分支前提是需要相同SDK中的不同分支。</p>
+<ul>
+<li><p>把另外一个分支的所有修改快速合并。并提交到一个分支上</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge --no-ff</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>把另外一个分支的单个commit 合并到当前分支，并提交单个分支，有冲突查看“HEAD”关键字</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git cherry-pick &lt;commit&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="解决冲突"><a href="#解决冲突" class="headerlink" title="解决冲突"></a>解决冲突</h2><p>合并分支时难免会产生冲突。冲突发生后分为如下两种情况进行处理：</p>
+<ul>
+<li><strong>文本文件冲突</strong> 可以通过git mergetool命令编辑冲突文件；</li>
+<li><strong>二进制文件冲突</strong> 时就无法合并了，要么使用被合并分支的该文件，要么就采用当前分支的该文件。<br>比如仓库下面的“path/lib_file.so”冲突了。则可以通过如下命令选择采用哪个分支的文件：  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git show branch_name:path/lib_file.so &gt; path/lib_file.so</span><br></pre></td></tr></table></figure>
+  命令中的第一个path/lib_file.so必须是对应的git仓库根目录的路径，第二个path/lib_file.so则是当前目录的相对路径。<h2 id="查看本地分支跟踪的远程分支"><a href="#查看本地分支跟踪的远程分支" class="headerlink" title="查看本地分支跟踪的远程分支"></a>查看本地分支跟踪的远程分支</h2></li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git rev-parse --abbrev-ref --symbolic-full-name @&#123;upstream&#125;</span><br></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverflow.com/questions/171550/find-out-which-remote-branch-a-local-branch-is-tracking">Find out which remote branch a local branch is tracking</a></p>
+<h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/book/en/v2">Pro Git book</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Git/" rel="tag"># Git</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/21595.html" rel="prev" title="Linux清理Cached内存">
+                  <i class="fa fa-angle-left"></i> Linux清理Cached内存
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/62746.html" rel="next" title="Excel常用函数算法">
+                  Excel常用函数算法 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
