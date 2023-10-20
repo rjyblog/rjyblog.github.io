@@ -150,7 +150,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -161,7 +161,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -178,6 +178,110 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/faedbb97.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/faedbb97.html" class="post-title-link" itemprop="url">LeakCanary源码详解</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-09-12 15:27:58" itemprop="dateCreated datePublished" datetime="2023-09-12T15:27:58+08:00">2023-09-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-10-18 10:25:18" itemprop="dateModified" datetime="2023-10-18T10:25:18+08:00">2023-10-18</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">LeakCanary源码详解</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文基于LeakCanary 2.12进行分析。</p>
+<img src="\assert\puml\5956ed6f46404b9ae4f0a580bdbdd8c8aa7a05645c598e56d57926aa4dc676c6.svg">
+
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>引入LeakCanary时，只需要引入maven库的坐标即可，如下：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">dependencies</span> &#123;</span><br><span class="line">  <span class="comment">// debugImplementation because LeakCanary should only run in debug builds.</span></span><br><span class="line">  debugImplementation <span class="string">&#x27;com.squareup.leakcanary:leakcanary-android:2.12&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>而不需要进行任何的代码改动就可以使用LeakCanary了。另外，引入leakcanary时使用的是debugImplementation表示只在debug版本中才会集成leakcanary，release版本不会集成。</p>
+<p>那么，leakcanary如何完成初始化呢？</p>
+<p>leakcanary使用了<code>ContentProvider</code>来进行初始化，当app启动时系统会自动初始化注册的ContentProvider。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">application</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">provider</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:name</span>=<span class="string">&quot;leakcanary.internal.MainProcessAppWatcherInstaller&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:authorities</span>=<span class="string">&quot;$&#123;applicationId&#125;.leakcanary-installer&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:enabled</span>=<span class="string">&quot;@bool/leak_canary_watcher_auto_install&quot;</span></span></span><br><span class="line"><span class="tag">      <span class="attr">android:exported</span>=<span class="string">&quot;false&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">internal</span> <span class="keyword">class</span> <span class="title class_">MainProcessAppWatcherInstaller</span> : <span class="type">ContentProvider</span>() &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">onCreate</span><span class="params">()</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    <span class="keyword">val</span> application = context!!.applicationContext <span class="keyword">as</span> Application</span><br><span class="line">    AppWatcher.manualInstall(application)</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">  &#125;</span><br><span class="line">  ......</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/faedbb97.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1104,118 +1208,6 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/posts/8e83ed63.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/6e2b1d41.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Jason">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="任建勇的博客">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 任建勇的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/6e2b1d41.html" class="post-title-link" itemprop="url">okhttp详解系列三：桥拦截器 BridgeInterceptor</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2023-08-19 15:08:00" itemprop="dateCreated datePublished" datetime="2023-08-19T15:08:00+08:00">2023-08-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-09-21 10:47:28" itemprop="dateModified" datetime="2023-09-21T10:47:28+08:00">2023-09-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/okhttp/" itemprop="url" rel="index"><span itemprop="name">okhttp</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-            <div class="post-description">桥拦截器主要用于用户和网络数据之间的转换</div>
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <ul>
-<li><a href="/posts/78efaca4.html" title="okhttp详解系列一：开篇">okhttp详解系列一：开篇</a></li>
-<li><a href="/posts/8e83ed63.html" title="okhttp详解系列二：重试重定向拦截器">okhttp详解系列二：重试重定向拦截器</a></li>
-<li><a href="/posts/6e2b1d41.html" title="okhttp详解系列三：桥拦截器 BridgeInterceptor">okhttp详解系列三：桥拦截器 BridgeInterceptor</a></li>
-<li><a href="/posts/37107c2e.html" title="okhttp详解系列四：缓存拦截器">okhttp详解系列四：缓存拦截器</a></li>
-<li><a href="/posts/ee27d764.html" title="okhttp详解系列五：连接拦截器 ConnectInterceptor">okhttp详解系列五：连接拦截器 ConnectInterceptor</a></li>
-<li><a href="/posts/73cf04e1.html" title="okhttp详解系列六：服务请求拦截器 CallServerInterceptor">okhttp详解系列六：服务请求拦截器 CallServerInterceptor</a>
-
-</li>
-</ul>
-<p>BridgeInterceptor拦截器简要描述一下就是做了如下三件事：</p>
-<ol>
-<li>首先会把用户的Request进行进一步的处理（处理request header），转换成真正请求网络的Request；</li>
-<li>然后继续调用其他拦截器进行网络请求；</li>
-<li>最后收到响应结果后保存cookie，并解压缩gzip，最终转换为用户的Response。</li>
-</ol>
-<h2 id="BridgeInterceptor处理时序"><a href="#BridgeInterceptor处理时序" class="headerlink" title="BridgeInterceptor处理时序"></a>BridgeInterceptor处理时序</h2><img src="\assert\puml\32437250f75aac68862c54a192a5fb365677ab4ca798da7b4b061697580b6eef.svg">
-
-<p>从上述流程可以看出BridgeInterceptor拦截器的处理逻辑比较简单。</p>
-
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/6e2b1d41.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

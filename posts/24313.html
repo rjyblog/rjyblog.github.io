@@ -28,7 +28,7 @@
 <meta property="og:description" content="Android APK反编译工具使用介绍">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2019-05-09T16:00:00.000Z">
-<meta property="article:modified_time" content="2023-08-17T01:46:48.253Z">
+<meta property="article:modified_time" content="2023-10-20T02:04:04.102Z">
 <meta property="article:author" content="Jason">
 <meta property="article:tag" content="Android">
 <meta property="article:tag" content="Android调试">
@@ -141,7 +141,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="nav-text">使用的工具</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8F%90%E5%8F%96APK%E4%B8%AD%E7%9A%84%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6"><span class="nav-text">提取APK中的资源文件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#dex%E8%BD%AC%E6%8D%A2%E4%B8%BAjar"><span class="nav-text">dex转换为jar</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-text">参考文档</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="nav-text">使用的工具</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dex%E8%BD%AC%E6%8D%A2%E4%B8%BAjar"><span class="nav-text">dex转换为jar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%8D%E7%BC%96%E8%AF%91%E4%B8%BASmali"><span class="nav-text">反编译为Smali</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8F%96APK%E4%B8%AD%E7%9A%84%E8%B5%84%E6%BA%90%E6%96%87%E4%BB%B6"><span class="nav-text">提取APK中的资源文件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E6%A1%A3"><span class="nav-text">参考文档</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -156,7 +156,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-count">53</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -167,7 +167,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-count">21</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -230,7 +230,7 @@
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-17 09:46:48" itemprop="dateModified" datetime="2023-08-17T09:46:48+08:00">2023-08-17</time>
+      <time title="修改时间：2023-10-20 10:04:04" itemprop="dateModified" datetime="2023-10-20T10:04:04+08:00">2023-10-20</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -252,20 +252,23 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h1><ul>
+    <div class="post-body" itemprop="articleBody"><h2 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h2><ul>
 <li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://ibotpeaches.github.io/Apktool/">apktool</a></li>
 <li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/pxb1988/dex2jar">dex2jar</a></li>
 <li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/java-decompiler/jd-gui">JD-GUI</a></li>
 </ul>
-<h1 id="提取APK中的资源文件"><a href="#提取APK中的资源文件" class="headerlink" title="提取APK中的资源文件"></a>提取APK中的资源文件</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar apktool_2.1.0.jar decode app.apk</span><br></pre></td></tr></table></figure>
+<h2 id="dex转换为jar"><a href="#dex转换为jar" class="headerlink" title="dex转换为jar"></a>dex转换为jar</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d2j-dex2jar.sh -f ~/path/to/apk_to_decompile.apk</span><br></pre></td></tr></table></figure>
 
-<h1 id="dex转换为jar"><a href="#dex转换为jar" class="headerlink" title="dex转换为jar"></a>dex转换为jar</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">d2j-dex2jar.sh -f ~/path/to/apk_to_decompile.apk</span><br></pre></td></tr></table></figure>
 <p>生成jar包后，需要使用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/java-decompiler/jd-gui">JD-GUI</a>打开查看</p>
 <p>在macos上打开JD-GUI可能会报下面错误：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">No suitable Java version found on your system!</span><br><span class="line">This program requires Java 1.8+</span><br><span class="line">Make sure you install the required Java version.</span><br></pre></td></tr></table></figure>
 
 <p>解决方案：在JD-GUI应用程序右击，然后选择“显示包内容”，然后打开<code>Contents/MacOS/universalJavaApplicationStub.sh</code>文件，找到这个报错的打印位置，把JAVA_HOME赋值为jdk home路径即可。</p>
-<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul>
+<h2 id="反编译为Smali"><a href="#反编译为Smali" class="headerlink" title="反编译为Smali"></a>反编译为Smali</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar apktool_2.8.1.jar decode -o apk_smali app.apk</span><br></pre></td></tr></table></figure>
+
+<h2 id="提取APK中的资源文件"><a href="#提取APK中的资源文件" class="headerlink" title="提取APK中的资源文件"></a>提取APK中的资源文件</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -jar apktool_2.8.1.jar decode app.apk</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
 <li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://segmentfault.com/a/1190000004703783">apk包的破解与反编译</a></li>
 </ul>
 

@@ -1,6 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Excel常用函数算法</title>
+    <url>/posts/62746.html</url>
+    <content><![CDATA[<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
+<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Office</category>
+      </categories>
+      <tags>
+        <tag>Excel</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>算法复杂度</title>
+    <url>/posts/30614.html</url>
+    <content><![CDATA[]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
+    <title>Red Black Tree</title>
+    <url>/posts/2588.html</url>
+    <content><![CDATA[<h2 id="红黑树的定义"><a href="#红黑树的定义" class="headerlink" title="红黑树的定义"></a>红黑树的定义</h2><p>红黑树是一种自平衡二进制搜索树。每个节点存储一个代表颜色的标记位，用于在数的插入和删除期间保持数的近似平衡。红黑树是一个特殊的二叉树，用于组织可以进行比较的数据元素。</p>
+<h2 id="红黑树的特点"><a href="#红黑树的特点" class="headerlink" title="红黑树的特点"></a>红黑树的特点</h2><ol>
+<li>每个节点都必须是红色或者黑色；</li>
+<li>跟节点是黑色。这条规则有时会被忽略，因为跟节点始终可以从红色变为黑色，但反过来就不一定成立。该规则对数据分析影响很小；</li>
+<li>所有叶子节点（包括空节点）都是黑色；</li>
+<li>红色节点的子节点都是黑色；</li>
+<li>从给定节点到其任何后代NIL节点的每条路径都经过相同数量的黑色节点；</li>
+</ol>
+<p>参考链接：</p>
+<ul>
+<li><a href="https://xlinux.nist.gov/dads/HTML/redblack.html">https://xlinux.nist.gov/dads/HTML/redblack.html</a></li>
+<li><a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">https://en.wikipedia.org/wiki/Red%E2%80%93black_tree</a></li>
+<li><a href="https://medium.com/@kevinsmavani007/red-black-tree-47e3249cf17">https://medium.com/@kevinsmavani007/red-black-tree-47e3249cf17</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>数据结构</category>
+      </categories>
+  </entry>
+  <entry>
     <title>GraphViz dot</title>
     <url>/posts/34020.html</url>
     <content><![CDATA[<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>在线编译工具：<a href="http://viz-js.com/">http://viz-js.com</a><br>VSCode安装插件：<a href="https://marketplace.visualstudio.com/items?itemName=joaompinto.vscode-graphviz">Graphviz (dot) language support for Visual Studio Code</a><br>命令行：dot，比如，<code>dot -Tpng -ofile.png file.dot</code>可以导出图片。在Ubuntu系统中，通过<code>sudo apt install graphviz</code>安装即可使用。</p>
@@ -1012,20 +1055,23 @@ void main(int argc, char* argv[]) { <br>
   <entry>
     <title>APK 反编译</title>
     <url>/posts/24313.html</url>
-    <content><![CDATA[<h1 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h1><ul>
+    <content><![CDATA[<h2 id="使用的工具"><a href="#使用的工具" class="headerlink" title="使用的工具"></a>使用的工具</h2><ul>
 <li><a href="https://ibotpeaches.github.io/Apktool/">apktool</a></li>
 <li><a href="https://github.com/pxb1988/dex2jar">dex2jar</a></li>
 <li><a href="https://github.com/java-decompiler/jd-gui">JD-GUI</a></li>
 </ul>
-<h1 id="提取APK中的资源文件"><a href="#提取APK中的资源文件" class="headerlink" title="提取APK中的资源文件"></a>提取APK中的资源文件</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">java -jar apktool_2.1.0.jar decode app.apk</span><br></pre></td></tr></table></figure>
+<h2 id="dex转换为jar"><a href="#dex转换为jar" class="headerlink" title="dex转换为jar"></a>dex转换为jar</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">d2j-dex2jar.sh -f ~/path/to/apk_to_decompile.apk</span><br></pre></td></tr></table></figure>
 
-<h1 id="dex转换为jar"><a href="#dex转换为jar" class="headerlink" title="dex转换为jar"></a>dex转换为jar</h1><figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">d2j-dex2jar.sh -f ~/path/to/apk_to_decompile.apk</span><br></pre></td></tr></table></figure>
 <p>生成jar包后，需要使用<a href="https://github.com/java-decompiler/jd-gui">JD-GUI</a>打开查看</p>
 <p>在macos上打开JD-GUI可能会报下面错误：</p>
 <figure class="highlight text"><table><tr><td class="code"><pre><span class="line">No suitable Java version found on your system!</span><br><span class="line">This program requires Java 1.8+</span><br><span class="line">Make sure you install the required Java version.</span><br></pre></td></tr></table></figure>
 
 <p>解决方案：在JD-GUI应用程序右击，然后选择“显示包内容”，然后打开<code>Contents/MacOS/universalJavaApplicationStub.sh</code>文件，找到这个报错的打印位置，把JAVA_HOME赋值为jdk home路径即可。</p>
-<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><ul>
+<h2 id="反编译为Smali"><a href="#反编译为Smali" class="headerlink" title="反编译为Smali"></a>反编译为Smali</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">java -jar apktool_2.8.1.jar decode -o apk_smali app.apk</span><br></pre></td></tr></table></figure>
+
+<h2 id="提取APK中的资源文件"><a href="#提取APK中的资源文件" class="headerlink" title="提取APK中的资源文件"></a>提取APK中的资源文件</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">java -jar apktool_2.8.1.jar decode app.apk</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><ul>
 <li><a href="https://segmentfault.com/a/1190000004703783">apk包的破解与反编译</a></li>
 </ul>
 ]]></content>
@@ -1036,6 +1082,17 @@ void main(int argc, char* argv[]) { <br>
         <tag>Android</tag>
         <tag>Android调试</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>Android应用进程启动流程</title>
+    <url>/posts/60405.html</url>
+    <content><![CDATA[<p>本文基于Android8.0源码。</p>
+<h2 id="启动流程图"><a href="#启动流程图" class="headerlink" title="启动流程图"></a>启动流程图</h2><p>点击可以看大图</p>
+<img src="\assert\puml\bceee7f8f98a1f5a87e9585d4db2fefcf02b74c433296d3df894ada43a7b8e44.svg"/>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
   </entry>
   <entry>
     <title>ARouter源码分析</title>
@@ -1099,17 +1156,6 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
-    <title>Android应用进程启动流程</title>
-    <url>/posts/60405.html</url>
-    <content><![CDATA[<p>本文基于Android8.0源码。</p>
-<h2 id="启动流程图"><a href="#启动流程图" class="headerlink" title="启动流程图"></a>启动流程图</h2><p>点击可以看大图</p>
-<img src="\assert\puml\bceee7f8f98a1f5a87e9585d4db2fefcf02b74c433296d3df894ada43a7b8e44.svg"/>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-  </entry>
-  <entry>
     <title>Android Activity启动流程</title>
     <url>/posts/11962.html</url>
     <content><![CDATA[<h2 id="startActivity流程"><a href="#startActivity流程" class="headerlink" title="startActivity流程"></a>startActivity流程</h2><img src="\assert\puml\34dd05df4ed54863846b43ec36d5097ed7c99496711c17b18b965704f888be84.svg"/>
@@ -1121,6 +1167,49 @@ void main(int argc, char* argv[]) { <br>
       <categories>
         <category>Android</category>
       </categories>
+  </entry>
+  <entry>
+    <title>Android Jni开发指南</title>
+    <url>/posts/936e646.html</url>
+    <content><![CDATA[<h2 id="现有项目添加C-C-源码"><a href="#现有项目添加C-C-源码" class="headerlink" title="现有项目添加C/C++源码"></a>现有项目添加C/C++源码</h2><p>如果现有项目还不支持C/C++，则可以通过如下步骤来加入C/C++</p>
+<p><img src="/images/Android/Android-Jni%E6%8C%87%E5%8D%97_2023-10-19-19-01-13.png" alt="Add C++ to Module"></p>
+<p>然后按照步骤操作即可。添加完成后打开<code>app\src\main\cpp\CMakeLists.txt</code>文件，修改项目名称</p>
+<h2 id="Java-Kotlin代码声明native函数"><a href="#Java-Kotlin代码声明native函数" class="headerlink" title="Java/Kotlin代码声明native函数"></a>Java/Kotlin代码声明native函数</h2><p>我们在<code>me.rjy.android.demo.MainActivity</code>中定义一个native函数，并加载native库。</p>
+<p>Java代码：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MainActivity</span> <span class="keyword">extends</span> <span class="title class_">AppCompatActivity</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">native</span> String <span class="title function_">stringFromJNI</span><span class="params">()</span>;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        System.loadLibrary(<span class="string">&quot;androidnativedemo&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Kotlin代码：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MainActivity</span> : <span class="type">ComponentActivity</span>() &#123;</span><br><span class="line">    <span class="keyword">external</span> <span class="function"><span class="keyword">fun</span> <span class="title">stringFromJNI</span><span class="params">()</span></span>: String</span><br><span class="line"></span><br><span class="line">    <span class="keyword">companion</span> <span class="keyword">object</span> &#123;</span><br><span class="line">        <span class="keyword">init</span> &#123;</span><br><span class="line">            System.loadLibrary(<span class="string">&quot;demo&quot;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义jni函数"><a href="#定义jni函数" class="headerlink" title="定义jni函数"></a>定义jni函数</h2><p>当Java代码中执行native函数时，虚拟机需要找到so库中相对应的函数符号。因此，我们在定义jni函数时，需要将函数注册到虚拟机中。</p>
+<h3 id="静态注册"><a href="#静态注册" class="headerlink" title="静态注册"></a>静态注册</h3><p>静态注册会严格限制jni函数的命名。jni函数命名规则：<code>Java_包名_类名_方法名</code>，其中包名中的<code>.</code>要替换为下滑杠<code>_</code>。如果函数名称不符合规范，在运行时就会抛出<code>java.lang.UnsatisfiedLinkError: No implementation found for ...</code>的异常。</p>
+<p>因为<code>stringFromJNI</code>函数在<code>me.rjy.android.demo.MainActivity</code>进行声明，所以定义的native函数如下：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function">JNIEXPORT </span></span><br><span class="line"><span class="function">jstring JNICALL <span class="title">Java_me_rjy_android_demo_MainActivity_stringFromJNI</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">        JNIEnv* env,</span></span></span><br><span class="line"><span class="params"><span class="function">        jobject <span class="comment">/* this */</span>)</span> </span>&#123;</span><br><span class="line">    std::string hello = <span class="string">&quot;Hello from C++&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> env-&gt;<span class="built_in">NewStringUTF</span>(hello.<span class="built_in">c_str</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过<code>JNIEXPORT</code>和<code>JNICALL</code>两个宏定义，虚拟机在加载so库时，就会把该函数与java代码的native函数进行绑定。</p>
+<p>静态注册的优点时代码量很少，缺点是要严格遵守命名规范，而且函数命名很长。</p>
+<h3 id="动态注册"><a href="#动态注册" class="headerlink" title="动态注册"></a>动态注册</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;jni.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NELEM(x) ((int) (sizeof(x) / sizeof((x)[0])))</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> jstring <span class="title">stringFromJNI</span><span class="params">(JNIEnv *env, jobject thiz)</span> </span>&#123;</span><br><span class="line">    std::string hello = <span class="string">&quot;Hello from C++&quot;</span>;</span><br><span class="line">    <span class="keyword">return</span> env-&gt;<span class="built_in">NewStringUTF</span>(hello.<span class="built_in">c_str</span>());</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以同时在数组中注册多个jni函数</span></span><br><span class="line"><span class="type">static</span> <span class="type">const</span> JNINativeMethod sMethods[] = &#123;</span><br><span class="line">        &#123;<span class="string">&quot;stringFromJNI&quot;</span>, <span class="string">&quot;()Ljava/lang/String;&quot;</span>, (<span class="type">void</span> *) stringFromJNI&#125;,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">int</span> <span class="title">registerNativeMethods</span><span class="params">(JNIEnv *env, <span class="type">const</span> <span class="type">char</span> *className,</span></span></span><br><span class="line"><span class="params"><span class="function">                                 <span class="type">const</span> JNINativeMethod *gMethods, <span class="type">int</span> numMethods)</span> </span>&#123;</span><br><span class="line">    jclass clazz = env-&gt;<span class="built_in">FindClass</span>(className);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (clazz == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> JNI_FALSE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (env-&gt;<span class="built_in">RegisterNatives</span>(clazz, gMethods, numMethods) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> JNI_FALSE;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> JNI_TRUE;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function">jint <span class="title">JNI_OnLoad</span><span class="params">(JavaVM *jvm, <span class="type">void</span> *)</span> </span>&#123;</span><br><span class="line">    JNIEnv *env = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="keyword">if</span> (jvm-&gt;<span class="built_in">GetEnv</span>((<span class="type">void</span> **) &amp;env, JNI_VERSION_1_6)) &#123;</span><br><span class="line">        <span class="keyword">return</span> JNI_ERR;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">registerNativeMethods</span>(env, <span class="string">&quot;me/rjy/android/demo/MainActivity&quot;</span>,</span><br><span class="line">                              sMethods, <span class="built_in">NELEM</span>(sMethods)) == JNI_FALSE) &#123;</span><br><span class="line">        <span class="keyword">return</span> JNI_ERR;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> JNI_VERSION_1_6;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>动态注册的代码要比静态注册多很多，这是动态注册的缺点。动态注册的一个关键点是函数的签名，这个非常容易出错，有一个直观的方法可以直接拿到函数签名：通过<a href="/posts/24313.html" title="APK 反编译">APK 反编译</a>介绍的方法，把apk中的类反编译为smali，然后找到对应的<code>MainActivity.smali</code>，smali文件中就可以找到对应的函数定义：</p>
+<figure class="highlight smali"><table><tr><td class="code"><pre><span class="line"><span class="keyword">.method</span><span class="keyword"> public</span><span class="keyword"> final</span> native stringFromJNI()<span class="class">Ljava/lang/String;</span><span class="keyword"></span></span><br><span class="line"><span class="keyword">.end method</span></span><br></pre></td></tr></table></figure>
+
+<p>其中<code>()Ljava/lang/String;</code>就是函数签名，<code>()</code>表示无参函数，<code>Ljava/lang/String;</code>表示返回一个String类型。</p>
+<h2 id="Android-JNI打印logcat日志"><a href="#Android-JNI打印logcat日志" class="headerlink" title="Android JNI打印logcat日志"></a>Android JNI打印logcat日志</h2><p>在c/c++文件中引入头文件：</p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;android/log.h&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>然后再需要打印日志的地方通过<code>__android_log_print</code>来打印日志即可：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line">__android_log_print(ANDROID_LOG_DEBUG, <span class="string">&quot;tag&quot;</span>, <span class="string">&quot;value=%d&quot;</span>, value);</span><br></pre></td></tr></table></figure>
+
+<p>可以对<code>__android_log_print</code>进行封装，比如<code>Log.d(...)/Log.i(..)</code>形式，在使用的时候会更加便捷。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="https://docs.oracle.com/javase/8/docs/technotes/guides/jni/spec/jniTOC.html">Java Native Interface Specification Contents</a><br><a href="https://www.baeldung.com/jni">Guide to JNI (Java Native Interface)</a></p>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+        <tag>Jni</tag>
+      </tags>
   </entry>
   <entry>
     <title>Android UI 绘制流程</title>
@@ -1536,6 +1625,196 @@ void main(int argc, char* argv[]) { <br>
       </tags>
   </entry>
   <entry>
+    <title>Android13: Activity启动流程</title>
+    <url>/posts/93b40782.html</url>
+    <content><![CDATA[<!-- toc -->
+
+<p>本文以时序图的形式来展示activity的启动过程，相比于贴源码会更加直观。本文的讲解的流程是基于<code>MainActivity</code>使用standard模式启动<code>SecondActivity</code>，且两个Activity都在同一个应用中，最后的部分也会讲解一下进程的启动。</p>
+<h2 id="第一阶段：执行startActivity"><a href="#第一阶段：执行startActivity" class="headerlink" title="第一阶段：执行startActivity"></a>第一阶段：执行startActivity</h2><pre class="mermaid">
+
+zenuml
+group App {
+    &lt;&lt;App&gt;&gt; act as Activity
+    &lt;&lt;App&gt;&gt; ins as Instrumentation
+}
+group AMS {
+    &lt;&lt;AMS&gt;&gt; atms as ActivityTaskManagerService #F0F8FF
+    ActivityStarter #F0F8FF
+}
+act.startActivity {
+    act.startActivityForResult {
+        ins.execStartActivity {
+            atms.startActivity {
+                atms.startActivityAsUser {
+                    &#x2F;&#x2F;没有缓存则创建
+                    new ActivityStarter()
+                    ActivityStarter.&quot;① execute&quot;
+                }
+            }
+        }
+    }
+}
+</pre>
+
+<pre class="mermaid">
+
+zenuml
+&lt;&lt;AMS&gt;&gt; ActivityStarter #F0F8FF
+ActivityStarter.&quot;① execute&quot; {
+    executeRequest {
+        new ActivityRecord()
+        startActivityUnchecked {
+            startActivityInner {
+                Task.addChild
+                Task.startActivityLocked
+                RootWindowContainer.resumeFocusedTasksTopActivities {
+                    Task.resumeTopActivityUncheckedLocked {
+                        resumeTopActivityInnerLocked {
+                            TaskFragment.resumeTopActivity {
+                                &#x2F;&#x2F;pause当前activity
+                                &quot;② startPausing()&quot;
+                                if (! isProcessRunning) {
+                                    ActivityTaskManagerService.startProcessAsync
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            handleStartResult
+            postStartActivityProcessing
+        }
+    }
+}
+</pre>
+
+<h2 id="第二阶段：pause当前activity"><a href="#第二阶段：pause当前activity" class="headerlink" title="第二阶段：pause当前activity"></a>第二阶段：pause当前activity</h2><p>启动<code>SecondActivity</code>之前会先执行<code>MainActivity</code>的<strong>pause</strong>操作：</p>
+<img src="\assert\puml\af8cd81dee6672e6f6a20a10468fb62bfb7ef4461d0bf7676b888ad21293248a.svg"/>
+
+<p>在Android 9之前的版本，<code>ActivityThread</code>中通过<code>LAUNCH_ACTIVITY</code>消息来启动activity，源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//android\app\ActivityThread.java</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleMessage</span><span class="params">(Message msg)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (DEBUG_MESSAGES) Slog.v(TAG, <span class="string">&quot;&gt;&gt;&gt; handling: &quot;</span> + codeToString(msg.what));</span><br><span class="line">            <span class="keyword">switch</span> (msg.what) &#123;</span><br><span class="line">                <span class="keyword">case</span> LAUNCH_ACTIVITY: &#123;</span><br><span class="line">                    Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, <span class="string">&quot;activityStart&quot;</span>);</span><br><span class="line">                    <span class="keyword">final</span> <span class="type">ActivityClientRecord</span> <span class="variable">r</span> <span class="operator">=</span> (ActivityClientRecord) msg.obj;</span><br><span class="line"></span><br><span class="line">                    r.packageInfo = getPackageInfoNoCheck(</span><br><span class="line">                            r.activityInfo.applicationInfo, r.compatInfo);</span><br><span class="line">                    handleLaunchActivity(r, <span class="literal">null</span>, <span class="string">&quot;LAUNCH_ACTIVITY&quot;</span>);</span><br><span class="line">                    Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</span><br><span class="line">                &#125; <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<p>但从Andorid 9开始，<code>ActivityThread</code>去掉了<code>LAUNCH_ACTIVITY</code> <code>PAUSE_ACTIVITY</code> <code>RESUME_ACTIVITY</code>等消息，而是改成了EXECUTE_TRANSACTION，通过ClientTransaction这套机制来执行activity生命周期流程，相关源码如下：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleMessage</span><span class="params">(Message msg)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (DEBUG_MESSAGES) Slog.v(TAG, <span class="string">&quot;&gt;&gt;&gt; handling: &quot;</span> + codeToString(msg.what));</span><br><span class="line">    <span class="keyword">switch</span> (msg.what) &#123;</span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">case</span> EXECUTE_TRANSACTION:</span><br><span class="line">            <span class="keyword">final</span> <span class="type">ClientTransaction</span> <span class="variable">transaction</span> <span class="operator">=</span> (ClientTransaction) msg.obj;</span><br><span class="line">            mTransactionExecutor.execute(transaction);</span><br><span class="line">            <span class="keyword">if</span> (isSystem()) &#123;</span><br><span class="line">                <span class="comment">// Client transactions inside system process are recycled on the client side</span></span><br><span class="line">                <span class="comment">// instead of ClientLifecycleManager to avoid being cleared before this</span></span><br><span class="line">                <span class="comment">// message is handled.</span></span><br><span class="line">                transaction.recycle();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// TODO(lifecycler): Recycle locally scheduled transactions.</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
+
+<p>下面是<code>ClientTransaction</code>类图：</p>
+<p><img src="/images/Android/Activity_Transaction%E7%B1%BB%E5%9B%BE.drawio.svg" alt="Activity Transaction"></p>
+<h2 id="第三阶段：启动新Activity"><a href="#第三阶段：启动新Activity" class="headerlink" title="第三阶段：启动新Activity"></a>第三阶段：启动新Activity</h2><p>下面继续Activity启动流程：</p>
+<img src="\assert\puml\263aec74e1347cf395906f401c5d05e5870918c03946c34837af9d65139e0d5c.svg"/>
+
+<p>执行<code>SecondAcitivity</code>的启动流程：</p>
+<img src="\assert\puml\8f597172f5a16153dcbfe468e77efa4ee4b7059593673287f4583b3af72fe22d.svg"/>
+
+<img src="\assert\puml\3bcfe12610278113939a68ac5bb2704fc69439c70b49710d89fff49917d51b30.svg"/>
+
+<h2 id="第四阶段：View添加到Window"><a href="#第四阶段：View添加到Window" class="headerlink" title="第四阶段：View添加到Window"></a>第四阶段：View添加到Window</h2><img src="\assert\puml\3d503e05c50ab5418d77a651aaf07091465229526edbb7a50e14feee684abb65.svg"/>
+
+<p>通过<a href="https://developer.android.google.cn/studio/profile/hierarchy-viewer">Hierarchy Viewer</a>看下DecorView结构：</p>
+<p><img src="/images/Android/DecorView%E7%A4%BA%E4%BE%8B.png" alt="DecorView示例"></p>
+<p>用户自定义的View会被添加到PhoneWindow.mContentParent中，而mContentParent是DecorView的一个子孙View。</p>
+<p>下面是Activity、Task之间的类图关系：</p>
+<img src="\assert\puml\10b3fa2523947201df50f6639920ed45fbdb4275b64aa4ca708e4adab6eefd67.svg"/>
+
+<h2 id="启动新APP进程"><a href="#启动新APP进程" class="headerlink" title="启动新APP进程"></a>启动新APP进程</h2><p>如果需要启动的activity不在同一个app中，就需要启动新的进程。</p>
+<pre class="mermaid">
+
+zenuml
+ActivityTaskManagerService.startProcessAsync {
+    H.sendMessage {
+        ActivityManagerService.startProcess {
+            startProcessLocked {
+                ProcessList.startProcessLocked {
+                    newProcessRecordLocked {
+                        new ProcessRecord()
+                    }
+                    &#x2F;&#x2F;with ProcessRecord
+                    startProcessLocked {
+                        ProcessList.&quot;配置runtimeFlags&quot;
+                        &#x2F;&#x2F;异步启动线程
+                        ProcessList -&gt; ActivityManagerService : mProcStartHandler.post
+                    }
+                }
+            }
+        }
+    }
+}
+</pre>
+
+<pre class="mermaid">
+
+zenuml
+ActivityManagerService.&quot;mProcStartHandler.dispatchMessage&quot; {
+    ProcessList.handleProcessStart {
+        startProcess {
+            ProcessStartResult &#x3D; Process.start {
+                ProcessStartResult &#x3D; ZygoteProcess.start {
+                    startViaZygote {
+                        ZygoteProcess.&quot;组装参数列表args&quot;
+                        zygoteSendArgsAndGetResult {
+                            &#x2F;&#x2F;通过LocalSocket向zygote发送进程启动参数
+                            &#x2F;&#x2F;并阻塞读取进程pid
+                            attemptZygoteSendArgsAndGetResult
+                        }
+                    }
+                }
+            }
+        }
+        handleProcessStartedLocked {
+            ActivityManagerService.addPidLocked {
+                ActivityTaskManagerService.&quot;onProcessMapped(pid, WindowProcessController)&quot; {
+                    ActivityTaskManagerService.&quot;mProcessMap.put(pid, proc)&quot;
+                }
+            }
+        }
+    }
+}
+</pre>
+
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//android-13.0.0_r41\frameworks\base\core\java\android\os\ZygoteProcess.java</span></span><br><span class="line">    <span class="keyword">private</span> Process.ProcessStartResult <span class="title function_">attemptZygoteSendArgsAndGetResult</span><span class="params">(</span></span><br><span class="line"><span class="params">            ZygoteState zygoteState, String msgStr)</span> <span class="keyword">throws</span> ZygoteStartFailedEx &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">BufferedWriter</span> <span class="variable">zygoteWriter</span> <span class="operator">=</span> zygoteState.mZygoteOutputWriter;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">DataInputStream</span> <span class="variable">zygoteInputStream</span> <span class="operator">=</span> zygoteState.mZygoteInputStream;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//通过LocalSocket将进程启动参数传输给zygote进程</span></span><br><span class="line">            zygoteWriter.write(msgStr);</span><br><span class="line">            zygoteWriter.flush();</span><br><span class="line"></span><br><span class="line">            Process.<span class="type">ProcessStartResult</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Process</span>.ProcessStartResult();</span><br><span class="line">            <span class="comment">//读取新进程的pid</span></span><br><span class="line">            result.pid = zygoteInputStream.readInt();</span><br><span class="line">            result.usingWrapper = zygoteInputStream.readBoolean();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (result.pid &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ZygoteStartFailedEx</span>(<span class="string">&quot;fork() failed&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">            zygoteState.close();</span><br><span class="line">            Log.e(LOG_TAG, <span class="string">&quot;IO Exception while communicating with Zygote - &quot;</span></span><br><span class="line">                    + ex.toString());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ZygoteStartFailedEx</span>(ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p>新的app进程启动运行的入口是<code>ActivityThread.main</code>函数：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//初始化主线程Looper</span></span><br><span class="line">    Looper.prepareMainLooper();</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//创建ActivityThread</span></span><br><span class="line">    <span class="type">ActivityThread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ActivityThread</span>();</span><br><span class="line">    thread.attach(<span class="literal">false</span>, startSeq);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sMainThreadHandler == <span class="literal">null</span>) &#123;</span><br><span class="line">        sMainThreadHandler = thread.getHandler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//启动主线程消息循环</span></span><br><span class="line">    Looper.loop();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Main thread loop unexpectedly exited&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<pre class="mermaid">
+
+zenuml
+group App {
+    ApplicationThread
+    Application
+    ActivityThread
+    mH
+}
+group AMS {
+    ActivityManagerService
+}
+ActivityThread.attach {
+    ActivityManagerService.attachApplication {
+        Binder.getCallingPid
+        attachApplicationLocked {
+            &quot;根据pid获取ProcessRecord&quot;
+            ApplicationThread.bindApplication {
+                mH.sendMessage(BIND_APPLICATION)
+            }
+        }
+    }
+}
+ActivityThread.handleMessage(BIND_APPLICATION) {
+    handleBindApplication {
+        new Application()
+        Application.attachBaseContext()
+        Application.onCreate()
+    }
+}
+</pre>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Bitmap内存分配以及回收</title>
     <url>/posts/68833f9e.html</url>
     <content><![CDATA[<h2 id="Bitmap内存分配"><a href="#Bitmap内存分配" class="headerlink" title="Bitmap内存分配"></a>Bitmap内存分配</h2><ul>
@@ -1597,6 +1876,33 @@ void main(int argc, char* argv[]) { <br>
       <tags>
         <tag>Android</tag>
         <tag>Bitmap</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Android Java虚拟机创建过程</title>
+    <url>/posts/31280.html</url>
+    <content><![CDATA[<p>本文基于Android8.0源码</p>
+<p>Android8.0使用的java虚拟机为ART，在大名鼎鼎的zygote进程中启动java虚拟机。<br>首先看一下zygote的main函数：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//app_main.cpp</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* <span class="type">const</span> argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//AppRuntime继承自AndroidRuntime, 构造函数中没有什么有用信息，可以不关注</span></span><br><span class="line">    <span class="function">AppRuntime <span class="title">runtime</span><span class="params">(argv[<span class="number">0</span>], computeArgBlockSize(argc, argv))</span></span>;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> (zygote) &#123;</span><br><span class="line">        <span class="comment">//调用到AndroidRuntime.start函数启动zygote进程的虚拟机</span></span><br><span class="line">        <span class="comment">//传入的第一个参数是java类ZygoteInit</span></span><br><span class="line">        runtime.<span class="built_in">start</span>(<span class="string">&quot;com.android.internal.os.ZygoteInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className) &#123;</span><br><span class="line">        runtime.<span class="built_in">start</span>(<span class="string">&quot;com.android.internal.os.RuntimeInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;Error: no class name or --zygote supplied.\n&quot;</span>);</span><br><span class="line">        <span class="built_in">app_usage</span>();</span><br><span class="line">        <span class="built_in">LOG_ALWAYS_FATAL</span>(<span class="string">&quot;app_process: no class name or --zygote supplied.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>runtime.start会调用父类的AndroidRuntime::start，看一下实现</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AndroidRuntime.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">AndroidRuntime::start</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* className, <span class="type">const</span> Vector&lt;String8&gt;&amp; options, <span class="type">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">/* start the virtual machine */</span></span><br><span class="line">    JniInvocation jni_invocation;</span><br><span class="line">    jni_invocation.<span class="built_in">Init</span>(<span class="literal">NULL</span>);  <span class="comment">// 1. 加载虚拟机动态库，并加载库函数符号</span></span><br><span class="line">    JNIEnv* env;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">startVm</span>(&amp;mJavaVM, &amp;env, zygote) != <span class="number">0</span>) &#123; <span class="comment">// 2. 启动虚拟机</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">onVmCreated</span>(env);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Register android functions.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">startReg</span>(env) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">ALOGE</span>(<span class="string">&quot;Unable to register all android natives\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (startClass == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">ALOGE</span>(<span class="string">&quot;JavaVM unable to locate class &#x27;%s&#x27;\n&quot;</span>, slashClassName);</span><br><span class="line">        <span class="comment">/* keep going */</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//调用com.android.internal.os.ZygoteInit的main函数，从此便进入了Java的世界</span></span><br><span class="line">        jmethodID startMeth = env-&gt;<span class="built_in">GetStaticMethodID</span>(startClass, <span class="string">&quot;main&quot;</span>,</span><br><span class="line">            <span class="string">&quot;([Ljava/lang/String;)V&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (startMeth == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="built_in">ALOGE</span>(<span class="string">&quot;JavaVM unable to find main() in &#x27;%s&#x27;\n&quot;</span>, className);</span><br><span class="line">            <span class="comment">/* keep going */</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            env-&gt;<span class="built_in">CallStaticVoidMethod</span>(startClass, startMeth, strArray);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>加载虚拟机动态库，并加载库函数符号</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//JniInvocation.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">JniInvocation::Init</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* library)</span> </span>&#123;</span><br><span class="line">  ......</span><br><span class="line">  library = <span class="built_in">GetLibrary</span>(library, buffer); <span class="comment">//返回“libart.so” art虚拟机库</span></span><br><span class="line">  ......</span><br><span class="line">  handle_ = <span class="built_in">dlopen</span>(library, kDlopenFlags);  <span class="comment">//动态加载虚拟机so库</span></span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//下面的三个if语句都是通过dlsym来获取虚拟机so库中的函数符号</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">FindSymbol</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">void</span>**&gt;(&amp;JNI_GetDefaultJavaVMInitArgs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetDefaultJavaVMInitArgs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//无比重要的函数，获取虚拟机构造函数的函数符号，创建虚拟机全靠JNI_CreateJavaVM</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">FindSymbol</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">void</span>**&gt;(&amp;JNI_CreateJavaVM_),</span><br><span class="line">                  <span class="string">&quot;JNI_CreateJavaVM&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">FindSymbol</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">void</span>**&gt;(&amp;JNI_GetCreatedJavaVMs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetCreatedJavaVMs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">jint <span class="title">JniInvocation::JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="type">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">JNI_CreateJavaVM_</span>(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//该函数就是最终创建虚拟机的函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function">jint <span class="title">JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="type">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> JniInvocation::<span class="built_in">GetJniInvocation</span>().<span class="built_in">JNI_CreateJavaVM</span>(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>启动虚拟机</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Start the Dalvik Virtual Machine.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">AndroidRuntime::startVm</span><span class="params">(JavaVM** pJavaVM, JNIEnv** pEnv, <span class="type">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...... <span class="comment">//组装虚拟机启动参数</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Initialize the VM.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * The JavaVM* is essentially per-process, and the JNIEnv* is per-thread.</span></span><br><span class="line"><span class="comment">     * If this call succeeds, the VM is ready, and we can start issuing</span></span><br><span class="line"><span class="comment">     * JNI calls.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">JNI_CreateJavaVM</span>(pJavaVM, pEnv, &amp;initArgs) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">ALOGE</span>(<span class="string">&quot;JNI_CreateJavaVM failed\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Android</category>
+      </categories>
+      <tags>
+        <tag>Android</tag>
       </tags>
   </entry>
   <entry>
@@ -1800,196 +2106,6 @@ component [WebpTranscodeProducer] #back:white;line.dotted
       </tags>
   </entry>
   <entry>
-    <title>Android13: Activity启动流程</title>
-    <url>/posts/93b40782.html</url>
-    <content><![CDATA[<!-- toc -->
-
-<p>本文以时序图的形式来展示activity的启动过程，相比于贴源码会更加直观。本文的讲解的流程是基于<code>MainActivity</code>使用standard模式启动<code>SecondActivity</code>，且两个Activity都在同一个应用中，最后的部分也会讲解一下进程的启动。</p>
-<h2 id="第一阶段：执行startActivity"><a href="#第一阶段：执行startActivity" class="headerlink" title="第一阶段：执行startActivity"></a>第一阶段：执行startActivity</h2><pre class="mermaid">
-
-zenuml
-group App {
-    &lt;&lt;App&gt;&gt; act as Activity
-    &lt;&lt;App&gt;&gt; ins as Instrumentation
-}
-group AMS {
-    &lt;&lt;AMS&gt;&gt; atms as ActivityTaskManagerService #F0F8FF
-    ActivityStarter #F0F8FF
-}
-act.startActivity {
-    act.startActivityForResult {
-        ins.execStartActivity {
-            atms.startActivity {
-                atms.startActivityAsUser {
-                    &#x2F;&#x2F;没有缓存则创建
-                    new ActivityStarter()
-                    ActivityStarter.&quot;① execute&quot;
-                }
-            }
-        }
-    }
-}
-</pre>
-
-<pre class="mermaid">
-
-zenuml
-&lt;&lt;AMS&gt;&gt; ActivityStarter #F0F8FF
-ActivityStarter.&quot;① execute&quot; {
-    executeRequest {
-        new ActivityRecord()
-        startActivityUnchecked {
-            startActivityInner {
-                Task.addChild
-                Task.startActivityLocked
-                RootWindowContainer.resumeFocusedTasksTopActivities {
-                    Task.resumeTopActivityUncheckedLocked {
-                        resumeTopActivityInnerLocked {
-                            TaskFragment.resumeTopActivity {
-                                &#x2F;&#x2F;pause当前activity
-                                &quot;② startPausing()&quot;
-                                if (! isProcessRunning) {
-                                    ActivityTaskManagerService.startProcessAsync
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-            handleStartResult
-            postStartActivityProcessing
-        }
-    }
-}
-</pre>
-
-<h2 id="第二阶段：pause当前activity"><a href="#第二阶段：pause当前activity" class="headerlink" title="第二阶段：pause当前activity"></a>第二阶段：pause当前activity</h2><p>启动<code>SecondActivity</code>之前会先执行<code>MainActivity</code>的<strong>pause</strong>操作：</p>
-<img src="\assert\puml\af8cd81dee6672e6f6a20a10468fb62bfb7ef4461d0bf7676b888ad21293248a.svg"/>
-
-<p>在Android 9之前的版本，<code>ActivityThread</code>中通过<code>LAUNCH_ACTIVITY</code>消息来启动activity，源码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//android\app\ActivityThread.java</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleMessage</span><span class="params">(Message msg)</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (DEBUG_MESSAGES) Slog.v(TAG, <span class="string">&quot;&gt;&gt;&gt; handling: &quot;</span> + codeToString(msg.what));</span><br><span class="line">            <span class="keyword">switch</span> (msg.what) &#123;</span><br><span class="line">                <span class="keyword">case</span> LAUNCH_ACTIVITY: &#123;</span><br><span class="line">                    Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, <span class="string">&quot;activityStart&quot;</span>);</span><br><span class="line">                    <span class="keyword">final</span> <span class="type">ActivityClientRecord</span> <span class="variable">r</span> <span class="operator">=</span> (ActivityClientRecord) msg.obj;</span><br><span class="line"></span><br><span class="line">                    r.packageInfo = getPackageInfoNoCheck(</span><br><span class="line">                            r.activityInfo.applicationInfo, r.compatInfo);</span><br><span class="line">                    handleLaunchActivity(r, <span class="literal">null</span>, <span class="string">&quot;LAUNCH_ACTIVITY&quot;</span>);</span><br><span class="line">                    Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);</span><br><span class="line">                &#125; <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
-
-<p>但从Andorid 9开始，<code>ActivityThread</code>去掉了<code>LAUNCH_ACTIVITY</code> <code>PAUSE_ACTIVITY</code> <code>RESUME_ACTIVITY</code>等消息，而是改成了EXECUTE_TRANSACTION，通过ClientTransaction这套机制来执行activity生命周期流程，相关源码如下：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">handleMessage</span><span class="params">(Message msg)</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (DEBUG_MESSAGES) Slog.v(TAG, <span class="string">&quot;&gt;&gt;&gt; handling: &quot;</span> + codeToString(msg.what));</span><br><span class="line">    <span class="keyword">switch</span> (msg.what) &#123;</span><br><span class="line">        ......</span><br><span class="line">        <span class="keyword">case</span> EXECUTE_TRANSACTION:</span><br><span class="line">            <span class="keyword">final</span> <span class="type">ClientTransaction</span> <span class="variable">transaction</span> <span class="operator">=</span> (ClientTransaction) msg.obj;</span><br><span class="line">            mTransactionExecutor.execute(transaction);</span><br><span class="line">            <span class="keyword">if</span> (isSystem()) &#123;</span><br><span class="line">                <span class="comment">// Client transactions inside system process are recycled on the client side</span></span><br><span class="line">                <span class="comment">// instead of ClientLifecycleManager to avoid being cleared before this</span></span><br><span class="line">                <span class="comment">// message is handled.</span></span><br><span class="line">                transaction.recycle();</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="comment">// TODO(lifecycler): Recycle locally scheduled transactions.</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br></pre></td></tr></table></figure>
-
-<p>下面是<code>ClientTransaction</code>类图：</p>
-<p><img src="/images/Android/Activity_Transaction%E7%B1%BB%E5%9B%BE.drawio.svg" alt="Activity Transaction"></p>
-<h2 id="第三阶段：启动新Activity"><a href="#第三阶段：启动新Activity" class="headerlink" title="第三阶段：启动新Activity"></a>第三阶段：启动新Activity</h2><p>下面继续Activity启动流程：</p>
-<img src="\assert\puml\263aec74e1347cf395906f401c5d05e5870918c03946c34837af9d65139e0d5c.svg"/>
-
-<p>执行<code>SecondAcitivity</code>的启动流程：</p>
-<img src="\assert\puml\8f597172f5a16153dcbfe468e77efa4ee4b7059593673287f4583b3af72fe22d.svg"/>
-
-<img src="\assert\puml\3bcfe12610278113939a68ac5bb2704fc69439c70b49710d89fff49917d51b30.svg"/>
-
-<h2 id="第四阶段：View添加到Window"><a href="#第四阶段：View添加到Window" class="headerlink" title="第四阶段：View添加到Window"></a>第四阶段：View添加到Window</h2><img src="\assert\puml\3d503e05c50ab5418d77a651aaf07091465229526edbb7a50e14feee684abb65.svg"/>
-
-<p>通过<a href="https://developer.android.google.cn/studio/profile/hierarchy-viewer">Hierarchy Viewer</a>看下DecorView结构：</p>
-<p><img src="/images/Android/DecorView%E7%A4%BA%E4%BE%8B.png" alt="DecorView示例"></p>
-<p>用户自定义的View会被添加到PhoneWindow.mContentParent中，而mContentParent是DecorView的一个子孙View。</p>
-<p>下面是Activity、Task之间的类图关系：</p>
-<img src="\assert\puml\10b3fa2523947201df50f6639920ed45fbdb4275b64aa4ca708e4adab6eefd67.svg"/>
-
-<h2 id="启动新APP进程"><a href="#启动新APP进程" class="headerlink" title="启动新APP进程"></a>启动新APP进程</h2><p>如果需要启动的activity不在同一个app中，就需要启动新的进程。</p>
-<pre class="mermaid">
-
-zenuml
-ActivityTaskManagerService.startProcessAsync {
-    H.sendMessage {
-        ActivityManagerService.startProcess {
-            startProcessLocked {
-                ProcessList.startProcessLocked {
-                    newProcessRecordLocked {
-                        new ProcessRecord()
-                    }
-                    &#x2F;&#x2F;with ProcessRecord
-                    startProcessLocked {
-                        ProcessList.&quot;配置runtimeFlags&quot;
-                        &#x2F;&#x2F;异步启动线程
-                        ProcessList -&gt; ActivityManagerService : mProcStartHandler.post
-                    }
-                }
-            }
-        }
-    }
-}
-</pre>
-
-<pre class="mermaid">
-
-zenuml
-ActivityManagerService.&quot;mProcStartHandler.dispatchMessage&quot; {
-    ProcessList.handleProcessStart {
-        startProcess {
-            ProcessStartResult &#x3D; Process.start {
-                ProcessStartResult &#x3D; ZygoteProcess.start {
-                    startViaZygote {
-                        ZygoteProcess.&quot;组装参数列表args&quot;
-                        zygoteSendArgsAndGetResult {
-                            &#x2F;&#x2F;通过LocalSocket向zygote发送进程启动参数
-                            &#x2F;&#x2F;并阻塞读取进程pid
-                            attemptZygoteSendArgsAndGetResult
-                        }
-                    }
-                }
-            }
-        }
-        handleProcessStartedLocked {
-            ActivityManagerService.addPidLocked {
-                ActivityTaskManagerService.&quot;onProcessMapped(pid, WindowProcessController)&quot; {
-                    ActivityTaskManagerService.&quot;mProcessMap.put(pid, proc)&quot;
-                }
-            }
-        }
-    }
-}
-</pre>
-
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//android-13.0.0_r41\frameworks\base\core\java\android\os\ZygoteProcess.java</span></span><br><span class="line">    <span class="keyword">private</span> Process.ProcessStartResult <span class="title function_">attemptZygoteSendArgsAndGetResult</span><span class="params">(</span></span><br><span class="line"><span class="params">            ZygoteState zygoteState, String msgStr)</span> <span class="keyword">throws</span> ZygoteStartFailedEx &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">BufferedWriter</span> <span class="variable">zygoteWriter</span> <span class="operator">=</span> zygoteState.mZygoteOutputWriter;</span><br><span class="line">            <span class="keyword">final</span> <span class="type">DataInputStream</span> <span class="variable">zygoteInputStream</span> <span class="operator">=</span> zygoteState.mZygoteInputStream;</span><br><span class="line"></span><br><span class="line">            <span class="comment">//通过LocalSocket将进程启动参数传输给zygote进程</span></span><br><span class="line">            zygoteWriter.write(msgStr);</span><br><span class="line">            zygoteWriter.flush();</span><br><span class="line"></span><br><span class="line">            Process.<span class="type">ProcessStartResult</span> <span class="variable">result</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Process</span>.ProcessStartResult();</span><br><span class="line">            <span class="comment">//读取新进程的pid</span></span><br><span class="line">            result.pid = zygoteInputStream.readInt();</span><br><span class="line">            result.usingWrapper = zygoteInputStream.readBoolean();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> (result.pid &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ZygoteStartFailedEx</span>(<span class="string">&quot;fork() failed&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException ex) &#123;</span><br><span class="line">            zygoteState.close();</span><br><span class="line">            Log.e(LOG_TAG, <span class="string">&quot;IO Exception while communicating with Zygote - &quot;</span></span><br><span class="line">                    + ex.toString());</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">ZygoteStartFailedEx</span>(ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>新的app进程启动运行的入口是<code>ActivityThread.main</code>函数：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> &#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//初始化主线程Looper</span></span><br><span class="line">    Looper.prepareMainLooper();</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//创建ActivityThread</span></span><br><span class="line">    <span class="type">ActivityThread</span> <span class="variable">thread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">ActivityThread</span>();</span><br><span class="line">    thread.attach(<span class="literal">false</span>, startSeq);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (sMainThreadHandler == <span class="literal">null</span>) &#123;</span><br><span class="line">        sMainThreadHandler = thread.getHandler();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">//启动主线程消息循环</span></span><br><span class="line">    Looper.loop();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">RuntimeException</span>(<span class="string">&quot;Main thread loop unexpectedly exited&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<pre class="mermaid">
-
-zenuml
-group App {
-    ApplicationThread
-    Application
-    ActivityThread
-    mH
-}
-group AMS {
-    ActivityManagerService
-}
-ActivityThread.attach {
-    ActivityManagerService.attachApplication {
-        Binder.getCallingPid
-        attachApplicationLocked {
-            &quot;根据pid获取ProcessRecord&quot;
-            ApplicationThread.bindApplication {
-                mH.sendMessage(BIND_APPLICATION)
-            }
-        }
-    }
-}
-ActivityThread.handleMessage(BIND_APPLICATION) {
-    handleBindApplication {
-        new Application()
-        Application.attachBaseContext()
-        Application.onCreate()
-    }
-}
-</pre>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LeakCanary源码详解</title>
     <url>/posts/faedbb97.html</url>
     <content><![CDATA[<p>本文基于LeakCanary 2.12进行分析。</p>
@@ -2069,33 +2185,6 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
 
 <p>RootViewWatcher会监听rootView的添加时机，然后调用<code>rootView.addOnAttachStateChangeListener</code>来接收onViewAttachedToWindow和onViewDetachedFromWindow事件。当onViewDetachedFromWindow时就会去检测是否发生内存泄漏。</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://blog.csdn.net/gdutxiaoxu/article/details/80738581">java 源码系列 - 带你读懂 Reference 和 ReferenceQueue</a></p>
-]]></content>
-      <categories>
-        <category>Android</category>
-      </categories>
-      <tags>
-        <tag>Android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Android Java虚拟机创建过程</title>
-    <url>/posts/31280.html</url>
-    <content><![CDATA[<p>本文基于Android8.0源码</p>
-<p>Android8.0使用的java虚拟机为ART，在大名鼎鼎的zygote进程中启动java虚拟机。<br>首先看一下zygote的main函数：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//app_main.cpp</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* <span class="type">const</span> argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">//AppRuntime继承自AndroidRuntime, 构造函数中没有什么有用信息，可以不关注</span></span><br><span class="line">    <span class="function">AppRuntime <span class="title">runtime</span><span class="params">(argv[<span class="number">0</span>], computeArgBlockSize(argc, argv))</span></span>;</span><br><span class="line">    <span class="comment">//...</span></span><br><span class="line">    <span class="keyword">if</span> (zygote) &#123;</span><br><span class="line">        <span class="comment">//调用到AndroidRuntime.start函数启动zygote进程的虚拟机</span></span><br><span class="line">        <span class="comment">//传入的第一个参数是java类ZygoteInit</span></span><br><span class="line">        runtime.<span class="built_in">start</span>(<span class="string">&quot;com.android.internal.os.ZygoteInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (className) &#123;</span><br><span class="line">        runtime.<span class="built_in">start</span>(<span class="string">&quot;com.android.internal.os.RuntimeInit&quot;</span>, args, zygote);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="built_in">fprintf</span>(stderr, <span class="string">&quot;Error: no class name or --zygote supplied.\n&quot;</span>);</span><br><span class="line">        <span class="built_in">app_usage</span>();</span><br><span class="line">        <span class="built_in">LOG_ALWAYS_FATAL</span>(<span class="string">&quot;app_process: no class name or --zygote supplied.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>runtime.start会调用父类的AndroidRuntime::start，看一下实现</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//AndroidRuntime.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">AndroidRuntime::start</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* className, <span class="type">const</span> Vector&lt;String8&gt;&amp; options, <span class="type">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ......</span><br><span class="line">    <span class="comment">/* start the virtual machine */</span></span><br><span class="line">    JniInvocation jni_invocation;</span><br><span class="line">    jni_invocation.<span class="built_in">Init</span>(<span class="literal">NULL</span>);  <span class="comment">// 1. 加载虚拟机动态库，并加载库函数符号</span></span><br><span class="line">    JNIEnv* env;</span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">startVm</span>(&amp;mJavaVM, &amp;env, zygote) != <span class="number">0</span>) &#123; <span class="comment">// 2. 启动虚拟机</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">onVmCreated</span>(env);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Register android functions.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">startReg</span>(env) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">ALOGE</span>(<span class="string">&quot;Unable to register all android natives\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (startClass == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        <span class="built_in">ALOGE</span>(<span class="string">&quot;JavaVM unable to locate class &#x27;%s&#x27;\n&quot;</span>, slashClassName);</span><br><span class="line">        <span class="comment">/* keep going */</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//调用com.android.internal.os.ZygoteInit的main函数，从此便进入了Java的世界</span></span><br><span class="line">        jmethodID startMeth = env-&gt;<span class="built_in">GetStaticMethodID</span>(startClass, <span class="string">&quot;main&quot;</span>,</span><br><span class="line">            <span class="string">&quot;([Ljava/lang/String;)V&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (startMeth == <span class="literal">NULL</span>) &#123;</span><br><span class="line">            <span class="built_in">ALOGE</span>(<span class="string">&quot;JavaVM unable to find main() in &#x27;%s&#x27;\n&quot;</span>, className);</span><br><span class="line">            <span class="comment">/* keep going */</span></span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            env-&gt;<span class="built_in">CallStaticVoidMethod</span>(startClass, startMeth, strArray);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol>
-<li>加载虚拟机动态库，并加载库函数符号</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">//JniInvocation.cpp</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">bool</span> <span class="title">JniInvocation::Init</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* library)</span> </span>&#123;</span><br><span class="line">  ......</span><br><span class="line">  library = <span class="built_in">GetLibrary</span>(library, buffer); <span class="comment">//返回“libart.so” art虚拟机库</span></span><br><span class="line">  ......</span><br><span class="line">  handle_ = <span class="built_in">dlopen</span>(library, kDlopenFlags);  <span class="comment">//动态加载虚拟机so库</span></span><br><span class="line">  ......</span><br><span class="line">  <span class="comment">//下面的三个if语句都是通过dlsym来获取虚拟机so库中的函数符号</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">FindSymbol</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">void</span>**&gt;(&amp;JNI_GetDefaultJavaVMInitArgs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetDefaultJavaVMInitArgs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="comment">//无比重要的函数，获取虚拟机构造函数的函数符号，创建虚拟机全靠JNI_CreateJavaVM</span></span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">FindSymbol</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">void</span>**&gt;(&amp;JNI_CreateJavaVM_),</span><br><span class="line">                  <span class="string">&quot;JNI_CreateJavaVM&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">if</span> (!<span class="built_in">FindSymbol</span>(<span class="built_in">reinterpret_cast</span>&lt;<span class="type">void</span>**&gt;(&amp;JNI_GetCreatedJavaVMs_),</span><br><span class="line">                  <span class="string">&quot;JNI_GetCreatedJavaVMs&quot;</span>)) &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function">jint <span class="title">JniInvocation::JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="type">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="built_in">JNI_CreateJavaVM_</span>(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//该函数就是最终创建虚拟机的函数</span></span><br><span class="line"><span class="keyword">extern</span> <span class="string">&quot;C&quot;</span> <span class="function">jint <span class="title">JNI_CreateJavaVM</span><span class="params">(JavaVM** p_vm, JNIEnv** p_env, <span class="type">void</span>* vm_args)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> JniInvocation::<span class="built_in">GetJniInvocation</span>().<span class="built_in">JNI_CreateJavaVM</span>(p_vm, p_env, vm_args);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>启动虚拟机</li>
-</ol>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Start the Dalvik Virtual Machine.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">AndroidRuntime::startVm</span><span class="params">(JavaVM** pJavaVM, JNIEnv** pEnv, <span class="type">bool</span> zygote)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    ...... <span class="comment">//组装虚拟机启动参数</span></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Initialize the VM.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * The JavaVM* is essentially per-process, and the JNIEnv* is per-thread.</span></span><br><span class="line"><span class="comment">     * If this call succeeds, the VM is ready, and we can start issuing</span></span><br><span class="line"><span class="comment">     * JNI calls.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="built_in">JNI_CreateJavaVM</span>(pJavaVM, pEnv, &amp;initArgs) &lt; <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="built_in">ALOGE</span>(<span class="string">&quot;JNI_CreateJavaVM failed\n&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Android</category>
@@ -2214,6 +2303,21 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
       </tags>
   </entry>
   <entry>
+    <title>C++成员函数指针</title>
+    <url>/posts/63718.html</url>
+    <content><![CDATA[<p>对于类的普通成员函数和静态成员函数，定义函数指针的方法是不同的，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">func_normal</span><span class="params">()</span> </span>&#123;      <span class="comment">//普通成员函数</span></span><br><span class="line">        std::cout &lt;&lt; __func__ &lt;&lt; std::endl;</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">func_static</span><span class="params">()</span> </span>&#123;    <span class="comment">//静态成员函数（static）</span></span><br><span class="line">        std::cout &lt;&lt; __func__ &lt;&lt; std::endl;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//g++ -std=c++11 to enable std::function</span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">foo</span><span class="params">(std::function&lt;<span class="type">void</span>()&gt; pf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">pf</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* normal function pointer */</span></span><br><span class="line">    <span class="built_in">void</span> (Test::*pfunc_n)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_n = &amp;Test::func_normal;</span><br><span class="line">    Test t;</span><br><span class="line">    (t.*pfunc_n)();</span><br><span class="line">    <span class="built_in">foo</span>(std::<span class="built_in">bind</span>(&amp;Test::func_normal, &amp;t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* static function pointer */</span></span><br><span class="line">    <span class="built_in">void</span> (*pfunc_s)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_s = &amp;Test::func_static;</span><br><span class="line">    <span class="built_in">pfunc_s</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果一个非静态成员函数指针作为函数参数，则只能把对象传入函数中，然后通过对象调用函数指针。在C++11中引入了function，其本质也是把类传入了函数。</p>
+]]></content>
+      <categories>
+        <category>C/C++</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>C++ 构造函数和初始化成员列表</title>
     <url>/posts/17009.html</url>
     <content><![CDATA[<h2 id="类的初始化顺序"><a href="#类的初始化顺序" class="headerlink" title="类的初始化顺序"></a>类的初始化顺序</h2><p>根据ISO/IEC 14882:1998(E) 中12.6.2一节的介绍。</p>
@@ -2243,34 +2347,6 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
 <h2 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h2><ul>
 <li><a href="http://en.cppreference.com/w/cpp/language/initializer_list">Constructors and member initializer lists</a></li>
 </ul>
-]]></content>
-      <categories>
-        <category>C/C++</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Excel常用函数算法</title>
-    <url>/posts/62746.html</url>
-    <content><![CDATA[<h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
-<figure class="highlight excel"><table><tr><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Office</category>
-      </categories>
-      <tags>
-        <tag>Excel</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++成员函数指针</title>
-    <url>/posts/63718.html</url>
-    <content><![CDATA[<p>对于类的普通成员函数和静态成员函数，定义函数指针的方法是不同的，如下：</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">func_normal</span><span class="params">()</span> </span>&#123;      <span class="comment">//普通成员函数</span></span><br><span class="line">        std::cout &lt;&lt; __func__ &lt;&lt; std::endl;</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">func_static</span><span class="params">()</span> </span>&#123;    <span class="comment">//静态成员函数（static）</span></span><br><span class="line">        std::cout &lt;&lt; __func__ &lt;&lt; std::endl;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//g++ -std=c++11 to enable std::function</span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">foo</span><span class="params">(std::function&lt;<span class="type">void</span>()&gt; pf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">pf</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* normal function pointer */</span></span><br><span class="line">    <span class="built_in">void</span> (Test::*pfunc_n)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_n = &amp;Test::func_normal;</span><br><span class="line">    Test t;</span><br><span class="line">    (t.*pfunc_n)();</span><br><span class="line">    <span class="built_in">foo</span>(std::<span class="built_in">bind</span>(&amp;Test::func_normal, &amp;t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* static function pointer */</span></span><br><span class="line">    <span class="built_in">void</span> (*pfunc_s)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_s = &amp;Test::func_static;</span><br><span class="line">    <span class="built_in">pfunc_s</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>如果一个非静态成员函数指针作为函数参数，则只能把对象传入函数中，然后通过对象调用函数指针。在C++11中引入了function，其本质也是把类传入了函数。</p>
 ]]></content>
       <categories>
         <category>C/C++</category>
@@ -2428,36 +2504,6 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
         <tag>C++</tag>
         <tag>Python</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>算法复杂度</title>
-    <url>/posts/30614.html</url>
-    <content><![CDATA[]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
-  </entry>
-  <entry>
-    <title>Red Black Tree</title>
-    <url>/posts/2588.html</url>
-    <content><![CDATA[<h2 id="红黑树的定义"><a href="#红黑树的定义" class="headerlink" title="红黑树的定义"></a>红黑树的定义</h2><p>红黑树是一种自平衡二进制搜索树。每个节点存储一个代表颜色的标记位，用于在数的插入和删除期间保持数的近似平衡。红黑树是一个特殊的二叉树，用于组织可以进行比较的数据元素。</p>
-<h2 id="红黑树的特点"><a href="#红黑树的特点" class="headerlink" title="红黑树的特点"></a>红黑树的特点</h2><ol>
-<li>每个节点都必须是红色或者黑色；</li>
-<li>跟节点是黑色。这条规则有时会被忽略，因为跟节点始终可以从红色变为黑色，但反过来就不一定成立。该规则对数据分析影响很小；</li>
-<li>所有叶子节点（包括空节点）都是黑色；</li>
-<li>红色节点的子节点都是黑色；</li>
-<li>从给定节点到其任何后代NIL节点的每条路径都经过相同数量的黑色节点；</li>
-</ol>
-<p>参考链接：</p>
-<ul>
-<li><a href="https://xlinux.nist.gov/dads/HTML/redblack.html">https://xlinux.nist.gov/dads/HTML/redblack.html</a></li>
-<li><a href="https://en.wikipedia.org/wiki/Red%E2%80%93black_tree">https://en.wikipedia.org/wiki/Red%E2%80%93black_tree</a></li>
-<li><a href="https://medium.com/@kevinsmavani007/red-black-tree-47e3249cf17">https://medium.com/@kevinsmavani007/red-black-tree-47e3249cf17</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>数据结构</category>
-      </categories>
   </entry>
   <entry>
     <title>Mixin模式</title>
@@ -2639,6 +2685,36 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
       </tags>
   </entry>
   <entry>
+    <title>Java CAS详解</title>
+    <url>/posts/fd3db9c4.html</url>
+    <content><![CDATA[<h2 id="CAS介绍"><a href="#CAS介绍" class="headerlink" title="CAS介绍"></a>CAS介绍</h2><p>CAS(Compare and swap)是并发编程中经常用到的一项技术。大体上讲，CAS算法会先使用期望值比较变量的实际值，如果相同，就使用目标值替换变量的值。如果不相同，就会重新读取期望值再次进行对比和替换。</p>
+<p>CAS主要是为了解决共享资源被加锁后，线程从阻塞状态切换回运行态比较耗时的问题，CAS是在不阻塞线程的情况下达到资源互斥的目的。但是如果共享资源竞争比较激烈就不适合使用CAS了，CAS会导致很多线程一直在重试访问共享资源，造成CPU资源的浪费。另外，如果共享资源的操作比较耗时，也就不适合使用CAS，这种场景使用阻塞的资源锁会更合适。</p>
+<h2 id="CAS源码分析"><a href="#CAS源码分析" class="headerlink" title="CAS源码分析"></a>CAS源码分析</h2><p>以AtomicInteger.getAndIncrement为例进行源码分析，下面代码来自<a href="https://hg.openjdk.org/jdk8/jdk8/jdk/">openJdk8源码</a>:</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AtomicInteger</span> <span class="keyword">extends</span> <span class="title class_">Number</span> <span class="keyword">implements</span> <span class="title class_">java</span>.io.Serializable &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Unsafe</span> <span class="variable">unsafe</span> <span class="operator">=</span> Unsafe.getUnsafe();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> valueOffset;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//获取value变量地址</span></span><br><span class="line">            valueOffset = unsafe.objectFieldOffset</span><br><span class="line">                (AtomicInteger.class.getDeclaredField(<span class="string">&quot;value&quot;</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(ex); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">int</span> value; <span class="comment">//volatile类型的变量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">getAndIncrement</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.getAndAddInt(<span class="built_in">this</span>, valueOffset, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>AtomicInteger.getAndIncrement</code>通过<code>Unsafe.getAndAddInt</code>方法实现：</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/** Unsafe.java **/</span></span><br><span class="line">    <span class="comment">//native方法，通过jni来调用</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="type">boolean</span> <span class="title function_">compareAndSwapInt</span><span class="params">(Object o, <span class="type">long</span> offset,<span class="type">int</span> expected, <span class="type">int</span> x)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">getAndAddInt</span><span class="params">(Object o, <span class="type">long</span> offset, <span class="type">int</span> delta)</span> &#123;</span><br><span class="line">        <span class="type">int</span> v;</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            v = getIntVolatile(o, offset);</span><br><span class="line">        &#125; <span class="keyword">while</span> (!compareAndSwapInt(o, offset, v, v + delta));</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>getAndAddInt</code>函数中，首先获取到期望值<code>v</code>，<code>v + delta</code>是目标值。然后进入compareAndSwapInt函数，compareAndSwapInt会首先对比实际值与期望值是否相同，如果相同就替换并返回true，while循环退出。如果不相同，compareAndSwapInt就返回false，继续执行while循环读取期望值，然后再次进行对比替换的步骤。</p>
+<p><code>compareAndSwapInt</code>是native函数，源码在hotspot的<code>unsafe.cpp</code>文件中，在现在的系统中对比替换操作都是通过硬件机制来实现。</p>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">UNSAFE_ENTRY</span>(jboolean, <span class="built_in">Unsafe_CompareAndSwapInt</span>(JNIEnv *env, jobject unsafe, jobject obj, jlong offset, jint e, jint x))</span><br><span class="line">  <span class="built_in">UnsafeWrapper</span>(<span class="string">&quot;Unsafe_CompareAndSwapInt&quot;</span>);</span><br><span class="line">  oop p = JNIHandles::<span class="built_in">resolve</span>(obj);</span><br><span class="line">  jint* addr = (jint *) <span class="built_in">index_oop_from_field_offset_long</span>(p, offset);</span><br><span class="line">  <span class="keyword">return</span> (jint)(Atomic::<span class="built_in">cmpxchg</span>(x, addr, e)) == e;</span><br><span class="line">UNSAFE_END</span><br></pre></td></tr></table></figure>
+
+<p><code>Atomic::cmpxchg</code>通过内嵌汇编语言来实现，在不同的硬件上有不同的实现。下面代码是windows x86平台的汇编代码：</p>
+<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/** [hotspot]\src\os_cpu\windows_x86\vm\atomic_windows_x86.inline.hpp **/</span></span><br><span class="line"><span class="keyword">inline</span> jint     <span class="title function_">Atomic::cmpxchg</span>    <span class="params">(jint     exchange_value, <span class="keyword">volatile</span> jint*     dest, jint     compare_value)</span> &#123;</span><br><span class="line">  <span class="comment">// alternative for InterlockedCompareExchange</span></span><br><span class="line">  <span class="type">int</span> mp = os::is_MP();</span><br><span class="line">  __asm &#123;</span><br><span class="line">    mov edx, dest   <span class="comment">//变量地址放入数据寄存器</span></span><br><span class="line">    mov ecx, exchange_value  <span class="comment">//目标值放入计数寄存器</span></span><br><span class="line">    mov eax, compare_value  <span class="comment">//期望值放入累加器寄存器</span></span><br><span class="line">    LOCK_IF_MP(mp)   <span class="comment">//根据当前cpu是否是多核进行加锁</span></span><br><span class="line">    cmpxchg dword ptr [edx], ecx</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>代码中<code>cmpxchg</code>汇编指令的含义是对比累加器(al/ax/eax/rax)和[edx]中的值（<small><em>[edx]表示变量地址，本质上就是一个指针</em></small>），如果值相同就把ecx寄存器的值放入[edx]中，否则就会把[edx]指向的变量值加载到累加器中。</p>
+<p><em>备注：AtomicInteger和Unsafe代码来之openJdk8：<a href="https://hg.openjdk.org/jdk8/jdk8/jdk">https://hg.openjdk.org/jdk8/jdk8/jdk</a>。unsafe.cpp代码在openjdk8 hotspot源码中：<a href="https://hg.openjdk.org/jdk8/jdk8/hotspot">https://hg.openjdk.org/jdk8/jdk8/hotspot</a></em></p>
+<h2 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a>ABA问题</h2><p>CAS会有ABA的问题，AtomicInteger对于<code>getAndIncrement</code>这种只进行加运算的操作不会存在ABA问题。但如果还有减运算就会存在ABA问题。java也提供了<code>AtomicStampedReference</code>类来解决ABA问题。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="https://jenkov.com/tutorials/java-concurrency/compare-and-swap.html">Compare and Swap</a><br><a href="https://www.felixcloutier.com/x86/cmpxchg">CMPXCHG — Compare and Exchange</a><br><a href="https://zhuanlan.zhihu.com/p/635463928">从汇编底层全面解析 CAS 的来龙去脉</a><br><a href="https://zhuanlan.zhihu.com/p/60106083">LongAdder解析</a><br><a href="https://blog.csdn.net/mulinsen77/article/details/84583716">AQS详解（面试）</a><br><a href="https://zhuanlan.zhihu.com/p/101430930">并发编程的灵魂：CAS机制详解</a><br><a href="https://zhuanlan.zhihu.com/p/29227508">SynchronousQueue实现原理</a></p>
+]]></content>
+      <categories>
+        <category>Java</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Java float和double存储结构</title>
     <url>/posts/2230f1f1.html</url>
     <content><![CDATA[<p><img src="/images/Java%E6%B5%AE%E7%82%B9%E6%95%B0%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84.drawio.svg" alt="Java浮点数存储结构"></p>
@@ -2755,6 +2831,8 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
 <p>可以通过下面代码进行验证：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">System.out.println(Integer.toBinaryString(Float.floatToRawIntBits(<span class="number">18.725f</span>)));</span><br><span class="line"><span class="comment">//输出结果位：0 10000011 00101011100110011001101（高位0实际上没有输出，这里手动补上了）</span></span><br><span class="line"></span><br><span class="line">System.out.println(Long.toBinaryString(Double.doubleToRawLongBits(<span class="number">18.725</span>)));</span><br><span class="line"><span class="comment">//输出结果：0 10000000011 0010101110011001100110011001100110011001100110011010</span></span><br></pre></td></tr></table></figure>
 
+<h2 id="字符串转浮点数"><a href="#字符串转浮点数" class="headerlink" title="字符串转浮点数"></a>字符串转浮点数</h2><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">//本示例是最基础的转换，比如输入“34.5789”，输出为 34.5789</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="type">float</span> <span class="title function_">stringToFloat</span><span class="params">(String str)</span> &#123;</span><br><span class="line">        <span class="type">int</span> <span class="variable">dotIndex</span> <span class="operator">=</span> str.indexOf(<span class="string">&quot;.&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (dotIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            dotIndex = str.length();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">float</span> <span class="variable">value</span> <span class="operator">=</span> <span class="number">0f</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i=dotIndex-<span class="number">1</span>, j=<span class="number">0</span>; i&gt;=<span class="number">0</span>; i--, j++) &#123;</span><br><span class="line">            value += (str.charAt(i)-<span class="string">&#x27;0&#x27;</span>) * Math.pow(<span class="number">10</span>, j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i=dotIndex+<span class="number">1</span>, j=<span class="number">1</span>; i&lt;str.length(); i++, j++) &#123;</span><br><span class="line">            value += (str.charAt(i)-<span class="string">&#x27;0&#x27;</span>) * Math.pow(<span class="number">10</span>, -j);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> value;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ul>
 <li><a href="https://www.shuxuele.com/numbers/scientific-notation.html">科学记数法</a></li>
 <li><a href="https://www.sojson.com/hexconvert.html">在线进制转换</a></li>
@@ -2762,36 +2840,6 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
 <li><a href="https://www.runoob.com/w3cnote/java-the-different-float-double.html">Java 浮点类型 float 和 double 的主要区别</a></li>
 <li><a href="https://blog.csdn.net/weixin_47713503/article/details/108699001">IEEE754 浮点数：简读+案例=秒懂</a></li>
 </ul>
-]]></content>
-      <categories>
-        <category>Java</category>
-      </categories>
-      <tags>
-        <tag>Java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Java CAS详解</title>
-    <url>/posts/fd3db9c4.html</url>
-    <content><![CDATA[<h2 id="CAS介绍"><a href="#CAS介绍" class="headerlink" title="CAS介绍"></a>CAS介绍</h2><p>CAS(Compare and swap)是并发编程中经常用到的一项技术。大体上讲，CAS算法会先使用期望值比较变量的实际值，如果相同，就使用目标值替换变量的值。如果不相同，就会重新读取期望值再次进行对比和替换。</p>
-<p>CAS主要是为了解决共享资源被加锁后，线程从阻塞状态切换回运行态比较耗时的问题，CAS是在不阻塞线程的情况下达到资源互斥的目的。但是如果共享资源竞争比较激烈就不适合使用CAS了，CAS会导致很多线程一直在重试访问共享资源，造成CPU资源的浪费。另外，如果共享资源的操作比较耗时，也就不适合使用CAS，这种场景使用阻塞的资源锁会更合适。</p>
-<h2 id="CAS源码分析"><a href="#CAS源码分析" class="headerlink" title="CAS源码分析"></a>CAS源码分析</h2><p>以AtomicInteger.getAndIncrement为例进行源码分析，下面代码来自<a href="https://hg.openjdk.org/jdk8/jdk8/jdk/">openJdk8源码</a>:</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">AtomicInteger</span> <span class="keyword">extends</span> <span class="title class_">Number</span> <span class="keyword">implements</span> <span class="title class_">java</span>.io.Serializable &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">Unsafe</span> <span class="variable">unsafe</span> <span class="operator">=</span> Unsafe.getUnsafe();</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">long</span> valueOffset;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//获取value变量地址</span></span><br><span class="line">            valueOffset = unsafe.objectFieldOffset</span><br><span class="line">                (AtomicInteger.class.getDeclaredField(<span class="string">&quot;value&quot;</span>));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123; <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">Error</span>(ex); &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="type">int</span> value; <span class="comment">//volatile类型的变量</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">getAndIncrement</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> unsafe.getAndAddInt(<span class="built_in">this</span>, valueOffset, <span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>AtomicInteger.getAndIncrement</code>通过<code>Unsafe.getAndAddInt</code>方法实现：</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="comment">/** Unsafe.java **/</span></span><br><span class="line">    <span class="comment">//native方法，通过jni来调用</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="type">boolean</span> <span class="title function_">compareAndSwapInt</span><span class="params">(Object o, <span class="type">long</span> offset,<span class="type">int</span> expected, <span class="type">int</span> x)</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">final</span> <span class="type">int</span> <span class="title function_">getAndAddInt</span><span class="params">(Object o, <span class="type">long</span> offset, <span class="type">int</span> delta)</span> &#123;</span><br><span class="line">        <span class="type">int</span> v;</span><br><span class="line">        <span class="keyword">do</span> &#123;</span><br><span class="line">            v = getIntVolatile(o, offset);</span><br><span class="line">        &#125; <span class="keyword">while</span> (!compareAndSwapInt(o, offset, v, v + delta));</span><br><span class="line">        <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p><code>getAndAddInt</code>函数中，首先获取到期望值<code>v</code>，<code>v + delta</code>是目标值。然后进入compareAndSwapInt函数，compareAndSwapInt会首先对比实际值与期望值是否相同，如果相同就替换并返回true，while循环退出。如果不相同，compareAndSwapInt就返回false，继续执行while循环读取期望值，然后再次进行对比替换的步骤。</p>
-<p><code>compareAndSwapInt</code>是native函数，源码在hotspot的<code>unsafe.cpp</code>文件中，在现在的系统中对比替换操作都是通过硬件机制来实现。</p>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="built_in">UNSAFE_ENTRY</span>(jboolean, <span class="built_in">Unsafe_CompareAndSwapInt</span>(JNIEnv *env, jobject unsafe, jobject obj, jlong offset, jint e, jint x))</span><br><span class="line">  <span class="built_in">UnsafeWrapper</span>(<span class="string">&quot;Unsafe_CompareAndSwapInt&quot;</span>);</span><br><span class="line">  oop p = JNIHandles::<span class="built_in">resolve</span>(obj);</span><br><span class="line">  jint* addr = (jint *) <span class="built_in">index_oop_from_field_offset_long</span>(p, offset);</span><br><span class="line">  <span class="keyword">return</span> (jint)(Atomic::<span class="built_in">cmpxchg</span>(x, addr, e)) == e;</span><br><span class="line">UNSAFE_END</span><br></pre></td></tr></table></figure>
-
-<p><code>Atomic::cmpxchg</code>通过内嵌汇编语言来实现，在不同的硬件上有不同的实现。下面代码是windows x86平台的汇编代码：</p>
-<figure class="highlight c"><table><tr><td class="code"><pre><span class="line"><span class="comment">/** [hotspot]\src\os_cpu\windows_x86\vm\atomic_windows_x86.inline.hpp **/</span></span><br><span class="line"><span class="keyword">inline</span> jint     <span class="title function_">Atomic::cmpxchg</span>    <span class="params">(jint     exchange_value, <span class="keyword">volatile</span> jint*     dest, jint     compare_value)</span> &#123;</span><br><span class="line">  <span class="comment">// alternative for InterlockedCompareExchange</span></span><br><span class="line">  <span class="type">int</span> mp = os::is_MP();</span><br><span class="line">  __asm &#123;</span><br><span class="line">    mov edx, dest   <span class="comment">//变量地址放入数据寄存器</span></span><br><span class="line">    mov ecx, exchange_value  <span class="comment">//目标值放入计数寄存器</span></span><br><span class="line">    mov eax, compare_value  <span class="comment">//期望值放入累加器寄存器</span></span><br><span class="line">    LOCK_IF_MP(mp)   <span class="comment">//根据当前cpu是否是多核进行加锁</span></span><br><span class="line">    cmpxchg dword ptr [edx], ecx</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>代码中<code>cmpxchg</code>汇编指令的含义是对比累加器(al/ax/eax/rax)和[edx]中的值（<small><em>[edx]表示变量地址，本质上就是一个指针</em></small>），如果值相同就把ecx寄存器的值放入[edx]中，否则就会把[edx]指向的变量值加载到累加器中。</p>
-<p><em>备注：AtomicInteger和Unsafe代码来之openJdk8：<a href="https://hg.openjdk.org/jdk8/jdk8/jdk">https://hg.openjdk.org/jdk8/jdk8/jdk</a>。unsafe.cpp代码在openjdk8 hotspot源码中：<a href="https://hg.openjdk.org/jdk8/jdk8/hotspot">https://hg.openjdk.org/jdk8/jdk8/hotspot</a></em></p>
-<h2 id="ABA问题"><a href="#ABA问题" class="headerlink" title="ABA问题"></a>ABA问题</h2><p>CAS会有ABA的问题，AtomicInteger对于<code>getAndIncrement</code>这种只进行加运算的操作不会存在ABA问题。但如果还有减运算就会存在ABA问题。java也提供了<code>AtomicStampedReference</code>类来解决ABA问题。</p>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a href="https://jenkov.com/tutorials/java-concurrency/compare-and-swap.html">Compare and Swap</a><br><a href="https://www.felixcloutier.com/x86/cmpxchg">CMPXCHG — Compare and Exchange</a><br><a href="https://zhuanlan.zhihu.com/p/635463928">从汇编底层全面解析 CAS 的来龙去脉</a><br><a href="https://zhuanlan.zhihu.com/p/60106083">LongAdder解析</a><br><a href="https://blog.csdn.net/mulinsen77/article/details/84583716">AQS详解（面试）</a><br><a href="https://zhuanlan.zhihu.com/p/101430930">并发编程的灵魂：CAS机制详解</a><br><a href="https://zhuanlan.zhihu.com/p/29227508">SynchronousQueue实现原理</a></p>
 ]]></content>
       <categories>
         <category>Java</category>
@@ -3084,6 +3132,35 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
       </tags>
   </entry>
   <entry>
+    <title>okhttp详解系列五：连接拦截器 ConnectInterceptor</title>
+    <url>/posts/ee27d764.html</url>
+    <content><![CDATA[<ul>
+<li><a href="/posts/78efaca4.html" title="okhttp详解系列一：开篇">okhttp详解系列一：开篇</a></li>
+<li><a href="/posts/8e83ed63.html" title="okhttp详解系列二：重试重定向拦截器">okhttp详解系列二：重试重定向拦截器</a></li>
+<li><a href="/posts/6e2b1d41.html" title="okhttp详解系列三：桥拦截器 BridgeInterceptor">okhttp详解系列三：桥拦截器 BridgeInterceptor</a></li>
+<li><a href="/posts/37107c2e.html" title="okhttp详解系列四：缓存拦截器">okhttp详解系列四：缓存拦截器</a></li>
+<li><a href="/posts/ee27d764.html" title="okhttp详解系列五：连接拦截器 ConnectInterceptor">okhttp详解系列五：连接拦截器 ConnectInterceptor</a></li>
+<li><a href="/posts/73cf04e1.html" title="okhttp详解系列六：服务请求拦截器 CallServerInterceptor">okhttp详解系列六：服务请求拦截器 CallServerInterceptor</a>
+
+</li>
+</ul>
+<p>连接拦截器（ConnectInterceptor）负责与服务器建立网络连接。连接拦截器类中的代码非常少，主要逻辑都在Exchange的初始化中：</p>
+<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">object</span> ConnectInterceptor : Interceptor &#123;</span><br><span class="line">  <span class="meta">@Throws(IOException::class)</span></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercept</span><span class="params">(chain: <span class="type">Interceptor</span>.<span class="type">Chain</span>)</span></span>: Response &#123;</span><br><span class="line">    <span class="keyword">val</span> realChain = chain <span class="keyword">as</span> RealInterceptorChain</span><br><span class="line">    <span class="comment">// 1. 初始化Exchange</span></span><br><span class="line">    <span class="keyword">val</span> exchange = realChain.call.initExchange(chain)</span><br><span class="line">    <span class="keyword">val</span> connectedChain = realChain.copy(exchange = exchange)</span><br><span class="line">    <span class="comment">// 2. 交给下一个拦截器进行处理，如果用户注册了网络拦截器，</span></span><br><span class="line">    <span class="comment">//  下一个拦截器就是用户注册的网络拦截器</span></span><br><span class="line">    <span class="keyword">val</span> result = connectedChain.proceed(realChain.request)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>连接拦截器的主要时序：</p>
+<img src="\assert\puml\ed220da452d203a5de22fa696f3d59ab86277252a8e82c524ce1c5d42e101f77.svg"/>
+
+<h2 id="连接池查找可用连接"><a href="#连接池查找可用连接" class="headerlink" title="连接池查找可用连接"></a>连接池查找可用连接</h2><img src="\assert\puml\5196ccecfb28764cb785fa1abf11dff86e94c1f4f7933bdb0360e9e9c30117a0.svg"/>
+
+<h2 id="连接拦截器类图结构"><a href="#连接拦截器类图结构" class="headerlink" title="连接拦截器类图结构"></a>连接拦截器类图结构</h2><img src="\assert\puml\8454aee1e46e6831f08b15ce7793519fbfa1042314c30909d6b065419d53d3c2.svg"/>]]></content>
+      <categories>
+        <category>okhttp</category>
+      </categories>
+      <tags>
+        <tag>okhttp</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>okhttp详解系列二：重试重定向拦截器</title>
     <url>/posts/8e83ed63.html</url>
     <content><![CDATA[<ul>
@@ -3106,35 +3183,6 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
 <li><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Authentication">HTTP 身份验证</a></li>
 </ol>
 ]]></content>
-      <categories>
-        <category>okhttp</category>
-      </categories>
-      <tags>
-        <tag>okhttp</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>okhttp详解系列五：连接拦截器 ConnectInterceptor</title>
-    <url>/posts/ee27d764.html</url>
-    <content><![CDATA[<ul>
-<li><a href="/posts/78efaca4.html" title="okhttp详解系列一：开篇">okhttp详解系列一：开篇</a></li>
-<li><a href="/posts/8e83ed63.html" title="okhttp详解系列二：重试重定向拦截器">okhttp详解系列二：重试重定向拦截器</a></li>
-<li><a href="/posts/6e2b1d41.html" title="okhttp详解系列三：桥拦截器 BridgeInterceptor">okhttp详解系列三：桥拦截器 BridgeInterceptor</a></li>
-<li><a href="/posts/37107c2e.html" title="okhttp详解系列四：缓存拦截器">okhttp详解系列四：缓存拦截器</a></li>
-<li><a href="/posts/ee27d764.html" title="okhttp详解系列五：连接拦截器 ConnectInterceptor">okhttp详解系列五：连接拦截器 ConnectInterceptor</a></li>
-<li><a href="/posts/73cf04e1.html" title="okhttp详解系列六：服务请求拦截器 CallServerInterceptor">okhttp详解系列六：服务请求拦截器 CallServerInterceptor</a>
-
-</li>
-</ul>
-<p>连接拦截器（ConnectInterceptor）负责与服务器建立网络连接。连接拦截器类中的代码非常少，主要逻辑都在Exchange的初始化中：</p>
-<figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">object</span> ConnectInterceptor : Interceptor &#123;</span><br><span class="line">  <span class="meta">@Throws(IOException::class)</span></span><br><span class="line">  <span class="keyword">override</span> <span class="function"><span class="keyword">fun</span> <span class="title">intercept</span><span class="params">(chain: <span class="type">Interceptor</span>.<span class="type">Chain</span>)</span></span>: Response &#123;</span><br><span class="line">    <span class="keyword">val</span> realChain = chain <span class="keyword">as</span> RealInterceptorChain</span><br><span class="line">    <span class="comment">// 1. 初始化Exchange</span></span><br><span class="line">    <span class="keyword">val</span> exchange = realChain.call.initExchange(chain)</span><br><span class="line">    <span class="keyword">val</span> connectedChain = realChain.copy(exchange = exchange)</span><br><span class="line">    <span class="comment">// 2. 交给下一个拦截器进行处理，如果用户注册了网络拦截器，</span></span><br><span class="line">    <span class="comment">//  下一个拦截器就是用户注册的网络拦截器</span></span><br><span class="line">    <span class="keyword">val</span> result = connectedChain.proceed(realChain.request)</span><br><span class="line">    <span class="keyword">return</span> result</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>连接拦截器的主要时序：</p>
-<img src="\assert\puml\ed220da452d203a5de22fa696f3d59ab86277252a8e82c524ce1c5d42e101f77.svg"/>
-
-<h2 id="连接池查找可用连接"><a href="#连接池查找可用连接" class="headerlink" title="连接池查找可用连接"></a>连接池查找可用连接</h2><img src="\assert\puml\5196ccecfb28764cb785fa1abf11dff86e94c1f4f7933bdb0360e9e9c30117a0.svg"/>
-
-<h2 id="连接拦截器类图结构"><a href="#连接拦截器类图结构" class="headerlink" title="连接拦截器类图结构"></a>连接拦截器类图结构</h2><img src="\assert\puml\8454aee1e46e6831f08b15ce7793519fbfa1042314c30909d6b065419d53d3c2.svg"/>]]></content>
       <categories>
         <category>okhttp</category>
       </categories>
@@ -3671,32 +3719,6 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
       </tags>
   </entry>
   <entry>
-    <title>awk命令使用说明</title>
-    <url>/posts/61132.html</url>
-    <content><![CDATA[<p><strong>查找</strong><br>查找以<code>ro.build.id=</code>开头的行</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;/^ro.build.id=/ &#123;print $1&#125;&#x27;</span> build.prop   <span class="comment">#在build.prop文件中查找</span></span><br></pre></td></tr></table></figure>
-<p>下面的例子实现了同样的效果，但是采用了变量的形式，用起来会更加灵活</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">prop_name=ro.build.id</span><br><span class="line">awk -v identifier=<span class="string">&quot;<span class="variable">$&#123;prop_name&#125;</span>=&quot;</span> <span class="string">&#x27;$0 ~ &quot;^&quot; identifier &#123;print $1&#125;&#x27;</span> build.prop</span><br></pre></td></tr></table></figure>
-
-<p><strong>分割字符</strong><br>默认以空格为分隔符，比如：<code>input | awk &#39;&#123;print \$1&#125;&#39;</code><br>可以通过-F参数指定分隔符，比如： <code>input | awk -F &quot;-&gt;&quot; &#39;&#123;print $2&#125;&#39;</code></p>
-<p><strong>字符串替换</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>实例：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>查找SYSTEM/开头的字符串，并把SYSTEM替换为system后输出<br>或者：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 /target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;/^SYSTEM\// &#123;print&#125;&#x27;</span> | awk <span class="string">&#x27;sub(/SYSTEM/,&quot;system&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
-<p>也能实现相同的效果</p>
-<p><strong>只输出最后一行</strong></p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --pretty=format:<span class="string">&quot;%H\ | awk &#x27;NF&#123;a=<span class="variable">$0</span>&#125; END&#123;print a&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Shell</category>
-      </categories>
-      <tags>
-        <tag>shell</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Shell管道</title>
     <url>/posts/669.html</url>
     <content><![CDATA[<h2 id="通过管道执行命令，获取各个命令的返回值"><a href="#通过管道执行命令，获取各个命令的返回值" class="headerlink" title="通过管道执行命令，获取各个命令的返回值"></a>通过管道执行命令，获取各个命令的返回值</h2><p>比如执行命令：cmd1 | cmd2 | cmd3  。 如果命令执行完后，通过”$?”获取的是cmd3的返回值。如何获取cmd1和cmd2的返回值呢？</p>
@@ -3730,6 +3752,32 @@ ActivityThread.handleMessage(BIND_APPLICATION) {
 <h2 id="行操作"><a href="#行操作" class="headerlink" title="行操作"></a>行操作</h2><h3 id="删除文件中的某一行"><a href="#删除文件中的某一行" class="headerlink" title="删除文件中的某一行"></a>删除文件中的某一行</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -i \&#x27;1d\&#x27; %s   #删除第一行的文字</span><br></pre></td></tr></table></figure>
 
 <h3 id="按行截取文本文件内容"><a href="#按行截取文本文件内容" class="headerlink" title="按行截取文本文件内容"></a>按行截取文本文件内容</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">sed -n &#x27;起始行号,结束行号p&#x27; 原始文件 &gt; 另存为的文件</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Shell</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>awk命令使用说明</title>
+    <url>/posts/61132.html</url>
+    <content><![CDATA[<p><strong>查找</strong><br>查找以<code>ro.build.id=</code>开头的行</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;/^ro.build.id=/ &#123;print $1&#125;&#x27;</span> build.prop   <span class="comment">#在build.prop文件中查找</span></span><br></pre></td></tr></table></figure>
+<p>下面的例子实现了同样的效果，但是采用了变量的形式，用起来会更加灵活</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">prop_name=ro.build.id</span><br><span class="line">awk -v identifier=<span class="string">&quot;<span class="variable">$&#123;prop_name&#125;</span>=&quot;</span> <span class="string">&#x27;$0 ~ &quot;^&quot; identifier &#123;print $1&#125;&#x27;</span> build.prop</span><br></pre></td></tr></table></figure>
+
+<p><strong>分割字符</strong><br>默认以空格为分隔符，比如：<code>input | awk &#39;&#123;print \$1&#125;&#39;</code><br>可以通过-F参数指定分隔符，比如： <code>input | awk -F &quot;-&gt;&quot; &#39;&#123;print $2&#125;&#39;</code></p>
+<p><strong>字符串替换</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>实例：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;BEGIN &#123; FS=&quot;SYSTEM/&quot; &#125; sub(/SYSTEM/,&quot;system&quot;) &#123;print $$2&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>查找SYSTEM/开头的字符串，并把SYSTEM替换为system后输出<br>或者：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">zipinfo -1 /target-V100R001C02B013SP06.zip | awk <span class="string">&#x27;/^SYSTEM\// &#123;print&#125;&#x27;</span> | awk <span class="string">&#x27;sub(/SYSTEM/,&quot;system&quot;)&#x27;</span></span><br></pre></td></tr></table></figure>
+<p>也能实现相同的效果</p>
+<p><strong>只输出最后一行</strong></p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">git <span class="built_in">log</span> --pretty=format:<span class="string">&quot;%H\ | awk &#x27;NF&#123;a=<span class="variable">$0</span>&#125; END&#123;print a&#125;&#x27;</span></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Shell</category>
