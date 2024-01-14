@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha256-CTSx/A06dm1B063156EVh15m6Y67pAjZZaQc89LLSrU=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.css" integrity="sha256-vQkngPS8jiHHH0I6ABTZroZk8NPZ7b+MUReOFE9UsXQ=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"rjyblog.gitee.io","root":"/","images":"/images","scheme":"Pisces","darkmode":false,"version":"8.18.2","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="sample项目调试12345678910111213sample-host-debug.apk -&gt; projects&#x2F;sample&#x2F;source&#x2F;sample-host├── sample-constant -&gt; projects&#x2F;sample&#x2F;source&#x2F;sample-constant└── sample-host-lib -&gt; projects&#x2F;sample&#x2F;sourc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Shadow插件化框架原理">
+<meta property="og:url" content="https://rjyblog.gitee.io/posts/765590d3.html">
+<meta property="og:site_name" content="任建勇的博客">
+<meta property="og:description" content="sample项目调试12345678910111213sample-host-debug.apk -&gt; projects&#x2F;sample&#x2F;source&#x2F;sample-host├── sample-constant -&gt; projects&#x2F;sample&#x2F;source&#x2F;sample-constant└── sample-host-lib -&gt; projects&#x2F;sample&#x2F;sourc">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/Shadow/PluginLoaderBinder.drawio.svg">
+<meta property="og:image" content="https://rjyblog.gitee.io/images/Shadow/%E6%8F%92%E4%BB%B6Activity%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.drawio.svg">
+<meta property="article:published_time" content="2023-12-30T14:18:12.000Z">
+<meta property="article:modified_time" content="2024-01-03T08:12:23.313Z">
+<meta property="article:author" content="Jason">
+<meta property="article:tag" content="插件化">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://rjyblog.gitee.io/images/Shadow/PluginLoaderBinder.drawio.svg">
+
+
+<link rel="canonical" href="https://rjyblog.gitee.io/posts/765590d3.html">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://rjyblog.gitee.io/posts/765590d3.html","path":"posts/765590d3.html","title":"Shadow插件化框架原理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Shadow插件化框架原理 | 任建勇的博客</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">任建勇的博客</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#sample%E9%A1%B9%E7%9B%AE%E8%B0%83%E8%AF%95"><span class="nav-text">sample项目调试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%92%E4%BB%B6%E5%90%AF%E5%8A%A8%E8%BF%87%E7%A8%8B"><span class="nav-text">插件启动过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BDRuntime"><span class="nav-text">加载Runtime</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BDLoader"><span class="nav-text">加载Loader</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8A%A0%E8%BD%BD%E6%8F%92%E4%BB%B6"><span class="nav-text">加载插件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%BF%E4%B8%BB%E8%BF%9B%E7%A8%8B%E5%92%8C%E6%8F%92%E4%BB%B6%E8%BF%9B%E7%A8%8Bbinder"><span class="nav-text">宿主进程和插件进程binder</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Activity%E6%8F%92%E4%BB%B6%E6%96%B9%E6%A1%88"><span class="nav-text">Activity插件方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%AF%E5%8A%A8%E5%85%B6%E4%BB%96%E6%8F%92%E4%BB%B6Activity"><span class="nav-text">启动其他插件Activity</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E7%9A%84%E5%A4%84%E7%90%86"><span class="nav-text">资源的处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8Sample%E4%B8%AD%E6%B7%BB%E5%8A%A0%E6%8F%92%E4%BB%B6"><span class="nav-text">在Sample中添加插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="Jason"
+      src="/images/avatar.png">
+  <p class="site-author-name" itemprop="name">Jason</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">66</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/765590d3.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Shadow插件化框架原理 | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Shadow插件化框架原理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2023-12-30 22:18:12" itemprop="dateCreated datePublished" datetime="2023-12-30T22:18:12+08:00">2023-12-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-03 16:12:23" itemprop="dateModified" datetime="2024-01-03T16:12:23+08:00">2024-01-03</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="sample项目调试"><a href="#sample项目调试" class="headerlink" title="sample项目调试"></a>sample项目调试</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">sample-host-debug.apk -&gt; projects/sample/source/sample-host</span><br><span class="line">├── sample-constant -&gt; projects/sample/source/sample-constant</span><br><span class="line">└── sample-host-lib -&gt; projects/sample/source/sample-host-lib</span><br><span class="line"></span><br><span class="line">pluginmanager.apk -&gt; projects/sample/source/sample-manager</span><br><span class="line">└── sample-constant -&gt; projects/sample/source/sample-constant</span><br><span class="line"></span><br><span class="line">sample-runtime-debug.apk -&gt; projects/sample/source/sample-plugin/sample-runtime</span><br><span class="line">└── activity-container -&gt; projects/sdk/core/activity-container (maven)</span><br><span class="line"></span><br><span class="line">sample-loader-debug.apk -&gt; projects/sample/source/sample-plugin/sample-loader</span><br><span class="line">├── sample-host-lib -&gt; projects/sample/source/sample-host-lib (compileOnly)</span><br><span class="line">└── sample-constant -&gt; projects/sample/source/sample-constant</span><br></pre></td></tr></table></figure>
+
+<p>下载Shadow工程后，在根目录执行<code>./gradlew build</code>等待编译成功，然后通过adb安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb install projects/sample/source/sample-host/build/outputs/apk/debug/sample-host-debug.apk</span><br></pre></td></tr></table></figure>
+
+<p>在sample-host-debug.apk的assets目录下包含<code>pluginmanager.apk</code>和<code>plugin-debug.zip</code>，其中plugin-debug.zip包含的文件：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">.</span><br><span class="line">├── config.json</span><br><span class="line">├── sample-app-plugin-debug.apk</span><br><span class="line">├── sample-app-plugin-debug2.apk</span><br><span class="line">├── sample-base-plugin-debug.apk</span><br><span class="line">├── sample-loader-debug.apk</span><br><span class="line">└── sample-runtime-debug.apk</span><br></pre></td></tr></table></figure>
+
+<p>config.json文件内容如下：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line"> <span class="attr">&quot;compact_version&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="number">1</span><span class="punctuation">,</span></span><br><span class="line">  <span class="number">2</span><span class="punctuation">,</span></span><br><span class="line">  <span class="number">3</span></span><br><span class="line"> <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;pluginLoader&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;apkName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-loader-debug.apk&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;hash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;476180733ADFE69DDBE88CADAD473A4B&quot;</span></span><br><span class="line"> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;plugins&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">   <span class="attr">&quot;partKey&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-plugin-app&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;apkName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-app-plugin-debug.apk&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;sample-base&quot;</span></span><br><span class="line">   <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;businessName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-plugin-app&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;hostWhiteList&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;com.tencent.shadow.sample.host.lib&quot;</span></span><br><span class="line">   <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;hash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ECF851E261BF1B8D165D9AEB7C4C3699&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">   <span class="attr">&quot;partKey&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-plugin-app2&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;apkName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-app-plugin-debug2.apk&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;dependsOn&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;sample-base&quot;</span></span><br><span class="line">   <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;businessName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-plugin-app2&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;hostWhiteList&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;com.tencent.shadow.sample.host.lib&quot;</span></span><br><span class="line">   <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;hash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;ECF851E261BF1B8D165D9AEB7C4C3699&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="punctuation">&#123;</span></span><br><span class="line">   <span class="attr">&quot;partKey&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-base&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;apkName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-base-plugin-debug.apk&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;businessName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-plugin-app&quot;</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;hostWhiteList&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="string">&quot;com.tencent.shadow.sample.host.lib&quot;</span></span><br><span class="line">   <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">   <span class="attr">&quot;hash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;18CA96C8EA499DC657ED6DE44B050728&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"> <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;runtime&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;apkName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;sample-runtime-debug.apk&quot;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;hash&quot;</span><span class="punctuation">:</span> <span class="string">&quot;364BAB0EB1B8CD345D15D767D1FA8DC7&quot;</span></span><br><span class="line"> <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;UUID&quot;</span><span class="punctuation">:</span> <span class="string">&quot;F5574A0D-D937-42C0-93A6-35E190CCA955&quot;</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="number">4</span><span class="punctuation">,</span></span><br><span class="line"> <span class="attr">&quot;UUID_NickName&quot;</span><span class="punctuation">:</span> <span class="string">&quot;1.1.5&quot;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="插件启动过程"><a href="#插件启动过程" class="headerlink" title="插件启动过程"></a>插件启动过程</h2><p>在sample代码中启动插件Activity会通过一个跳板<code>PluginLoadActivity</code>，跳板Activity会展示插件loading view，从而避免插件启动过程中的黑屏给用户带来困惑。</p>
+<pre class="mermaid">
+
+zenuml
+PluginLoadActivity.&quot;startPlugin run&quot; {
+    mPluginManager &#x3D; HostApplication.loadPluginManager {
+        PluginManager &#x3D; Shadow.getPluginManager {
+            new DynamicPluginManager()
+        }
+    }
+    DynamicPluginManager.enter {
+        updateManagerImpl {
+            &#x2F;&#x2F;从pluginmanager.apk中加载manager
+            new SamplePluginManager()
+        }
+        SamplePluginManager.enter {
+            onStartActivity {
+                &quot;展示pluginmanager.apk的loading&quot; {
+                    &quot;👇① 子线程run&quot;
+                }
+            }
+        }
+    }
+}
+</pre>
+
+<pre class="mermaid">
+
+zenuml
+SamplePluginManager.&quot;☝① onStartActivity run&quot; {
+    FastPluginManager.installPlugin
+    FastPluginManager.loadPlugin(sample-base) {
+        loadPluginLoaderAndRuntime {
+            bindPluginProcessService {
+                &quot;独立进程启动PluginProcessService&quot;
+            }
+            loadRunTime {
+                PpsController.&quot;👇① loadRuntime&quot;
+            }
+            loadPluginLoader {
+                PpsController.&quot;👇② loadPluginLoader&quot;
+            }
+        }
+        BinderPluginLoader.&quot;👇③ loadPlugin&quot;
+    }
+    FastPluginManager.loadPlugin(sample-plugin-app)
+    FastPluginManager.callApplicationOnCreate(sample-base) {
+        BinderPluginLoader.callApplicationOnCreate
+    }
+    FastPluginManager.callApplicationOnCreate(sample-plugin-app)
+    BinderPluginLoader.convertActivityIntent
+    BinderPluginLoader.startActivityInPluginProcess
+}
+</pre>
+
+<h3 id="加载Runtime"><a href="#加载Runtime" class="headerlink" title="加载Runtime"></a>加载Runtime</h3><pre class="mermaid">
+
+zenuml
+PluginProcessService.&quot;☝① (binder)loadRuntime&quot; {
+    InstalledApk &#x3D; BinderUuidManager.getRuntime
+    DynamicRuntime.loadRuntime {
+        &quot;runtime挂在ClassLoader parent&quot;
+    }
+}
+</pre>
+
+<p><code>PluginProcessService</code>类位于宿主apk中，但是是在独立进程中启动服务。<br>runtime加载后ClassLoader的结构是：<code>BootClassLoader</code> &lt;- <code>RuntimeClassLoader</code> &lt;- <code>PathClassLoader</code>。</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dalvik.system.PathClassLoader[DexPathList[[zip file &quot;/data/app/~~ENGi6EgoGsbDZ8Ntp66PEg==/com.tencent.shadow.sample.host-tXgX3vZIGlZxM6yNcDzx3A==/base.apk&quot;],nativeLibraryDirectories=[/data/app/~~ENGi6EgoGsbDZ8Ntp66PEg==/com.tencent.shadow.sample.host-tXgX3vZIGlZxM6yNcDzx3A==/lib/x86_64, /system/lib64, /system_ext/lib64]]]</span><br><span class="line">RuntimeClassLoader[DexPathList[[zip file &quot;/data/user/0/com.tencent.shadow.sample.host/files/ShadowPluginManager/UnpackedPlugin/test-dynamic-manager/696fd64a75befe2ff6a0c9e9f2e317e4/plugin-debug.zip/sample-runtime-debug.apk&quot;],nativeLibraryDirectories=[/system/lib64, /system_ext/lib64]]]</span><br><span class="line">java.lang.BootClassLoader@d43cbf0</span><br></pre></td></tr></table></figure>
+
+<h3 id="加载Loader"><a href="#加载Loader" class="headerlink" title="加载Loader"></a>加载Loader</h3><p>loader和runtime一样都是在PluginProcessService中进行加载。</p>
+<pre class="mermaid">
+
+zenuml
+PluginProcessService.&quot;☝② (binder)loadPluginLoader&quot; {
+    PluginProcessService.&quot;InstalledApk &#x3D; BinderUuidManager.getPluginLoader&quot;
+    PluginLoaderImpl &#x3D; LoaderImplLoader.load {
+        &quot;ApkClassLoader.loadClass(LoaderFactoryImpl)&quot;
+        LoaderFactoryImpl.buildLoader {
+            new DynamicPluginLoader
+            new PluginLoaderBinder(DynamicPluginLoader)
+        }
+    }
+    PluginLoaderBinder.setUuidManager
+}
+</pre>
+
+<h3 id="加载插件"><a href="#加载插件" class="headerlink" title="加载插件"></a>加载插件</h3><pre class="mermaid">
+
+zenuml
+DynamicPluginLoader.&quot;☝③ loadPlugin(binder)&quot; {
+    SamplePluginLoader.loadPlugin {
+        &quot;ShadowPluginLoader#loadPlugin&quot; {
+            &quot;new PluginServiceManager&quot;
+            LoadPluginBloc.loadPlugin {
+                PluginClassLoader &#x3D; LoadApkBloc.loadPlugin
+                &quot;PluginManifest &#x3D; PluginClassLoader.loadPluginManifest&quot;
+                &quot;ApplicationInfo &#x3D; CreatePluginApplicationInfoBloc.create&quot;
+                &quot;new PluginPackageManagerImpl&quot;
+                &quot;Resources &#x3D; CreateResourceBloc.create&quot;
+                &quot;new ShadowAppComponentFactory&quot;
+                &quot;ShadowApplication &#x3D; CreateApplicationBloc.createShadowApplication&quot;
+                ComponentManager.addPluginApkInfo
+                &quot;PluginParts注册到map&quot;
+                PluginPartInfoManager.addPluginInfo
+            }
+        }
+    }
+}
+</pre>
+
+<p>每个插件包中都包含一个<code>com.tencent.shadow.core.manifest_parser.PluginManifest</code>类，用户记录当前插件包中有那些activity、service、receiver、provider，加载插件后这些信息会被注册到<code>ComponentManager</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> &#123;</span><br><span class="line">  activities = <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo[] &#123; </span><br><span class="line">      <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivityReCreate&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivitySetTheme&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivityOptionMenu&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivityOnCreate&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivityOrientation&quot;</span>, <span class="number">0</span>, <span class="number">1073742976</span>, <span class="number">16</span>, <span class="number">0</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivityWindowSoftMode&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.provider.TestDBContentProviderActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.activity.TestActivityReCreateBySystem&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.receiver.TestReceiverActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.receiver.TestDynamicReceiverActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), </span><br><span class="line">      <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.fragment.TestDynamicFragmentActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.fragment.TestXmlFragmentActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.dialog.TestDialogActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.packagemanager.TestPackageManagerActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.provider.TestFileProviderActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.application.TestApplicationActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.context.ActivityContextSubDirTestActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.context.ApplicationContextSubDirTestActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.host_communication.PluginUseHostClassActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.webview.WebViewActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>), </span><br><span class="line">      <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ActivityInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.fragment.TestDialogFragmentActivity&quot;</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, -<span class="number">1</span>) &#125;;</span><br><span class="line">  services = <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ServiceInfo[] &#123; <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ServiceInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.service.HostAddPluginViewService&quot;</span>) &#125;;</span><br><span class="line">  receivers = <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ReceiverInfo[] &#123; <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ReceiverInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.receiver.MyReceiver&quot;</span>, <span class="keyword">new</span> <span class="title class_">String</span>[] &#123; <span class="string">&quot;com.tencent.test.action&quot;</span> &#125;) &#125;;</span><br><span class="line">  providers = <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ProviderInfo[] &#123; <span class="keyword">new</span> <span class="title class_">PluginManifest</span>.ProviderInfo(<span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.usecases.provider.TestProvider&quot;</span>, <span class="string">&quot;com.tencent.shadow.sample.host.provider.test&quot;</span>, <span class="literal">false</span>) &#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<?xml version="1.0" encoding="us-ascii" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="359px" preserveAspectRatio="none" style="width:731px;height:359px;background:#FFFFFF;" version="1.1" viewBox="0 0 731 359" width="731px" zoomAndPan="magnify"><defs/><g><!--class ShadowPluginLoader--><g id="elem_ShadowPluginLoader"><rect codeLine="1" fill="#F1F1F1" height="64.2969" id="ShadowPluginLoader" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="179" x="270" y="147.5"/><ellipse cx="285" cy="163.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M287.3438,159.1719 C286.4063,158.7344 285.8125,158.5938 284.9375,158.5938 C282.3125,158.5938 280.3125,160.6719 280.3125,163.3906 L280.3125,164.5156 C280.3125,167.0938 282.4219,168.9844 285.3125,168.9844 C286.5313,168.9844 287.6875,168.6875 288.4375,168.1406 C289.0156,167.7344 289.3438,167.2813 289.3438,166.8906 C289.3438,166.4375 288.9531,166.0469 288.4844,166.0469 C288.2656,166.0469 288.0625,166.125 287.875,166.3125 C287.4219,166.7969 287.4219,166.7969 287.2344,166.8906 C286.8125,167.1563 286.125,167.2813 285.3594,167.2813 C283.3125,167.2813 282.0156,166.1875 282.0156,164.4844 L282.0156,163.3906 C282.0156,161.6094 283.2656,160.2969 285,160.2969 C285.5781,160.2969 286.1875,160.4531 286.6563,160.7031 C287.1406,160.9844 287.3125,161.2031 287.4063,161.6094 C287.4688,162.0156 287.5,162.1406 287.6406,162.2656 C287.7813,162.4063 288.0156,162.5156 288.2344,162.5156 C288.5,162.5156 288.7656,162.375 288.9375,162.1563 C289.0469,162 289.0781,161.8125 289.0781,161.3906 L289.0781,159.9688 C289.0781,159.5313 289.0625,159.4063 288.9688,159.25 C288.8125,158.9844 288.5313,158.8438 288.2344,158.8438 C287.9375,158.8438 287.7344,158.9375 287.5156,159.25 L287.3438,159.1719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="147" x="299" y="168.3467">ShadowPluginLoader</text><line style="stroke:#181818;stroke-width:0.5;" x1="271" x2="448" y1="179.5" y2="179.5"/><rect fill="none" height="6" style="stroke:#C82930;stroke-width:1.0;" width="6" x="278" y="190.1484"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="124" x="290" y="196.4951">mPluginPartsMap</text><line style="stroke:#181818;stroke-width:0.5;" x1="271" x2="448" y1="203.7969" y2="203.7969"/></g><!--class ComponentManager--><g id="elem_ComponentManager"><rect codeLine="20" fill="#F1F1F1" height="48" id="ComponentManager" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="178" x="522.5" y="304"/><ellipse cx="537.5" cy="320" fill="#A9DCDF" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M539.5781,321.8125 L539.9688,322.7969 L539.5781,322.7969 C539.125,322.7969 539.0156,322.8125 538.8594,322.9219 C538.6094,323.0781 538.4531,323.3594 538.4531,323.6563 C538.4531,323.9219 538.5938,324.1719 538.8125,324.3281 C538.9531,324.4531 539.1563,324.5 539.5781,324.5 L541.9375,324.5 C542.2969,324.5 542.5156,324.4688 542.6563,324.375 C542.9063,324.2344 543.0625,323.9375 543.0625,323.6563 C543.0625,323.375 542.9219,323.125 542.7031,322.9688 C542.5313,322.8281 542.375,322.7969 541.9063,322.7969 L538.5156,314.5938 L534.8438,314.5938 C534.3906,314.5938 534.2656,314.6094 534.1094,314.7031 C533.8594,314.875 533.7031,315.1563 533.7031,315.4375 C533.7031,315.7188 533.8438,315.9688 534.0625,316.1406 C534.2344,316.25 534.4063,316.2813 534.8438,316.2813 L535.9219,316.2813 L533.2813,322.7969 C532.8594,322.7969 532.7031,322.8125 532.5469,322.9219 C532.2969,323.0781 532.1406,323.3594 532.1406,323.6563 C532.1406,324.2188 532.5156,324.5 533.2656,324.5 L535.5313,324.5 C535.8906,324.5 536.1094,324.4688 536.2344,324.375 C536.5,324.2344 536.6406,323.9375 536.6406,323.6563 C536.6406,323.375 536.5156,323.125 536.2969,322.9531 C536.125,322.8281 535.9844,322.7969 535.5313,322.7969 L535.1406,322.7969 L535.5313,321.8125 L539.5781,321.8125 Z M538.875,320.1094 L536.2031,320.1094 L537.5469,316.8438 L538.875,320.1094 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="146" x="551.5" y="324.8467">ComponentManager</text><line style="stroke:#181818;stroke-width:0.5;" x1="523.5" x2="699.5" y1="336" y2="336"/><line style="stroke:#181818;stroke-width:0.5;" x1="523.5" x2="699.5" y1="344" y2="344"/></g><!--class PluginServiceManager--><g id="elem_PluginServiceManager"><rect fill="#F1F1F1" height="48" id="PluginServiceManager" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="189" x="7" y="304"/><ellipse cx="22" cy="320" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M24.3438,315.6719 C23.4063,315.2344 22.8125,315.0938 21.9375,315.0938 C19.3125,315.0938 17.3125,317.1719 17.3125,319.8906 L17.3125,321.0156 C17.3125,323.5938 19.4219,325.4844 22.3125,325.4844 C23.5313,325.4844 24.6875,325.1875 25.4375,324.6406 C26.0156,324.2344 26.3438,323.7813 26.3438,323.3906 C26.3438,322.9375 25.9531,322.5469 25.4844,322.5469 C25.2656,322.5469 25.0625,322.625 24.875,322.8125 C24.4219,323.2969 24.4219,323.2969 24.2344,323.3906 C23.8125,323.6563 23.125,323.7813 22.3594,323.7813 C20.3125,323.7813 19.0156,322.6875 19.0156,320.9844 L19.0156,319.8906 C19.0156,318.1094 20.2656,316.7969 22,316.7969 C22.5781,316.7969 23.1875,316.9531 23.6563,317.2031 C24.1406,317.4844 24.3125,317.7031 24.4063,318.1094 C24.4688,318.5156 24.5,318.6406 24.6406,318.7656 C24.7813,318.9063 25.0156,319.0156 25.2344,319.0156 C25.5,319.0156 25.7656,318.875 25.9375,318.6563 C26.0469,318.5 26.0781,318.3125 26.0781,317.8906 L26.0781,316.4688 C26.0781,316.0313 26.0625,315.9063 25.9688,315.75 C25.8125,315.4844 25.5313,315.3438 25.2344,315.3438 C24.9375,315.3438 24.7344,315.4375 24.5156,315.75 L24.3438,315.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="157" x="36" y="324.8467">PluginServiceManager</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="195" y1="336" y2="336"/><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="195" y1="344" y2="344"/></g><!--class PluginContentProviderManager--><g id="elem_PluginContentProviderManager"><rect fill="#F1F1F1" height="48" id="PluginContentProviderManager" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="256" x="231.5" y="304"/><ellipse cx="246.5" cy="320" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M248.8438,315.6719 C247.9063,315.2344 247.3125,315.0938 246.4375,315.0938 C243.8125,315.0938 241.8125,317.1719 241.8125,319.8906 L241.8125,321.0156 C241.8125,323.5938 243.9219,325.4844 246.8125,325.4844 C248.0313,325.4844 249.1875,325.1875 249.9375,324.6406 C250.5156,324.2344 250.8438,323.7813 250.8438,323.3906 C250.8438,322.9375 250.4531,322.5469 249.9844,322.5469 C249.7656,322.5469 249.5625,322.625 249.375,322.8125 C248.9219,323.2969 248.9219,323.2969 248.7344,323.3906 C248.3125,323.6563 247.625,323.7813 246.8594,323.7813 C244.8125,323.7813 243.5156,322.6875 243.5156,320.9844 L243.5156,319.8906 C243.5156,318.1094 244.7656,316.7969 246.5,316.7969 C247.0781,316.7969 247.6875,316.9531 248.1563,317.2031 C248.6406,317.4844 248.8125,317.7031 248.9063,318.1094 C248.9688,318.5156 249,318.6406 249.1406,318.7656 C249.2813,318.9063 249.5156,319.0156 249.7344,319.0156 C250,319.0156 250.2656,318.875 250.4375,318.6563 C250.5469,318.5 250.5781,318.3125 250.5781,317.8906 L250.5781,316.4688 C250.5781,316.0313 250.5625,315.9063 250.4688,315.75 C250.3125,315.4844 250.0313,315.3438 249.7344,315.3438 C249.4375,315.3438 249.2344,315.4375 249.0156,315.75 L248.8438,315.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="224" x="260.5" y="324.8467">PluginContentProviderManager</text><line style="stroke:#181818;stroke-width:0.5;" x1="232.5" x2="486.5" y1="336" y2="336"/><line style="stroke:#181818;stroke-width:0.5;" x1="232.5" x2="486.5" y1="344" y2="344"/></g><!--class SamplePluginLoader--><g id="elem_SamplePluginLoader"><rect fill="#F1F1F1" height="48" id="SamplePluginLoader" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="178" x="56.5" y="155.5"/><ellipse cx="71.5" cy="171.5" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M73.8438,167.1719 C72.9063,166.7344 72.3125,166.5938 71.4375,166.5938 C68.8125,166.5938 66.8125,168.6719 66.8125,171.3906 L66.8125,172.5156 C66.8125,175.0938 68.9219,176.9844 71.8125,176.9844 C73.0313,176.9844 74.1875,176.6875 74.9375,176.1406 C75.5156,175.7344 75.8438,175.2813 75.8438,174.8906 C75.8438,174.4375 75.4531,174.0469 74.9844,174.0469 C74.7656,174.0469 74.5625,174.125 74.375,174.3125 C73.9219,174.7969 73.9219,174.7969 73.7344,174.8906 C73.3125,175.1563 72.625,175.2813 71.8594,175.2813 C69.8125,175.2813 68.5156,174.1875 68.5156,172.4844 L68.5156,171.3906 C68.5156,169.6094 69.7656,168.2969 71.5,168.2969 C72.0781,168.2969 72.6875,168.4531 73.1563,168.7031 C73.6406,168.9844 73.8125,169.2031 73.9063,169.6094 C73.9688,170.0156 74,170.1406 74.1406,170.2656 C74.2813,170.4063 74.5156,170.5156 74.7344,170.5156 C75,170.5156 75.2656,170.375 75.4375,170.1563 C75.5469,170 75.5781,169.8125 75.5781,169.3906 L75.5781,167.9688 C75.5781,167.5313 75.5625,167.4063 75.4688,167.25 C75.3125,166.9844 75.0313,166.8438 74.7344,166.8438 C74.4375,166.8438 74.2344,166.9375 74.0156,167.25 L73.8438,167.1719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="146" x="85.5" y="176.3467">SamplePluginLoader</text><line style="stroke:#181818;stroke-width:0.5;" x1="57.5" x2="233.5" y1="187.5" y2="187.5"/><line style="stroke:#181818;stroke-width:0.5;" x1="57.5" x2="233.5" y1="195.5" y2="195.5"/></g><!--class PluginComponentLauncher--><g id="elem_PluginComponentLauncher"><rect codeLine="18" fill="#F1F1F1" height="129.4844" id="PluginComponentLauncher" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="225" x="499" y="115"/><ellipse cx="514" cy="131" fill="#B4A7E5" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M514.9531,127.7813 L516.6719,127.7813 C517.0625,127.7813 517.25,127.75 517.375,127.6719 C517.6406,127.5156 517.7813,127.2344 517.7813,126.9375 C517.7813,126.6719 517.6719,126.4063 517.4375,126.2344 C517.2656,126.125 517.125,126.0938 516.6719,126.0938 L511.5313,126.0938 C511.0938,126.0938 510.9688,126.1094 510.8125,126.2031 C510.5625,126.3594 510.4063,126.6563 510.4063,126.9375 C510.4063,127.2188 510.5469,127.4688 510.7656,127.6406 C510.9219,127.75 511.1094,127.7813 511.5313,127.7813 L513.25,127.7813 L513.25,134.2969 L511.5313,134.2969 C511.0938,134.2969 510.9688,134.3125 510.8125,134.4219 C510.5625,134.5781 510.4063,134.8594 510.4063,135.1563 C510.4063,135.4063 510.5469,135.6719 510.7656,135.8281 C510.9219,135.9531 511.125,136 511.5313,136 L516.6719,136 C517.4219,136 517.7813,135.7188 517.7813,135.1563 C517.7813,134.875 517.6719,134.625 517.4375,134.4531 C517.2656,134.3281 517.125,134.2969 516.6719,134.2969 L514.9531,134.2969 L514.9531,127.7813 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" font-style="italic" lengthAdjust="spacing" textLength="193" x="528" y="135.8467">PluginComponentLauncher</text><line style="stroke:#181818;stroke-width:0.5;" x1="500" x2="723" y1="147" y2="147"/><line style="stroke:#181818;stroke-width:0.5;" x1="500" x2="723" y1="155" y2="155"/><ellipse cx="510" cy="168.6484" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="116" x="519" y="171.9951">startActivity(...)</text><ellipse cx="510" cy="184.9453" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="184" x="519" y="188.292">startActivityForResult(...)</text><ellipse cx="510" cy="201.2422" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="113" x="519" y="204.5889">startService(...)</text><ellipse cx="510" cy="217.5391" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="111" x="519" y="220.8857">stopService(...)</text><ellipse cx="510" cy="233.8359" fill="#84BE84" rx="3" ry="3" style="stroke:#038048;stroke-width:1.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="110" x="519" y="237.1826">bindService(...)</text></g><!--class ShadowContext--><g id="elem_ShadowContext"><rect fill="#F1F1F1" height="48" id="ShadowContext" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="146" x="538.5" y="7"/><ellipse cx="553.5" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M555.8438,18.6719 C554.9063,18.2344 554.3125,18.0938 553.4375,18.0938 C550.8125,18.0938 548.8125,20.1719 548.8125,22.8906 L548.8125,24.0156 C548.8125,26.5938 550.9219,28.4844 553.8125,28.4844 C555.0313,28.4844 556.1875,28.1875 556.9375,27.6406 C557.5156,27.2344 557.8438,26.7813 557.8438,26.3906 C557.8438,25.9375 557.4531,25.5469 556.9844,25.5469 C556.7656,25.5469 556.5625,25.625 556.375,25.8125 C555.9219,26.2969 555.9219,26.2969 555.7344,26.3906 C555.3125,26.6563 554.625,26.7813 553.8594,26.7813 C551.8125,26.7813 550.5156,25.6875 550.5156,23.9844 L550.5156,22.8906 C550.5156,21.1094 551.7656,19.7969 553.5,19.7969 C554.0781,19.7969 554.6875,19.9531 555.1563,20.2031 C555.6406,20.4844 555.8125,20.7031 555.9063,21.1094 C555.9688,21.5156 556,21.6406 556.1406,21.7656 C556.2813,21.9063 556.5156,22.0156 556.7344,22.0156 C557,22.0156 557.2656,21.875 557.4375,21.6563 C557.5469,21.5 557.5781,21.3125 557.5781,20.8906 L557.5781,19.4688 C557.5781,19.0313 557.5625,18.9063 557.4688,18.75 C557.3125,18.4844 557.0313,18.3438 556.7344,18.3438 C556.4375,18.3438 556.2344,18.4375 556.0156,18.75 L555.8438,18.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="114" x="567.5" y="27.8467">ShadowContext</text><line style="stroke:#181818;stroke-width:0.5;" x1="539.5" x2="683.5" y1="39" y2="39"/><line style="stroke:#181818;stroke-width:0.5;" x1="539.5" x2="683.5" y1="47" y2="47"/></g><!--reverse link ShadowPluginLoader to ComponentManager--><g id="link_ShadowPluginLoader_ComponentManager"><path codeLine="4" d="M423.3173,217.6 C470.8503,245.233 528.907,278.9846 571.752,303.8927 " fill="none" id="ShadowPluginLoader-backto-ComponentManager" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="412.943,211.569,416.1198,218.0426,423.3173,217.6,420.1405,211.1264,412.943,211.569" style="stroke:#181818;stroke-width:1.0;"/></g><!--reverse link ShadowPluginLoader to PluginServiceManager--><g id="link_ShadowPluginLoader_PluginServiceManager"><path codeLine="5" d="M296.8621,217.7143 C279.2261,228.1093 269.731,233.599 251.5,244 C215.438,264.5743 174.137,287.3719 144.015,303.8603 " fill="none" id="ShadowPluginLoader-backto-PluginServiceManager" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="307.2,211.621,300,211.2217,296.8621,217.7143,304.0622,218.1136,307.2,211.621" style="stroke:#181818;stroke-width:1.0;"/></g><!--reverse link ShadowPluginLoader to PluginContentProviderManager--><g id="link_ShadowPluginLoader_PluginContentProviderManager"><path codeLine="6" d="M359.5,223.569 C359.5,251.118 359.5,278.7429 359.5,303.6652 " fill="none" id="ShadowPluginLoader-backto-PluginContentProviderManager" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="359.5,211.569,355.5,217.569,359.5,223.569,363.5,217.569,359.5,211.569" style="stroke:#181818;stroke-width:1.0;"/></g><!--link SamplePluginLoader to ShadowPluginLoader--><g id="link_SamplePluginLoader_ShadowPluginLoader"><path codeLine="7" d="M234.527,179.5 C246.244,179.5 239.96,179.5 251.676,179.5 " fill="none" id="SamplePluginLoader-to-ShadowPluginLoader" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="269.676,179.5,251.676,173.5,251.676,185.5,269.676,179.5" style="stroke:#181818;stroke-width:1.0;"/></g><!--reverse link PluginComponentLauncher to ComponentManager--><g id="link_PluginComponentLauncher_ComponentManager"><path codeLine="16" d="M598.4828,262.3274 C598.0588,283.4546 599.431,287.6484 601.877,303.7133 " fill="none" id="PluginComponentLauncher-backto-ComponentManager" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="598.844,244.331,592.484,262.207,604.4816,262.4478,598.844,244.331" style="stroke:#181818;stroke-width:1.0;"/></g><!--reverse link PluginComponentLauncher to ComponentManager--><g id="link_PluginComponentLauncher_ComponentManager"><path codeLine="21" d="M625.2833,262.3269 C625.7333,283.4541 624.279,287.6484 621.689,303.7133 " fill="none" id="PluginComponentLauncher-backto-ComponentManager-1" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="624.9,244.331,619.2847,262.4547,631.2819,262.1991,624.9,244.331" style="stroke:#181818;stroke-width:1.0;"/></g><!--reverse link ShadowContext to PluginComponentLauncher--><g id="link_ShadowContext_PluginComponentLauncher"><path codeLine="19" d="M611.5,67.213 C611.5,83.35 611.5,93.692 611.5,114.929 " fill="none" id="ShadowContext-backto-PluginComponentLauncher" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="#181818" points="611.5,55.213,607.5,61.213,611.5,67.213,615.5,61.213,611.5,55.213" style="stroke:#181818;stroke-width:1.0;"/></g><!--SRC=[bLBB2eCm4BpdAtBi0_s2KYX2JnQaVi4QKmre8ibgMwh_tg0YM2DjSvoTdSmComemXiOvfEeU5NKcPAWWvPg-2BNFe-M0Hg3HNA0Y7N6GTvv70rLMIdA95v2GSRt66u2OwqOm_XCtK1AjRgHL8-nase6oAlXinskFZYo422kWRy3uf3Xw3Q6MB9_Yxgb16_J4K3G2dnlVzxUkmLdfApTrWGl6c6kEgye19qAcCxWZQ-OEhQlVxwd6Mll-7ZXhz9C9YK4D32dh3sBnsL_MtW00]--></g></svg>
+
+<h2 id="宿主进程和插件进程binder"><a href="#宿主进程和插件进程binder" class="headerlink" title="宿主进程和插件进程binder"></a>宿主进程和插件进程binder</h2><p><img src="/images/Shadow/PluginLoaderBinder.drawio.svg" alt="Shadow Binder"></p>
+<pre class="mermaid">
+
+zenuml
+BinderPluginLoader.startActivityInPluginProcess {
+    PluginLoaderBinder.&quot;binder onTransact&quot; {
+        DynamicPluginLoader.startActivityInPluginProcess
+    }
+}
+</pre>
+
+<h2 id="Activity插件方案"><a href="#Activity插件方案" class="headerlink" title="Activity插件方案"></a>Activity插件方案</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://juejin.cn/post/6844903876655579150">Shadow解决Activity等组件生命周期的方法解析</a>这篇文章是插件框架作者对于Activity生命周期的介绍。</p>
+<p>比如插件中有个MainActivity，如下：</p>
+<?xml version="1.0" encoding="us-ascii" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="62px" preserveAspectRatio="none" style="width:415px;height:62px;background:#FFFFFF;" version="1.1" viewBox="0 0 415 62" width="415px" zoomAndPan="magnify"><defs/><g><!--class Activity--><g id="elem_Activity"><rect fill="#F1F1F1" height="48" id="Activity" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="88" x="7" y="7"/><ellipse cx="22" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M24.3438,18.6719 C23.4063,18.2344 22.8125,18.0938 21.9375,18.0938 C19.3125,18.0938 17.3125,20.1719 17.3125,22.8906 L17.3125,24.0156 C17.3125,26.5938 19.4219,28.4844 22.3125,28.4844 C23.5313,28.4844 24.6875,28.1875 25.4375,27.6406 C26.0156,27.2344 26.3438,26.7813 26.3438,26.3906 C26.3438,25.9375 25.9531,25.5469 25.4844,25.5469 C25.2656,25.5469 25.0625,25.625 24.875,25.8125 C24.4219,26.2969 24.4219,26.2969 24.2344,26.3906 C23.8125,26.6563 23.125,26.7813 22.3594,26.7813 C20.3125,26.7813 19.0156,25.6875 19.0156,23.9844 L19.0156,22.8906 C19.0156,21.1094 20.2656,19.7969 22,19.7969 C22.5781,19.7969 23.1875,19.9531 23.6563,20.2031 C24.1406,20.4844 24.3125,20.7031 24.4063,21.1094 C24.4688,21.5156 24.5,21.6406 24.6406,21.7656 C24.7813,21.9063 25.0156,22.0156 25.2344,22.0156 C25.5,22.0156 25.7656,21.875 25.9375,21.6563 C26.0469,21.5 26.0781,21.3125 26.0781,20.8906 L26.0781,19.4688 C26.0781,19.0313 26.0625,18.9063 25.9688,18.75 C25.8125,18.4844 25.5313,18.3438 25.2344,18.3438 C24.9375,18.3438 24.7344,18.4375 24.5156,18.75 L24.3438,18.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="56" x="36" y="27.8467">Activity</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="94" y1="39" y2="39"/><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="94" y1="47" y2="47"/></g><!--class BaseActivity--><g id="elem_BaseActivity"><rect fill="#F1F1F1" height="48" id="BaseActivity" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122" x="130" y="7"/><ellipse cx="145" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M147.3438,18.6719 C146.4063,18.2344 145.8125,18.0938 144.9375,18.0938 C142.3125,18.0938 140.3125,20.1719 140.3125,22.8906 L140.3125,24.0156 C140.3125,26.5938 142.4219,28.4844 145.3125,28.4844 C146.5313,28.4844 147.6875,28.1875 148.4375,27.6406 C149.0156,27.2344 149.3438,26.7813 149.3438,26.3906 C149.3438,25.9375 148.9531,25.5469 148.4844,25.5469 C148.2656,25.5469 148.0625,25.625 147.875,25.8125 C147.4219,26.2969 147.4219,26.2969 147.2344,26.3906 C146.8125,26.6563 146.125,26.7813 145.3594,26.7813 C143.3125,26.7813 142.0156,25.6875 142.0156,23.9844 L142.0156,22.8906 C142.0156,21.1094 143.2656,19.7969 145,19.7969 C145.5781,19.7969 146.1875,19.9531 146.6563,20.2031 C147.1406,20.4844 147.3125,20.7031 147.4063,21.1094 C147.4688,21.5156 147.5,21.6406 147.6406,21.7656 C147.7813,21.9063 148.0156,22.0156 148.2344,22.0156 C148.5,22.0156 148.7656,21.875 148.9375,21.6563 C149.0469,21.5 149.0781,21.3125 149.0781,20.8906 L149.0781,19.4688 C149.0781,19.0313 149.0625,18.9063 148.9688,18.75 C148.8125,18.4844 148.5313,18.3438 148.2344,18.3438 C147.9375,18.3438 147.7344,18.4375 147.5156,18.75 L147.3438,18.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="90" x="159" y="27.8467">BaseActivity</text><line style="stroke:#181818;stroke-width:0.5;" x1="131" x2="251" y1="39" y2="39"/><line style="stroke:#181818;stroke-width:0.5;" x1="131" x2="251" y1="47" y2="47"/></g><!--class MainActivity--><g id="elem_MainActivity"><rect fill="#F1F1F1" height="48" id="MainActivity" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="121" x="287.5" y="7"/><ellipse cx="302.5" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M304.8438,18.6719 C303.9063,18.2344 303.3125,18.0938 302.4375,18.0938 C299.8125,18.0938 297.8125,20.1719 297.8125,22.8906 L297.8125,24.0156 C297.8125,26.5938 299.9219,28.4844 302.8125,28.4844 C304.0313,28.4844 305.1875,28.1875 305.9375,27.6406 C306.5156,27.2344 306.8438,26.7813 306.8438,26.3906 C306.8438,25.9375 306.4531,25.5469 305.9844,25.5469 C305.7656,25.5469 305.5625,25.625 305.375,25.8125 C304.9219,26.2969 304.9219,26.2969 304.7344,26.3906 C304.3125,26.6563 303.625,26.7813 302.8594,26.7813 C300.8125,26.7813 299.5156,25.6875 299.5156,23.9844 L299.5156,22.8906 C299.5156,21.1094 300.7656,19.7969 302.5,19.7969 C303.0781,19.7969 303.6875,19.9531 304.1563,20.2031 C304.6406,20.4844 304.8125,20.7031 304.9063,21.1094 C304.9688,21.5156 305,21.6406 305.1406,21.7656 C305.2813,21.9063 305.5156,22.0156 305.7344,22.0156 C306,22.0156 306.2656,21.875 306.4375,21.6563 C306.5469,21.5 306.5781,21.3125 306.5781,20.8906 L306.5781,19.4688 C306.5781,19.0313 306.5625,18.9063 306.4688,18.75 C306.3125,18.4844 306.0313,18.3438 305.7344,18.3438 C305.4375,18.3438 305.2344,18.4375 305.0156,18.75 L304.8438,18.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89" x="316.5" y="27.8467">MainActivity</text><line style="stroke:#181818;stroke-width:0.5;" x1="288.5" x2="407.5" y1="39" y2="39"/><line style="stroke:#181818;stroke-width:0.5;" x1="288.5" x2="407.5" y1="47" y2="47"/></g><!--reverse link Activity to BaseActivity--><g id="link_Activity_BaseActivity"><path codeLine="1" d="M113.0234,31 C124.6456,31 118.268,31 129.89,31 " fill="none" id="Activity-backto-BaseActivity" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="95.0234,31,113.0234,37,113.0234,25,95.0234,31" style="stroke:#181818;stroke-width:1.0;"/></g><!--reverse link BaseActivity to MainActivity--><g id="link_BaseActivity_MainActivity"><path codeLine="2" d="M270.021,31 C281.769,31 275.516,31 287.264,31 " fill="none" id="BaseActivity-backto-MainActivity" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="252.021,31,270.021,37,270.021,25,252.021,31" style="stroke:#181818;stroke-width:1.0;"/></g><!--SRC=[SqmkoIpBBAbKiAdHLN1AB4vrX0fm8NF0ihw9cNam0G00]--></g></svg>
+
+<p>经过<code>Javassist</code>处理后类图结构(替换代码实现在<code>com.tencent.shadow.core.transform.specific.ActivityTransform</code>)：</p>
+<?xml version="1.0" encoding="us-ascii" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="62px" preserveAspectRatio="none" style="width:471px;height:62px;background:#FFFFFF;" version="1.1" viewBox="0 0 471 62" width="471px" zoomAndPan="magnify"><defs/><g><!--class ShadowActivity--><g id="elem_ShadowActivity"><rect fill="#F1F1F1" height="48" id="ShadowActivity" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="143" x="7" y="7"/><ellipse cx="22" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M24.3438,18.6719 C23.4063,18.2344 22.8125,18.0938 21.9375,18.0938 C19.3125,18.0938 17.3125,20.1719 17.3125,22.8906 L17.3125,24.0156 C17.3125,26.5938 19.4219,28.4844 22.3125,28.4844 C23.5313,28.4844 24.6875,28.1875 25.4375,27.6406 C26.0156,27.2344 26.3438,26.7813 26.3438,26.3906 C26.3438,25.9375 25.9531,25.5469 25.4844,25.5469 C25.2656,25.5469 25.0625,25.625 24.875,25.8125 C24.4219,26.2969 24.4219,26.2969 24.2344,26.3906 C23.8125,26.6563 23.125,26.7813 22.3594,26.7813 C20.3125,26.7813 19.0156,25.6875 19.0156,23.9844 L19.0156,22.8906 C19.0156,21.1094 20.2656,19.7969 22,19.7969 C22.5781,19.7969 23.1875,19.9531 23.6563,20.2031 C24.1406,20.4844 24.3125,20.7031 24.4063,21.1094 C24.4688,21.5156 24.5,21.6406 24.6406,21.7656 C24.7813,21.9063 25.0156,22.0156 25.2344,22.0156 C25.5,22.0156 25.7656,21.875 25.9375,21.6563 C26.0469,21.5 26.0781,21.3125 26.0781,20.8906 L26.0781,19.4688 C26.0781,19.0313 26.0625,18.9063 25.9688,18.75 C25.8125,18.4844 25.5313,18.3438 25.2344,18.3438 C24.9375,18.3438 24.7344,18.4375 24.5156,18.75 L24.3438,18.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="111" x="36" y="27.8467">ShadowActivity</text><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="149" y1="39" y2="39"/><line style="stroke:#181818;stroke-width:0.5;" x1="8" x2="149" y1="47" y2="47"/></g><!--class BaseActivity--><g id="elem_BaseActivity"><rect fill="#F1F1F1" height="48" id="BaseActivity" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="122" x="185.5" y="7"/><ellipse cx="200.5" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M202.8438,18.6719 C201.9063,18.2344 201.3125,18.0938 200.4375,18.0938 C197.8125,18.0938 195.8125,20.1719 195.8125,22.8906 L195.8125,24.0156 C195.8125,26.5938 197.9219,28.4844 200.8125,28.4844 C202.0313,28.4844 203.1875,28.1875 203.9375,27.6406 C204.5156,27.2344 204.8438,26.7813 204.8438,26.3906 C204.8438,25.9375 204.4531,25.5469 203.9844,25.5469 C203.7656,25.5469 203.5625,25.625 203.375,25.8125 C202.9219,26.2969 202.9219,26.2969 202.7344,26.3906 C202.3125,26.6563 201.625,26.7813 200.8594,26.7813 C198.8125,26.7813 197.5156,25.6875 197.5156,23.9844 L197.5156,22.8906 C197.5156,21.1094 198.7656,19.7969 200.5,19.7969 C201.0781,19.7969 201.6875,19.9531 202.1563,20.2031 C202.6406,20.4844 202.8125,20.7031 202.9063,21.1094 C202.9688,21.5156 203,21.6406 203.1406,21.7656 C203.2813,21.9063 203.5156,22.0156 203.7344,22.0156 C204,22.0156 204.2656,21.875 204.4375,21.6563 C204.5469,21.5 204.5781,21.3125 204.5781,20.8906 L204.5781,19.4688 C204.5781,19.0313 204.5625,18.9063 204.4688,18.75 C204.3125,18.4844 204.0313,18.3438 203.7344,18.3438 C203.4375,18.3438 203.2344,18.4375 203.0156,18.75 L202.8438,18.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="90" x="214.5" y="27.8467">BaseActivity</text><line style="stroke:#181818;stroke-width:0.5;" x1="186.5" x2="306.5" y1="39" y2="39"/><line style="stroke:#181818;stroke-width:0.5;" x1="186.5" x2="306.5" y1="47" y2="47"/></g><!--class MainActivity--><g id="elem_MainActivity"><rect fill="#F1F1F1" height="48" id="MainActivity" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="121" x="343" y="7"/><ellipse cx="358" cy="23" fill="#ADD1B2" rx="11" ry="11" style="stroke:#181818;stroke-width:1.0;"/><path d="M360.3438,18.6719 C359.4063,18.2344 358.8125,18.0938 357.9375,18.0938 C355.3125,18.0938 353.3125,20.1719 353.3125,22.8906 L353.3125,24.0156 C353.3125,26.5938 355.4219,28.4844 358.3125,28.4844 C359.5313,28.4844 360.6875,28.1875 361.4375,27.6406 C362.0156,27.2344 362.3438,26.7813 362.3438,26.3906 C362.3438,25.9375 361.9531,25.5469 361.4844,25.5469 C361.2656,25.5469 361.0625,25.625 360.875,25.8125 C360.4219,26.2969 360.4219,26.2969 360.2344,26.3906 C359.8125,26.6563 359.125,26.7813 358.3594,26.7813 C356.3125,26.7813 355.0156,25.6875 355.0156,23.9844 L355.0156,22.8906 C355.0156,21.1094 356.2656,19.7969 358,19.7969 C358.5781,19.7969 359.1875,19.9531 359.6563,20.2031 C360.1406,20.4844 360.3125,20.7031 360.4063,21.1094 C360.4688,21.5156 360.5,21.6406 360.6406,21.7656 C360.7813,21.9063 361.0156,22.0156 361.2344,22.0156 C361.5,22.0156 361.7656,21.875 361.9375,21.6563 C362.0469,21.5 362.0781,21.3125 362.0781,20.8906 L362.0781,19.4688 C362.0781,19.0313 362.0625,18.9063 361.9688,18.75 C361.8125,18.4844 361.5313,18.3438 361.2344,18.3438 C360.9375,18.3438 360.7344,18.4375 360.5156,18.75 L360.3438,18.6719 Z " fill="#000000"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="89" x="372" y="27.8467">MainActivity</text><line style="stroke:#181818;stroke-width:0.5;" x1="344" x2="463" y1="39" y2="39"/><line style="stroke:#181818;stroke-width:0.5;" x1="344" x2="463" y1="47" y2="47"/></g><!--reverse link ShadowActivity to BaseActivity--><g id="link_ShadowActivity_BaseActivity"><path codeLine="1" d="M168.031,31 C179.839,31 173.646,31 185.453,31 " fill="none" id="ShadowActivity-backto-BaseActivity" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="150.031,31,168.031,37,168.031,25,150.031,31" style="stroke:#181818;stroke-width:1.0;"/></g><!--reverse link BaseActivity to MainActivity--><g id="link_BaseActivity_MainActivity"><path codeLine="2" d="M325.521,31 C337.269,31 331.016,31 342.764,31 " fill="none" id="BaseActivity-backto-MainActivity" style="stroke:#181818;stroke-width:1.0;"/><polygon fill="none" points="307.521,31,325.521,37,325.521,25,307.521,31" style="stroke:#181818;stroke-width:1.0;"/></g><!--SRC=[2yv8JCalTqmkoIpBBAbKiAdHLN1AB4w52N0XSy2olecPUJ010000]--></g></svg>
+
+<p>下面看下整个Activity的详细继承关系，包括插件Activity与壳子Activity的关系：</p>
+<p><img src="/images/Shadow/%E6%8F%92%E4%BB%B6Activity%E7%BB%A7%E6%89%BF%E5%85%B3%E7%B3%BB.drawio.svg" alt="插件Activity继承关系"></p>
+<h3 id="启动其他插件Activity"><a href="#启动其他插件Activity" class="headerlink" title="启动其他插件Activity"></a>启动其他插件Activity</h3><p><code>com.tencent.shadow.core.runtime.ShadowContext#startActivity</code></p>
+<pre class="mermaid">
+
+zenuml
+ShadowContext.startActivity {
+    ComponentManager.startActivity {
+        &quot;pluginIntent.toActivityContainerIntent&quot;
+        ShadowContext.superStartActivity
+    }
+}
+</pre>
+
+<p>Activity的启动时会把目标Activity替换成<code>PluginDefaultProxyActivity</code>，即<code>PluginContainerActivity</code>。比如，我们通过如下方式启动一个插件中的Activity：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">Intent</span> <span class="variable">intent</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Intent</span>();</span><br><span class="line">intent.setClassName(<span class="built_in">this</span>, <span class="string">&quot;com.tencent.shadow.sample.plugin.app.lib.gallery.splash.SplashActivity&quot;</span>);</span><br><span class="line">startActivity(intent);</span><br></pre></td></tr></table></figure>
+
+<p>经过ComponentManager转换后的Intent是：</p>
+<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Intent &#123; cmp=com.tencent.shadow.sample.host/com.tencent.shadow.sample.plugin.runtime.PluginDefaultProxyActivity (has extras) &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="资源的处理"><a href="#资源的处理" class="headerlink" title="资源的处理"></a>资源的处理</h2><p>资源的生成逻辑在<code>com.tencent.shadow.core.loader.blocs.CreateResourceBloc#create</code>中。<br>当Android版本高于8.1时，ApplicationInfo#sharedLibraryFiles添加了插件apk路径来实现：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sharedLibraryFiles=[</span><br><span class="line">    /system/framework/android.test.base.jar,</span><br><span class="line">    /product/app/WebViewGoogle/WebViewGoogle.apk,</span><br><span class="line">    /product/app/TrichromeLibrary/TrichromeLibrary.apk, </span><br><span class="line">    /product/overlay/EmulationPixel6/EmulationPixel6Overlay.apk, </span><br><span class="line">    /product/overlay/NavigationBarModeGestural/NavigationBarModeGesturalOverlay.apk,</span><br><span class="line">    /data/user/0/com.tencent.shadow.sample.host/files/ShadowPluginManager/UnpackedPlugin/test-dynamic-manager/c9329f69c23a75baeb87a9adb567fafe/plugin-debug.zip/sample-base-plugin-debug.apk]</span><br><span class="line">sourceDir=/data/app/~~tt8RnZsUIq-XZDgF1_e6Gw==/com.tencent.shadow.sample.host-IUAuR_XOsVpJONVyM0Z26w==/base.apk</span><br><span class="line">publicSourceDir=/data/app/~~tt8RnZsUIq-XZDgF1_e6Gw==/com.tencent.shadow.sample.host-IUAuR_XOsVpJONVyM0Z26w==/base.apk</span><br></pre></td></tr></table></figure>
+
+<p>然后通过<code>packageManager.getResourcesForApplication(applicationInfo)</code>来生成新的Resources。</p>
+<p>如果Android版本<strong>不</strong>高于8.1，则通过自定义<code>MixResources</code>同时持有宿主和插件的资源，当获取资源时首先获取宿主的，当获取不到时再从插件中获取。</p>
+<p>资源句柄最终会赋值给<code>com.tencent.shadow.core.runtime.ShadowContext#mPluginResources</code>。</p>
+<p>为了解决合并资源后资源ID的冲突，Shadow把插件的资源ID的package-id字段给位了0x7E，可以看下sample-app项目下面的的build.gradle的配置：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 将插件的资源ID分区改为和宿主0x7F不同的值</span></span><br><span class="line">aaptOptions &#123;</span><br><span class="line">    additionalParameters <span class="string">&quot;--package-id&quot;</span>, <span class="string">&quot;0x7E&quot;</span>, <span class="string">&quot;--allow-reserved-package-id&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="在Sample中添加插件"><a href="#在Sample中添加插件" class="headerlink" title="在Sample中添加插件"></a>在Sample中添加插件</h2><p>插件目录<code>projects/sample/source/sample-plugin/my-plugin-app</code>。需要注意的一点是shadow字段不要添加到<code>my-plugin-app/build.gradle</code>，而是要添加到<code>projects/sample/source/sample-plugin/sample-app/build.gradle</code>中，如下：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line">shadow &#123;</span><br><span class="line">    packagePlugin &#123;</span><br><span class="line">        pluginTypes &#123;</span><br><span class="line">            debug &#123;</span><br><span class="line">                loaderApkConfig = <span class="keyword">new</span> Tuple2(<span class="string">&#x27;sample-loader-debug.apk&#x27;</span>, <span class="string">&#x27;:sample-loader:assembleDebug&#x27;</span>)</span><br><span class="line">                runtimeApkConfig = <span class="keyword">new</span> Tuple2(<span class="string">&#x27;sample-runtime-debug.apk&#x27;</span>, <span class="string">&#x27;:sample-runtime:assembleDebug&#x27;</span>)</span><br><span class="line">                pluginApks &#123;</span><br><span class="line">                    pluginApk1 &#123;</span><br><span class="line">                        businessName = <span class="string">&#x27;sample-plugin-app&#x27;</span></span><br><span class="line">                        partKey = <span class="string">&#x27;sample-plugin-app&#x27;</span></span><br><span class="line">                        buildTask = <span class="string">&#x27;:sample-app:assemblePluginDebug&#x27;</span></span><br><span class="line">                        apkPath = <span class="string">&#x27;projects/sample/source/sample-plugin/sample-app/build/outputs/apk/plugin/debug/sample-app-plugin-debug.apk&#x27;</span></span><br><span class="line">                        hostWhiteList = [<span class="string">&quot;com.tencent.shadow.sample.host.lib&quot;</span>]</span><br><span class="line">                        dependsOn = [<span class="string">&#x27;sample-base&#x27;</span>]</span><br><span class="line">                    &#125;</span><br><span class="line">                    ......</span><br><span class="line">                    pluginApk3 &#123; <span class="comment">//这是我添加的插件</span></span><br><span class="line">                        businessName = <span class="string">&#x27;my-plugin-app&#x27;</span></span><br><span class="line">                        partKey = <span class="string">&#x27;my-plugin-app&#x27;</span></span><br><span class="line">                        buildTask = <span class="string">&#x27;:my-plugin-app:assemblePluginDebug&#x27;</span></span><br><span class="line">                        apkPath = <span class="string">&#x27;projects/sample/source/sample-plugin/my-plugin-app/build/outputs/apk/plugin/debug/my-plugin-app-plugin-debug.apk&#x27;</span></span><br><span class="line">                        hostWhiteList = [<span class="string">&quot;com.tencent.shadow.sample.host.lib&quot;</span>]</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            release &#123;</span><br><span class="line">                ......</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        loaderApkProjectPath = <span class="string">&#x27;projects/sample/source/sample-plugin/sample-loader&#x27;</span></span><br><span class="line">        runtimeApkProjectPath = <span class="string">&#x27;projects/sample/source/sample-plugin/sample-runtime&#x27;</span></span><br><span class="line"></span><br><span class="line">        archiveSuffix = System.getenv(<span class="string">&quot;PluginSuffix&quot;</span>) ?: <span class="string">&quot;&quot;</span></span><br><span class="line">        archivePrefix = <span class="string">&#x27;plugin&#x27;</span></span><br><span class="line">        <span class="keyword">destinationDir</span> = <span class="string">&quot;$&#123;getRootProject().getBuildDir()&#125;&quot;</span></span><br><span class="line"></span><br><span class="line">        version = <span class="number">4</span></span><br><span class="line">        compactVersion = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]</span><br><span class="line">        uuidNickName = <span class="string">&quot;1.1.5&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>插件apk的applicationId的配置：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">android &#123;</span><br><span class="line">    defaultConfig &#123;</span><br><span class="line">        applicationId <span class="string">&#x27;me.rjy.android.shadow.app&#x27;</span> <span class="comment">//可以与宿主不同</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 将插件applicationId设置为和宿主相同</span></span><br><span class="line">    productFlavors &#123;</span><br><span class="line">        plugin &#123;</span><br><span class="line">            applicationId <span class="keyword">project</span>.SAMPLE_HOST_APP_APPLICATION_ID  <span class="comment">//必须与宿主相同</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ......</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Tencent/Shadow/wiki">Home Wiki</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/Tencent/Shadow/blob/master/projects/sample/README.md">Sample Readme</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://juejin.cn/post/6844903876655579150">Shadow解决Activity等组件生命周期的方法解析</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://juejin.cn/post/7244810003576324157">Android插件化框架-Shadow原理解析</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://juejin.cn/post/6844903975381270536">腾讯插件框架Shadow解析之动态化和插件加载</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://juejin.cn/post/7160545636280958983">Shadow的接入记录</a><br><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.jianshu.com/p/f00dc837227f">Android Tencent Shadow 插件接入指南</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E6%8F%92%E4%BB%B6%E5%8C%96/" rel="tag"># 插件化</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/posts/7ed69fd0.html" rel="prev" title="Android屏幕分辨率适配">
+                  <i class="fa fa-angle-left"></i> Android屏幕分辨率适配
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/posts/826e5a44.html" rel="next" title="JetpackCompose key的使用">
+                  JetpackCompose key的使用 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2024</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Jason</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener external nofollow noreferrer" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/pisces/" rel="noopener external nofollow noreferrer" target="_blank">NexT.Pisces</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/next-theme-pjax/0.6.0/pjax.min.js" integrity="sha256-vxLn1tSKWD4dqbMRyv940UYw4sXgMtYcK6reefzZrao=" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fancyapps-ui/5.0.24/fancybox/fancybox.umd.js" integrity="sha256-oyhjPiYRWGXaAt+ny/mTMWOnN1GBoZDUQnzzgC7FRI4=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mermaid/10.5.0/mermaid.min.js","integrity":"sha256-K7oJiQlDulzl24ZUFOywuYme1JqBBvQzK6m8qHjt9Gk="}}</script>
+  <script type="module" src="/js/zenuml-definition-074a43fa.js"></script>
+  <script type="module" src="/js/mermaid-zenuml.esm.min.mjs"></script>
+  <script src="/js/third-party/tags/mermaid.js"></script>
+
+
+  <script src="/js/third-party/fancybox.js"></script>
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>

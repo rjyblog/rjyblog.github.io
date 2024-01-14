@@ -150,18 +150,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">53</span>
+          <span class="site-state-item-count">66</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -187,7 +187,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/9839.html">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/62746.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -205,7 +205,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/9839.html" class="post-title-link" itemprop="url">addr2line死机问题定位</a>
+          <a href="/posts/62746.html" class="post-title-link" itemprop="url">Excel常用函数算法</a>
         </h2>
 
         <div class="post-meta-container">
@@ -216,115 +216,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2018-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-22T00:00:00+08:00">2018-06-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-10-17 14:20:15" itemprop="dateModified" datetime="2023-10-17T14:20:15+08:00">2023-10-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-            <div class="post-description">Android死机问题定位笔记</div>
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>死机问题在程序开发过程中是经常遇到的问题，本文介绍通过addr2line工具解析堆栈来定位死机问题</p>
-<h2 id="使用addr2line定位死机问题"><a href="#使用addr2line定位死机问题" class="headerlink" title="使用addr2line定位死机问题"></a>使用addr2line定位死机问题</h2><p>在某个C应用程序挂掉后，会生成堆栈信息，如下：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">F/libc    (21866): Fatal signal 11 (SIGSEGV) at 0x00000000 (code=1)</span><br><span class="line">W/        (21866): [SkCanvas* DrawSurface::lockCanvas(const android::Rect&amp;)]-----[76]</span><br><span class="line">I/DEBUG   (  944): *** *** *** *** *** *** *** *** *** *** *** *** *** *** *** ***</span><br><span class="line">I/DEBUG   (  944): Build fingerprint: &#x27;full_godbox/godbox:4.0.3/8841C/84125002:eng/ test-keys&#x27;</span><br><span class="line">I/DEBUG   (  944): pid: 21866, tid: 21866  &gt;&gt;&gt; demo_cmd &lt;&lt;&lt;</span><br><span class="line">I/DEBUG   (  944): signal 11 (SIGSEGV), code 1 (SEGV_MAPERR), fault addr 00000000</span><br><span class="line">I/DEBUG   (  944):  r0 00000003  r1 00000000  r2 000010b0  r3 0000001f</span><br><span class="line">I/DEBUG   (  944):  r4 41334124  r5 00000000  r6 beae2f94  r7 00000046</span><br><span class="line">I/DEBUG   (  944):  r8 beae2f08  r9 00000010  10 00000bb8  fp beae3024</span><br><span class="line">I/DEBUG   (  944):  ip 400c6108  sp beae2f00  lr 41331d13  pc 41331d42  cpsr 00000030</span><br><span class="line">I/DEBUG   (  944):  d0  0000000000000000  d1  0000000000000000</span><br><span class="line">I/DEBUG   (  944):  d2  0000000000000000  d3  c1859800408ca000</span><br><span class="line">I/DEBUG   (  944):  d4  4125f000c1981600  d5  43ff000041200000</span><br><span class="line">I/DEBUG   (  944):  d6  0000000000000000  d7  0000000000000000</span><br><span class="line">I/DEBUG   (  944):  d8  0000000000000000  d9  0000000000000000</span><br><span class="line">I/DEBUG   (  944):  d10 0000000000000000  d11 0000000000000000</span><br><span class="line">I/DEBUG   (  944):  d12 0000000000000000  d13 0000000000000000</span><br><span class="line">I/DEBUG   (  944):  d14 0000000000000000  d15 0000000000000000</span><br><span class="line">I/DEBUG   (  944):  scr 60000010</span><br><span class="line">I/DEBUG   (  944):</span><br><span class="line">I/DEBUG   (  944):          #00  pc 00002d42  /system/lib/libtest.so (std_ping)</span><br><span class="line">I/DEBUG   (  944):          #01  pc 0000f466  /system/bin/demo_cmd</span><br><span class="line">I/DEBUG   (  944):</span><br><span class="line">I/DEBUG   (  944): code around pc:</span><br></pre></td></tr></table></figure>
-
-<p>这种情况下就可以通过<font color="blue">addr2line</font>命令定位出死在了哪一行代码：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">addr2line -e libtest.so 00002d42</span><br><span class="line">addr2line -e demo_cmd 0000f466</span><br></pre></td></tr></table></figure>
-
-<p>注意：我们机顶盒上的so库或者可执行程序，一般都是被stripped的，是无法使用addr2line命令定位死机位置的。这种情况下，则需要找到对应的not stripped的同名文件。这两个文件必须是同一次编译生成的。<br>&ensp; 可以使用file命令查看strip状态，如下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$ file system/bin/demo_cmd</span><br><span class="line">system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), stripped</span><br><span class="line">$ file symbols/system/bin/demo_cmd</span><br><span class="line">symbols/system/bin/demo_cmd: ELF 32-bit LSB  shared object, ARM, EABI5 version 1 (SYSV), dynamically linked (uses shared libs), not stripped</span><br></pre></td></tr></table></figure>
-
-<p>备注：</p>
-<ul>
-<li>本文介绍的所有命令，都是在Linux主机上执行的命令；</li>
-<li>addr2line解析的文件必须是”<font color="red">not stripped</font>“的文件。如果是android sdk，一般放在out的symbols目录下，比如：out/target/product/xxx/symbols/</li>
-<li>如果是Android机顶盒，应用程序挂掉后在/data/tombstones/目录下面会生成墓碑文件tombstone_*。在这些文件中就会有堆栈信息。</li>
-</ul>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/9839.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/41513.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Jason">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="任建勇的博客">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 任建勇的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/41513.html" class="post-title-link" itemprop="url">代码调试之打印堆栈</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-22T00:00:00+08:00">2018-06-22</time>
+      <time title="创建时间：2018-07-25 00:00:00" itemprop="dateCreated datePublished" datetime="2018-07-25T00:00:00+08:00">2018-07-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -339,14 +231,14 @@
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+          <a href="/categories/Office/" itemprop="url" rel="index"><span itemprop="name">Office</span></a>
         </span>
     </span>
 
   
 </div>
 
-            <div class="post-description">日志中打印方法堆栈调用的方法</div>
+            <div class="post-description">Excel常用函数算法</div>
         </div>
       </header>
 
@@ -354,15 +246,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="java代码中打印堆栈"><a href="#java代码中打印堆栈" class="headerlink" title="java代码中打印堆栈"></a>java代码中打印堆栈</h2><p>Java代码打印堆栈比较简单， 堆栈信息获取和输出，都可以通过Throwable类的方法实现。目前通用的做法是在java进程出现需要注意的异常时，打印堆栈，然后再决定退出或挽救。通常的方法是使用exception的printStackTrace()方法：  </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> <span class="title function_">func</span><span class="params">()</span> &#123;</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    ...</span><br><span class="line">  &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">    e.printStackTrace();</span><br><span class="line">    ...</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>也可以只打印堆栈不退出，这样就比较方便分析代码的动态运行情况。Java代码中插入堆栈打印的方法如下  </p>
-<p>推荐   </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line">Log.d(TAG, android.util.Log.getStackTraceString(<span class="keyword">new</span> <span class="title class_">java</span>.lang.Throwable()));</span><br></pre></td></tr></table></figure>
+          <h2 id="字符串截取"><a href="#字符串截取" class="headerlink" title="字符串截取"></a>字符串截取</h2><h3 id="IP格式字符串截取前两段"><a href="#IP格式字符串截取前两段" class="headerlink" title="IP格式字符串截取前两段"></a>IP格式字符串截取前两段</h3><p>本算法可以适用于192.178.1.1或者1.20.0.7557等格式字符串</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">=<span class="built_in">LEFT</span>(<span class="symbol">C1</span>,<span class="built_in">IFERROR</span>(<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>,<span class="built_in">FIND</span>(<span class="string">&quot;.&quot;</span>,<span class="symbol">C1</span>)+<span class="number">1</span>)-<span class="number">1</span>,<span class="number">100</span>))</span><br></pre></td></tr></table></figure>
 
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/41513.html#more" rel="contents">
+              <a class="btn" href="/posts/62746.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -393,7 +282,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/36017.html">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/18133.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.png">
@@ -411,7 +300,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/36017.html" class="post-title-link" itemprop="url">Shell 变量全解</a>
+          <a href="/posts/18133.html" class="post-title-link" itemprop="url">Markdown基本语法</a>
         </h2>
 
         <div class="post-meta-container">
@@ -422,14 +311,897 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2018-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-22T00:00:00+08:00">2018-06-22</time>
+      <time title="创建时间：2018-07-25 00:00:00" itemprop="dateCreated datePublished" datetime="2018-07-25T00:00:00+08:00">2018-07-25</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-calendar-check"></i>
       </span>
       <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-19 14:08:57" itemprop="dateModified" datetime="2023-08-19T14:08:57+08:00">2023-08-19</time>
+      <time title="修改时间：2023-10-17 16:07:24" itemprop="dateModified" datetime="2023-10-17T16:07:24+08:00">2023-10-17</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">常用的Markdown基本语法</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><p>Markdown语法的标志可以使用#表示，共支持6级标题</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 一级标题</span></span><br><span class="line"><span class="section">## 二级标题</span></span><br><span class="line"><span class="section">### 三级标题</span></span><br><span class="line"><span class="section">#### 四级标题</span></span><br><span class="line"><span class="section">##### 五级标题</span></span><br><span class="line"><span class="section">###### 六级标题</span></span><br></pre></td></tr></table></figure>
+
+<p>为了美观，也可以采用下面这种对称形式</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="section"># 一级标题 #</span></span><br><span class="line"><span class="section">## 二级标题 ##</span></span><br><span class="line"><span class="section">### 三级标题 ###</span></span><br><span class="line"><span class="section">#### 四级标题 ####</span></span><br><span class="line"><span class="section">##### 五级标题 #####</span></span><br><span class="line"><span class="section">###### 六级标题 ######</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="列表"><a href="#列表" class="headerlink" title="列表"></a>列表</h2><p><strong>无序列表</strong> 使用星号（*）、加号（+）或是减号（-）作为列表标记，三种标记符产生的效果完全相同，比如：</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">*</span> Red</span><br><span class="line"><span class="bullet">*</span> Blue</span><br><span class="line"><span class="bullet">*</span> Green</span><br></pre></td></tr></table></figure>
+
+<p>上述文字产生的列表如下：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/18133.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/3223.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/3223.html" class="post-title-link" itemprop="url">Git 常用命令</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-25 00:00:00" itemprop="dateCreated datePublished" datetime="2018-07-25T00:00:00+08:00">2018-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 09:46:48" itemprop="dateModified" datetime="2023-08-17T09:46:48+08:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E4%BB%A3%E7%A0%81%E7%AE%A1%E7%90%86/" itemprop="url" rel="index"><span itemprop="name">代码管理</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Git 常用命令</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="常用全局配置"><a href="#常用全局配置" class="headerlink" title="常用全局配置"></a>常用全局配置</h2><p>git配置使用<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-config">git config</a>来完成。</p>
+<h3 id="配置用户信息"><a href="#配置用户信息" class="headerlink" title="配置用户信息"></a>配置用户信息</h3><p>要配置成自己的真实用户名（姓名全拼）和邮箱</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name <span class="string">&quot;John Doe&quot;</span></span><br><span class="line">git config --global user.email <span class="string">&quot;johndoe@example.com&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="配置别名"><a href="#配置别名" class="headerlink" title="配置别名"></a>配置别名</h3><p>比如<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-checkout">git checkout</a>通过配置别名，可以使用git co来达到<a target="_blank" rel="noopener external nofollow noreferrer" href="https://git-scm.com/docs/git-checkout">git checkout</a>的效果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git config --global alias.co checkout</span><br><span class="line">git config --global alias.br branch</span><br><span class="line">git config --global alias.ci commit</span><br><span class="line">git config --global alias.st status</span><br></pre></td></tr></table></figure>
+
+<h3 id="配置编辑器vim"><a href="#配置编辑器vim" class="headerlink" title="配置编辑器vim"></a>配置编辑器vim</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git config --global core.editor vim</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/3223.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/21595.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/21595.html" class="post-title-link" itemprop="url">Linux清理Cached内存</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-07-13 00:00:00" itemprop="dateCreated datePublished" datetime="2018-07-13T00:00:00+08:00">2018-07-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 09:46:48" itemprop="dateModified" datetime="2023-08-17T09:46:48+08:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">Linux清理Cached内存</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>Kernels 2.6.16 and newer provide a mechanism to have the kernel drop the page cache and/or inode and dentry caches on command, which can help free up a lot of memory. Now you can throw away that script that allocated a ton of memory just to get rid of the cache…</p>
+<p>To use /proc/sys/vm/drop_caches, just echo a number to it.</p>
+<p>To free pagecache:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 1 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>To free dentries and inodes:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 2 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>To free pagecache, dentries and inodes:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> 3 &gt; /proc/sys/vm/drop_caches</span><br></pre></td></tr></table></figure>
+<p>This is a non-destructive operation and will only free things that are completely unused. Dirty objects will continue to be in use until written out to disk and are not freeable. If you run “sync” first to flush them out to disk, these drop operations will tend to free more memory.</p>
+<p>参考网站：</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/21595.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/63718.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/63718.html" class="post-title-link" itemprop="url">C++成员函数指针</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-24T00:00:00+08:00">2018-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 13:45:03" itemprop="dateModified" datetime="2023-08-17T13:45:03+08:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">C++成员函数指针的使用</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>对于类的普通成员函数和静态成员函数，定义函数指针的方法是不同的，如下：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Test</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">func_normal</span><span class="params">()</span> </span>&#123;      <span class="comment">//普通成员函数</span></span><br><span class="line">        std::cout &lt;&lt; __func__ &lt;&lt; std::endl;</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">func_static</span><span class="params">()</span> </span>&#123;    <span class="comment">//静态成员函数（static）</span></span><br><span class="line">        std::cout &lt;&lt; __func__ &lt;&lt; std::endl;</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">//g++ -std=c++11 to enable std::function</span></span><br><span class="line"><span class="function"><span class="type">static</span> <span class="type">void</span> <span class="title">foo</span><span class="params">(std::function&lt;<span class="type">void</span>()&gt; pf)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="built_in">pf</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">(<span class="type">int</span> argc, <span class="type">char</span>* argv[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">/* normal function pointer */</span></span><br><span class="line">    <span class="built_in">void</span> (Test::*pfunc_n)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_n = &amp;Test::func_normal;</span><br><span class="line">    Test t;</span><br><span class="line">    (t.*pfunc_n)();</span><br><span class="line">    <span class="built_in">foo</span>(std::<span class="built_in">bind</span>(&amp;Test::func_normal, &amp;t));</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* static function pointer */</span></span><br><span class="line">    <span class="built_in">void</span> (*pfunc_s)() = <span class="literal">NULL</span>;</span><br><span class="line">    pfunc_s = &amp;Test::func_static;</span><br><span class="line">    <span class="built_in">pfunc_s</span>();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果一个非静态成员函数指针作为函数参数，则只能把对象传入函数中，然后通过对象调用函数指针。在C++11中引入了function，其本质也是把类传入了函数。</p>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/63718.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/17009.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/17009.html" class="post-title-link" itemprop="url">C++ 类的构造与析构</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-24T00:00:00+08:00">2018-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2024-01-13 15:45:30" itemprop="dateModified" datetime="2024-01-13T15:45:30+08:00">2024-01-13</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">介绍C++类的初始化过程</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="类的构造"><a href="#类的构造" class="headerlink" title="类的构造"></a>类的构造</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">User</span>(<span class="type">int</span> id, string name, string phone);</span><br></pre></td></tr></table></figure>
+
+<p>可以采用如下格式来进行类实例的创建：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">User user = <span class="built_in">User</span>(<span class="number">1</span>, <span class="string">&quot;Jone&quot;</span>, <span class="string">&quot;123456&quot;</span>);</span><br><span class="line"><span class="function">User <span class="title">user</span><span class="params">(<span class="number">1</span>, <span class="string">&quot;Jone&quot;</span>, <span class="string">&quot;123456&quot;</span>)</span></span>;</span><br><span class="line">User* user = <span class="keyword">new</span> <span class="built_in">User</span>(<span class="number">1</span>, <span class="string">&quot;Jone&quot;</span>, <span class="string">&quot;123456&quot;</span>);</span><br><span class="line"></span><br><span class="line">User user = &#123; <span class="number">1</span>, <span class="string">&quot;Jone&quot;</span>, <span class="string">&quot;123456&quot;</span> &#125;;           <span class="comment">//C++ 11</span></span><br><span class="line">User user&#123; <span class="number">1</span>, <span class="string">&quot;Jone&quot;</span>, <span class="string">&quot;123456&quot;</span> &#125;;              <span class="comment">//C++ 11</span></span><br><span class="line">User* user = <span class="keyword">new</span> User&#123; <span class="number">1</span>, <span class="string">&quot;Jone&quot;</span>, <span class="string">&quot;123456&quot;</span> &#125;;  <span class="comment">//C++ 11</span></span><br></pre></td></tr></table></figure>
+
+<p>如果User类有默认构造函数，则下面方式可以直接构造一个类：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">User user;  <span class="comment">//此处不是变量的声明，而是类实例的创建</span></span><br><span class="line">User* user = <span class="keyword">new</span> User;  <span class="comment">//此处也是使用默认构造函数</span></span><br></pre></td></tr></table></figure>
+
+<p>对于只有一个参数的构造函数，可以采用赋值的方式创建一个类实例：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">A a = <span class="number">10</span>;  <span class="comment">//构造函数为 A(int id);</span></span><br></pre></td></tr></table></figure>
+
+<p>这种形式容易带来问题，可以使用<code>explicit</code>来修饰只有一个参数的构造函数，就能禁用这种类的构造写法。</p>
+<h2 id="构造函数分类"><a href="#构造函数分类" class="headerlink" title="构造函数分类"></a>构造函数分类</h2>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/17009.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/55021.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/55021.html" class="post-title-link" itemprop="url">C/C++ 程序内存分段</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-24T00:00:00+08:00">2018-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 13:45:08" itemprop="dateModified" datetime="2023-08-17T13:45:08+08:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">C/C++ 程序的堆、栈、BSS等内存分段的介绍</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><img src="/images/C%E7%A8%8B%E5%BA%8F%E5%86%85%E5%AD%98%E5%88%86%E6%AE%B5_2023-08-17-13-44-16.png" alt="内存分段示意图"></p>
+<h2 id="栈-stack"><a href="#栈-stack" class="headerlink" title="栈(stack)"></a>栈(stack)</h2><p>栈又称堆栈， 是用户存放程序临时创建的局部变量，也就是说我们函数括弧“{}”中定义的变量（但不包括static声明的变量，static意味着在数据段中存放变量）。除此以外，在函数被调用时，其参数也会被压入发起调用的进程栈中，并且待到调用结束后，函数的返回值也会被存放回栈中。由于栈的先进后出特点，所以栈特别方便用来保存/恢复调用现场。从这个意义上讲，我们可以把堆栈看成一个寄存、交换临时数据的内存区。</p>
+<h2 id="堆（heap）"><a href="#堆（heap）" class="headerlink" title="堆（heap）"></a>堆（heap）</h2><p>堆是用于存放进程运行中被动态分配的内存段，它的大小并不固定，可动态扩张或缩减。当进程调用malloc等函数分配内存时，新分配的内存就被动态添加到堆上（堆被扩张）；当利用free等函数释放内存时，被释放的内存从堆中被剔除（堆被缩减）</p>
+<h2 id="BSS段（bss-segment）"><a href="#BSS段（bss-segment）" class="headerlink" title="BSS段（bss segment）"></a>BSS段（bss segment）</h2><p>BSS（Block Started by Symbol）属于静态内存分配，通常是指用来存放程序中未初始化的全局变量和静态变量的一块内存区域。特点是可读写。</p>
+<p>BSS段在磁盘上不是真的占用变量大小的空间，它仅仅记录了变量所需要的大小（占位符），也就是说，在该段中记录了所有未初始化全局变量与局部静态变量的大小总和，至于每个变量的大小则存储在符号表的size属性中。当可执行文件加载运行前，会为BSS段中的变量分配足够的空间并全部自动清零（因此，才有未初始化的全局变量的值为0的说法）。</p>
+<p>BSS段主要是为了节省可执行文件在磁盘上所占的空间，对未初始化的大型数组的节省效率比较明显。</p>
+<p>默认情况下，编译器会把初始化值为0的变量（比如static int a = 0）放在BSS段。但可以通过“#pragma explicit_zero_data on”把初始值为零的变量放到data段，而不是bss段。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/55021.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/52729.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/52729.html" class="post-title-link" itemprop="url">gcc编译过程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-24T00:00:00+08:00">2018-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 13:48:28" itemprop="dateModified" datetime="2023-08-17T13:48:28+08:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">gcc编译过程分为预处理、编译、汇编、链接几个步骤</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <!-- ![gcc编译过程](/images/gcc编译过程_2023-08-17-13-45-43.png) -->
+
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+ "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Generated by graphviz version 2.40.1 (20161225.0304)
+ -->
+<!-- Title: %0 Pages: 1 -->
+<svg width="617pt" height="44pt" viewBox="0.00 0.00 616.91 44.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 40)">
+<title>%0</title>
+<polygon fill="#ffffff" stroke="transparent" points="-4,4 -4,-40 612.9124,-40 612.9124,4 -4,4"/>
+<!-- c -->
+<g id="node1" class="node">
+<title>c</title>
+<polygon fill="none" stroke="#000000" points="54,-36 0,-36 0,0 54,0 54,-36"/>
+<text text-anchor="middle" x="27" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">hello.c</text>
+</g>
+<!-- i -->
+<g id="node2" class="node">
+<title>i</title>
+<polygon fill="none" stroke="#000000" points="201.1564,-36 147.1564,-36 147.1564,0 201.1564,0 201.1564,-36"/>
+<text text-anchor="middle" x="174.1564" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">hello.i</text>
+</g>
+<!-- c&#45;&gt;i -->
+<g id="edge1" class="edge">
+<title>c&#45;&gt;i</title>
+<path fill="none" stroke="#000000" d="M54.3341,-18C77.565,-18 111.1389,-18 136.841,-18"/>
+<polygon fill="#000000" stroke="#000000" points="136.9687,-21.5001 146.9687,-18 136.9686,-14.5001 136.9687,-21.5001"/>
+<text text-anchor="middle" x="100.5782" y="-22.2" font-family="Times,serif" font-size="14.00" fill="#000000">预处理 &#45;E</text>
+</g>
+<!-- s -->
+<g id="node3" class="node">
+<title>s</title>
+<polygon fill="none" stroke="#000000" points="347.9348,-36 293.9348,-36 293.9348,0 347.9348,0 347.9348,-36"/>
+<text text-anchor="middle" x="320.9348" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">hello.s</text>
+</g>
+<!-- i&#45;&gt;s -->
+<g id="edge2" class="edge">
+<title>i&#45;&gt;s</title>
+<path fill="none" stroke="#000000" d="M201.4203,-18C224.5915,-18 258.0791,-18 283.7153,-18"/>
+<polygon fill="#000000" stroke="#000000" points="283.8169,-21.5001 293.8169,-18 283.8169,-14.5001 283.8169,-21.5001"/>
+<text text-anchor="middle" x="247.5456" y="-22.2" font-family="Times,serif" font-size="14.00" fill="#000000">编译 &#45;S</text>
+</g>
+<!-- o -->
+<g id="node4" class="node">
+<title>o</title>
+<polygon fill="none" stroke="#000000" points="488.056,-36 433.0598,-36 433.0598,0 488.056,0 488.056,-36"/>
+<text text-anchor="middle" x="460.5579" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">hello.o</text>
+</g>
+<!-- s&#45;&gt;o -->
+<g id="edge3" class="edge">
+<title>s&#45;&gt;o</title>
+<path fill="none" stroke="#000000" d="M348.187,-18C369.4793,-18 399.3129,-18 422.8895,-18"/>
+<polygon fill="#000000" stroke="#000000" points="422.8973,-21.5001 432.8973,-18 422.8972,-14.5001 422.8973,-21.5001"/>
+<text text-anchor="middle" x="390.6224" y="-22.2" font-family="Times,serif" font-size="14.00" fill="#000000">汇编 &#45;c</text>
+</g>
+<!-- e -->
+<g id="node5" class="node">
+<title>e</title>
+<polygon fill="none" stroke="#000000" points="608.9124,-36 554.9124,-36 554.9124,0 608.9124,0 608.9124,-36"/>
+<text text-anchor="middle" x="581.9124" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">hello</text>
+</g>
+<!-- o&#45;&gt;e -->
+<g id="edge4" class="edge">
+<title>o&#45;&gt;e</title>
+<path fill="none" stroke="#000000" d="M488.0951,-18C504.8922,-18 526.5769,-18 544.8666,-18"/>
+<polygon fill="#000000" stroke="#000000" points="544.9022,-21.5001 554.9022,-18 544.9022,-14.5001 544.9022,-21.5001"/>
+<text text-anchor="middle" x="521.3591" y="-22.2" font-family="Times,serif" font-size="14.00" fill="#000000">链接</text>
+</g>
+</g>
+</svg>
+
+
+<h2 id="示例如下："><a href="#示例如下：" class="headerlink" title="示例如下："></a>示例如下：</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">gcc -E hello.c -o hello.i</span><br><span class="line">gcc -S hello.i -o hello.s</span><br><span class="line">gcc -c hello.s -o hello.o</span><br><span class="line">gcc hello.s -o hello</span><br></pre></td></tr></table></figure>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/52729.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/31550.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/31550.html" class="post-title-link" itemprop="url">编程语言参考网站</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-24T00:00:00+08:00">2018-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 09:46:48" itemprop="dateModified" datetime="2023-08-17T09:46:48+08:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BC%96%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">编程</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">C++ Java Python Android 编程参考网站汇总</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="C"><a href="#C" class="headerlink" title="C++"></a>C++</h2><hr>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.cplusplus.com/reference/">Standard C++ Library reference</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://zh.cppreference.com/">C++ 参考手册</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://en.wikibooks.org/wiki/C%2B%2B_Programming/All_Chapters">C++ Programming - Wikibooks</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://github.com/isocpp/CppCoreGuidelines/blob/master/CppCoreGuidelines.md">C++ Core Guidelines</a> by Bjarne Stroustrup &amp; Herb Sutter</li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.stroustrup.com/bs_faq2.html">Bjarne Stroustrup’s C++ Style and Technique FAQ</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://www.boost.org/">Boost: C++ libraries</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://stackoverflow.com/questions/388242/the-definitive-c-book-guide-and-list">The Definitive C++ Book Guide and List</a></li>
+</ul>
+<h2 id="Python"><a href="#Python" class="headerlink" title="Python"></a>Python</h2><hr>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://docs.python.org/3/library/index.html#the-python-standard-library" title="Permalink to this headline">The Python Standard Library</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://google.github.io/styleguide/pyguide.html">Google Python Style Guide</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.runoob.com/python3/python3-tutorial.html">Python 3 教程 - 菜鸟教程</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://www.runoob.com/python/python-tutorial.html">Python 2 教程 - 菜鸟教程</a></li>
+</ul>
+<h2 id="Android"><a href="#Android" class="headerlink" title="Android"></a>Android</h2><hr>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://developer.android.google.cn/guide?hl=zh_cn">开发者指南</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://developer.android.google.cn/reference/">Android API reference</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://developer.android.com/guide/platform/">Android Platform Architecture</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://developer.android.google.cn/reference/android/media/MediaCodec">MediaCodec</a></li>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="https://developer.android.google.cn/training/articles/perf-jni">JNI tips</a></li>
+</ul>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/31550.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/25730.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/25730.html" class="post-title-link" itemprop="url">Shell判断文件是否存在</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-24T00:00:00+08:00">2018-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 09:46:48" itemprop="dateModified" datetime="2023-08-17T09:46:48+08:00">2023-08-17</time>
     </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
@@ -444,7 +1216,7 @@
   
 </div>
 
-            <div class="post-description">Linux Shell脚本编程中变量使用介绍</div>
+            <div class="post-description">Shell判断文件是否存在</div>
         </div>
       </header>
 
@@ -452,95 +1224,42 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h2 id="变量介绍"><a href="#变量介绍" class="headerlink" title="变量介绍"></a>变量介绍</h2><p>shell变量是一种很“弱”的变量，默认情况下，一个变量保存一个串，shell不关心这个串是什么含义。所以若要进行数学运算，必须使用一些命令例如let、declare、expr、双括号等。</p>
-<p>shell变量可分为两类：局部变量和环境变量。局部变量只在创建它们的shell中可用。而环境变量则可以在创建它们的shell及其派生出来的任意子进程中使用。有些变量是用户创建的，其他的则是专用shell变量。</p>
-<p>变量名必须以字母或下划线字符开头。其余的字符可以是字母、数字(0~9)或下划线字符。任何其他的字符都标志着变量名的终止。名字是大小写敏感的。</p>
-<p>给变量赋值时，等号周围不能有任何空白符。为了给变量赋空值，可以在等号后跟一个换行符。</p>
-<p>用set命令可以查看所有的变量，unset var命令可以清除变量var，var相当于没有定义过。readonly var可以把var变为只读变量，定义之后不能对var进行任何更改。</p>
-<p>shell变量常见引用方式如下：</p>
-<!-- <style>
-.tablelines table, .tablelines td, .tablelines th {
-        border: 1px solid #C0C0C0;
-        padding: 0.25em;
-        }
-</style> -->
+          <p>Conditional Logic on Files</p>
+<ul>
+<li>‘-a’ file exists.</li>
+<li>‘-b’ file exists and is a block special file.</li>
+<li>‘-c’ file exists and is a character special file.</li>
+<li>‘-d’ file exists and is a directory.</li>
+<li>‘-e’ file exists (just the same as -a).</li>
+<li>‘-f’ file exists and is a regular file.</li>
+<li>‘-g’ file exists and has its setgid(2) bit set.</li>
+<li>‘-G’ file exists and has the same group ID as this process.</li>
+<li>‘-k’ file exists and has its sticky bit set.</li>
+<li>‘-L’ file exists and is a symbolic link.</li>
+<li>‘-n’ string length is not zero.</li>
+<li>‘-o’ Named option is set on.</li>
+<li>‘-O’ file exists and is owned by the user ID of this process.</li>
+<li>‘-p’ file exists and is a first in, first out (FIFO) special file or named pipe.</li>
+<li>‘-r’ file exists and is readable by the current process.</li>
+<li>‘-s’ file exists and has a size greater than zero.</li>
+<li>‘-S’ file exists and is a socket.</li>
+<li>‘-t’ file descriptor number fildes is open and associated with a terminal device.</li>
+<li>‘-u’ file exists and has its setuid(2) bit set.</li>
+<li>‘-w’ file exists and is writable by the current process.</li>
+<li>‘-x’ file exists and is executable by the current process.</li>
+<li>‘-z’ string length is zero.</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">if [ -f $&#123;mypath&#125; ];then</span><br><span class="line">    echo &quot;file exist&quot;</span><br><span class="line">fi</span><br><span class="line"></span><br><span class="line">if [ &quot;$&#123;mypath&#125;&quot; != &quot;&quot; ] &amp;&amp; [ -f $&#123;mypath&#125; ];then</span><br><span class="line">    echo &quot;mypath is not empty and file exist&quot;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
 
-<table>
-<thead>
-<tr>
-<th>引用格式</th>
-<th>含义介绍</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>${var}</td>
-<td>变量值。也可以写成$var，但是不推荐。</td>
-</tr>
-<tr>
-<td>${&#35;var}</td>
-<td>变量长度。例如var=&quot;HelloWorld&quot;，则${&#35;var}返回值为10。 注意，引号””是界定符号，而不是变量中的字符。</td>
-</tr>
-<tr>
-<td>${var:start_index}</td>
-<td>返回从start_index开始一直到字符串结尾。<br>start_index为0表示从第一个字符开始，<br>start_index为0-x表示从倒数第x个字符开始。<br>例如var=&quot;0123456789&quot;。则${var:0}返回&quot;0123456789&quot;，${var:6}返回&quot;6789&quot;，${var:0-3}返回”789”。</td>
-</tr>
-<tr>
-<td>${var:start_index:length}</td>
-<td>返回从start_index开始的length个字符，length可以为负数。var=&quot;0123456789&quot;，${var:2:5}返回&quot;23456&quot;，${var:5:-2}返回&quot;567&quot;（-2表示剩余2个字符不要），${var:0-3:-1}返回&quot;78&quot;。</td>
-</tr>
-<tr>
-<td>${var&#35;string}</td>
-<td>返回从左边删除string后的字符串，尽量短的去匹配。例如var=&quot;https&#xfeff;://127.0.0.1/index.php&quot;， ${var&#35;*/}返回&quot;/127.0.0.1/index.php&quot;</td>
-</tr>
-<tr>
-<td>${var&#35;&#35;string}</td>
-<td>返回从左边删除string后的字符串，尽量长的去匹配。例如var=&quot;https&#xfeff;://127.0.0.1/index.php&quot;，${var&#35;&#35;*/}返回&quot;index.php&quot;</td>
-</tr>
-<tr>
-<td>${var%string}</td>
-<td>返回从右边删除string后的字符串，尽量短的去匹配。例如var=&quot;https&#xfeff;://127.0.0.1/index.php&quot;，${var%/*}返回&quot;https&#xfeff;://127.0.0.1&quot;</td>
-</tr>
-<tr>
-<td>${var%string}</td>
-<td>返回从右边删除string后的字符串，尽量长的去匹配。例如var=&quot;https&#xfeff;://127.0.0.1/index.php&quot;，${var%/*}返回&quot;https:&quot;</td>
-</tr>
-<tr>
-<td>${var:-newstring}</td>
-<td>如果var为空，或者未定义，则返回newstring；否则返回原值。</td>
-</tr>
-<tr>
-<td>${var:=newstring}</td>
-<td>如果var为空，或者未定义，则返回newstring，并把newstring赋值给var；否则返回原值。</td>
-</tr>
-<tr>
-<td>${var:+newstring}</td>
-<td>如果var不为空，则返回newstring；如果var为空，则返回空值。</td>
-</tr>
-<tr>
-<td>${var:?newstring}</td>
-<td>如果var为空或者未定义，则将newstring写入标准错误流，本语句失败；如果var不为空，则返回原值。</td>
-</tr>
-<tr>
-<td>${var/substring/newstring}</td>
-<td>返回var中第一个substring被替换成newstring的字符串。例如var=&quot;2345432&quot;, ${var/3/Hello}返回&quot;2Hello45432&quot;</td>
-</tr>
-<tr>
-<td>${var//substring/newstring}</td>
-<td>返回var中所有substring被替换成newstring的字符串。例如var=&quot;2345432&quot;, ${var//3/Hello}返回&quot;2Hello454Hello2&quot;</td>
-</tr>
-<tr>
-<td>$(command)</td>
-<td>返回command命令执行后的所输出的结果。例如$(date)，返回date命令执行后的输出，同<code>date</code>命令</td>
-</tr>
-<tr>
-<td>$((算数表达式))</td>
-<td>返回双括号中算数运算的结果。例如$((20+5*6))，返回50</td>
-</tr>
-</tbody></table>
-<h2 id="环境变量"><a href="#环境变量" class="headerlink" title="环境变量"></a>环境变量</h2><p>环境变量的定义方法如下：</p>
+<p>参考网站：</p>
+<ul>
+<li><a target="_blank" rel="noopener external nofollow noreferrer" href="http://codewiki.wikidot.com/shell-script:if-else">If / Else Statements (Shell Scripting)</a></li>
+</ul>
+
           <!--noindex-->
             <div class="post-button">
-              <a class="btn" href="/posts/36017.html#more" rel="contents">
+              <a class="btn" href="/posts/25730.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -564,7 +1283,7 @@
 
 
   <nav class="pagination">
-    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span>
+    <a class="extend prev" rel="prev" title="上一页" aria-label="上一页" href="/page/5/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" title="下一页" aria-label="下一页" href="/page/7/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 </div>
@@ -575,7 +1294,7 @@
 
   <div class="copyright">
     &copy; 
-    <span itemprop="copyrightYear">2023</span>
+    <span itemprop="copyrightYear">2024</span>
     <span class="with-love">
       <i class="fa fa-heart"></i>
     </span>
