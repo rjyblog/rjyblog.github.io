@@ -291,105 +291,6 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/63761.html">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.png">
-      <meta itemprop="name" content="Jason">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="任建勇的博客">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | 任建勇的博客">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/posts/63761.html" class="post-title-link" itemprop="url">sed命令使用说明</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2018-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-24T00:00:00+08:00">2018-06-24</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">更新于</span>
-      <time title="修改时间：2023-08-17 09:46:48" itemprop="dateModified" datetime="2023-08-17T09:46:48+08:00">2023-08-17</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-            <div class="post-description">sed命令使用笔记</div>
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <h2 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h2><h3 id="普通字符替换"><a href="#普通字符替换" class="headerlink" title="普通字符替换"></a>普通字符替换</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">param_name=ro.build.id</span><br><span class="line">sed -i &quot;s/$&#123;param_name&#125;=.*/$&#123;param_name&#125;=new_value/g&quot; build.prop</span><br></pre></td></tr></table></figure>
-<p>本例用于修改build.prop文件中的ro.build.id参数的值</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i &quot;s/oldstring/newstring/g&quot; `grep oldstring -rl yourdir`</span><br></pre></td></tr></table></figure>
-<p>批量替换</p>
-<h3 id="二进制内容替换"><a href="#二进制内容替换" class="headerlink" title="二进制内容替换"></a>二进制内容替换</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i &#x27;s/\x00/\x0a/g&#x27; %s      #本例是把&#x27;\0&#x27;替换为&#x27;\n&#x27;</span><br></pre></td></tr></table></figure>
-
-<h2 id="行操作"><a href="#行操作" class="headerlink" title="行操作"></a>行操作</h2><h3 id="删除文件中的某一行"><a href="#删除文件中的某一行" class="headerlink" title="删除文件中的某一行"></a>删除文件中的某一行</h3>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/posts/63761.html#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/61132.html">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -463,6 +364,105 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/posts/61132.html#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://rjyblog.gitee.io/posts/63761.html">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.png">
+      <meta itemprop="name" content="Jason">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | 任建勇的博客">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/posts/63761.html" class="post-title-link" itemprop="url">sed命令使用说明</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2018-06-24 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-24T00:00:00+08:00">2018-06-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-08-17 09:46:48" itemprop="dateModified" datetime="2023-08-17T09:46:48+08:00">2023-08-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Shell/" itemprop="url" rel="index"><span itemprop="name">Shell</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">sed命令使用笔记</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="内容替换"><a href="#内容替换" class="headerlink" title="内容替换"></a>内容替换</h2><h3 id="普通字符替换"><a href="#普通字符替换" class="headerlink" title="普通字符替换"></a>普通字符替换</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">param_name=ro.build.id</span><br><span class="line">sed -i &quot;s/$&#123;param_name&#125;=.*/$&#123;param_name&#125;=new_value/g&quot; build.prop</span><br></pre></td></tr></table></figure>
+<p>本例用于修改build.prop文件中的ro.build.id参数的值</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i &quot;s/oldstring/newstring/g&quot; `grep oldstring -rl yourdir`</span><br></pre></td></tr></table></figure>
+<p>批量替换</p>
+<h3 id="二进制内容替换"><a href="#二进制内容替换" class="headerlink" title="二进制内容替换"></a>二进制内容替换</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sed -i &#x27;s/\x00/\x0a/g&#x27; %s      #本例是把&#x27;\0&#x27;替换为&#x27;\n&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="行操作"><a href="#行操作" class="headerlink" title="行操作"></a>行操作</h2><h3 id="删除文件中的某一行"><a href="#删除文件中的某一行" class="headerlink" title="删除文件中的某一行"></a>删除文件中的某一行</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/posts/63761.html#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
